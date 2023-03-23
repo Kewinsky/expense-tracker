@@ -1,6 +1,4 @@
-import "./App.css";
-
-function App() {
+function Router() {
   return (
     <div>
       <h1>Siema</h1>
@@ -8,4 +6,4 @@ function App() {
   );
 }
 
-export default App;
+export default Router;
