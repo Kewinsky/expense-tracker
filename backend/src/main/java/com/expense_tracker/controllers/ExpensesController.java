@@ -14,7 +14,7 @@ public class ExpensesController {
     ExpensesRepository repository;
 
     @GetMapping(path="/allExpenses")
-    @ResponseBody Iterable<Expense> getAllExpenses() {
+    @ResponseBody Iterable<Expense> allExpenses() {
         return repository.findAll();
     }
 
@@ -25,7 +25,7 @@ public class ExpensesController {
     }
 
     @PostMapping(path="/addExpense")
-    String addNewExpense (
+    String addExpense (
             @RequestBody Expense expense
     ) {
         repository.save(expense);
