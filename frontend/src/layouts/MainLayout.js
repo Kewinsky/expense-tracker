@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import Navbar from "../components/navbarComponent/NavbarComponent";
+import NavbarComponent from "../components/navbarComponent/NavbarComponent";
 
 const MainLayout = ({ children, pageTitle }) => {
   useEffect(() => {
@@ -8,7 +8,7 @@ const MainLayout = ({ children, pageTitle }) => {
 
   return (
     <>
-      <Navbar />
+      <NavbarComponent />
       <main>{children}</main>
     </>
   );
