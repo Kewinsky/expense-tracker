@@ -11,7 +11,7 @@ function ModalComponent({ show, setShow }) {
       </Modal.Header>
       <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
       <Modal.Footer>
-        <Button variant="secondary" onClick={handleClose}>
+        <Button variant="outline-secondary" onClick={handleClose}>
           Close
         </Button>
         <Button variant="danger" onClick={handleClose}>
