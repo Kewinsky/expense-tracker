@@ -1,5 +1,5 @@
 import Table from "react-bootstrap/Table";
-import TableElementComponent from "./TableElementComponent";
+import ActionButtonsComponents from "./ActionButtonsComponents";
 
 const TableComponent = ({ expenses, setExpenses }) => {
   return (
@@ -15,14 +15,17 @@ const TableComponent = ({ expenses, setExpenses }) => {
       </thead>
       <tbody>
         {expenses.map((expense) => (
-          <TableElementComponent
-            key={expense.id}
-            expense={expense}
-            expenses={expenses}
-            setExpenses={setExpenses}
-          />
+          <tr key={expense.id}>
+            <td>{expense.date}</td>
+            <td>{expense.title}</td>
+            <td>{expense.value}</td>
+            <td>{expense.category}</td>
+            <ActionButtonsComponents
+              expense={expense}
+              setExpenses={setExpenses}
+            />
+          </tr>
         ))}
-        <TableElementComponent />
       </tbody>
     </Table>
   );
