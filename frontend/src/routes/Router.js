@@ -3,6 +3,7 @@ import MainLayout from "../layouts/MainLayout";
 import AboutPage from "../pages/aboutPage/AboutPage";
 import HomePage from "../pages/homePage/HomePage";
 import LoginPage from "../pages/loginPage/LoginPage";
+import RegisterPage from "../pages/registerPage/RegisterPage";
 import TrackerPage from "../pages/trackerPage/TrackerPage";
 import UpdatePage from "../pages/updatePage/UpdatePage";
 
@@ -14,6 +15,14 @@ export const Router = () => {
         element={
           <MainLayout pageTitle={"Home"}>
             <HomePage />
+          </MainLayout>
+        }
+      />
+      <Route
+        path="/register"
+        element={
+          <MainLayout pageTitle={"Register"}>
+            <RegisterPage />
           </MainLayout>
         }
       />
