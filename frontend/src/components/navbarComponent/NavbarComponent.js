@@ -13,10 +13,13 @@ const NavbarComponent = () => {
           <Nav className="me-auto my-2 my-lg-0" navbarScroll>
             <Nav.Link href="/">Home</Nav.Link>
             <Nav.Link href="/tracker">Tracker</Nav.Link>
-            <Nav.Link href="/about">About Us</Nav.Link>
+            <Nav.Link href="/analyzer">Analyzer</Nav.Link>
           </Nav>
           <Button href="/login" variant="outline-success">
             Login
+          </Button>
+          <Button href="/logout" variant="outline-danger">
+            Logout
           </Button>
         </Navbar.Collapse>
       </Container>

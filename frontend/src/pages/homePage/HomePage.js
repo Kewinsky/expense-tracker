@@ -7,7 +7,7 @@ const HomePage = () => {
       <h1>Welcome at Expense_Tracker</h1>
       <h4>
         don't hesitate to add new expense{" "}
-        <a href="/tracker">
+        <a href="/tracker" className="link-success">
           <FontAwesomeIcon icon={faCircleArrowRight} />
         </a>
       </h4>

@@ -1,6 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import MainLayout from "../layouts/MainLayout";
-import AboutPage from "../pages/aboutPage/AboutPage";
+import AnalyzerPage from "../pages/analyzerPage/AnalyzerPage";
 import HomePage from "../pages/homePage/HomePage";
 import LoginPage from "../pages/loginPage/LoginPage";
 import RegisterPage from "../pages/registerPage/RegisterPage";
@@ -43,10 +43,10 @@ export const Router = () => {
         }
       />
       <Route
-        path="/about"
+        path="/analyzer"
         element={
-          <MainLayout pageTitle={"About us"}>
-            <AboutPage />
+          <MainLayout pageTitle={"Analyzer"}>
+            <AnalyzerPage />
           </MainLayout>
         }
       />
