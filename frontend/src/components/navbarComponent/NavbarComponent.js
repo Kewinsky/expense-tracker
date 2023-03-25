@@ -18,9 +18,9 @@ const NavbarComponent = () => {
           <Button href="/login" variant="outline-success">
             Login
           </Button>
-          <Button href="/logout" variant="outline-danger">
+          {/* <Button href="/logout" variant="outline-danger">
             Logout
-          </Button>
+          </Button> */}
         </Navbar.Collapse>
       </Container>
     </Navbar>
