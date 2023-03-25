@@ -1,4 +1,4 @@
-package com.expense_tracker.exceptions;
+package com.expense_tracker.exceptions.expenses;
 
 public class ExpenseNotFoundException extends RuntimeException{
     public ExpenseNotFoundException(int id) {

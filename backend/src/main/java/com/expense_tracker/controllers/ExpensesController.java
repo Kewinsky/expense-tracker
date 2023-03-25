@@ -1,13 +1,14 @@
 package com.expense_tracker.controllers;
 
 import com.expense_tracker.entities.Expense;
-import com.expense_tracker.exceptions.ExpenseNotFoundException;
+import com.expense_tracker.exceptions.expenses.ExpenseNotFoundException;
 import com.expense_tracker.repositories.ExpensesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/v1/api")
+@RequestMapping("/v1/api/expenses")
+@CrossOrigin
 public class ExpensesController {
 
     @Autowired

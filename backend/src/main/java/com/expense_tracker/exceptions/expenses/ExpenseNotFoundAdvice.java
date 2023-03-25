@@ -1,4 +1,4 @@
-package com.expense_tracker.exceptions;
+package com.expense_tracker.exceptions.expenses;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -11,7 +11,7 @@ public class ExpenseNotFoundAdvice {
     @ResponseBody
     @ExceptionHandler(ExpenseNotFoundException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    String todoNotFoundHandler(ExpenseNotFoundException ex) {
+    String expenseNotFoundHandler(ExpenseNotFoundException ex) {
         return ex.getMessage();
     }
 }
