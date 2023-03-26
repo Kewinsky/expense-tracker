@@ -7,7 +7,7 @@ import RegisterPage from "../pages/registerPage/RegisterPage";
 import TrackerPage from "../pages/trackerPage/TrackerPage";
 import UpdatePage from "../pages/updatePage/UpdatePage";
 
-export const Router = () => {
+export const Router = ({ expenses, setExpenses }) => {
   return (
     <Routes>
       <Route
@@ -38,7 +38,7 @@ export const Router = () => {
         path="/tracker"
         element={
           <MainLayout pageTitle={"Tracker"}>
-            <TrackerPage />
+            <TrackerPage expenses={expenses} setExpenses={setExpenses} />
           </MainLayout>
         }
       />
@@ -51,10 +51,10 @@ export const Router = () => {
         }
       />
       <Route
-        path="/update"
+        path="/update/:id"
         element={
           <MainLayout pageTitle={"Update"}>
-            <UpdatePage />
+            <UpdatePage expenses={expenses} setExpenses={setExpenses} />
           </MainLayout>
         }
       />
