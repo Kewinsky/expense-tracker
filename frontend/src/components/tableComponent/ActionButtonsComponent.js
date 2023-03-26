@@ -1,24 +1,17 @@
 import { useState } from "react";
 import Button from "react-bootstrap/Button";
+import { Link } from "react-router-dom";
 import ModalComponent from "../modalComponent/ModalComponent";
 const ActionButtonsComponents = ({ expense, setExpenses }) => {
   const [show, setShow] = useState(false);
 
   const handleShow = () => setShow(true);
 
-  const passData = () => setExpenses();
-
   return (
     <td className="text-center">
-      <Button
-        href="/update"
-        variant="outline-dark"
-        type="submit"
-        className="mx-2"
-        onClick={() => passData()}
-      >
+      <Link className="link-dark mx-3" to={`/update/${expense.id}`}>
         Edit
-      </Button>
+      </Link>
       <Button variant="outline-dark" type="submit" onClick={handleShow}>
         Delete
       </Button>
