@@ -14,7 +14,7 @@ public class Expense {
     private String title;
     private float value;
     private ExpenseCategories category;
-    private LocalDate date;
+    private String date;
 
     public Expense() {
     }
@@ -51,11 +51,11 @@ public class Expense {
         this.category = category;
     }
 
-    public LocalDate getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(LocalDate date) {
+    public void setDate(String date) {
         this.date = date;
     }
 }
