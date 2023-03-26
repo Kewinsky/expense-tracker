@@ -1,9 +1,9 @@
 import UpdateComponent from "../../components/updateComponent/UpdateComponent";
-const UpdatePage = ({ expense, setExpenses }) => {
+const UpdatePage = ({ expenses, setExpenses }) => {
   return (
     <div className="d-flex justify-content-center">
       <div className="m-5 w-50">
-        <UpdateComponent expense={expense} setExpenses={setExpenses} />
+        <UpdateComponent expenses={expenses} setExpenses={setExpenses} />
       </div>
     </div>
   );
