@@ -28,7 +28,7 @@ function ModalComponent({ expense, setExpenses, show, setShow }) {
       </Modal.Header>
       <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
       <Modal.Footer>
-        <Button variant="outline-secondary" onClick={handleClose}>
+        <Button variant="outline-dark" onClick={handleClose}>
           Close
         </Button>
         <Button variant="danger" onClick={() => deleteExpense(expense.id)}>
