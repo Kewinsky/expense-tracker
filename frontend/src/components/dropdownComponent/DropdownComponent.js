@@ -1,14 +1,14 @@
 import Form from "react-bootstrap/Form";
 
-const DropdownComponent = () => {
+const DropdownComponent = ({ value, onChange }) => {
   return (
-    <Form.Select required>
+    <Form.Select required onChange={onChange} value={value}>
       <option value="" selected disabled>
         Select category
       </option>
-      <option value="food">Food</option>
-      <option value="transport">Transport</option>
-      <option value="utilities">Utilities</option>
+      <option value="FOOD">Food</option>
+      <option value="TRANSPORT">Transport</option>
+      <option value="UTILITIES">Utilities</option>
     </Form.Select>
   );
 };

@@ -12,8 +12,6 @@ const UpdateComponent = ({ expenses, setExpenses }) => {
     return item.id === parseInt(expenseId);
   });
 
-  console.log({ selectedExpense });
-
   const [date, setDate] = useState(selectedExpense.date);
   const [title, setTitle] = useState(selectedExpense.title);
   const [value, setValue] = useState(selectedExpense.value);

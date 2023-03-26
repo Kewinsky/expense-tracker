@@ -13,10 +13,12 @@ function ModalComponent({ expense, setExpenses, show, setShow }) {
   };
 
   const deleteExpense = async (id) => {
-    await axios.delete(
-      `http://localhost:8080/v1/api/expenses/deleteExpense/${id}`
-    );
-    reloadData();
+    await axios
+      .delete(`http://localhost:8080/v1/api/expenses/deleteExpense/${id}`)
+      .then(() => reloadData())
+      .then(() => {
+        console.log("expense deleted");
+      });
   };
 
   return (
