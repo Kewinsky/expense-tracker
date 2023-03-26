@@ -33,7 +33,7 @@ public class ExpensesController {
         return "Expense saved. (" + expense.getId() + " " + expense.getTitle() + ")";
     }
 
-    @PostMapping("updateExpense/{id}")
+    @PutMapping("updateExpense/{id}")
     String updateExpense(@RequestBody Expense expense,
                           @PathVariable int id){
         return repository.findById(id)
