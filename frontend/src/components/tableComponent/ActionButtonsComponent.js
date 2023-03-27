@@ -10,7 +10,7 @@ const ActionButtonsComponents = ({ expense, setExpenses }) => {
   return (
     <td className="text-center">
       <Link className="link-dark mx-3" to={`/update/${expense.id}`}>
-        Edit
+        <Button variant="outline-dark">Edit</Button>
       </Link>
       <Button variant="outline-dark" type="submit" onClick={handleShow}>
         Delete
