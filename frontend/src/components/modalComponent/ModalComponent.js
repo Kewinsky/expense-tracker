@@ -26,7 +26,9 @@ function ModalComponent({ expense, setExpenses, show, setShow }) {
       <Modal.Header closeButton>
         <Modal.Title>Delete this item?</Modal.Title>
       </Modal.Header>
-      <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+      <Modal.Body>
+        If you want to delete this item click 'Yes' button.
+      </Modal.Body>
       <Modal.Footer>
         <Button variant="outline-dark" onClick={handleClose}>
           Close

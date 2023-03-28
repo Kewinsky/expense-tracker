@@ -1,0 +1,10 @@
+@import "../../utils/theme.scss";
+
+button {
+  background-color: #fff;
+  border: none;
+
+  &:hover {
+    background-color: #f2f2f2;
+  }
+}
