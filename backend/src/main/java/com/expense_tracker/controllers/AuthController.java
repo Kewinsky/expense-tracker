@@ -8,7 +8,6 @@ import com.expense_tracker.payloads.SignUpRequest;
 import com.expense_tracker.repositories.UserRepository;
 import com.expense_tracker.security.JwtTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -23,7 +22,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import javax.validation.Valid;
 import java.net.URI;
 
 @RestController
@@ -55,8 +53,6 @@ public class AuthController {
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
             String jwt = tokenProvider.generateToken(authentication);
-
-            System.out.println(authentication.getPrincipal());
 
             return ResponseEntity.ok(new JwtAuthenticationResponse(jwt));
         } catch (BadCredentialsException ex) {

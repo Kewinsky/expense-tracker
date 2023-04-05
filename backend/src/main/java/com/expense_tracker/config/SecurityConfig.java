@@ -93,9 +93,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // Our public endpoints
                 .antMatchers("/api/**").permitAll()
                 .antMatchers("/api/auth/**").permitAll()
-                .antMatchers("/api/user/checkUsernameAvailability", "/api/user/checkEmailAvailability").permitAll();
+                .antMatchers("/api/user/checkUsernameAvailability", "/api/user/checkEmailAvailability").permitAll()
                 // Our private endpoints
-//                .anyRequest().authenticated();
+                .anyRequest().authenticated();
 
         // Add our custom JWT security filter
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);

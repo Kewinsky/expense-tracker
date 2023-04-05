@@ -1,23 +1,15 @@
 package com.expense_tracker.controllers;
 
-import com.expense_tracker.entities.Expense;
 import com.expense_tracker.entities.User;
 import com.expense_tracker.exceptions.ResourceNotFoundException;
-import com.expense_tracker.exceptions.expenses.ExpenseNotFoundException;
 import com.expense_tracker.exceptions.users.UserNotFoundException;
 import com.expense_tracker.payloads.UserIdentityAvailability;
 import com.expense_tracker.payloads.UserProfile;
-import com.expense_tracker.payloads.UserSummary;
 import com.expense_tracker.repositories.UserRepository;
-import com.expense_tracker.security.CurrentUser;
-import com.expense_tracker.security.IAuthenticationFacade;
+import com.expense_tracker.security.CustomUserDetailsService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -28,9 +20,7 @@ public class UserController {
     private UserRepository userRepository;
 
     @Autowired
-    private IAuthenticationFacade authenticationFacade;
-
-    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
+    CustomUserDetailsService customUserDetailsService;
 
     @GetMapping("/getUsers")
     @ResponseBody public Iterable<User> getUsers() {
@@ -43,22 +33,10 @@ public class UserController {
                 .orElseThrow(() -> new UserNotFoundException(id));
     }
 
-    @GetMapping("/getCurrentUser")
+    @GetMapping("/user/me")
     public Object getCurrentUser() {
-//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//        System.out.println(auth);
-//        return auth.getPrincipal();
-//        Authentication authentication = authenticationFacade.getAuthentication();
-//        System.out.println(authentication.getPrincipal());
-
-        return SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return customUserDetailsService.getLoggedInUser();
     }
-
-//    @GetMapping("/getCurrentUser")
-//    public UserSummary getCurrentUser(@CurrentUser User user) {
-//        UserSummary userSummary = new UserSummary(user.getId(), user.getUsername(), user.getEmail());
-//        return userSummary;
-//    }
 
     @GetMapping("/user/checkUsernameAvailability")
     public UserIdentityAvailability checkUsernameAvailability(@RequestParam(value = "username") String username) {
