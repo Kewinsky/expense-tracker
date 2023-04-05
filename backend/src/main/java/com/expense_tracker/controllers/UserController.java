@@ -7,8 +7,6 @@ import com.expense_tracker.payloads.UserIdentityAvailability;
 import com.expense_tracker.payloads.UserProfile;
 import com.expense_tracker.repositories.UserRepository;
 import com.expense_tracker.security.CustomUserDetailsService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
