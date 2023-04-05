@@ -1,39 +1,84 @@
 package com.expense_tracker.controllers;
 
-
 import com.expense_tracker.entities.Expense;
 import com.expense_tracker.entities.User;
+import com.expense_tracker.exceptions.ResourceNotFoundException;
 import com.expense_tracker.exceptions.expenses.ExpenseNotFoundException;
 import com.expense_tracker.exceptions.users.UserNotFoundException;
-import com.expense_tracker.repositories.UsersRepository;
+import com.expense_tracker.payloads.UserIdentityAvailability;
+import com.expense_tracker.payloads.UserProfile;
+import com.expense_tracker.payloads.UserSummary;
+import com.expense_tracker.repositories.UserRepository;
+import com.expense_tracker.security.CurrentUser;
+import com.expense_tracker.security.IAuthenticationFacade;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/v1/api/users")
-@CrossOrigin
+@RequestMapping("/api")
 public class UserController {
 
     @Autowired
-    UsersRepository repository;
+    private UserRepository userRepository;
 
-    @GetMapping(path="/allUsers")
-    @ResponseBody
-    Iterable<User> allUsers() {
-        return repository.findAll();
+    @Autowired
+    private IAuthenticationFacade authenticationFacade;
+
+    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
+
+    @GetMapping("/getUsers")
+    @ResponseBody public Iterable<User> getUsers() {
+        return userRepository.findAll();
     }
 
-    @GetMapping(path="/getUser/{id}")
-    User getUser(@PathVariable int id) {
-        return repository.findById(id)
+    @GetMapping(path="/getUserById/{id}")
+    User getUserById(@PathVariable int id) {
+        return userRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException(id));
     }
 
-    @PostMapping(path="/addUser")
-    String addUser (
-            @RequestBody User user
-    ) {
-        repository.save(user);
-        return "User saved: " + user;
+    @GetMapping("/getCurrentUser")
+    public Object getCurrentUser() {
+//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//        System.out.println(auth);
+//        return auth.getPrincipal();
+//        Authentication authentication = authenticationFacade.getAuthentication();
+//        System.out.println(authentication.getPrincipal());
+
+        return SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    }
+
+//    @GetMapping("/getCurrentUser")
+//    public UserSummary getCurrentUser(@CurrentUser User user) {
+//        UserSummary userSummary = new UserSummary(user.getId(), user.getUsername(), user.getEmail());
+//        return userSummary;
+//    }
+
+    @GetMapping("/user/checkUsernameAvailability")
+    public UserIdentityAvailability checkUsernameAvailability(@RequestParam(value = "username") String username) {
+        Boolean isAvailable = !userRepository.existsByUsername(username);
+        return new UserIdentityAvailability(isAvailable);
+    }
+
+    @GetMapping("/user/checkEmailAvailability")
+    public UserIdentityAvailability checkEmailAvailability(@RequestParam(value = "email") String email) {
+        Boolean isAvailable = !userRepository.existsByEmail(email);
+        return new UserIdentityAvailability(isAvailable);
+    }
+
+    @GetMapping("/users/{username}")
+    public UserProfile getUserProfile(@PathVariable(value = "username") String username) {
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new ResourceNotFoundException("User", "username", username));
+
+        UserProfile userProfile = new UserProfile(user.getId(), user.getUsername());
+
+        return userProfile;
     }
 }
