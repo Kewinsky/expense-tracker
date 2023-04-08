@@ -8,6 +8,7 @@ import com.expense_tracker.payloads.UserProfile;
 import com.expense_tracker.repositories.UserRepository;
 import com.expense_tracker.security.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -21,7 +22,7 @@ public class UserController {
     CustomUserDetailsService customUserDetailsService;
 
     @GetMapping("/getUsers")
-    @ResponseBody public Iterable<User> getUsers() {
+    public Iterable<User> getUsers() {
         return userRepository.findAll();
     }
 
@@ -33,7 +34,8 @@ public class UserController {
 
     @GetMapping("/user/me")
     public Object getCurrentUser() {
-        return customUserDetailsService.getLoggedInUser();
+        Object userPrincipal =  SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return userPrincipal;
     }
 
     @GetMapping("/user/checkUsernameAvailability")

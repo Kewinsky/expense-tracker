@@ -11,10 +11,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-@AllArgsConstructor
-@NoArgsConstructor
 @Data
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name="users")
 public class User implements UserDetails {
     @Id
