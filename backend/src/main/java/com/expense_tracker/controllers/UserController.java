@@ -1,39 +1,37 @@
 package com.expense_tracker.controllers;
 
-
-import com.expense_tracker.entities.Expense;
-import com.expense_tracker.entities.User;
-import com.expense_tracker.exceptions.expenses.ExpenseNotFoundException;
+import com.expense_tracker.models.User;
 import com.expense_tracker.exceptions.users.UserNotFoundException;
-import com.expense_tracker.repositories.UsersRepository;
+import com.expense_tracker.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/v1/api/users")
-@CrossOrigin
+@RequestMapping("/api")
 public class UserController {
 
     @Autowired
-    UsersRepository repository;
+    private UserRepository userRepository;
 
-    @GetMapping(path="/allUsers")
-    @ResponseBody
-    Iterable<User> allUsers() {
-        return repository.findAll();
+    @GetMapping("/getUsers")
+    public Iterable<User> getUsers() {
+        return userRepository.findAll();
     }
 
-    @GetMapping(path="/getUser/{id}")
-    User getUser(@PathVariable int id) {
-        return repository.findById(id)
+    @GetMapping(path="/getUserById/{id}")
+    User getUserById(@PathVariable Long id) {
+        return userRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException(id));
     }
 
-    @PostMapping(path="/addUser")
-    String addUser (
-            @RequestBody User user
-    ) {
-        repository.save(user);
-        return "User saved: " + user;
+    @GetMapping("/user/me")
+    public Object getCurrentUser() {
+        Object userPrincipal =  SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return userPrincipal;
     }
+
+
+
+
 }
