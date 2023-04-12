@@ -1,4 +1,4 @@
-package com.expense_tracker.entities;
+package com.expense_tracker.models;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,15 +14,15 @@ import javax.persistence.*;
 public class Expense {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     private String title;
 
     private float value;
 
-    private int categoryId;
+    private Long categoryId;
 
     private String date;
 
-    private int userId;
+    private Long userId;
 }

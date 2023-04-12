@@ -1,14 +1,13 @@
-package com.expense_tracker.payloads;
+package com.expense_tracker.payloads.requests;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-public class UserSummary {
-    private int id;
+@NoArgsConstructor
+public class LoginRequest {
     private String username;
-    private String email;
+    private String password;
 }
