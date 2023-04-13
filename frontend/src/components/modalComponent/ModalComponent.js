@@ -7,14 +7,14 @@ function ModalComponent({ expense, setExpenses, show, setShow }) {
 
   const reloadData = async () => {
     const response = await axios.get(
-      "http://localhost:8080/v1/api/expenses/allExpenses"
+      "http://localhost:8080/api/expenses/allExpenses"
     );
     setExpenses(response.data);
   };
 
   const deleteExpense = async (id) => {
     await axios
-      .delete(`http://localhost:8080/v1/api/expenses/deleteExpense/${id}`)
+      .delete(`http://localhost:8080/api/expenses/deleteExpense/${id}`)
       .then(() => reloadData())
       .then(() => {
         console.log("expense deleted");
