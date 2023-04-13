@@ -42,7 +42,7 @@ const UpdateComponent = ({ expenses, setExpenses }) => {
 
   const reloadData = async () => {
     const response = await axios.get(
-      "http://localhost:8080/v1/api/expenses/allExpenses"
+      "http://localhost:8080/api/expenses/allExpenses"
     );
     setExpenses(response.data);
   };
@@ -51,7 +51,7 @@ const UpdateComponent = ({ expenses, setExpenses }) => {
     e.preventDefault();
     await axios
       .put(
-        `http://localhost:8080/v1/api/expenses/updateExpense/${expenseId}`,
+        `http://localhost:8080/api/expenses/updateExpense/${expenseId}`,
         updatedExpense
       )
       .then(() => reloadData())

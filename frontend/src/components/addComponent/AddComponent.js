@@ -30,7 +30,7 @@ const AddComponent = ({ setExpenses }) => {
 
   const reloadData = async () => {
     const response = await axios.get(
-      "http://localhost:8080/v1/api/expenses/allExpenses"
+      "http://localhost:8080/api/expenses/allExpenses"
     );
     setExpenses(response.data);
   };
@@ -44,10 +44,10 @@ const AddComponent = ({ setExpenses }) => {
     setCategory("");
 
     await axios
-      .post("http://localhost:8080/v1/api/expenses/addExpense", newExpense)
+      .post("http://localhost:8080/api/expenses/addExpense", newExpense)
       .then(() => reloadData())
       .then(() => {
-        console.log("epxnese added");
+        console.log("expense added");
       });
   };
 

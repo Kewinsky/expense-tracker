@@ -7,7 +7,7 @@ const App = () => {
 
   const allExpenses = async () => {
     const response = await axios.get(
-      "http://localhost:8080/v1/api/expenses/allExpenses"
+      "http://localhost:8080/api/expenses/allExpenses"
     );
     setExpenses(response.data);
   };
@@ -18,5 +18,4 @@ const App = () => {
 
   return <Router expenses={expenses} setExpenses={setExpenses} />;
 };
-
 export default App;
