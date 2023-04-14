@@ -30,7 +30,7 @@ const LoginComponent = () => {
 
     AuthService.login(username, password).then(
       () => {
-        navigate("/home");
+        navigate("/");
         window.location.reload();
       },
       () => {
