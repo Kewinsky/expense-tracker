@@ -27,6 +27,7 @@ const App = () => {
       expenses={expenses}
       setExpenses={setExpenses}
       currentUser={currentUser}
+      setCurrentUser={setCurrentUser}
     />
   );
 };

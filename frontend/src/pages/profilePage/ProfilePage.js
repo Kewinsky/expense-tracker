@@ -1,21 +1,26 @@
-import { useState, useEffect } from "react";
-import UserService from "../../services/userService";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-const ProfilePage = () => {
+import ProfileComponent from "../../components/profileComponent/ProfileComponent";
+import AuthService from "../../services/authService";
+const ProfilePage = (currentUser, serCurrentUser) => {
   const navigate = useNavigate();
-  const [content, setContent] = useState("");
 
   useEffect(() => {
-    UserService.getUserBoard().then(
-      (response) => {
-        setContent(response.data);
-      },
-      () => {
-        navigate("/unauthorized");
-      }
-    );
+    // TODO: refactor using currentUser instead invoking same method
+    const user = AuthService.getCurrentUser();
+    if (!user) {
+      navigate("/login");
+    }
+
+    console.log(currentUser.currentUser);
   }, []);
-  return <div>{content}</div>;
+
+  return (
+    <ProfileComponent
+      currentUser={currentUser}
+      serCurrentUser={serCurrentUser}
+    />
+  );
 };
 
 export default ProfilePage;

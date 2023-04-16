@@ -12,7 +12,12 @@ import TrackerPage from "../pages/trackerPage/TrackerPage";
 import UnauthorizedPage from "../pages/unauthorizedPage/UnauthorizedPage";
 import UpdatePage from "../pages/updatePage/UpdatePage";
 
-export const Router = ({ expenses, setExpenses, currentUser }) => {
+export const Router = ({
+  expenses,
+  setExpenses,
+  currentUser,
+  setCurrentUser,
+}) => {
   return (
     <Routes>
       <Route
@@ -87,7 +92,10 @@ export const Router = ({ expenses, setExpenses, currentUser }) => {
         path="/profile"
         element={
           <MainLayout pageTitle={"Profile Page"}>
-            <ProfilePage />
+            <ProfilePage
+              currentUser={currentUser}
+              setCurrentUser={setCurrentUser}
+            />
           </MainLayout>
         }
       />
@@ -95,7 +103,7 @@ export const Router = ({ expenses, setExpenses, currentUser }) => {
         path="/unauthorized"
         element={
           <MainLayout pageTitle={"Unauthorized"}>
-            <UnauthorizedPage />
+            <UnauthorizedPage currentUser={currentUser} />
           </MainLayout>
         }
       />
