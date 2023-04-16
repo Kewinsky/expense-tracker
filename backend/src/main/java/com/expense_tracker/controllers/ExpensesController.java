@@ -4,11 +4,13 @@ import com.expense_tracker.models.Expense;
 import com.expense_tracker.exceptions.expenses.ExpenseNotFoundException;
 import com.expense_tracker.repositories.ExpensesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/expenses")
 @CrossOrigin
+@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
 public class ExpensesController {
 
     @Autowired
@@ -47,7 +49,7 @@ public class ExpensesController {
                 .map(exp -> {
                     exp.setTitle(expense.getTitle());
                     exp.setValue(expense.getValue());
-                    exp.setCategoryId(expense.getCategoryId());
+                    exp.setCategory(expense.getCategory());
                     exp.setDate(expense.getDate());
                     expensesRepository.save(exp);
                     return "Expense saved. (" + exp.getId() + " " + exp.getTitle() + ")";

@@ -16,7 +16,6 @@ public class Category {
     private Long id;
 
     @Enumerated(EnumType.STRING)
-    @Column(length = 20)
     private ECategory name;
 
     public Category(ECategory name) {

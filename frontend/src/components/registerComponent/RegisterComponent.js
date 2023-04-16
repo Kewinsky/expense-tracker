@@ -1,30 +1,106 @@
 import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
+import React, { useState, useRef } from "react";
+import AuthService from "../../services/authService";
+import { Form } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 const RegisterComponent = () => {
+  const form = useRef();
+
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [message, setMessage] = useState("");
+
+  const navigate = useNavigate();
+
+  const onChangeUsername = (e) => {
+    const username = e.target.value;
+    setUsername(username);
+  };
+
+  const onChangeEmail = (e) => {
+    const email = e.target.value;
+    setEmail(email);
+  };
+
+  const onChangePassword = (e) => {
+    const password = e.target.value;
+    setPassword(password);
+  };
+
+  const handleRegister = (e) => {
+    e.preventDefault();
+
+    setMessage("");
+
+    AuthService.register(username, email, password).then(
+      () => {
+        AuthService.login(username, password).then(() => {
+          navigate("/");
+          window.location.reload();
+        });
+      },
+      (error) => {
+        const resMessage =
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+          error.message ||
+          error.toString();
+
+        setMessage(resMessage);
+      }
+    );
+  };
+
   return (
-    <Form>
+    <Form onSubmit={handleRegister} ref={form}>
       <Form.Group className="mb-3">
-        <Form.Label>Name</Form.Label>
-        <Form.Control type="text" placeholder="Enter name" />
+        <Form.Label>Username</Form.Label>
+        <Form.Control
+          type="text"
+          placeholder="Enter username"
+          required
+          value={username}
+          onChange={onChangeUsername}
+        />
       </Form.Group>
       <Form.Group className="mb-3">
         <Form.Label>Email address</Form.Label>
-        <Form.Control type="email" placeholder="Enter email" />
+        <Form.Control
+          type="email"
+          placeholder="Enter email"
+          required
+          value={email}
+          onChange={onChangeEmail}
+        />
       </Form.Group>
       <Form.Group className="mb-3">
         <Form.Label>Password</Form.Label>
-        <Form.Control type="password" placeholder="Enter password" />
+        <Form.Control
+          type="password"
+          placeholder="Enter password"
+          required
+          value={password}
+          onChange={onChangePassword}
+        />
       </Form.Group>
-      <Form.Group className="mb-3">
-        <Form.Label>Confirm password</Form.Label>
-        <Form.Control type="password" placeholder="Confirm password" />
-      </Form.Group>
-      <div className="text-center">
+      <Form.Group className="text-center">
         <Button variant="dark" type="submit">
           Sign Up
         </Button>
-      </div>
+      </Form.Group>
+
+      {message && (
+        <Form.Group className="mt-3">
+          <div className="form-group">
+            <div className="alert alert-danger" role="alert">
+              {message}
+            </div>
+          </div>
+        </Form.Group>
+      )}
     </Form>
   );
 };

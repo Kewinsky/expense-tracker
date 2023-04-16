@@ -1,22 +1,33 @@
 import { useState, useEffect } from "react";
 import Router from "./routes/Router";
-import axios from "axios";
+import ExpenseService from "./services/expenseService";
+import AuthService from "./services/authService";
 
 const App = () => {
   const [expenses, setExpenses] = useState([]);
+  const [currentUser, setCurrentUser] = useState(undefined);
 
-  const allExpenses = async () => {
-    const response = await axios.get(
-      "http://localhost:8080/v1/api/expenses/allExpenses"
-    );
+  const getAllExpenses = async () => {
+    const response = await ExpenseService.getExpensesByUser();
+
     setExpenses(response.data);
   };
 
   useEffect(() => {
-    allExpenses();
+    const user = AuthService.getCurrentUser();
+
+    if (user) {
+      setCurrentUser(user);
+      getAllExpenses();
+    }
   }, []);
 
-  return <Router expenses={expenses} setExpenses={setExpenses} />;
+  return (
+    <Router
+      expenses={expenses}
+      setExpenses={setExpenses}
+      currentUser={currentUser}
+    />
+  );
 };
-
 export default App;
