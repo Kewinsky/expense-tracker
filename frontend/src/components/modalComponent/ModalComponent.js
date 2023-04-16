@@ -10,6 +10,7 @@ function ModalComponent({ expense, setExpenses, show, setShow }) {
     setExpenses(response.data);
   };
 
+  //TODO: not working
   const handleDelete = async (id) => {
     await ExpenseService.deleteExpense(id)
       .then(() => reloadData())
