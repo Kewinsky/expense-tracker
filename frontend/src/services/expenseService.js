@@ -4,10 +4,6 @@ import AuthService from "./authService";
 
 const API_URL = "http://localhost:8080/api/expenses/";
 
-const getExpenses = () => {
-  return axios.get(API_URL + "getExpenses", { headers: authHeader() });
-};
-
 const getExpenseById = (id) => {
   return axios.get(API_URL + `getExpense/${id}`, { headers: authHeader() });
 };
@@ -29,14 +25,13 @@ const updateExpense = (id, newExpense) => {
   });
 };
 
-const deleteExpense = async (id) => {
-  return await axios.delete(API_URL + `deleteExpense/${id}`, {
+const deleteExpense = (id) => {
+  return axios.delete(API_URL + `deleteExpense/${id}`, {
     headers: authHeader(),
   });
 };
 
 const ExpenseService = {
-  getExpenses,
   getExpenseById,
   getExpensesByUser,
   addExpense,

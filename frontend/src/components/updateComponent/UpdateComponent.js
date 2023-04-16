@@ -1,9 +1,9 @@
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import DropdownComponent from "../dropdownComponent/DropdownComponent";
-import axios from "axios";
 import { useParams } from "react-router-dom";
 import { useState } from "react";
+import ExpenseService from "../../services/expenseService";
 const UpdateComponent = ({ expenses, setExpenses }) => {
   const { id } = useParams();
   const expenseId = id;
@@ -41,19 +41,14 @@ const UpdateComponent = ({ expenses, setExpenses }) => {
   };
 
   const reloadData = async () => {
-    const response = await axios.get(
-      "http://localhost:8080/api/expenses/allExpenses"
-    );
+    const response = await ExpenseService.getExpensesByUser();
+
     setExpenses(response.data);
   };
 
   const handleUpdateExpense = async (e) => {
     e.preventDefault();
-    await axios
-      .put(
-        `http://localhost:8080/api/expenses/updateExpense/${expenseId}`,
-        updatedExpense
-      )
+    await ExpenseService.updateExpense(expenseId, updatedExpense)
       .then(() => reloadData())
       .then(() => {
         console.log("expense updated");
