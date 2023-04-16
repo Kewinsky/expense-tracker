@@ -10,7 +10,7 @@ function ModalComponent({ expense, setExpenses, show, setShow }) {
     setExpenses(response.data);
   };
 
-  const deleteExpense = async (id) => {
+  const handleDelete = async (id) => {
     await ExpenseService.deleteExpense(id)
       .then(() => reloadData())
       .then(() => {
@@ -30,7 +30,7 @@ function ModalComponent({ expense, setExpenses, show, setShow }) {
         <Button variant="outline-dark" onClick={handleClose}>
           Close
         </Button>
-        <Button variant="danger" onClick={() => deleteExpense(expense.id)}>
+        <Button variant="danger" onClick={() => handleDelete(expense.id)}>
           Yes
         </Button>
       </Modal.Footer>

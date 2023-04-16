@@ -46,7 +46,7 @@ const AddComponent = ({ setExpenses, currentUser }) => {
     setExpenses(response.data);
   };
 
-  const handleAddNewExpense = async (e) => {
+  const handleAddExpense = async (e) => {
     e.preventDefault();
 
     setDate("");
@@ -63,7 +63,7 @@ const AddComponent = ({ setExpenses, currentUser }) => {
 
   return (
     <Container className="my-3">
-      <Form onSubmit={handleAddNewExpense}>
+      <Form onSubmit={handleAddExpense}>
         <Row className="align-items-end" xs={1} md={2} lg={5}>
           <Col className="mt-3">
             <Form.Group>

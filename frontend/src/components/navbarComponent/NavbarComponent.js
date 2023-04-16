@@ -20,7 +20,7 @@ const NavbarComponent = () => {
     }
   }, []);
 
-  const logOut = () => {
+  const handleLogout = () => {
     AuthService.logout();
     setShowModeratorBoard(false);
     setShowAdminBoard(false);
@@ -52,7 +52,11 @@ const NavbarComponent = () => {
             )}
           </Nav>
           {currentUser ? (
-            <Button href="/login" variant="outline-danger" onClick={logOut}>
+            <Button
+              href="/login"
+              variant="outline-danger"
+              onClick={handleLogout}
+            >
               Logout
             </Button>
           ) : (
