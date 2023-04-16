@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
@@ -6,7 +6,10 @@ import DropdownComponent from "../dropdownComponent/DropdownComponent";
 import ExpenseService from "../../services/expenseService";
 
 const AddComponent = ({ setExpenses, currentUser }) => {
-  // const userId = currentUser.id;
+  let userId = 0;
+  if (currentUser !== undefined) {
+    userId = currentUser.id;
+  }
 
   const [date, setDate] = useState("");
   const [title, setTitle] = useState("");
@@ -34,19 +37,14 @@ const AddComponent = ({ setExpenses, currentUser }) => {
     title,
     value,
     category: category.toUpperCase(),
-    userId: 1,
+    userId: userId,
   };
 
-  const reloadData = async (id) => {
-    const response = await ExpenseService.getExpensesByUser(id);
+  const reloadData = async () => {
+    const response = await ExpenseService.getExpensesByUser();
 
     setExpenses(response.data);
   };
-
-  useEffect(() => {
-    const userId = currentUser;
-    console.log(userId);
-  });
 
   const handleAddNewExpense = async (e) => {
     e.preventDefault();
@@ -57,17 +55,10 @@ const AddComponent = ({ setExpenses, currentUser }) => {
     setCategory("");
 
     await ExpenseService.addExpense(newExpense)
-      .then(() => reloadData(1))
+      .then(() => reloadData())
       .then(() => {
         console.log("expense added");
       });
-
-    // await axios
-    //   .post("http://localhost:8080/api/expenses/addExpense", newExpense)
-    //   .then(() => reloadData())
-    //   .then(() => {
-    //     console.log("expense added");
-    //   });
   };
 
   return (

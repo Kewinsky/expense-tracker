@@ -1,20 +1,17 @@
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-import axios from "axios";
+import ExpenseService from "../../services/expenseService";
 
 function ModalComponent({ expense, setExpenses, show, setShow }) {
   const handleClose = () => setShow(false);
 
   const reloadData = async () => {
-    const response = await axios.get(
-      "http://localhost:8080/api/expenses/allExpenses"
-    );
+    const response = await ExpenseService.getExpensesByUser();
     setExpenses(response.data);
   };
 
   const deleteExpense = async (id) => {
-    await axios
-      .delete(`http://localhost:8080/api/expenses/deleteExpense/${id}`)
+    await ExpenseService.deleteExpense(id)
       .then(() => reloadData())
       .then(() => {
         console.log("expense deleted");

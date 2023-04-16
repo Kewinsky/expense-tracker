@@ -7,8 +7,8 @@ const App = () => {
   const [expenses, setExpenses] = useState([]);
   const [currentUser, setCurrentUser] = useState(undefined);
 
-  const getAllExpenses = async (id) => {
-    const response = await ExpenseService.getExpensesByUser(id);
+  const getAllExpenses = async () => {
+    const response = await ExpenseService.getExpensesByUser();
 
     setExpenses(response.data);
   };
@@ -18,7 +18,7 @@ const App = () => {
 
     if (user) {
       setCurrentUser(user);
-      getAllExpenses(user.id);
+      getAllExpenses();
     }
   }, []);
 
@@ -27,7 +27,6 @@ const App = () => {
       expenses={expenses}
       setExpenses={setExpenses}
       currentUser={currentUser}
-      setCurrentUser={setCurrentUser}
     />
   );
 };
