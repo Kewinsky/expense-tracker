@@ -1,5 +1,6 @@
 package com.expense_tracker.models;
 
+import com.expense_tracker.models.enums.ECategory;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,7 +21,8 @@ public class Expense {
 
     private float value;
 
-    private Long categoryId;
+    @Enumerated(EnumType.STRING)
+    private ECategory category;
 
     private String date;
 
