@@ -1,10 +1,13 @@
-import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import DropdownComponent from "../dropdownComponent/DropdownComponent";
-const AddComponent = ({ setExpenses }) => {
+import ExpenseService from "../../services/expenseService";
+
+const AddComponent = ({ setExpenses, currentUser }) => {
+  // const userId = currentUser.id;
+
   const [date, setDate] = useState("");
   const [title, setTitle] = useState("");
   const [value, setValue] = useState("");
@@ -26,14 +29,24 @@ const AddComponent = ({ setExpenses }) => {
     setCategory(e.target.value);
   };
 
-  const newExpense = { date, title, value, category: category.toUpperCase() };
+  const newExpense = {
+    date,
+    title,
+    value,
+    category: category.toUpperCase(),
+    userId: 1,
+  };
 
-  const reloadData = async () => {
-    const response = await axios.get(
-      "http://localhost:8080/api/expenses/allExpenses"
-    );
+  const reloadData = async (id) => {
+    const response = await ExpenseService.getExpensesByUser(id);
+
     setExpenses(response.data);
   };
+
+  useEffect(() => {
+    const userId = currentUser;
+    console.log(userId);
+  });
 
   const handleAddNewExpense = async (e) => {
     e.preventDefault();
@@ -43,12 +56,18 @@ const AddComponent = ({ setExpenses }) => {
     setValue("");
     setCategory("");
 
-    await axios
-      .post("http://localhost:8080/api/expenses/addExpense", newExpense)
-      .then(() => reloadData())
+    await ExpenseService.addExpense(newExpense)
+      .then(() => reloadData(1))
       .then(() => {
         console.log("expense added");
       });
+
+    // await axios
+    //   .post("http://localhost:8080/api/expenses/addExpense", newExpense)
+    //   .then(() => reloadData())
+    //   .then(() => {
+    //     console.log("expense added");
+    //   });
   };
 
   return (

@@ -12,7 +12,12 @@ import TrackerPage from "../pages/trackerPage/TrackerPage";
 import UnauthorizedPage from "../pages/unauthorizedPage/UnauthorizedPage";
 import UpdatePage from "../pages/updatePage/UpdatePage";
 
-export const Router = ({ expenses, setExpenses }) => {
+export const Router = ({
+  expenses,
+  setExpenses,
+  currentUser,
+  setCurrentUser,
+}) => {
   return (
     <Routes>
       <Route
@@ -43,7 +48,12 @@ export const Router = ({ expenses, setExpenses }) => {
         path="/tracker"
         element={
           <MainLayout pageTitle={"Tracker"}>
-            <TrackerPage expenses={expenses} setExpenses={setExpenses} />
+            <TrackerPage
+              expenses={expenses}
+              setExpenses={setExpenses}
+              currentUser={currentUser}
+              setCurrentUser={setCurrentUser}
+            />
           </MainLayout>
         }
       />

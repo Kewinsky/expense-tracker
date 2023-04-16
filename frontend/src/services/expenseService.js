@@ -8,27 +8,27 @@ const getExpenses = () => {
 };
 
 const getExpenseById = (id) => {
-  return axios.get(API_URL + "getExpense/${id}", { headers: authHeader() });
+  return axios.get(API_URL + `getExpense/${id}`, { headers: authHeader() });
 };
 
-const getExpenseByUser = (id) => {
-  return axios.get(API_URL + "getExpenseByUser/${id}", {
+const getExpensesByUser = async (id) => {
+  return await axios.get(API_URL + `getExpensesByUser/${id}`, {
     headers: authHeader(),
   });
 };
 
-const addExpense = (id, expense) => {
+const addExpense = (expense) => {
   return axios.post(API_URL + "addExpense", expense, { headers: authHeader() });
 };
 
 const updateExpense = (id, newExpense) => {
-  return axios.put(API_URL + "updateExpense/${id}", newExpense, {
+  return axios.put(API_URL + `updateExpense/${id}`, newExpense, {
     headers: authHeader(),
   });
 };
 
 const deleteExpense = (id) => {
-  return axios.delete(API_URL + "deleteExpense/${id}", {
+  return axios.delete(API_URL + `deleteExpense/${id}`, {
     headers: authHeader(),
   });
 };
@@ -36,7 +36,7 @@ const deleteExpense = (id) => {
 const ExpenseService = {
   getExpenses,
   getExpenseById,
-  getExpenseByUser,
+  getExpensesByUser,
   addExpense,
   updateExpense,
   deleteExpense,
