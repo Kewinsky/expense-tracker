@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/expenses")
 @CrossOrigin
-@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+@PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
 public class ExpensesController {
 
     @Autowired
@@ -39,7 +39,7 @@ public class ExpensesController {
     String addExpense (@RequestBody Expense expense) {
         userController.getUserById(expense.getUserId());
         expensesRepository.save(expense);
-        return "Expense saved. (" + expense.getId() + " " + expense.getTitle() + ")";
+        return "Expense saved.";
     }
 
     @PutMapping("updateExpense/{id}")
@@ -52,7 +52,7 @@ public class ExpensesController {
                     exp.setCategory(expense.getCategory());
                     exp.setDate(expense.getDate());
                     expensesRepository.save(exp);
-                    return "Expense saved. (" + exp.getId() + " " + exp.getTitle() + ")";
+                    return "Expense updated.";
                 })
                 .orElseThrow(() -> new ExpenseNotFoundException(id));
     }

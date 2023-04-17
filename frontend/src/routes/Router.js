@@ -1,11 +1,9 @@
 import { Routes, Route } from "react-router-dom";
 import MainLayout from "../layouts/MainLayout";
-import AdminPage from "../pages/adminPage/AdminPage";
 import AnalyzerPage from "../pages/analyzerPage/AnalyzerPage";
 import ErrorPage from "../pages/errorPage/ErrorPage";
 import HomePage from "../pages/homePage/HomePage";
 import LoginPage from "../pages/loginPage/LoginPage";
-import ModPage from "../pages/modPage/ModPage";
 import ProfilePage from "../pages/profilePage/ProfilePage";
 import RegisterPage from "../pages/registerPage/RegisterPage";
 import TrackerPage from "../pages/trackerPage/TrackerPage";
@@ -69,22 +67,6 @@ export const Router = ({
         element={
           <MainLayout pageTitle={"Update"}>
             <UpdatePage expenses={expenses} setExpenses={setExpenses} />
-          </MainLayout>
-        }
-      />
-      <Route
-        path="/admin"
-        element={
-          <MainLayout pageTitle={"Admin Page"}>
-            <AdminPage />
-          </MainLayout>
-        }
-      />
-      <Route
-        path="/moderator"
-        element={
-          <MainLayout pageTitle={"Moderator Page"}>
-            <ModPage />
           </MainLayout>
         }
       />

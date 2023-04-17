@@ -1,24 +1,40 @@
 import axios from "axios";
 import { authHeader } from "./authHeader";
 
-const TEST_URL = "http://localhost:8080/api/test/";
+const API_URL = "http://localhost:8080/api/users/";
 
-const getUserBoard = () => {
-  return axios.get(TEST_URL + "user", { headers: authHeader() });
+const getUsers = () => {
+  return axios.get(API_URL + "getUsers", { headers: authHeader() });
 };
 
-const getModeratorBoard = () => {
-  return axios.get(TEST_URL + "mod", { headers: authHeader() });
+const getUserById = (id) => {
+  return axios.get(API_URL + `getUserById/${id}`, { headers: authHeader() });
 };
 
-const getAdminBoard = () => {
-  return axios.get(TEST_URL + "admin", { headers: authHeader() });
+const updateUser = (id, newUser) => {
+  return axios.put(API_URL + `updateUser/${id}`, newUser, {
+    headers: authHeader(),
+  });
+};
+
+const updateUserByAdmin = (id, newUser) => {
+  return axios.put(API_URL + `updateUserByAdmin/${id}`, newUser, {
+    headers: authHeader(),
+  });
+};
+
+const deleteUser = (id) => {
+  return axios.delete(API_URL + `deleteUser/${id}`, {
+    headers: authHeader(),
+  });
 };
 
 const UserService = {
-  getUserBoard,
-  getModeratorBoard,
-  getAdminBoard,
+  getUsers,
+  getUserById,
+  updateUser,
+  updateUserByAdmin,
+  deleteUser,
 };
 
 export default UserService;
