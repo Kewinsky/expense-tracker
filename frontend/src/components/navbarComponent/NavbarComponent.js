@@ -7,12 +7,18 @@ import AuthService from "../../services/authService";
 
 const NavbarComponent = () => {
   const [currentUser, setCurrentUser] = useState(undefined);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
     const user = AuthService.getCurrentUser();
 
     if (user) {
       setCurrentUser(user);
+      const roles = user.roles;
+
+      if (roles.includes("ROLE_ADMIN")) {
+        setIsAdmin(true);
+      }
     }
   }, []);
 
@@ -33,6 +39,11 @@ const NavbarComponent = () => {
               <>
                 <Nav.Link href="/tracker">Tracker</Nav.Link>
                 <Nav.Link href="/analyzer">Analyzer</Nav.Link>
+              </>
+            )}
+            {isAdmin && (
+              <>
+                <Nav.Link href="/usermanagement">User Management</Nav.Link>
               </>
             )}
             {currentUser && (

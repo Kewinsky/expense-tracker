@@ -11,9 +11,7 @@ const ProfilePage = (currentUser, serCurrentUser) => {
     if (!user) {
       navigate("/login");
     }
-
-    console.log(currentUser.currentUser);
-  }, []);
+  });
 
   return (
     <ProfileComponent

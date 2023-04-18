@@ -1,8 +1,11 @@
+import AuthService from "../../services/authService";
 const ProfileComponent = (currentUser, serCurrentUser) => {
+  const user = AuthService.getCurrentUser();
+
   return (
     <div>
-      <p>Username: {currentUser.username}</p>
-      <p>Email: {currentUser.email}</p>
+      <p>Username: {user.username}</p>
+      <p>Email: {user.email}</p>
     </div>
   );
 };
