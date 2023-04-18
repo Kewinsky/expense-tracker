@@ -9,6 +9,7 @@ import RegisterPage from "../pages/registerPage/RegisterPage";
 import TrackerPage from "../pages/trackerPage/TrackerPage";
 import UnauthorizedPage from "../pages/unauthorizedPage/UnauthorizedPage";
 import UpdatePage from "../pages/updatePage/UpdatePage";
+import UserManagementPage from "../pages/userManagementPage/UserManagementPage";
 
 export const Router = ({
   expenses,
@@ -67,6 +68,14 @@ export const Router = ({
         element={
           <MainLayout pageTitle={"Update"}>
             <UpdatePage expenses={expenses} setExpenses={setExpenses} />
+          </MainLayout>
+        }
+      />
+      <Route
+        path="/usermanagement"
+        element={
+          <MainLayout pageTitle={"User Management"}>
+            <UserManagementPage />
           </MainLayout>
         }
       />
