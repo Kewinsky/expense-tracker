@@ -59,7 +59,7 @@ export const Router = ({
         path="/analyzer"
         element={
           <MainLayout pageTitle={"Analyzer"}>
-            <AnalyzerPage />
+            <AnalyzerPage currentUser={currentUser} />
           </MainLayout>
         }
       />
@@ -75,7 +75,7 @@ export const Router = ({
         path="/usermanagement"
         element={
           <MainLayout pageTitle={"User Management"}>
-            <UserManagementPage />
+            <UserManagementPage currentUser={currentUser} />
           </MainLayout>
         }
       />

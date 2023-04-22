@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthService from "../../services/authService";
 import UserService from "../../services/userService";
-import UserTableComponent from "../../components/tableComponent/UserTableComponent";
-const UserManagementPage = () => {
+import TableComponent from "../../components/tableComponent/TableComponent";
+const UserManagementPage = ({ currentUser }) => {
   const [users, setUsers] = useState([]);
 
   const navigate = useNavigate();
@@ -13,7 +13,7 @@ const UserManagementPage = () => {
     setUsers(response.data);
   };
 
-  // TODO: currentUser
+  // TODO: navigate does not work
   useEffect(() => {
     const user = AuthService.getCurrentUser();
     const role = user?.roles || [];
@@ -27,7 +27,7 @@ const UserManagementPage = () => {
     }
   }, []);
 
-  return <UserTableComponent users={users} setUsers={setUsers} />;
+  return <TableComponent records={users} setRecords={setUsers} />;
 };
 
 export default UserManagementPage;

@@ -1,9 +1,8 @@
-import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import AuthService from "../../services/authService";
 const AnalyzerPage = ({ currentUser }) => {
   const navigate = useNavigate();
 
+  // TODO: navigate does not work
   if (!currentUser) {
     navigate("/login");
   }

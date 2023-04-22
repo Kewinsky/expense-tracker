@@ -1,29 +1,32 @@
 import Table from "react-bootstrap/Table";
-import ActionButtonsComponent from "./ActionButtonsComponent";
+import { Button } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
-const TableComponent = ({ expenses, setExpenses }) => {
+const TableComponent = ({ records, setRecords }) => {
   return (
     <Table striped bordered hover size="md">
       <thead>
         <tr>
-          <th>Date</th>
-          <th>Title</th>
-          <th>Value</th>
-          <th>Category</th>
+          <th>Username</th>
+          <th>Email</th>
+          <th>Roles</th>
           <th>Action</th>
         </tr>
       </thead>
       <tbody>
-        {expenses.map((expense) => (
-          <tr key={expense.id}>
-            <td>{expense.date}</td>
-            <td>{expense.title}</td>
-            <td>{expense.value}</td>
-            <td>{expense.category}</td>
-            <ActionButtonsComponent
-              expense={expense}
-              setExpenses={setExpenses}
-            />
+        {records.map((record) => (
+          <tr key={record.id}>
+            <td>{record.username}</td>
+            <td>{record.email}</td>
+            <td>ROLES</td>
+            <td>
+              <Link className="link-dark mx-3">
+                <Button variant="outline-dark">Edit</Button>
+              </Link>
+              <Button variant="outline-dark" type="submit">
+                Delete
+              </Button>
+            </td>
           </tr>
         ))}
       </tbody>

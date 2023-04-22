@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 const TrackerPage = ({ expenses, setExpenses, currentUser }) => {
   const navigate = useNavigate();
 
+  // TODO: navigate does not work
   if (!currentUser) {
     navigate("/login");
   }

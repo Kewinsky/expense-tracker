@@ -1,14 +1,12 @@
-import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 const UnauthorizedPage = ({ currentUser }) => {
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (!currentUser) {
-      navigate("/login");
-    }
-  }, [currentUser, navigate]);
+  // TODO: navigate does not work
+  if (!currentUser) {
+    navigate("/login");
+  }
 
   return (
     <div className="text-center mt-5">
