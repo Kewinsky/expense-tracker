@@ -3,11 +3,11 @@ import Table from "react-bootstrap/Table";
 import ActionButtonsComponents from "./ActionButtonsComponent";
 import "./sortableTableComponent.scss";
 
-const useSortableData = (expenses, config = null) => {
+const useSortableData = (expensesList, config = null) => {
   const [sortConfig, setSortConfig] = useState(config);
 
   const sortedExpenses = useMemo(() => {
-    let sortableExpenses = [...expenses];
+    let sortableExpenses = [...expensesList];
     if (sortConfig !== null) {
       sortableExpenses.sort((a, b) => {
         if (a[sortConfig.key] < b[sortConfig.key]) {
@@ -20,7 +20,7 @@ const useSortableData = (expenses, config = null) => {
       });
     }
     return sortableExpenses;
-  }, [expenses, sortConfig]);
+  }, [expensesList, sortConfig]);
 
   const requestSort = (key) => {
     let direction = "ascending";
@@ -34,11 +34,11 @@ const useSortableData = (expenses, config = null) => {
     setSortConfig({ key, direction });
   };
 
-  return { expenses: sortedExpenses, requestSort, sortConfig };
+  return { sortedExpenses, requestSort, sortConfig };
 };
 
-const SortableTableComponent = (props, setExpenses) => {
-  const { expenses, requestSort, sortConfig } = useSortableData(props.expenses);
+const SortableTableComponent = ({ expenses, setExpenses }) => {
+  const { sortedExpenses, requestSort, sortConfig } = useSortableData(expenses);
   const getClassNamesFor = (name) => {
     if (!sortConfig) {
       return;
@@ -90,7 +90,7 @@ const SortableTableComponent = (props, setExpenses) => {
         </tr>
       </thead>
       <tbody>
-        {expenses.map((expense) => (
+        {sortedExpenses.map((expense) => (
           <tr key={expense.id}>
             <td>{expense.date}</td>
             <td>{expense.title}</td>

@@ -2,7 +2,7 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import ExpenseService from "../../services/expenseService";
 
-function ModalComponent({ expense, setExpenses, show, setShow }) {
+const ModalComponent = ({ expense, setExpenses, show, setShow }) => {
   const handleClose = () => setShow(false);
 
   const reloadData = async () => {
@@ -10,7 +10,6 @@ function ModalComponent({ expense, setExpenses, show, setShow }) {
     setExpenses(response.data);
   };
 
-  //TODO: not working
   const handleDelete = async (id) => {
     await ExpenseService.deleteExpense(id)
       .then(() => reloadData())
@@ -37,6 +36,6 @@ function ModalComponent({ expense, setExpenses, show, setShow }) {
       </Modal.Footer>
     </Modal>
   );
-}
+};
 
 export default ModalComponent;

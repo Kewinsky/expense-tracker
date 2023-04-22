@@ -18,7 +18,7 @@ const UserTableComponent = ({ users, setUsers }) => {
             <td>{user.username}</td>
             <td>{user.email}</td>
             <td>{user.username}</td>
-            <ActionButtonsComponent user={user} setUsers={setUsers} />
+            <ActionButtonsComponent record={user} setRecords={setUsers} />
           </tr>
         ))}
       </tbody>

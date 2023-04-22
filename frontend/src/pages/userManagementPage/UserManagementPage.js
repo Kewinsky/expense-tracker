@@ -16,7 +16,7 @@ const UserManagementPage = () => {
   // TODO: currentUser
   useEffect(() => {
     const user = AuthService.getCurrentUser();
-    const role = user.roles;
+    const role = user?.roles || [];
 
     if (!user) {
       navigate("/login");
@@ -24,9 +24,8 @@ const UserManagementPage = () => {
       navigate("/unauthorized");
     } else {
       getAllUsers();
-      console.log(users);
     }
-  });
+  }, []);
 
   return <UserTableComponent users={users} setUsers={setUsers} />;
 };

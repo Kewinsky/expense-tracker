@@ -1,21 +1,14 @@
-import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import AuthService from "../../services/authService";
+import { useNavigate } from "react-router-dom";
 
-const UnauthorizedPage = (currentUser) => {
+const UnauthorizedPage = ({ currentUser }) => {
   const navigate = useNavigate();
 
-  //TODO: why currentUser undefined
-  // if (!currentUser) {
-  //   navigate("/login");
-  // }
-
   useEffect(() => {
-    const user = AuthService.getCurrentUser();
-    if (!user) {
+    if (!currentUser) {
       navigate("/login");
     }
-  });
+  }, [currentUser, navigate]);
 
   return (
     <div className="text-center mt-5">
