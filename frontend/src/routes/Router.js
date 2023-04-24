@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import MainLayout from "../layouts/MainLayout";
 import AnalyzerPage from "../pages/analyzerPage/AnalyzerPage";
 import ErrorPage from "../pages/errorPage/ErrorPage";
@@ -10,6 +10,7 @@ import TrackerPage from "../pages/trackerPage/TrackerPage";
 import UnauthorizedPage from "../pages/unauthorizedPage/UnauthorizedPage";
 import UpdatePage from "../pages/updatePage/UpdatePage";
 import UserManagementPage from "../pages/userManagementPage/UserManagementPage";
+import ProtectedRoute from "./ProtectedRoute";
 
 export const Router = ({
   expenses,
@@ -59,7 +60,9 @@ export const Router = ({
         path="/analyzer"
         element={
           <MainLayout pageTitle={"Analyzer"}>
-            <AnalyzerPage currentUser={currentUser} />
+            <ProtectedRoute currentUser={currentUser}>
+              <AnalyzerPage />
+            </ProtectedRoute>
           </MainLayout>
         }
       />
@@ -75,7 +78,11 @@ export const Router = ({
         path="/usermanagement"
         element={
           <MainLayout pageTitle={"User Management"}>
-            <UserManagementPage currentUser={currentUser} />
+            {currentUser ? (
+              <UserManagementPage currentUser={currentUser} />
+            ) : (
+              <Navigate to={"/login"} />
+            )}
           </MainLayout>
         }
       />
