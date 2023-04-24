@@ -1,8 +1,22 @@
 import Table from "react-bootstrap/Table";
-import { Button } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import ActionButtonsComponents from "./ActionButtonsComponent";
+import UserService from "../../services/userService";
 
 const TableComponent = ({ records, setRecords }) => {
+  const reloadData = async () => {
+    const response = await UserService.getUsers();
+    setRecords(response.data);
+  };
+
+  const handleDelete = async (id) => {
+    await UserService.deleteUser(id)
+      .then(() => reloadData())
+      .then(() => {
+        console.log("record deleted");
+      })
+      .catch((err) => console.log(err));
+  };
+
   return (
     <Table striped bordered hover size="md">
       <thead>
@@ -18,15 +32,12 @@ const TableComponent = ({ records, setRecords }) => {
           <tr key={record.id}>
             <td>{record.username}</td>
             <td>{record.email}</td>
-            <td>ROLES</td>
-            <td>
-              <Link className="link-dark mx-3">
-                <Button variant="outline-dark">Edit</Button>
-              </Link>
-              <Button variant="outline-dark" type="submit">
-                Delete
-              </Button>
-            </td>
+            <td>{record.roles.map((role) => role.name).join(", ")}</td>
+            <ActionButtonsComponents
+              handleDelete={handleDelete}
+              record={record}
+              setExpenses={setRecords}
+            />
           </tr>
         ))}
       </tbody>

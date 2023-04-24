@@ -1,7 +1,7 @@
 import { Navigate } from "react-router-dom";
 
 const ProtectedRoute = ({ currentUser, children }) => {
-  if (!currentUser) {
+  if (currentUser === undefined) {
     return <Navigate to="/login" replace />;
   }
 

@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 import Table from "react-bootstrap/Table";
 import ActionButtonsComponents from "./ActionButtonsComponent";
 import "./sortableTableComponent.scss";
+import ExpenseService from "../../services/expenseService";
 
 const useSortableData = (expensesList, config = null) => {
   const [sortConfig, setSortConfig] = useState(config);
@@ -38,6 +39,20 @@ const useSortableData = (expensesList, config = null) => {
 };
 
 const SortableTableComponent = ({ expenses, setExpenses }) => {
+  const reloadData = async () => {
+    const response = await ExpenseService.getExpensesByUser();
+    setExpenses(response.data);
+  };
+
+  const handleDelete = async (id) => {
+    await ExpenseService.deleteExpense(id)
+      .then(() => reloadData())
+      .then(() => {
+        console.log("expense deleted");
+      })
+      .catch((err) => console.log(err));
+  };
+
   const { sortedExpenses, requestSort, sortConfig } = useSortableData(expenses);
   const getClassNamesFor = (name) => {
     if (!sortConfig) {
@@ -97,7 +112,8 @@ const SortableTableComponent = ({ expenses, setExpenses }) => {
             <td>{expense.value}</td>
             <td>{expense.category}</td>
             <ActionButtonsComponents
-              expense={expense}
+              handleDelete={handleDelete}
+              record={expense}
               setExpenses={setExpenses}
             />
           </tr>

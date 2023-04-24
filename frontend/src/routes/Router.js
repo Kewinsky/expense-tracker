@@ -48,11 +48,13 @@ export const Router = ({
         path="/tracker"
         element={
           <MainLayout pageTitle={"Tracker"}>
-            <TrackerPage
-              expenses={expenses}
-              setExpenses={setExpenses}
-              currentUser={currentUser}
-            />
+            <ProtectedRoute currentUser={currentUser}>
+              <TrackerPage
+                expenses={expenses}
+                setExpenses={setExpenses}
+                currentUser={currentUser}
+              />
+            </ProtectedRoute>
           </MainLayout>
         }
       />
@@ -61,7 +63,7 @@ export const Router = ({
         element={
           <MainLayout pageTitle={"Analyzer"}>
             <ProtectedRoute currentUser={currentUser}>
-              <AnalyzerPage />
+              <AnalyzerPage currentUser={currentUser} />
             </ProtectedRoute>
           </MainLayout>
         }
@@ -70,7 +72,9 @@ export const Router = ({
         path="/update/:id"
         element={
           <MainLayout pageTitle={"Update"}>
-            <UpdatePage expenses={expenses} setExpenses={setExpenses} />
+            <ProtectedRoute currentUser={currentUser}>
+              <UpdatePage expenses={expenses} setExpenses={setExpenses} />
+            </ProtectedRoute>
           </MainLayout>
         }
       />
@@ -78,11 +82,9 @@ export const Router = ({
         path="/usermanagement"
         element={
           <MainLayout pageTitle={"User Management"}>
-            {currentUser ? (
-              <UserManagementPage currentUser={currentUser} />
-            ) : (
-              <Navigate to={"/login"} />
-            )}
+            <ProtectedRoute currentUser={currentUser}>
+              <UserManagementPage />
+            </ProtectedRoute>
           </MainLayout>
         }
       />
@@ -90,10 +92,12 @@ export const Router = ({
         path="/profile"
         element={
           <MainLayout pageTitle={"Profile Page"}>
-            <ProfilePage
-              currentUser={currentUser}
-              setCurrentUser={setCurrentUser}
-            />
+            <ProtectedRoute currentUser={currentUser}>
+              <ProfilePage
+                currentUser={currentUser}
+                setCurrentUser={setCurrentUser}
+              />
+            </ProtectedRoute>
           </MainLayout>
         }
       />
@@ -101,7 +105,9 @@ export const Router = ({
         path="/unauthorized"
         element={
           <MainLayout pageTitle={"Unauthorized"}>
-            <UnauthorizedPage currentUser={currentUser} />
+            <ProtectedRoute currentUser={currentUser}>
+              <UnauthorizedPage currentUser={currentUser} />
+            </ProtectedRoute>
           </MainLayout>
         }
       />
