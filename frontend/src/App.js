@@ -22,10 +22,11 @@ const App = () => {
 
   useEffect(() => {
     getCurrentUser();
-    getAllExpenses();
+    if (AuthService.getCurrentUser()) {
+      getAllExpenses();
+    }
   }, []);
 
-  console.log(currentUser);
   return (
     <Router
       expenses={expenses}
