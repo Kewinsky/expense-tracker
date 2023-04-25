@@ -1,42 +1,84 @@
+import { useMemo, useState } from "react";
 import Table from "react-bootstrap/Table";
 import ActionButtonsComponents from "./ActionButtonsComponent";
-import UserService from "../../services/userService";
+import "./sortableTableComponent.scss";
 
-const TableComponent = ({ records, setRecords }) => {
-  const reloadData = async () => {
-    const response = await UserService.getUsers();
-    setRecords(response.data);
+const useSortableData = (recordsList, config = null) => {
+  const [sortConfig, setSortConfig] = useState(config);
+
+  const sortedRecords = useMemo(() => {
+    let sortableRecords = [...recordsList];
+    if (sortConfig !== null) {
+      sortableRecords.sort((a, b) => {
+        if (a[sortConfig.key] < b[sortConfig.key]) {
+          return sortConfig.direction === "ascending" ? -1 : 1;
+        }
+        if (a[sortConfig.key] > b[sortConfig.key]) {
+          return sortConfig.direction === "ascending" ? 1 : -1;
+        }
+        return 0;
+      });
+    }
+    return sortableRecords;
+  }, [recordsList, sortConfig]);
+
+  const requestSort = (key) => {
+    let direction = "ascending";
+    if (
+      sortConfig &&
+      sortConfig.key === key &&
+      sortConfig.direction === "ascending"
+    ) {
+      direction = "descending";
+    }
+    setSortConfig({ key, direction });
   };
 
-  const handleDelete = async (id) => {
-    await UserService.deleteUser(id)
-      .then(() => reloadData())
-      .then(() => {
-        console.log("record deleted");
-      })
-      .catch((err) => console.log(err));
+  return { sortedRecords, requestSort, sortConfig };
+};
+
+const TableComponent = ({
+  configLabels,
+  handleUpdate,
+  handleDelete,
+  records,
+}) => {
+  const { sortedRecords, requestSort, sortConfig } = useSortableData(records);
+  const getClassNamesFor = (name) => {
+    if (!sortConfig) {
+      return;
+    }
+    return sortConfig.key === name ? sortConfig.direction : undefined;
   };
 
   return (
     <Table striped bordered hover size="md">
       <thead>
         <tr>
-          <th>Username</th>
-          <th>Email</th>
-          <th>Roles</th>
+          {configLabels.map((label) => (
+            <th>
+              <button
+                type="button"
+                onClick={() => requestSort(label)}
+                className={getClassNamesFor(label)}
+              >
+                {label.charAt(0).toUpperCase() + label.slice(1)}
+              </button>
+            </th>
+          ))}
           <th>Action</th>
         </tr>
       </thead>
       <tbody>
-        {records.map((record) => (
+        {sortedRecords.map((record) => (
           <tr key={record.id}>
-            <td>{record.username}</td>
-            <td>{record.email}</td>
-            <td>{record.roles.map((role) => role.name).join(", ")}</td>
+            {configLabels.map((label) => (
+              <td>{record[label]}</td>
+            ))}
             <ActionButtonsComponents
+              handleUpdate={handleUpdate}
               handleDelete={handleDelete}
               record={record}
-              setExpenses={setRecords}
             />
           </tr>
         ))}

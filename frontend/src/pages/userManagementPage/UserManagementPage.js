@@ -1,10 +1,16 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import AuthService from "../../services/authService";
 import UserService from "../../services/userService";
 import TableComponent from "../../components/tableComponent/TableComponent";
 const UserManagementPage = ({ currentUser }) => {
+  const configLabels = ["username", "email", "roles"];
+  const handleUpdate = "/update/user";
+
   const [users, setUsers] = useState([]);
+
+  const simplifiedUsers = users.map((user) => {
+    return { ...user, roles: user.roles.map((role) => role.name).join(", ") };
+  });
 
   const navigate = useNavigate();
 
@@ -13,21 +19,29 @@ const UserManagementPage = ({ currentUser }) => {
     setUsers(response.data);
   };
 
-  // TODO: navigate does not work
-  useEffect(() => {
-    const user = AuthService.getCurrentUser();
-    const role = user?.roles || [];
+  const handleDelete = async (id) => {
+    await UserService.deleteUser(id)
+      .then(() => getAllUsers())
+      .catch((err) => console.log(err.response.data));
+  };
 
-    if (!user) {
-      navigate("/login");
-    } else if (!role.includes("ROLE_ADMIN")) {
+  useEffect(() => {
+    if (!currentUser?.roles.includes("ROLE_ADMIN")) {
       navigate("/unauthorized");
     } else {
       getAllUsers();
     }
   }, []);
 
-  return <TableComponent records={users} setRecords={setUsers} />;
+  return (
+    <TableComponent
+      handleUpdate={handleUpdate}
+      handleDelete={handleDelete}
+      configLabels={configLabels}
+      records={simplifiedUsers}
+      setRecords={setUsers}
+    />
+  );
 };
 
 export default UserManagementPage;
