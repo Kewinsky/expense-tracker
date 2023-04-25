@@ -1,4 +1,4 @@
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import MainLayout from "../layouts/MainLayout";
 import AnalyzerPage from "../pages/analyzerPage/AnalyzerPage";
 import ErrorPage from "../pages/errorPage/ErrorPage";
@@ -8,9 +8,10 @@ import ProfilePage from "../pages/profilePage/ProfilePage";
 import RegisterPage from "../pages/registerPage/RegisterPage";
 import TrackerPage from "../pages/trackerPage/TrackerPage";
 import UnauthorizedPage from "../pages/unauthorizedPage/UnauthorizedPage";
-import UpdatePage from "../pages/updatePage/UpdatePage";
 import UserManagementPage from "../pages/userManagementPage/UserManagementPage";
 import ProtectedRoute from "./ProtectedRoute";
+import UpdateExpensePage from "../pages/updatePage/UpdateExpensePage";
+import UpdateUserPage from "../pages/updatePage/UpdateUserPage";
 
 export const Router = ({
   expenses,
@@ -69,11 +70,24 @@ export const Router = ({
         }
       />
       <Route
-        path="/update/:id"
+        path="/update/expense/:id"
         element={
-          <MainLayout pageTitle={"Update"}>
+          <MainLayout pageTitle={"Update Expense"}>
             <ProtectedRoute currentUser={currentUser}>
-              <UpdatePage expenses={expenses} setExpenses={setExpenses} />
+              <UpdateExpensePage
+                expenses={expenses}
+                setExpenses={setExpenses}
+              />
+            </ProtectedRoute>
+          </MainLayout>
+        }
+      />
+      <Route
+        path="/update/user/:id"
+        element={
+          <MainLayout pageTitle={"Update User"}>
+            <ProtectedRoute currentUser={currentUser}>
+              <UpdateUserPage />
             </ProtectedRoute>
           </MainLayout>
         }
@@ -83,7 +97,7 @@ export const Router = ({
         element={
           <MainLayout pageTitle={"User Management"}>
             <ProtectedRoute currentUser={currentUser}>
-              <UserManagementPage />
+              <UserManagementPage currentUser={currentUser} />
             </ProtectedRoute>
           </MainLayout>
         }

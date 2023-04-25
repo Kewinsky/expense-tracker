@@ -4,7 +4,7 @@ import DropdownComponent from "../dropdownComponent/DropdownComponent";
 import { useParams } from "react-router-dom";
 import { useState } from "react";
 import ExpenseService from "../../services/expenseService";
-const UpdateComponent = ({ expenses, setExpenses }) => {
+const UpdateExpenseComponent = ({ expenses, setExpenses }) => {
   const { id } = useParams();
   const expenseId = id;
 
@@ -50,9 +50,6 @@ const UpdateComponent = ({ expenses, setExpenses }) => {
     e.preventDefault();
     await ExpenseService.updateExpense(expenseId, updatedExpense)
       .then(() => reloadData())
-      .then(() => {
-        console.log("expense updated");
-      })
       .then((window.location = "/tracker"));
   };
 
@@ -108,4 +105,4 @@ const UpdateComponent = ({ expenses, setExpenses }) => {
   );
 };
 
-export default UpdateComponent;
+export default UpdateExpenseComponent;
