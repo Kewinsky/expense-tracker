@@ -50,7 +50,6 @@ public class UserController {
                 .map(user1 -> {
                     user1.setUsername(user.getUsername());
                     user1.setEmail(user.getEmail());
-                    user1.setPassword(user.getPassword());
                     user1.setRoles(user.getRoles());
                     userRepository.save(user1);
                     return "User updated.";

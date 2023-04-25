@@ -1,9 +1,9 @@
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { useParams } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import UserService from "../../services/userService";
-import MultiselectComponent from "../multiselectComponent/MultiselectComponent";
+import AuthService from "../../services/authService";
 const UpdateUserComponent = ({ users, setUsers }) => {
   const { id } = useParams();
   const userId = id;
@@ -14,7 +14,7 @@ const UpdateUserComponent = ({ users, setUsers }) => {
 
   const [username, setUsername] = useState(selectedUser.username);
   const [email, setEmail] = useState(selectedUser.email);
-  const [roles, setRoles] = useState(selectedUser.roles);
+  const [isModerator, setIsModerator] = useState(false);
 
   const handleInputUsername = (e) => {
     setUsername(e.target.value);
@@ -24,14 +24,14 @@ const UpdateUserComponent = ({ users, setUsers }) => {
     setEmail(e.target.value);
   };
 
-  const handleInputRoles = (e) => {
-    setRoles(e.target.value);
+  const handleToggleSwitch = (e) => {
+    setIsModerator(e.target.checked);
   };
 
   const updatedUser = {
     username,
     email,
-    roles,
+    isModerator,
   };
 
   const reloadData = async () => {
@@ -46,14 +46,22 @@ const UpdateUserComponent = ({ users, setUsers }) => {
       .then((window.location = "/usermanagement"));
   };
 
+  useEffect(() => {
+    const roles = selectedUser.roles.map((role) => role.name);
+    if (roles.includes("ROLE_MODERATOR")) {
+      setIsModerator(true);
+    }
+  }, []);
+
   return (
-    <Form onSubmit={handleUpdateUser}>
+    // <Form onSubmit={handleUpdateUser}>
+    <Form>
       <Form.Group className="mt-3">
         <Form.Label>Username</Form.Label>
         <Form.Control
           onChange={handleInputUsername}
           value={username}
-          type="date"
+          type="text"
         />
       </Form.Group>
 
@@ -68,8 +76,13 @@ const UpdateUserComponent = ({ users, setUsers }) => {
       </Form.Group>
 
       <Form.Group className="mt-3">
-        <Form.Label>Roles</Form.Label>
-        <MultiselectComponent onChange={handleInputRoles} value={roles} />
+        <Form.Check
+          type="switch"
+          id="custom-switch"
+          label="Moderator"
+          onChange={handleToggleSwitch}
+          checked={isModerator}
+        />
       </Form.Group>
 
       <Form.Group className="mt-3">
@@ -82,7 +95,7 @@ const UpdateUserComponent = ({ users, setUsers }) => {
           variant="outline-dark"
           type="submit"
           className="w-100"
-          href="/tracker"
+          href="/usermanagement"
         >
           Cancel
         </Button>
