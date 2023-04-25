@@ -4,11 +4,9 @@ import { useParams } from "react-router-dom";
 import { useState } from "react";
 import UserService from "../../services/userService";
 import MultiselectComponent from "../multiselectComponent/MultiselectComponent";
-const UpdateUserComponent = ({ reloadData, users }) => {
+const UpdateUserComponent = ({ users, setUsers }) => {
   const { id } = useParams();
   const userId = id;
-
-  console.log(users);
 
   const selectedUser = users.find((item) => {
     return item.id === parseInt(userId);
@@ -34,6 +32,11 @@ const UpdateUserComponent = ({ reloadData, users }) => {
     username,
     email,
     roles,
+  };
+
+  const reloadData = async () => {
+    const response = await UserService.getUsers();
+    setUsers(response.data);
   };
 
   const handleUpdateUser = async (e) => {
