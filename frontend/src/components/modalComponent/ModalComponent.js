@@ -1,22 +1,8 @@
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-import ExpenseService from "../../services/expenseService";
 
-function ModalComponent({ expense, setExpenses, show, setShow }) {
+const ModalComponent = ({ handleDelete, record, show, setShow }) => {
   const handleClose = () => setShow(false);
-
-  const reloadData = async () => {
-    const response = await ExpenseService.getExpensesByUser();
-    setExpenses(response.data);
-  };
-
-  const handleDelete = async (id) => {
-    await ExpenseService.deleteExpense(id)
-      .then(() => reloadData())
-      .then(() => {
-        console.log("expense deleted");
-      });
-  };
 
   return (
     <Modal show={show} onHide={handleClose}>
@@ -30,12 +16,12 @@ function ModalComponent({ expense, setExpenses, show, setShow }) {
         <Button variant="outline-dark" onClick={handleClose}>
           Close
         </Button>
-        <Button variant="danger" onClick={() => handleDelete(expense.id)}>
+        <Button variant="danger" onClick={() => handleDelete(record.id)}>
           Yes
         </Button>
       </Modal.Footer>
     </Modal>
   );
-}
+};
 
 export default ModalComponent;

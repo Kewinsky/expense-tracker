@@ -6,24 +6,24 @@ import Navbar from "react-bootstrap/Navbar";
 import AuthService from "../../services/authService";
 
 const NavbarComponent = () => {
-  const [showModeratorBoard, setShowModeratorBoard] = useState(false);
-  const [showAdminBoard, setShowAdminBoard] = useState(false);
   const [currentUser, setCurrentUser] = useState(undefined);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
     const user = AuthService.getCurrentUser();
 
     if (user) {
       setCurrentUser(user);
-      setShowModeratorBoard(user.roles.includes("ROLE_MODERATOR"));
-      setShowAdminBoard(user.roles.includes("ROLE_ADMIN"));
+      const roles = user.roles;
+
+      if (roles.includes("ROLE_ADMIN")) {
+        setIsAdmin(true);
+      }
     }
   }, []);
 
   const handleLogout = () => {
     AuthService.logout();
-    setShowModeratorBoard(false);
-    setShowAdminBoard(false);
     setCurrentUser(undefined);
   };
 
@@ -41,10 +41,11 @@ const NavbarComponent = () => {
                 <Nav.Link href="/analyzer">Analyzer</Nav.Link>
               </>
             )}
-            {showModeratorBoard && (
-              <Nav.Link href="/moderator">Moderator Board</Nav.Link>
+            {isAdmin && (
+              <>
+                <Nav.Link href="/usermanagement">User Management</Nav.Link>
+              </>
             )}
-            {showAdminBoard && <Nav.Link href="/admin">Admin Board</Nav.Link>}
             {currentUser && (
               <Nav.Link href="/profile">
                 {currentUser.username}'s Board

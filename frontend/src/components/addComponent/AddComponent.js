@@ -54,11 +54,7 @@ const AddComponent = ({ setExpenses, currentUser }) => {
     setValue("");
     setCategory("");
 
-    await ExpenseService.addExpense(newExpense)
-      .then(() => reloadData())
-      .then(() => {
-        console.log("expense added");
-      });
+    await ExpenseService.addExpense(newExpense).then(() => reloadData());
   };
 
   return (

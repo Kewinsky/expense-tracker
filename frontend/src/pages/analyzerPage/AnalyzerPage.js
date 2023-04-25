@@ -1,4 +1,4 @@
-const AnalyzerPage = () => {
+const AnalyzerPage = ({ currentUser }) => {
   return <div>Analyzer Page</div>;
 };
 

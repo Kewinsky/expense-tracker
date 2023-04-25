@@ -1,28 +1,84 @@
+import { useMemo, useState } from "react";
 import Table from "react-bootstrap/Table";
-import ActionButtonsComponent from "./ActionButtonsComponent";
+import ActionButtonsComponents from "./ActionButtonsComponent";
+import "./sortableTableComponent.scss";
 
-const TableComponent = ({ expenses, setExpenses }) => {
+const useSortableData = (recordsList, config = null) => {
+  const [sortConfig, setSortConfig] = useState(config);
+
+  const sortedRecords = useMemo(() => {
+    let sortableRecords = [...recordsList];
+    if (sortConfig !== null) {
+      sortableRecords.sort((a, b) => {
+        if (a[sortConfig.key] < b[sortConfig.key]) {
+          return sortConfig.direction === "ascending" ? -1 : 1;
+        }
+        if (a[sortConfig.key] > b[sortConfig.key]) {
+          return sortConfig.direction === "ascending" ? 1 : -1;
+        }
+        return 0;
+      });
+    }
+    return sortableRecords;
+  }, [recordsList, sortConfig]);
+
+  const requestSort = (key) => {
+    let direction = "ascending";
+    if (
+      sortConfig &&
+      sortConfig.key === key &&
+      sortConfig.direction === "ascending"
+    ) {
+      direction = "descending";
+    }
+    setSortConfig({ key, direction });
+  };
+
+  return { sortedRecords, requestSort, sortConfig };
+};
+
+const TableComponent = ({
+  configLabels,
+  handleUpdate,
+  handleDelete,
+  records,
+}) => {
+  const { sortedRecords, requestSort, sortConfig } = useSortableData(records);
+  const getClassNamesFor = (name) => {
+    if (!sortConfig) {
+      return;
+    }
+    return sortConfig.key === name ? sortConfig.direction : undefined;
+  };
+
   return (
     <Table striped bordered hover size="md">
       <thead>
         <tr>
-          <th>Date</th>
-          <th>Title</th>
-          <th>Value</th>
-          <th>Category</th>
+          {configLabels.map((label) => (
+            <th>
+              <button
+                type="button"
+                onClick={() => requestSort(label)}
+                className={getClassNamesFor(label)}
+              >
+                {label.charAt(0).toUpperCase() + label.slice(1)}
+              </button>
+            </th>
+          ))}
           <th>Action</th>
         </tr>
       </thead>
       <tbody>
-        {expenses.map((expense) => (
-          <tr key={expense.id}>
-            <td>{expense.date}</td>
-            <td>{expense.title}</td>
-            <td>{expense.value}</td>
-            <td>{expense.category}</td>
-            <ActionButtonsComponent
-              expense={expense}
-              setExpenses={setExpenses}
+        {sortedRecords.map((record) => (
+          <tr key={record.id}>
+            {configLabels.map((label) => (
+              <td>{record[label]}</td>
+            ))}
+            <ActionButtonsComponents
+              handleUpdate={handleUpdate}
+              handleDelete={handleDelete}
+              record={record}
             />
           </tr>
         ))}

@@ -13,11 +13,16 @@ const App = () => {
     setExpenses(response.data);
   };
 
-  useEffect(() => {
+  const getCurrentUser = () => {
     const user = AuthService.getCurrentUser();
-
     if (user) {
       setCurrentUser(user);
+    }
+  };
+
+  useEffect(() => {
+    getCurrentUser();
+    if (AuthService.getCurrentUser()) {
       getAllExpenses();
     }
   }, []);
@@ -26,7 +31,8 @@ const App = () => {
     <Router
       expenses={expenses}
       setExpenses={setExpenses}
-      currentUser={currentUser}
+      currentUser={AuthService.getCurrentUser()}
+      setCurrentUser={setCurrentUser}
     />
   );
 };
