@@ -3,7 +3,6 @@ import Form from "react-bootstrap/Form";
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import UserService from "../../services/userService";
-import AuthService from "../../services/authService";
 const UpdateUserComponent = ({ users, setUsers }) => {
   const { id } = useParams();
   const userId = id;
@@ -15,6 +14,9 @@ const UpdateUserComponent = ({ users, setUsers }) => {
   const [username, setUsername] = useState(selectedUser.username);
   const [email, setEmail] = useState(selectedUser.email);
   const [isModerator, setIsModerator] = useState(false);
+  const [roles, setRoles] = useState(
+    selectedUser.roles.map((role) => role.name)
+  );
 
   const handleInputUsername = (e) => {
     setUsername(e.target.value);
@@ -26,12 +28,18 @@ const UpdateUserComponent = ({ users, setUsers }) => {
 
   const handleToggleSwitch = (e) => {
     setIsModerator(e.target.checked);
+    if (roles.includes("ROLE_MODERATOR")) {
+      roles.splice(roles.indexOf("ROLE_MODERATOR"), 1);
+    } else {
+      roles.push("ROLE_MODERATOR");
+    }
+    setRoles(roles);
   };
 
   const updatedUser = {
     username,
     email,
-    isModerator,
+    role: roles,
   };
 
   const reloadData = async () => {
@@ -41,9 +49,10 @@ const UpdateUserComponent = ({ users, setUsers }) => {
 
   const handleUpdateUser = async (e) => {
     e.preventDefault();
-    await UserService.updateUser(userId, updatedUser)
+    await UserService.updateUserByAdmin(userId, updatedUser)
       .then(() => reloadData())
-      .then((window.location = "/usermanagement"));
+      .then((window.location = "/usermanagement"))
+      .catch((err) => console.log(err.response.data));
   };
 
   useEffect(() => {
@@ -54,8 +63,7 @@ const UpdateUserComponent = ({ users, setUsers }) => {
   }, []);
 
   return (
-    // <Form onSubmit={handleUpdateUser}>
-    <Form>
+    <Form onSubmit={handleUpdateUser}>
       <Form.Group className="mt-3">
         <Form.Label>Username</Form.Label>
         <Form.Control
