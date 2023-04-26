@@ -26,6 +26,7 @@ public class UserController {
         return userRepository.findAll();
     }
 
+    @PreAuthorize("hasRole('USER') or hasRole('USER')")
     @GetMapping(path="/getUserById/{id}")
     User getUserById(@PathVariable Long id) {
         return userRepository.findById(id)
