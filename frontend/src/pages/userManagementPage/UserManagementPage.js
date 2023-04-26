@@ -31,7 +31,7 @@ const UserManagementPage = ({ currentUser }) => {
     } else {
       getAllUsers();
     }
-  }, []);
+  }, [currentUser?.roles, navigate]);
 
   return (
     <TableComponent

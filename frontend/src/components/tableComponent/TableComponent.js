@@ -56,7 +56,7 @@ const TableComponent = ({
       <thead>
         <tr>
           {configLabels.map((label) => (
-            <th>
+            <th key={label}>
               <button
                 type="button"
                 onClick={() => requestSort(label)}
@@ -73,7 +73,7 @@ const TableComponent = ({
         {sortedRecords.map((record) => (
           <tr key={record.id}>
             {configLabels.map((label) => (
-              <td>{record[label]}</td>
+              <td key={configLabels.indexOf(label)}>{record[label]}</td>
             ))}
             <ActionButtonsComponents
               handleUpdate={handleUpdate}
