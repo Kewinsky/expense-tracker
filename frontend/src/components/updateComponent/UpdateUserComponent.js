@@ -60,7 +60,7 @@ const UpdateUserComponent = ({ users, setUsers }) => {
     if (roles.includes("ROLE_MODERATOR")) {
       setIsModerator(true);
     }
-  }, []);
+  }, [selectedUser.roles]);
 
   return (
     <Form onSubmit={handleUpdateUser}>
