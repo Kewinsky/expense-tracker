@@ -10,6 +10,7 @@ const AddComponent = ({ setExpenses, currentUser }) => {
   if (currentUser !== undefined) {
     userId = currentUser.id;
   }
+  const options = ["FOOD", "TRANSPORT", "UTILITIES"];
 
   const [date, setDate] = useState("");
   const [title, setTitle] = useState("");
@@ -103,6 +104,7 @@ const AddComponent = ({ setExpenses, currentUser }) => {
               <DropdownComponent
                 value={category}
                 onChange={handleSelectCategory}
+                options={options}
               />
             </Form.Group>
           </Col>
