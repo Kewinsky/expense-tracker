@@ -12,6 +12,7 @@ import UserManagementPage from "../pages/userManagementPage/UserManagementPage";
 import ProtectedRoute from "./ProtectedRoute";
 import UpdateExpensePage from "../pages/updatePage/UpdateExpensePage";
 import UpdateUserPage from "../pages/updatePage/UpdateUserPage";
+import UpdateAdminPage from "../pages/updatePage/UpdateAdminPage";
 
 export const Router = ({
   expenses,
@@ -87,7 +88,20 @@ export const Router = ({
         element={
           <MainLayout pageTitle={"Update User"}>
             <ProtectedRoute currentUser={currentUser}>
-              <UpdateUserPage />
+              <UpdateUserPage
+                currentUser={currentUser}
+                setCurrentUser={setCurrentUser}
+              />
+            </ProtectedRoute>
+          </MainLayout>
+        }
+      />
+      <Route
+        path="/update/userByAdmin/:id"
+        element={
+          <MainLayout pageTitle={"Update User"}>
+            <ProtectedRoute currentUser={currentUser}>
+              <UpdateAdminPage />
             </ProtectedRoute>
           </MainLayout>
         }
@@ -107,10 +121,7 @@ export const Router = ({
         element={
           <MainLayout pageTitle={"Profile Page"}>
             <ProtectedRoute currentUser={currentUser}>
-              <ProfilePage
-                currentUser={currentUser}
-                setCurrentUser={setCurrentUser}
-              />
+              <ProfilePage currentUser={currentUser} />
             </ProtectedRoute>
           </MainLayout>
         }
