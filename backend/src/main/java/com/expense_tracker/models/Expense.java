@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @Data
 @NoArgsConstructor
@@ -24,7 +25,7 @@ public class Expense {
     @Enumerated(EnumType.STRING)
     private ECategory category;
 
-    private String date;
+    private LocalDate date;
 
     private Long userId;
 }
