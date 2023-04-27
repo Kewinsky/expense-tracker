@@ -1,6 +1,8 @@
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { useState } from "react";
+import UserService from "../../services/userService";
+import AuthService from "../../services/authService";
 const UpdateUserByUserComponent = ({ currentUser, setCurrentUser }) => {
   const [username, setUsername] = useState(currentUser.username);
   const [email, setEmail] = useState(currentUser.email);
@@ -21,9 +23,10 @@ const UpdateUserByUserComponent = ({ currentUser, setCurrentUser }) => {
   const handleUpdateUser = async (e) => {
     e.preventDefault();
     console.log(updatedUser);
-    // await UserService.updateUser(currentUser.id, updatedUser)
-    //   .then((window.location = "/profile"))
-    //   .catch((err) => console.log(err.response.data));
+    await UserService.updateUser(currentUser.id, updatedUser)
+      .then(AuthService.logout())
+      .then((window.location = "/login"))
+      .catch((err) => console.log(err.response.data));
   };
 
   return (
