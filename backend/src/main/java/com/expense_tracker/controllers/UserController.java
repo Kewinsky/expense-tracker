@@ -8,6 +8,7 @@ import com.expense_tracker.repositories.UserRepository;
 import com.expense_tracker.utils.RoleConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -26,14 +27,14 @@ public class UserController {
         return userRepository.findAll();
     }
 
-    @PreAuthorize("hasRole('USER') or hasRole('USER')")
+    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR')")
     @GetMapping(path="/getUserById/{id}")
     User getUserById(@PathVariable Long id) {
         return userRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException(id));
     }
 
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR')")
     @PutMapping("updateUser/{id}")
     String updateUser(@RequestBody User user,
                          @PathVariable Long id){
@@ -42,11 +43,10 @@ public class UserController {
                 .map(user1 -> {
                     user1.setUsername(user.getUsername());
                     user1.setEmail(user.getEmail());
-                    user1.setPassword(user.getPassword());
                     userRepository.save(user1);
                     return "User updated.";
                 })
-                .orElseThrow(() -> new ExpenseNotFoundException(id));
+                .orElseThrow(() -> new UserNotFoundException(id));
     }
 
     @PutMapping("updateUserByAdmin/{id}")
