@@ -12,7 +12,7 @@ import UserManagementPage from "../pages/userManagementPage/UserManagementPage";
 import ProtectedRoute from "./ProtectedRoute";
 import UpdateExpensePage from "../pages/updatePage/UpdateExpensePage";
 import UpdateUserPage from "../pages/updatePage/UpdateUserPage";
-import UpdateUserByUserPage from "../pages/updatePage/UpdateUserByUserPage";
+import UpdateAdminPage from "../pages/updatePage/UpdateAdminPage";
 
 export const Router = ({
   expenses,
@@ -88,7 +88,7 @@ export const Router = ({
         element={
           <MainLayout pageTitle={"Update User"}>
             <ProtectedRoute currentUser={currentUser}>
-              <UpdateUserByUserPage
+              <UpdateUserPage
                 currentUser={currentUser}
                 setCurrentUser={setCurrentUser}
               />
@@ -101,7 +101,7 @@ export const Router = ({
         element={
           <MainLayout pageTitle={"Update User"}>
             <ProtectedRoute currentUser={currentUser}>
-              <UpdateUserPage />
+              <UpdateAdminPage />
             </ProtectedRoute>
           </MainLayout>
         }
