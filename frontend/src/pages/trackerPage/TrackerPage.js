@@ -1,11 +1,20 @@
+import { useState } from "react";
 import AddComponent from "../../components/addComponent/AddComponent";
+import FilteringComponent from "../../components/filteringComponent/FilteringComponent";
 import SeparatorComponent from "../../components/separatorComponent/SeparatorComponent";
 import TableComponent from "../../components/tableComponent/TableComponent";
 import ExpenseService from "../../services/expenseService";
 
-const TrackerPage = ({ expenses, setExpenses, currentUser }) => {
+const TrackerPage = ({
+  expenses,
+  setExpenses,
+  currentUser,
+  expenseCategories,
+}) => {
   const configLabels = ["date", "title", "value", "category"];
   const handleUpdate = "/update/expense";
+
+  const [filteredExpenses, setFilteredExpenses] = useState([]);
 
   const reloadData = async () => {
     const response = await ExpenseService.getExpensesByUser();
@@ -24,13 +33,19 @@ const TrackerPage = ({ expenses, setExpenses, currentUser }) => {
         expenses={expenses}
         setExpenses={setExpenses}
         currentUser={currentUser}
+        categories={expenseCategories}
+      />
+      <FilteringComponent
+        expenses={expenses}
+        setFilteredExpenses={setFilteredExpenses}
+        categories={expenseCategories}
       />
       <SeparatorComponent />
       <TableComponent
         handleUpdate={handleUpdate}
         handleDelete={handleDelete}
         configLabels={configLabels}
-        records={expenses}
+        records={filteredExpenses}
         setRecords={setExpenses}
       />
     </>

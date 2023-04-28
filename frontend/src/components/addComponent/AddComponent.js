@@ -5,12 +5,11 @@ import Form from "react-bootstrap/Form";
 import DropdownComponent from "../dropdownComponent/DropdownComponent";
 import ExpenseService from "../../services/expenseService";
 
-const AddComponent = ({ setExpenses, currentUser }) => {
+const AddComponent = ({ setExpenses, currentUser, categories }) => {
   let userId = 0;
   if (currentUser !== undefined) {
     userId = currentUser.id;
   }
-  const options = ["FOOD", "TRANSPORT", "UTILITIES"];
 
   const [date, setDate] = useState("");
   const [title, setTitle] = useState("");
@@ -104,7 +103,8 @@ const AddComponent = ({ setExpenses, currentUser }) => {
               <DropdownComponent
                 value={category}
                 onChange={handleSelectCategory}
-                options={options}
+                options={categories}
+                placeholder={"Select category"}
               />
             </Form.Group>
           </Col>

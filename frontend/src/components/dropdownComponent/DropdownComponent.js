@@ -1,13 +1,15 @@
 import Form from "react-bootstrap/Form";
 
-const DropdownComponent = ({ value, onChange, options }) => {
+const DropdownComponent = ({ value, onChange, options, placeholder }) => {
   return (
     <Form.Select required onChange={onChange} value={value}>
       <option value="" defaultValue disabled>
-        Select category
+        {placeholder}
       </option>
       {options.map((option) => (
-        <option value={option}>{option}</option>
+        <option key={option} value={option}>
+          {option}
+        </option>
       ))}
     </Form.Select>
   );
