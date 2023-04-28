@@ -19,6 +19,7 @@ export const Router = ({
   setExpenses,
   currentUser,
   setCurrentUser,
+  expenseCategories,
 }) => {
   return (
     <Routes>
@@ -55,6 +56,7 @@ export const Router = ({
                 expenses={expenses}
                 setExpenses={setExpenses}
                 currentUser={currentUser}
+                expenseCategories={expenseCategories}
               />
             </ProtectedRoute>
           </MainLayout>
@@ -78,6 +80,7 @@ export const Router = ({
               <UpdateExpensePage
                 expenses={expenses}
                 setExpenses={setExpenses}
+                expenseCategories={expenseCategories}
               />
             </ProtectedRoute>
           </MainLayout>

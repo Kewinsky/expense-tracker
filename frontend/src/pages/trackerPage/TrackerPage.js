@@ -5,9 +5,13 @@ import SeparatorComponent from "../../components/separatorComponent/SeparatorCom
 import TableComponent from "../../components/tableComponent/TableComponent";
 import ExpenseService from "../../services/expenseService";
 
-const TrackerPage = ({ expenses, setExpenses, currentUser }) => {
+const TrackerPage = ({
+  expenses,
+  setExpenses,
+  currentUser,
+  expenseCategories,
+}) => {
   const configLabels = ["date", "title", "value", "category"];
-  const categories = ["FOOD", "TRANSPORT", "UTILITIES"];
   const handleUpdate = "/update/expense";
 
   const [filteredExpenses, setFilteredExpenses] = useState([]);
@@ -29,12 +33,12 @@ const TrackerPage = ({ expenses, setExpenses, currentUser }) => {
         expenses={expenses}
         setExpenses={setExpenses}
         currentUser={currentUser}
-        categories={categories}
+        categories={expenseCategories}
       />
       <FilteringComponent
         expenses={expenses}
         setFilteredExpenses={setFilteredExpenses}
-        categories={categories}
+        categories={expenseCategories}
       />
       <SeparatorComponent />
       <TableComponent
