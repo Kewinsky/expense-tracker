@@ -8,7 +8,20 @@ import "../multiselectComponent/multiselectComponent.scss";
 import { expenseFilter } from "../../helpers/expenseFilter";
 
 const FilteringComponent = ({ expenses, categories, setFilteredExpenses }) => {
-  const months = ["January", "February", "March", "April", "May"];
+  const months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
   const currentMonth = new Date();
 
   const [category, setCategory] = useState(["ALL"]);
