@@ -1,32 +1,20 @@
-import { useEffect, useState } from "react";
 import DropdownComponent from "../dropdownComponent/DropdownComponent";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { Col, Container, Row } from "react-bootstrap";
 import MultiselectComponent from "../multiselectComponent/MultiselectComponent";
+import { useEffect } from "react";
 import "../multiselectComponent/multiselectComponent.scss";
-import { expenseFilter } from "../../helpers/expenseFilter";
 
-const FilteringComponent = ({ expenses, categories, setFilteredExpenses }) => {
-  const months = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
-  const currentMonth = new Date();
-
-  const [category, setCategory] = useState(["ALL"]);
-  const [month, setMonth] = useState(months[currentMonth.getMonth()]);
-
+const FilteringComponent = ({
+  categories,
+  month,
+  setMonth,
+  category,
+  setCategory,
+  months,
+  filterExpenses,
+}) => {
   const handleSelectMonth = (e) => {
     setMonth(e.target.value);
   };
@@ -37,23 +25,10 @@ const FilteringComponent = ({ expenses, categories, setFilteredExpenses }) => {
     );
   };
 
-  const filterExpenses = () => {
-    const filteredExpenses = expenseFilter(
-      expenses,
-      months.indexOf(month),
-      category
-    );
-    setFilteredExpenses(filteredExpenses);
-  };
-
   const handleFiltering = (e) => {
     e.preventDefault();
     filterExpenses();
   };
-
-  useEffect(() => {
-    filterExpenses();
-  }, []);
 
   return (
     <Container className="my-3">
