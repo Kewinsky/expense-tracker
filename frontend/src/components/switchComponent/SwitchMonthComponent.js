@@ -5,7 +5,7 @@ import {
 } from "react-icons/bs";
 import { Link } from "react-router-dom";
 
-export const SwitchMonthComponent = ({ months, month, setMonth }) => {
+const SwitchMonthComponent = ({ months, month, setMonth }) => {
   const handleRightButton = () => {
     if (month < 11) {
       month = month + 1;
@@ -31,3 +31,5 @@ export const SwitchMonthComponent = ({ months, month, setMonth }) => {
     </div>
   );
 };
+
+export default SwitchMonthComponent;
