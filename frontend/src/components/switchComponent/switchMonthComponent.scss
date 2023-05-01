@@ -1,0 +1,16 @@
+@import "../../utils/theme.scss";
+
+.switch-container {
+  display: flex;
+  margin: 1rem;
+  justify-content: center;
+}
+
+.switch-button {
+  height: 2rem;
+}
+
+.month-title {
+  width: 150px;
+  text-align: center;
+}
