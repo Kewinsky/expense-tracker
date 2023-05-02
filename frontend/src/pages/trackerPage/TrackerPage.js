@@ -11,21 +11,8 @@ const TrackerPage = ({
   setExpenses,
   currentUser,
   expenseCategories,
+  months,
 }) => {
-  const months = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
   const configLabels = ["date", "title", "value", "category"];
   const handleUpdate = "/update/expense";
   const currentDate = new Date();

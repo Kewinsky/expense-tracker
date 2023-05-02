@@ -15,6 +15,21 @@ const App = () => {
     "SAVINGS",
   ];
 
+  const months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+
   const [expenses, setExpenses] = useState([]);
   const [currentUser, setCurrentUser] = useState(undefined);
 
@@ -45,6 +60,7 @@ const App = () => {
       currentUser={AuthService.getCurrentUser()}
       setCurrentUser={setCurrentUser}
       expenseCategories={expenseCategories}
+      months={months}
     />
   );
 };
