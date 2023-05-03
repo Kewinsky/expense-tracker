@@ -4,12 +4,26 @@ import {
   BsFillArrowRightCircleFill,
 } from "react-icons/bs";
 import { Link } from "react-router-dom";
+import { getSavedSum, sumAllByMonth } from "../../helpers/analyzerMethods";
 
-const SwitchMonthComponent = ({ months, month, setMonth }) => {
+const SwitchMonthComponent = ({
+  expenses,
+  months,
+  month,
+  setMonth,
+  setOutcome,
+  setPreviousOutcome,
+  setSavings,
+  setPreviousSavings,
+}) => {
   const handleRightButton = () => {
     if (month < 11) {
       month = month + 1;
       setMonth(month);
+      setOutcome(sumAllByMonth(expenses, month));
+      setPreviousOutcome(sumAllByMonth(expenses, month - 1));
+      setSavings(getSavedSum(expenses, month));
+      setPreviousSavings(getSavedSum(expenses, month - 1));
     }
   };
 
@@ -17,6 +31,10 @@ const SwitchMonthComponent = ({ months, month, setMonth }) => {
     if (month > 0) {
       month = month - 1;
       setMonth(month);
+      setOutcome(sumAllByMonth(expenses, month));
+      setPreviousOutcome(sumAllByMonth(expenses, month - 1));
+      setSavings(getSavedSum(expenses, month));
+      setPreviousSavings(getSavedSum(expenses, month - 1));
     }
   };
   return (

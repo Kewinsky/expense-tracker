@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SwitchMonthComponent from "../../components/switchComponent/SwitchMonthComponent";
 import SummaryComponent from "../../components/summaryComponent/SummaryComponent";
 import SeparatorComponent from "../../components/separatorComponent/SeparatorComponent";
@@ -11,11 +11,18 @@ import { Chart as ChartJS } from "chart.js/auto";
 import UtilitiesComponent from "../../components/utilitiesComponent/UtilitiesComponent";
 import { Col, Container, Row } from "react-bootstrap";
 import "./analyzerPage.scss";
+import { getSavedSum, sumAllByMonth } from "../../helpers/analyzerMethods";
 
-const AnalyzerPage = ({ months }) => {
+const AnalyzerPage = ({ expenses, months }) => {
   const currentDate = new Date();
-  const [month, setMonth] = useState(0);
 
+  // summary info
+  const [outcome, setOutcome] = useState(0);
+  const [previousOutcome, setPreviousOutcome] = useState(0);
+  const [savings, setSavings] = useState(0);
+  const [previousSavings, setPreviousSavings] = useState(0);
+
+  const [month, setMonth] = useState(currentDate.getMonth());
   const [userData, setUserData] = useState({
     labels: exampleData.map((item) => item.category),
     datasets: [
@@ -26,15 +33,32 @@ const AnalyzerPage = ({ months }) => {
     ],
   });
 
+  useEffect(() => {
+    setOutcome(sumAllByMonth(expenses, month));
+    setPreviousOutcome(sumAllByMonth(expenses, month - 1));
+    setSavings(getSavedSum(expenses, month));
+    setPreviousSavings(getSavedSum(expenses, month - 1));
+  });
+
   return (
     <>
       <SwitchMonthComponent
+        expenses={expenses}
         month={month}
         setMonth={setMonth}
         months={months}
         currentDate={currentDate}
+        setOutcome={setOutcome}
+        setPreviousOutcome={setPreviousOutcome}
+        setSavings={setSavings}
+        setPreviousSavings={setPreviousSavings}
       />
-      <SummaryComponent />
+      <SummaryComponent
+        outcome={outcome}
+        previousOutcome={previousOutcome}
+        savings={savings}
+        previousSavings={previousSavings}
+      />
       <SeparatorComponent />
       <Container>
         <Row className="justify-content-center">
