@@ -116,7 +116,7 @@ const AnalyzerPage = ({ expenses, months }) => {
             <CategoriesSummaryComponent expenses={expenses} month={month} />
           </Col>
           <Col className="col-12 col-lg-6 p-4">
-            <UtilitiesComponent />
+            <UtilitiesComponent expenses={expenses} month={month} />
           </Col>
           <Col className="col-12 col-lg-6 p-4">
             <NoteComponent />

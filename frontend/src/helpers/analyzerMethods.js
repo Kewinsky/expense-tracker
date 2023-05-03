@@ -42,9 +42,7 @@ const sumUtilities = (items, month) => {
     gas: 0,
     water: 0,
     rent: 0,
-    internet: 0,
     subscribtion: 0,
-    other: 0,
   };
 
   for (let i = 0; i < items.length; i++) {
@@ -54,20 +52,16 @@ const sumUtilities = (items, month) => {
     const dataMonth = date.getMonth();
 
     if (month === null || dataMonth === month) {
-      if (title.includes("electricity")) {
+      if (title.includes("Electricity")) {
         sumByTitle.electricity += value;
-      } else if (title.includes("gas")) {
+      } else if (title.includes("Gas")) {
         sumByTitle.gas += value;
-      } else if (title.includes("water")) {
+      } else if (title.includes("Water")) {
         sumByTitle.water += value;
-      } else if (title.includes("rent")) {
+      } else if (title.includes("Rent")) {
         sumByTitle.rent += value;
-      } else if (title.includes("internet")) {
-        sumByTitle.internet += value;
-      } else if (title.includes("subscribtion")) {
+      } else if (title.includes("Subscribtion")) {
         sumByTitle.subscribtion += value;
-      } else {
-        sumByTitle.other += value;
       }
     }
   }
