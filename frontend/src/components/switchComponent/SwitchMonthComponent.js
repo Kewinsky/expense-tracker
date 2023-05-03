@@ -15,6 +15,7 @@ const SwitchMonthComponent = ({
   setPreviousOutcome,
   setSavings,
   setPreviousSavings,
+  filterExpenses,
 }) => {
   const handleRightButton = () => {
     if (month < 11) {
@@ -24,6 +25,7 @@ const SwitchMonthComponent = ({
       setPreviousOutcome(sumAllByMonth(expenses, month - 1));
       setSavings(getSavedSum(expenses, month));
       setPreviousSavings(getSavedSum(expenses, month - 1));
+      filterExpenses(month);
     }
   };
 
@@ -35,6 +37,7 @@ const SwitchMonthComponent = ({
       setPreviousOutcome(sumAllByMonth(expenses, month - 1));
       setSavings(getSavedSum(expenses, month));
       setPreviousSavings(getSavedSum(expenses, month - 1));
+      filterExpenses(month);
     }
   };
   return (

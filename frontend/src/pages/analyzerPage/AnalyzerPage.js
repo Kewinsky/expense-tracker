@@ -12,6 +12,7 @@ import UtilitiesComponent from "../../components/utilitiesComponent/UtilitiesCom
 import { Col, Container, Row } from "react-bootstrap";
 import "./analyzerPage.scss";
 import { getSavedSum, sumAllByMonth } from "../../helpers/analyzerMethods";
+import { expenseFilter } from "../../helpers/expenseFilter";
 
 const AnalyzerPage = ({ expenses, months }) => {
   const currentDate = new Date();
@@ -23,7 +24,20 @@ const AnalyzerPage = ({ expenses, months }) => {
   const [previousSavings, setPreviousSavings] = useState(0);
 
   const [month, setMonth] = useState(currentDate.getMonth());
-  const [userData, setUserData] = useState({
+  const [filteredExpenses, setFilteredExpenses] = useState([]);
+
+  // charts data
+  const [pieChartData, setPieChartData] = useState({
+    labels: filteredExpenses.map((item) => item.category),
+    datasets: [
+      {
+        label: "Expenses",
+        data: filteredExpenses.map((data) => data.value),
+      },
+    ],
+  });
+
+  const [lineChartData, setLineChartData] = useState({
     labels: exampleData.map((item) => item.category),
     datasets: [
       {
@@ -33,12 +47,43 @@ const AnalyzerPage = ({ expenses, months }) => {
     ],
   });
 
+  const mountPieChartData = (items, label) => {
+    if (items.length) {
+      setPieChartData({
+        labels: items.map((item) => item.category),
+        datasets: [
+          {
+            label: label,
+            data: items.map((data) => data.value),
+            backgroundColor: [
+              "#35A3EB",
+              "#FF6383",
+              "#4BC0C0",
+              "#FF9E40",
+              "#9966FE",
+              "#FFCD56",
+              "#C8CBCF",
+              "#FFD6C4",
+            ],
+          },
+        ],
+      });
+    }
+  };
+
+  const filterExpenses = (month) => {
+    const response = expenseFilter(expenses, month, "ALL");
+    setFilteredExpenses(response);
+    mountPieChartData(response, "Expenses");
+  };
+
   useEffect(() => {
+    filterExpenses(month);
     setOutcome(sumAllByMonth(expenses, month));
     setPreviousOutcome(sumAllByMonth(expenses, month - 1));
     setSavings(getSavedSum(expenses, month));
     setPreviousSavings(getSavedSum(expenses, month - 1));
-  });
+  }, [expenses]);
 
   return (
     <>
@@ -52,6 +97,8 @@ const AnalyzerPage = ({ expenses, months }) => {
         setPreviousOutcome={setPreviousOutcome}
         setSavings={setSavings}
         setPreviousSavings={setPreviousSavings}
+        filterExpenses={filterExpenses}
+        setFilteredExpenses={setFilteredExpenses}
       />
       <SummaryComponent
         outcome={outcome}
@@ -63,7 +110,7 @@ const AnalyzerPage = ({ expenses, months }) => {
       <Container>
         <Row className="justify-content-center">
           <Col className="col-12 col-lg-6 p-4">
-            <LineChartComponent chartData={userData} />
+            <LineChartComponent chartData={lineChartData} />
           </Col>
           <Col className="col-12 col-lg-6 p-4">
             <CategoriesSummaryComponent />
@@ -75,7 +122,7 @@ const AnalyzerPage = ({ expenses, months }) => {
             <NoteComponent />
           </Col>
           <Col className="col-12 col-lg-6 p-4">
-            <PieChartComponent chartData={userData} />
+            <PieChartComponent chartData={pieChartData} />
           </Col>
         </Row>
       </Container>
