@@ -113,7 +113,7 @@ const AnalyzerPage = ({ expenses, months }) => {
             <LineChartComponent chartData={lineChartData} />
           </Col>
           <Col className="col-12 col-lg-6 p-4">
-            <CategoriesSummaryComponent />
+            <CategoriesSummaryComponent expenses={expenses} month={month} />
           </Col>
           <Col className="col-12 col-lg-6 p-4">
             <UtilitiesComponent />
