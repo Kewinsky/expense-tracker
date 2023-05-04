@@ -69,7 +69,7 @@ export const Router = ({
         element={
           <MainLayout pageTitle={"Analyzer"}>
             <ProtectedRoute currentUser={currentUser}>
-              <AnalyzerPage months={months} />
+              <AnalyzerPage expenses={expenses} months={months} />
             </ProtectedRoute>
           </MainLayout>
         }

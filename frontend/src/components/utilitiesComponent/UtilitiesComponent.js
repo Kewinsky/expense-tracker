@@ -1,13 +1,14 @@
 import RecordComponent from "../categoriesSummaryComponent/RecordComponent";
-const UtilitiesComponent = () => {
+import { sumUtilities } from "../../helpers/analyzerMethods";
+const UtilitiesComponent = ({ expenses, month }) => {
+  const array = sumUtilities(expenses, month);
+
   return (
     <>
       <h4>Utilities</h4>
-      <RecordComponent title={"Gas"} value={100} />
-      <RecordComponent title={"Water"} value={100} />
-      <RecordComponent title={"Electricity"} value={100} />
-      <RecordComponent title={"Fee"} value={100} />
-      <RecordComponent title={"Raty"} value={100} />
+      {array.map((item) => (
+        <RecordComponent title={item.title.toUpperCase()} value={item.value} />
+      ))}
     </>
   );
 };
