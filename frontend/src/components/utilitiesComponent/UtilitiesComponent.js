@@ -2,7 +2,6 @@ import RecordComponent from "../categoriesSummaryComponent/RecordComponent";
 import { sumUtilities } from "../../helpers/analyzerMethods";
 const UtilitiesComponent = ({ expenses, month }) => {
   const array = sumUtilities(expenses, month);
-  console.log(array);
 
   return (
     <>

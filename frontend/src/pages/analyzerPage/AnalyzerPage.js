@@ -6,16 +6,21 @@ import LineChartComponent from "../../components/lineChartComponent/LineChartCom
 import PieChartComponent from "../../components/pieChartComponent/PieChartComponent";
 import NoteComponent from "../../components/noteComponent/NoteComponent";
 import CategoriesSummaryComponent from "../../components/categoriesSummaryComponent/CategoriesSummaryComponent";
-import { exampleData } from "../../helpers/exampleData";
 import { Chart as ChartJS } from "chart.js/auto";
 import UtilitiesComponent from "../../components/utilitiesComponent/UtilitiesComponent";
 import { Col, Container, Row } from "react-bootstrap";
 import "./analyzerPage.scss";
-import { getSavedSum, sumAllByMonth } from "../../helpers/analyzerMethods";
+import {
+  getSavedSum,
+  sumAllByMonth,
+  sumAllMonths,
+} from "../../helpers/analyzerMethods";
 import { expenseFilter } from "../../helpers/expenseFilter";
 
 const AnalyzerPage = ({ expenses, months }) => {
   const currentDate = new Date();
+  const totalSumByMonth = sumAllMonths(expenses);
+  console.log(totalSumByMonth);
 
   // summary info
   const [outcome, setOutcome] = useState(0);
@@ -38,11 +43,11 @@ const AnalyzerPage = ({ expenses, months }) => {
   });
 
   const [lineChartData, setLineChartData] = useState({
-    labels: exampleData.map((item) => item.category),
+    labels: totalSumByMonth.map((item) => item.month),
     datasets: [
       {
-        label: "Expenses",
-        data: exampleData.map((data) => data.value),
+        label: "Total Year",
+        data: totalSumByMonth.map((data) => data.total),
       },
     ],
   });
@@ -71,10 +76,25 @@ const AnalyzerPage = ({ expenses, months }) => {
     }
   };
 
+  const mountLineChart = (items, label) => {
+    if (items.length) {
+      setLineChartData({
+        labels: totalSumByMonth.map((item) => item.month),
+        datasets: [
+          {
+            label: label,
+            data: totalSumByMonth.map((data) => data.total),
+          },
+        ],
+      });
+    }
+  };
+
   const filterExpenses = (month) => {
     const response = expenseFilter(expenses, month, "ALL");
     setFilteredExpenses(response);
     mountPieChartData(response, "Expenses");
+    mountLineChart(expenses, "Total of Year");
   };
 
   useEffect(() => {

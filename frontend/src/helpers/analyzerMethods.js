@@ -1,3 +1,20 @@
+const sumAllMonths = (items) => {
+  const result = [];
+  const groupedByMonth = items.reduce((acc, expense) => {
+    const date = new Date(expense.date);
+    const monthName = date.toLocaleString("default", { month: "long" }); // Get month name
+    if (!acc[monthName]) {
+      acc[monthName] = 0; // Initialize sum for this month to 0
+      result.push({ month: monthName, total: 0 }); // Add a new object to the result array
+    }
+    acc[monthName] += expense.value;
+    const index = result.findIndex((obj) => obj.month === monthName);
+    result[index].total = acc[monthName]; // Update the total for this month in the result array
+    return acc;
+  }, {});
+  return result;
+};
+
 const sumAllByMonth = (items, month) => {
   let sum = 0;
   const array = items.filter((item) => {
@@ -85,6 +102,7 @@ const getSavedSum = (items, month) => {
 };
 
 export {
+  sumAllMonths,
   sumAllByMonth,
   sumByCategory,
   getTopCategories,
