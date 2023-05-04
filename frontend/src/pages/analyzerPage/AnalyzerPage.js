@@ -14,13 +14,13 @@ import {
   getSavedSum,
   sumAllByMonth,
   sumAllMonths,
+  getSumCategories,
 } from "../../helpers/analyzerMethods";
 import { expenseFilter } from "../../helpers/expenseFilter";
 
 const AnalyzerPage = ({ expenses, months }) => {
   const currentDate = new Date();
   const totalSumByMonth = sumAllMonths(expenses);
-  console.log(totalSumByMonth);
 
   // summary info
   const [outcome, setOutcome] = useState(0);
@@ -93,7 +93,7 @@ const AnalyzerPage = ({ expenses, months }) => {
   const filterExpenses = (month) => {
     const response = expenseFilter(expenses, month, "ALL");
     setFilteredExpenses(response);
-    mountPieChartData(response, "Expenses");
+    mountPieChartData(getSumCategories(response, month), "Expenses");
     mountLineChart(expenses, "Total of Year");
   };
 

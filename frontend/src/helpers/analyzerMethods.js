@@ -47,6 +47,12 @@ const sumByCategory = (items, month) => {
   return result;
 };
 
+const getSumCategories = (items, month) => {
+  const sumByCategoryData = sumByCategory(items, month);
+  const sortedData = sumByCategoryData.sort((a, b) => b.value - a.value);
+  return sortedData;
+};
+
 const getTopCategories = (items, month) => {
   const sumByCategoryData = sumByCategory(items, month);
   const sortedData = sumByCategoryData.sort((a, b) => b.value - a.value);
@@ -104,6 +110,7 @@ const getSavedSum = (items, month) => {
 export {
   sumAllMonths,
   sumAllByMonth,
+  getSumCategories,
   sumByCategory,
   getTopCategories,
   sumUtilities,
