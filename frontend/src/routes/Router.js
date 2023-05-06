@@ -27,7 +27,7 @@ export const Router = ({
       <Route
         path="/"
         element={
-          <MainLayout pageTitle={"Home"}>
+          <MainLayout pageTitle={"Spendee | Home"}>
             <HomePage />
           </MainLayout>
         }
@@ -35,7 +35,7 @@ export const Router = ({
       <Route
         path="/register"
         element={
-          <MainLayout pageTitle={"Register"}>
+          <MainLayout pageTitle={"Spendee | Register"}>
             <RegisterPage />
           </MainLayout>
         }
@@ -43,7 +43,7 @@ export const Router = ({
       <Route
         path="/login"
         element={
-          <MainLayout pageTitle={"Login"}>
+          <MainLayout pageTitle={"Spendee | Login"}>
             <LoginPage />
           </MainLayout>
         }
@@ -51,7 +51,7 @@ export const Router = ({
       <Route
         path="/tracker"
         element={
-          <MainLayout pageTitle={"Tracker"}>
+          <MainLayout pageTitle={"Spendee | Tracker"}>
             <ProtectedRoute currentUser={currentUser}>
               <TrackerPage
                 expenses={expenses}
@@ -67,7 +67,7 @@ export const Router = ({
       <Route
         path="/analyzer"
         element={
-          <MainLayout pageTitle={"Analyzer"}>
+          <MainLayout pageTitle={"Spendee | Analyzer"}>
             <ProtectedRoute currentUser={currentUser}>
               <AnalyzerPage expenses={expenses} months={months} />
             </ProtectedRoute>
@@ -77,7 +77,7 @@ export const Router = ({
       <Route
         path="/update/expense/:id"
         element={
-          <MainLayout pageTitle={"Update Expense"}>
+          <MainLayout pageTitle={"Spendee | Update Expense"}>
             <ProtectedRoute currentUser={currentUser}>
               <UpdateExpensePage
                 expenses={expenses}
@@ -91,7 +91,7 @@ export const Router = ({
       <Route
         path="/update/user/:id"
         element={
-          <MainLayout pageTitle={"Update User"}>
+          <MainLayout pageTitle={"Spendee | Update User"}>
             <ProtectedRoute currentUser={currentUser}>
               <UpdateUserPage
                 currentUser={currentUser}
@@ -104,7 +104,7 @@ export const Router = ({
       <Route
         path="/update/userByAdmin/:id"
         element={
-          <MainLayout pageTitle={"Update User"}>
+          <MainLayout pageTitle={"Spendee | Update User"}>
             <ProtectedRoute currentUser={currentUser}>
               <UpdateAdminPage />
             </ProtectedRoute>
@@ -114,7 +114,7 @@ export const Router = ({
       <Route
         path="/usermanagement"
         element={
-          <MainLayout pageTitle={"User Management"}>
+          <MainLayout pageTitle={"Spendee | User Management"}>
             <ProtectedRoute currentUser={currentUser}>
               <UserManagementPage currentUser={currentUser} />
             </ProtectedRoute>
@@ -124,7 +124,7 @@ export const Router = ({
       <Route
         path="/profile"
         element={
-          <MainLayout pageTitle={"Profile Page"}>
+          <MainLayout pageTitle={"Spendee | Profile"}>
             <ProtectedRoute currentUser={currentUser}>
               <ProfilePage currentUser={currentUser} />
             </ProtectedRoute>
