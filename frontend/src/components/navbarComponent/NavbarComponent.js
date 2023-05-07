@@ -48,7 +48,7 @@ const NavbarComponent = () => {
             )}
             {currentUser && (
               <Nav.Link href="/profile">
-                {currentUser.username}'s Board
+                {currentUser.username}'s Profile
               </Nav.Link>
             )}
           </Nav>
