@@ -128,7 +128,7 @@ export const Router = ({
         element={
           <MainLayout pageTitle={"Spendee | Profile"}>
             <ProtectedRoute currentUser={currentUser}>
-              <ProfilePage currentUser={currentUser} />
+              <ProfilePage currentUser={currentUser} theme={theme} />
             </ProtectedRoute>
           </MainLayout>
         }

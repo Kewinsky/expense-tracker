@@ -145,6 +145,6 @@ input:focus {
 }
 
 .darkTheme {
-  background-color: $dark;
-  color: white;
+  background-color: $dark !important;
+  color: white !important;
 }

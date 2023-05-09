@@ -3,6 +3,7 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { Col, Container, Row } from "react-bootstrap";
 import MultiselectComponent from "../multiselectComponent/MultiselectComponent";
+import ThemeModeService from "../../services/themeModeService";
 import "../multiselectComponent/multiselectComponent.scss";
 
 const FilteringComponent = ({
@@ -16,6 +17,8 @@ const FilteringComponent = ({
   theme,
 }) => {
   const buttonTheme = theme === "dark" ? "light" : "dark";
+  const inputTheme =
+    ThemeModeService.getCurrentThemeMode() === "dark" ? "darkTheme" : "";
 
   const handleSelectMonth = (e) => {
     setMonth(e.target.value);
@@ -44,6 +47,7 @@ const FilteringComponent = ({
                 onChange={handleSelectMonth}
                 options={months}
                 placeholder={"Select month"}
+                theme={inputTheme}
               />
             </Form.Group>
           </Col>
@@ -56,7 +60,7 @@ const FilteringComponent = ({
                 multiple
                 value={category}
                 onChange={handleSelectCategory}
-                className="setHeight"
+                className={`setHeight ${inputTheme}`}
               >
                 <option key="ALL" value="ALL" defaultValue>
                   ALL
@@ -72,7 +76,7 @@ const FilteringComponent = ({
           <Col className="mt-3">
             <Form.Group>
               <Button
-                variant={`${buttonTheme}`}
+                variant={`outline-${buttonTheme}`}
                 type="submit"
                 className="w-100"
               >

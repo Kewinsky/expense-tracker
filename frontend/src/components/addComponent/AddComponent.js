@@ -4,8 +4,12 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import DropdownComponent from "../dropdownComponent/DropdownComponent";
 import ExpenseService from "../../services/expenseService";
+import ThemeModeService from "../../services/themeModeService";
 
 const AddComponent = ({ setExpenses, currentUser, categories }) => {
+  const inputTheme =
+    ThemeModeService.getCurrentThemeMode() === "dark" ? "darkTheme" : "";
+
   let userId = 0;
   if (currentUser !== undefined) {
     userId = currentUser.id;
@@ -69,6 +73,7 @@ const AddComponent = ({ setExpenses, currentUser, categories }) => {
                 type="date"
                 value={date}
                 onChange={handleInputDate}
+                className={inputTheme}
               />
             </Form.Group>
           </Col>
@@ -81,6 +86,7 @@ const AddComponent = ({ setExpenses, currentUser, categories }) => {
                 placeholder="Multisport subscription"
                 value={title}
                 onChange={handleInputTitle}
+                className={inputTheme}
               />
             </Form.Group>
           </Col>
@@ -94,6 +100,7 @@ const AddComponent = ({ setExpenses, currentUser, categories }) => {
                 placeholder="100,00"
                 value={value}
                 onChange={handleInputValue}
+                className={inputTheme}
               />
             </Form.Group>
           </Col>
@@ -105,6 +112,7 @@ const AddComponent = ({ setExpenses, currentUser, categories }) => {
                 onChange={handleSelectCategory}
                 options={categories}
                 placeholder={"Select category"}
+                theme={inputTheme}
               />
             </Form.Group>
           </Col>
