@@ -2,7 +2,7 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { useState } from "react";
 import UserService from "../../services/userService";
-import AuthService from "../../services/authService";
+
 const UpdateUserComponent = ({ currentUser, setCurrentUser }) => {
   const [username, setUsername] = useState(currentUser.username);
   const [email, setEmail] = useState(currentUser.email);

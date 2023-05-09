@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import Table from "react-bootstrap/Table";
 import ActionButtonsComponents from "./ActionButtonsComponent";
+import SpinnerComponent from "../spinnerComponent/SpinnerComponent";
 import "./sortableTableComponent.scss";
 
 const useSortableData = (recordsList, config = null) => {
@@ -50,6 +51,10 @@ const TableComponent = ({
     }
     return sortConfig.key === name ? sortConfig.direction : undefined;
   };
+
+  if (!records.length) {
+    return <SpinnerComponent />;
+  }
 
   return (
     <Table striped bordered hover size="md">

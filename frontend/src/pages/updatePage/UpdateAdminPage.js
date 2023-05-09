@@ -13,10 +13,6 @@ const UpdateAdminPage = () => {
     getAllUsers();
   }, []);
 
-  if (!users.length) {
-    return <div>Loading...</div>;
-  }
-
   return (
     <div className="d-flex justify-content-center">
       <div className="m-5 w-50">
