@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import Router from "./routes/Router";
 import ExpenseService from "./services/expenseService";
 import AuthService from "./services/authService";
+import ThemeModeComponent from "./components/themeModeComponent/ThemeModeComponent";
+import ThemeModeService from "./services/themeModeService";
 
 const App = () => {
   const expenseCategories = [
@@ -30,6 +32,7 @@ const App = () => {
     "December",
   ];
 
+  const [theme, setTheme] = useState("light");
   const [expenses, setExpenses] = useState([]);
   const [currentUser, setCurrentUser] = useState(undefined);
 
@@ -46,7 +49,34 @@ const App = () => {
     }
   };
 
+  const handleToggleSwitch = () => {
+    const newTheme = theme === "light" ? "dark" : "light";
+    setTheme(newTheme);
+    ThemeModeService.setThemeMode(newTheme);
+    switchThemes(newTheme);
+  };
+
+  const switchThemes = (theme) => {
+    if (theme === "dark") {
+      document.body.style.color = "white";
+      document.body.style.backgroundColor = "#212529";
+    } else {
+      document.body.style.color = "black";
+      document.body.style.backgroundColor = "white";
+    }
+  };
+
+  const getCurrentTheme = () => {
+    const storedTheme = ThemeModeService.getCurrentThemeMode();
+    if (storedTheme) {
+      setTheme(storedTheme);
+      ThemeModeService.setThemeMode(storedTheme);
+      switchThemes(storedTheme);
+    }
+  };
+
   useEffect(() => {
+    getCurrentTheme();
     getCurrentUser();
     if (AuthService.getCurrentUser()) {
       getAllExpenses();
@@ -54,14 +84,21 @@ const App = () => {
   }, []);
 
   return (
-    <Router
-      expenses={expenses}
-      setExpenses={setExpenses}
-      currentUser={AuthService.getCurrentUser()}
-      setCurrentUser={setCurrentUser}
-      expenseCategories={expenseCategories}
-      months={months}
-    />
+    <>
+      <ThemeModeComponent
+        theme={theme}
+        handleToggleSwitch={handleToggleSwitch}
+      />
+      <Router
+        expenses={expenses}
+        setExpenses={setExpenses}
+        currentUser={AuthService.getCurrentUser()}
+        setCurrentUser={setCurrentUser}
+        expenseCategories={expenseCategories}
+        months={months}
+        theme={theme}
+      />
+    </>
   );
 };
 export default App;

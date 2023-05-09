@@ -5,6 +5,8 @@ import {
 } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import { getSavedSum, sumAllByMonth } from "../../helpers/analyzerMethods";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleArrowRight } from "@fortawesome/free-solid-svg-icons";
 
 const SwitchMonthComponent = ({
   expenses,
@@ -16,7 +18,10 @@ const SwitchMonthComponent = ({
   setSavings,
   setPreviousSavings,
   filterExpenses,
+  theme,
 }) => {
+  const reversedTheme = theme === "dark" ? "light" : "dark";
+
   const handleRightButton = () => {
     if (month < 11) {
       month = month + 1;
@@ -42,12 +47,12 @@ const SwitchMonthComponent = ({
   };
   return (
     <div className="switch-container">
-      <Link variant="outline-dark" onClick={handleLeftButton}>
-        <BsFillArrowLeftCircleFill size={28} color="#212529" />
+      <Link className={`link-${reversedTheme}`} onClick={handleLeftButton}>
+        <BsFillArrowLeftCircleFill size={28} />
       </Link>
       <h5 className="month-title">{months[month]}</h5>
-      <Link variant="outline-dark" onClick={handleRightButton}>
-        <BsFillArrowRightCircleFill size={28} color="#212529" />
+      <Link className={`link-${reversedTheme}`} onClick={handleRightButton}>
+        <BsFillArrowRightCircleFill size={28} />
       </Link>
     </div>
   );

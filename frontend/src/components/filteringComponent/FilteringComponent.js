@@ -3,7 +3,6 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { Col, Container, Row } from "react-bootstrap";
 import MultiselectComponent from "../multiselectComponent/MultiselectComponent";
-import { useEffect } from "react";
 import "../multiselectComponent/multiselectComponent.scss";
 
 const FilteringComponent = ({
@@ -14,7 +13,10 @@ const FilteringComponent = ({
   setCategory,
   months,
   filterExpenses,
+  theme,
 }) => {
+  const buttonTheme = theme === "dark" ? "light" : "dark";
+
   const handleSelectMonth = (e) => {
     setMonth(e.target.value);
   };
@@ -69,7 +71,11 @@ const FilteringComponent = ({
           </Col>
           <Col className="mt-3">
             <Form.Group>
-              <Button variant="outline-dark" type="submit" className="w-100">
+              <Button
+                variant={`${buttonTheme}`}
+                type="submit"
+                className="w-100"
+              >
                 Filter
               </Button>
             </Form.Group>

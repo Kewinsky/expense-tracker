@@ -3,6 +3,7 @@ import Table from "react-bootstrap/Table";
 import ActionButtonsComponents from "./ActionButtonsComponent";
 import SpinnerComponent from "../spinnerComponent/SpinnerComponent";
 import "./sortableTableComponent.scss";
+import { Button } from "react-bootstrap";
 
 const useSortableData = (recordsList, config = null) => {
   const [sortConfig, setSortConfig] = useState(config);
@@ -43,7 +44,10 @@ const TableComponent = ({
   handleUpdate,
   handleDelete,
   records,
+  theme,
 }) => {
+  const buttonTheme = theme === "dark" ? "light" : "dark";
+
   const { sortedRecords, requestSort, sortConfig } = useSortableData(records);
   const getClassNamesFor = (name) => {
     if (!sortConfig) {
@@ -57,18 +61,19 @@ const TableComponent = ({
   }
 
   return (
-    <Table striped bordered hover size="md">
+    <Table striped bordered hover size="md" variant={theme}>
       <thead>
         <tr>
           {configLabels.map((label) => (
             <th key={label}>
-              <button
+              <Button
                 type="button"
                 onClick={() => requestSort(label)}
                 className={getClassNamesFor(label)}
+                variant={`outline-${buttonTheme}`}
               >
                 {label.charAt(0).toUpperCase() + label.slice(1)}
-              </button>
+              </Button>
             </th>
           ))}
           <th>Action</th>
@@ -84,6 +89,7 @@ const TableComponent = ({
               handleUpdate={handleUpdate}
               handleDelete={handleDelete}
               record={record}
+              theme={buttonTheme}
             />
           </tr>
         ))}

@@ -1,10 +1,10 @@
 import LoginComponent from "../../components/loginComponent/LoginComponent";
 
-const LoginPage = () => {
+const LoginPage = ({ theme }) => {
   return (
     <div className="d-flex justify-content-center">
       <div className="m-5 w-50">
-        <LoginComponent />
+        <LoginComponent theme={theme} />
       </div>
     </div>
   );

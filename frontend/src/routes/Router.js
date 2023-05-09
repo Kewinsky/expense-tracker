@@ -21,6 +21,7 @@ export const Router = ({
   setCurrentUser,
   expenseCategories,
   months,
+  theme,
 }) => {
   return (
     <Routes>
@@ -36,7 +37,7 @@ export const Router = ({
         path="/register"
         element={
           <MainLayout pageTitle={"Spendee | Register"}>
-            <RegisterPage />
+            <RegisterPage theme={theme} />
           </MainLayout>
         }
       />
@@ -44,7 +45,7 @@ export const Router = ({
         path="/login"
         element={
           <MainLayout pageTitle={"Spendee | Login"}>
-            <LoginPage />
+            <LoginPage theme={theme} />
           </MainLayout>
         }
       />
@@ -59,6 +60,7 @@ export const Router = ({
                 currentUser={currentUser}
                 expenseCategories={expenseCategories}
                 months={months}
+                theme={theme}
               />
             </ProtectedRoute>
           </MainLayout>
@@ -69,7 +71,7 @@ export const Router = ({
         element={
           <MainLayout pageTitle={"Spendee | Analyzer"}>
             <ProtectedRoute currentUser={currentUser}>
-              <AnalyzerPage expenses={expenses} months={months} />
+              <AnalyzerPage expenses={expenses} months={months} theme={theme} />
             </ProtectedRoute>
           </MainLayout>
         }
@@ -116,7 +118,7 @@ export const Router = ({
         element={
           <MainLayout pageTitle={"Spendee | User Management"}>
             <ProtectedRoute currentUser={currentUser}>
-              <UserManagementPage currentUser={currentUser} />
+              <UserManagementPage currentUser={currentUser} theme={theme} />
             </ProtectedRoute>
           </MainLayout>
         }

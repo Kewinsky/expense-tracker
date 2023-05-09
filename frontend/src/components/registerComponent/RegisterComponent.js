@@ -4,7 +4,9 @@ import AuthService from "../../services/authService";
 import { Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
-const RegisterComponent = () => {
+const RegisterComponent = ({ theme }) => {
+  const reversedTheme = theme === "dark" ? "light" : "dark";
+
   const form = useRef();
 
   const [username, setUsername] = useState("");
@@ -87,7 +89,7 @@ const RegisterComponent = () => {
         />
       </Form.Group>
       <Form.Group className="text-center">
-        <Button variant="dark" type="submit">
+        <Button variant={reversedTheme} type="submit">
           Sign Up
         </Button>
       </Form.Group>

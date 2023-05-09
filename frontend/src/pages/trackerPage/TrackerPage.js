@@ -12,6 +12,7 @@ const TrackerPage = ({
   currentUser,
   expenseCategories,
   months,
+  theme,
 }) => {
   const configLabels = ["date", "title", "value", "category"];
   const handleUpdate = "/update/expense";
@@ -57,6 +58,7 @@ const TrackerPage = ({
         setCategory={setCategory}
         filterExpenses={filterExpenses}
         months={months}
+        theme={theme}
       />
       <SeparatorComponent />
       <TableComponent
@@ -65,6 +67,7 @@ const TrackerPage = ({
         configLabels={configLabels}
         records={filteredExpenses}
         setRecords={setExpenses}
+        theme={theme}
       />
     </>
   );

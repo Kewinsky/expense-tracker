@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import UserService from "../../services/userService";
 import TableComponent from "../../components/tableComponent/TableComponent";
-const UserManagementPage = ({ currentUser }) => {
+const UserManagementPage = ({ currentUser, theme }) => {
   const configLabels = ["username", "email", "roles"];
   const handleUpdate = "/update/userByAdmin";
 
@@ -40,6 +40,7 @@ const UserManagementPage = ({ currentUser }) => {
       configLabels={configLabels}
       records={simplifiedUsers}
       setRecords={setUsers}
+      theme={theme}
     />
   );
 };

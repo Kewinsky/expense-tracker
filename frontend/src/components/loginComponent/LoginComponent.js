@@ -4,7 +4,9 @@ import React, { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthService from "../../services/authService";
 
-const LoginComponent = () => {
+const LoginComponent = ({ theme }) => {
+  const reversedTheme = theme === "dark" ? "light" : "dark";
+
   const form = useRef();
 
   const [username, setUsername] = useState("");
@@ -65,13 +67,13 @@ const LoginComponent = () => {
       <div className="text-center mb-3">
         <span>
           No account? Go to{" "}
-          <a href="/register" className="link-dark">
+          <a href="/register" className={`link-${reversedTheme}`}>
             register page
           </a>
         </span>
       </div>
       <div className="text-center">
-        <Button variant="dark" type="submit">
+        <Button variant={reversedTheme} type="submit">
           Login
         </Button>
       </div>
