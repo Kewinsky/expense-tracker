@@ -3,9 +3,12 @@ import Form from "react-bootstrap/Form";
 import React, { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthService from "../../services/authService";
+import ThemeModeService from "../../services/themeModeService";
 
 const LoginComponent = ({ theme }) => {
   const reversedTheme = theme === "dark" ? "light" : "dark";
+  const inputTheme =
+    ThemeModeService.getCurrentThemeMode() === "dark" ? "darkTheme" : "";
 
   const form = useRef();
 
@@ -51,6 +54,7 @@ const LoginComponent = ({ theme }) => {
           required
           value={username}
           onChange={onChangeUsername}
+          className={inputTheme}
         />
       </Form.Group>
 
@@ -62,6 +66,7 @@ const LoginComponent = ({ theme }) => {
           required
           value={password}
           onChange={onChangePassword}
+          className={inputTheme}
         />
       </Form.Group>
       <div className="text-center mb-3">

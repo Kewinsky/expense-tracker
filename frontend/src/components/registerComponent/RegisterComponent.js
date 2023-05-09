@@ -3,9 +3,12 @@ import React, { useState, useRef } from "react";
 import AuthService from "../../services/authService";
 import { Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import ThemeModeService from "../../services/themeModeService";
 
 const RegisterComponent = ({ theme }) => {
   const reversedTheme = theme === "dark" ? "light" : "dark";
+  const inputTheme =
+    ThemeModeService.getCurrentThemeMode() === "dark" ? "darkTheme" : "";
 
   const form = useRef();
 
@@ -66,6 +69,7 @@ const RegisterComponent = ({ theme }) => {
           required
           value={username}
           onChange={onChangeUsername}
+          className={inputTheme}
         />
       </Form.Group>
       <Form.Group className="mb-3">
@@ -76,6 +80,7 @@ const RegisterComponent = ({ theme }) => {
           required
           value={email}
           onChange={onChangeEmail}
+          className={inputTheme}
         />
       </Form.Group>
       <Form.Group className="mb-3">
@@ -86,6 +91,7 @@ const RegisterComponent = ({ theme }) => {
           required
           value={password}
           onChange={onChangePassword}
+          className={inputTheme}
         />
       </Form.Group>
       <Form.Group className="text-center">
