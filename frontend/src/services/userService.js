@@ -1,5 +1,6 @@
 import axios from "axios";
 import { authHeader } from "./authHeader";
+import AuthService from "./authService";
 
 const API_URL = "http://localhost:8080/api/users/";
 
@@ -13,7 +14,11 @@ const getUserById = (id) => {
   return axios.get(API_URL + `getUserById/${id}`, { headers: authHeader() });
 };
 
-const updateUser = (id, newUser) => {
+const updateCurrentUser = (id, newUser) => {
+  const user = AuthService.getCurrentUser();
+  user.username = newUser.username;
+  user.email = newUser.email;
+  localStorage.setItem("user", JSON.stringify(user));
   return axios.put(API_URL + `updateUser/${id}`, newUser, {
     headers: authHeader(),
   });
@@ -34,7 +39,7 @@ const deleteUser = (id) => {
 const UserService = {
   getUsers,
   getUserById,
-  updateUser,
+  updateCurrentUser,
   updateUserByAdmin,
   deleteUser,
 };

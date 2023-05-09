@@ -22,10 +22,8 @@ const UpdateUserComponent = ({ currentUser, setCurrentUser }) => {
 
   const handleUpdateUser = async (e) => {
     e.preventDefault();
-    console.log(updatedUser);
-    await UserService.updateUser(currentUser.id, updatedUser)
-      .then(AuthService.logout())
-      .then((window.location = "/login"))
+    await UserService.updateCurrentUser(currentUser.id, updatedUser)
+      .then((window.location = "/profile"))
       .catch((err) => console.log(err.response.data));
   };
 
