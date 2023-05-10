@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import DropdownComponent from "../dropdownComponent/DropdownComponent";
 import ExpenseService from "../../services/expenseService";
 import Select from "react-select";
 import { dropdownData } from "../../helpers/dropdownData";
