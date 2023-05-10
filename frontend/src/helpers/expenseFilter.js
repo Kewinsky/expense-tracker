@@ -1,6 +1,6 @@
 export const expenseFilter = (items, month, categories) => {
   return items.filter((item) => {
-    if (categories.includes("ALL")) {
+    if (!categories.length) {
       return new Date(item.date).getMonth() === month;
     }
     return (
