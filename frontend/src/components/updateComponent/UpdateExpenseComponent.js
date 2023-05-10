@@ -4,6 +4,8 @@ import DropdownComponent from "../dropdownComponent/DropdownComponent";
 import { useParams } from "react-router-dom";
 import { useState } from "react";
 import ExpenseService from "../../services/expenseService";
+import Select from "react-select";
+import { dropdownData } from "../../helpers/dropdownData";
 const UpdateExpenseComponent = ({
   expenses,
   setExpenses,
@@ -34,7 +36,7 @@ const UpdateExpenseComponent = ({
   };
 
   const handleSelectCategory = (e) => {
-    setCategory(e.target.value);
+    setCategory(e.value);
   };
 
   const updatedExpense = {
@@ -87,11 +89,12 @@ const UpdateExpenseComponent = ({
 
       <Form.Group className="mt-3">
         <Form.Label>Category</Form.Label>
-        <DropdownComponent
-          value={category}
+        <Select
+          options={dropdownData(expenseCategories)}
+          defaultValue={
+            dropdownData(expenseCategories)[expenseCategories.indexOf(category)]
+          }
           onChange={handleSelectCategory}
-          options={expenseCategories}
-          placeholder={"Select category"}
         />
       </Form.Group>
 
