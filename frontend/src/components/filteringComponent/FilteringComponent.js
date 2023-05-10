@@ -1,10 +1,9 @@
-import DropdownComponent from "../dropdownComponent/DropdownComponent";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { Col, Container, Row } from "react-bootstrap";
-import MultiselectComponent from "../multiselectComponent/MultiselectComponent";
 import { useEffect } from "react";
-import "../multiselectComponent/multiselectComponent.scss";
+import Select from "react-select";
+import { dropdownData } from "../../helpers/dropdownData";
 
 const FilteringComponent = ({
   categories,
@@ -16,62 +15,41 @@ const FilteringComponent = ({
   filterExpenses,
 }) => {
   const handleSelectMonth = (e) => {
-    setMonth(e.target.value);
+    setMonth(e.value);
   };
 
   const handleSelectCategory = (e) => {
-    setCategory(
-      [].slice.call(e.target.selectedOptions).map((item) => item.value)
-    );
+    setCategory(Array.isArray(e) ? e.map((x) => x.value) : []);
   };
 
-  const handleFiltering = (e) => {
-    e.preventDefault();
+  useEffect(() => {
     filterExpenses();
-  };
+  }, [month, category]);
 
   return (
     <Container className="my-3">
-      <Form onSubmit={handleFiltering}>
+      <Form>
         <Row className="align-items-end" xs={1} md={2} lg={5}>
           <Col className="mt-3">
             <Form.Group>
               <Form.Label>Choose month</Form.Label>
-              <DropdownComponent
-                value={month}
+              <Select
+                options={dropdownData(months)}
                 onChange={handleSelectMonth}
-                options={months}
-                placeholder={"Select month"}
+                defaultValue={dropdownData(months)[months.indexOf(month)]}
               />
             </Form.Group>
           </Col>
           <Col className="mt-3">
             <Form.Group>
               <Form.Label>Choose category</Form.Label>
-              {/* <MultiselectComponent options={categories} /> */}
-              <Form.Control
-                as="select"
-                multiple
-                value={category}
+              <Select
+                isMulti
+                closeMenuOnSelect={false}
+                options={dropdownData(categories)}
                 onChange={handleSelectCategory}
-                className="setHeight"
-              >
-                <option key="ALL" value="ALL" defaultValue>
-                  ALL
-                </option>
-                {categories.map((option) => (
-                  <option key={option} value={option}>
-                    {option}
-                  </option>
-                ))}
-              </Form.Control>
-            </Form.Group>
-          </Col>
-          <Col className="mt-3">
-            <Form.Group>
-              <Button variant="outline-dark" type="submit" className="w-100">
-                Filter
-              </Button>
+                placeholder={"Select categories"}
+              />
             </Form.Group>
           </Col>
         </Row>
