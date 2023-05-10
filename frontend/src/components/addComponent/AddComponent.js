@@ -104,6 +104,7 @@ const AddComponent = ({ setExpenses, currentUser, categories }) => {
               <Select
                 options={dropdownData(categories)}
                 onChange={handleSelectCategory}
+                placeholder={"Select category"}
               />
             </Form.Group>
           </Col>
