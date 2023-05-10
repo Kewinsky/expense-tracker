@@ -91,7 +91,7 @@ const AnalyzerPage = ({ expenses, months }) => {
   };
 
   const filterExpenses = (month) => {
-    const response = expenseFilter(expenses, month, "ALL");
+    const response = expenseFilter(expenses, month, null);
     setFilteredExpenses(response);
     mountPieChartData(getSumCategories(response, month), "Expenses");
     mountLineChart(expenses, "Total of Year");
