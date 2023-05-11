@@ -41,26 +41,11 @@ public class ExpensesController {
         return expensesRepository.findByUserId(id);
     }
 
-    @GetMapping(path="/getNoteByUser/{id}")
-    @ResponseBody Iterable<Note> getNoteByUser(@PathVariable Long id) {
-        return notesRepository.findByUserId(id);
-    }
-
     @PostMapping(path="/addExpense")
     String addExpense (@RequestBody Expense expense) {
         userController.getUserById(expense.getUserId());
         expensesRepository.save(expense);
         return "Expense saved.";
-    }
-
-    @PostMapping(path="/addNote")
-    String addNote (@RequestBody Note note) {
-        userController.getUserById(note.getUserId());
-        if(notesRepository.findByUserId(note.getUserId()).toString() == "[]"){
-            notesRepository.save(note);
-            return "Note saved.";
-        }
-        return "Already created.";
     }
 
     @PutMapping("updateExpense/{id}")
@@ -76,18 +61,6 @@ public class ExpensesController {
                     return "Expense updated.";
                 })
                 .orElseThrow(() -> new ExpenseNotFoundException(id));
-    }
-
-    @PutMapping("updateNote/{id}")
-    String updateNote(@RequestBody Note note,
-                         @PathVariable Long id){
-        return notesRepository.findById(id)
-                .map(nt -> {
-                    nt.setContent(note.getContent());
-                    notesRepository.save(nt);
-                    return "Note updated.";
-                })
-                .orElseThrow(() -> new NoteNotFoundException(id));
     }
 
     @DeleteMapping("/deleteExpense/{id}")
