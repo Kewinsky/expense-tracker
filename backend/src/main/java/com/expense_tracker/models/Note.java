@@ -1,12 +1,10 @@
 package com.expense_tracker.models;
 
-import com.expense_tracker.models.enums.ECategory;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 
 @Data
 @NoArgsConstructor
@@ -15,12 +13,11 @@ import java.time.LocalDate;
 @Table(name="notes")
 public class Note {
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
-    private String content;
+    private int month;
 
-    private LocalDate month;
-
+    private String note;
     private Long userId;
 }
