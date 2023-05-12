@@ -21,7 +21,7 @@ public class NotesController {
     @Autowired
     UserController userController;
 
-    @GetMapping(path = "/getNoteByUser/{id}")
+    @GetMapping(path = "/getNotesByUser/{id}")
     @ResponseBody
     Iterable<Note> getNotesByUser(@PathVariable Long id) {
         return notesRepository.findByUserId(id);
