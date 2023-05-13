@@ -15,28 +15,12 @@ const getExpensesByUser = async () => {
   });
 };
 
-const getNoteByUser = async () => {
-  return await axios.get(API_URL + `getNoteByUser/${userId.id}`, {
-    headers: authHeader(),
-  });
-};
-
 const addExpense = (expense) => {
   return axios.post(API_URL + "addExpense", expense, { headers: authHeader() });
 };
 
-const addNote = (note) => {
-  return axios.post(API_URL + "addNote", note, { headers: authHeader() });
-};
-
 const updateExpense = (id, newExpense) => {
   return axios.put(API_URL + `updateExpense/${id}`, newExpense, {
-    headers: authHeader(),
-  });
-};
-
-const updateNote = (id, newNote) => {
-  return axios.put(API_URL + `updateNote/${id}`, newNote, {
     headers: authHeader(),
   });
 };
@@ -50,11 +34,8 @@ const deleteExpense = (id) => {
 const ExpenseService = {
   getExpenseById,
   getExpensesByUser,
-  getNoteByUser,
   addExpense,
-  addNote,
   updateExpense,
-  updateNote,
   deleteExpense,
 };
 
