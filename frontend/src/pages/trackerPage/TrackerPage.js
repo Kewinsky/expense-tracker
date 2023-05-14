@@ -18,7 +18,7 @@ const TrackerPage = ({
   const handleUpdate = "/update/expense";
   const currentDate = new Date();
 
-  const [category, setCategory] = useState(["ALL"]);
+  const [category, setCategory] = useState([]);
   const [month, setMonth] = useState(months[currentDate.getMonth()]);
   const [filteredExpenses, setFilteredExpenses] = useState([]);
 

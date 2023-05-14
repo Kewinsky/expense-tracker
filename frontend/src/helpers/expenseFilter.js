@@ -1,11 +1,11 @@
-export const expenseFilter = (items, month, categories) => {
+export const expenseFilter = (items, month, category) => {
   return items.filter((item) => {
-    if (categories.includes("ALL")) {
+    if (category === null || !category.length) {
       return new Date(item.date).getMonth() === month;
     }
     return (
       new Date(item.date).getMonth() === month &&
-      categories.includes(item.category)
+      category.includes(item.category)
     );
   });
 };
