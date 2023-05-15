@@ -4,6 +4,7 @@ import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import AuthService from "../../services/authService";
+import "./navbarComponent.scss";
 
 const NavbarComponent = () => {
   const [currentUser, setCurrentUser] = useState(undefined);
@@ -28,7 +29,7 @@ const NavbarComponent = () => {
   };
 
   return (
-    <Navbar bg="dark" variant="dark" expand="lg">
+    <Navbar bg="dark" variant="dark" expand="lg" className="nav-border">
       <Container fluid>
         <Navbar.Brand href="/">Spendee</Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarScroll" />
