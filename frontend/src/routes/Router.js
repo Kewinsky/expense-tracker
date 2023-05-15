@@ -85,6 +85,7 @@ export const Router = ({
                 expenses={expenses}
                 setExpenses={setExpenses}
                 expenseCategories={expenseCategories}
+                theme={theme}
               />
             </ProtectedRoute>
           </MainLayout>
@@ -98,6 +99,7 @@ export const Router = ({
               <UpdateUserPage
                 currentUser={currentUser}
                 setCurrentUser={setCurrentUser}
+                theme={theme}
               />
             </ProtectedRoute>
           </MainLayout>
@@ -108,7 +110,7 @@ export const Router = ({
         element={
           <MainLayout pageTitle={"Spendee | Update User"}>
             <ProtectedRoute currentUser={currentUser}>
-              <UpdateAdminPage />
+              <UpdateAdminPage theme={theme} />
             </ProtectedRoute>
           </MainLayout>
         }

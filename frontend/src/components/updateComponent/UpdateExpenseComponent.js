@@ -5,17 +5,27 @@ import { useState } from "react";
 import ExpenseService from "../../services/expenseService";
 import Select from "react-select";
 import { dropdownData } from "../../helpers/dropdownData";
+import ThemeModeService from "../../services/themeModeService";
+import SelectComponent from "../selectComponent/SelectComponent";
 const UpdateExpenseComponent = ({
   expenses,
   setExpenses,
   expenseCategories,
+  theme,
 }) => {
   const { id } = useParams();
   const expenseId = id;
+  const buttonTheme = theme === "dark" ? "light" : "dark";
+  const inputTheme =
+    ThemeModeService.getCurrentThemeMode() === "dark" ? "darkTheme" : "";
 
   const selectedExpense = expenses.find((item) => {
     return item.id === parseInt(expenseId);
   });
+
+  const getDefaultValue = () => {
+    return dropdownData(expenseCategories)[expenseCategories.indexOf(category)];
+  };
 
   const [date, setDate] = useState(selectedExpense.date);
   const [title, setTitle] = useState(selectedExpense.title);
@@ -62,7 +72,12 @@ const UpdateExpenseComponent = ({
     <Form onSubmit={handleUpdateExpense}>
       <Form.Group className="mt-3">
         <Form.Label>Date</Form.Label>
-        <Form.Control onChange={handleInputDate} value={date} type="date" />
+        <Form.Control
+          onChange={handleInputDate}
+          value={date}
+          type="date"
+          className={inputTheme}
+        />
       </Form.Group>
 
       <Form.Group className="mt-3">
@@ -72,6 +87,7 @@ const UpdateExpenseComponent = ({
           value={title}
           type="text"
           placeholder="Multisport subscription"
+          className={inputTheme}
         />
       </Form.Group>
 
@@ -83,17 +99,17 @@ const UpdateExpenseComponent = ({
           type="number"
           step={0.5}
           placeholder="100,00"
+          className={inputTheme}
         />
       </Form.Group>
 
       <Form.Group className="mt-3">
         <Form.Label>Category</Form.Label>
-        <Select
-          options={dropdownData(expenseCategories)}
-          defaultValue={
-            dropdownData(expenseCategories)[expenseCategories.indexOf(category)]
-          }
-          onChange={handleSelectCategory}
+        <SelectComponent
+          options={expenseCategories}
+          handleSelect={handleSelectCategory}
+          theme={inputTheme}
+          defaultValue={getDefaultValue()}
         />
       </Form.Group>
 
@@ -104,7 +120,7 @@ const UpdateExpenseComponent = ({
       </Form.Group>
       <Form.Group className="mt-2">
         <Button
-          variant="outline-dark"
+          variant={`outline-${buttonTheme}`}
           type="submit"
           className="w-100"
           href="/tracker"

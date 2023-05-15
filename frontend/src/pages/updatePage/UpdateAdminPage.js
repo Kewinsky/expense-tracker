@@ -2,7 +2,7 @@ import UpdateAdminComponent from "../../components/updateComponent/UpdateAdminCo
 import UserService from "../../services/userService";
 import { useEffect, useState } from "react";
 import SpinnerComponent from "../../components/spinnerComponent/SpinnerComponent";
-const UpdateAdminPage = () => {
+const UpdateAdminPage = ({ theme }) => {
   const [users, setUsers] = useState([]);
 
   const getAllUsers = async () => {
@@ -21,7 +21,7 @@ const UpdateAdminPage = () => {
   return (
     <div className="d-flex justify-content-center">
       <div className="m-5 w-50">
-        <UpdateAdminComponent users={users} setUsers={setUsers} />
+        <UpdateAdminComponent users={users} setUsers={setUsers} theme={theme} />
       </div>
     </div>
   );
