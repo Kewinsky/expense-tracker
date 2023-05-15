@@ -4,8 +4,7 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import ExpenseService from "../../services/expenseService";
 import ThemeModeService from "../../services/themeModeService";
-import Select from "react-select";
-import { dropdownData } from "../../helpers/dropdownData";
+import SelectComponent from "../selectComponent/SelectComponent";
 
 const AddComponent = ({ setExpenses, currentUser, categories }) => {
   const inputTheme =
@@ -108,9 +107,9 @@ const AddComponent = ({ setExpenses, currentUser, categories }) => {
           <Col className="mt-3">
             <Form.Group>
               <Form.Label>Category</Form.Label>
-              <Select
-                options={dropdownData(categories)}
-                onChange={handleSelectCategory}
+              <SelectComponent
+                options={categories}
+                handleSelect={handleSelectCategory}
                 placeholder={"Select category"}
                 theme={inputTheme}
               />

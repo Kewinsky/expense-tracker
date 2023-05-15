@@ -2,8 +2,8 @@ import Form from "react-bootstrap/Form";
 import { Col, Container, Row } from "react-bootstrap";
 import ThemeModeService from "../../services/themeModeService";
 import { useEffect } from "react";
-import Select from "react-select";
 import { dropdownData } from "../../helpers/dropdownData";
+import SelectComponent from "../selectComponent/SelectComponent";
 
 const FilteringComponent = ({
   categories,
@@ -15,9 +15,12 @@ const FilteringComponent = ({
   filterExpenses,
   theme,
 }) => {
-  const buttonTheme = theme === "dark" ? "light" : "dark";
   const inputTheme =
     ThemeModeService.getCurrentThemeMode() === "dark" ? "darkTheme" : "";
+
+  const getDefaultValue = () => {
+    return dropdownData(months)[months.indexOf(month)];
+  };
 
   const handleSelectMonth = (e) => {
     setMonth(e.value);
@@ -38,23 +41,23 @@ const FilteringComponent = ({
           <Col className="mt-3">
             <Form.Group>
               <Form.Label>Choose month</Form.Label>
-              <Select
-                options={dropdownData(months)}
-                onChange={handleSelectMonth}
+              <SelectComponent
+                options={months}
+                handleSelect={handleSelectMonth}
                 theme={inputTheme}
-                defaultValue={dropdownData(months)[months.indexOf(month)]}
+                defaultValue={getDefaultValue()}
               />
             </Form.Group>
           </Col>
           <Col className="mt-3">
             <Form.Group>
               <Form.Label>Choose category</Form.Label>
-              <Select
-                isMulti
+              <SelectComponent
+                isMulti={true}
                 closeMenuOnSelect={false}
-                options={dropdownData(categories)}
-                onChange={handleSelectCategory}
-                className={`setHeight ${inputTheme}`}
+                options={categories}
+                handleSelect={handleSelectCategory}
+                theme={inputTheme}
               />
             </Form.Group>
           </Col>
