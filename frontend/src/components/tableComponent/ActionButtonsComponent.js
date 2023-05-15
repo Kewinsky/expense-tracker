@@ -29,6 +29,7 @@ const ActionButtonsComponents = ({
         record={record}
         show={show}
         setShow={setShow}
+        theme={theme}
       />
     </td>
   );
