@@ -64,7 +64,7 @@ VALUES
     ("UTILITIES", "2023-04-15", "Internet Subscribtion", 1, 60),
     ("HOUSING", "2023-04-25", "Home repairs", 1, 250),
     ("SAVINGS", "2023-04-30", "401k Contribution", 1, 600),
-    ("FOOD", "2023-04-30", "Takeout", 1, 40);
+    ("FOOD", "2023-04-30", "Takeout", 1, 40),
 
 
     ("FOOD", "2023-05-01", "Groceries", 1, 80),
