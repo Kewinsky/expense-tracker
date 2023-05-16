@@ -6,7 +6,7 @@ import Navbar from "react-bootstrap/Navbar";
 import AuthService from "../../services/authService";
 import "./navbarComponent.scss";
 import DarkModeComponent from "../darkModeComponent/DarkModeComponent";
-import logo from "../../assets/icons/logo_2_white.png";
+import logo from "../../assets/icons/logo.png";
 
 const NavbarComponent = () => {
   const [currentUser, setCurrentUser] = useState(undefined);
