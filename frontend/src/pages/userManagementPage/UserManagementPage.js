@@ -8,8 +8,16 @@ const UserManagementPage = ({ currentUser }) => {
 
   const [users, setUsers] = useState([]);
 
+  const roleMapping = {
+    ROLE_USER: "User",
+    ROLE_ADMIN: "Admin",
+    ROLE_MODERATOR: "Moderator",
+  };
+
   const simplifiedUsers = users.map((user) => {
-    return { ...user, roles: user.roles.map((role) => role.name).join(", ") };
+    const roles = user.roles.map((role) => roleMapping[role.name]).join(" | ");
+
+    return { ...user, roles };
   });
 
   const navigate = useNavigate();
@@ -38,7 +46,7 @@ const UserManagementPage = ({ currentUser }) => {
       handleUpdate={handleUpdate}
       handleDelete={handleDelete}
       configLabels={configLabels}
-      records={simplifiedUsers}
+      records={simplifiedUsers.slice(1)}
       setRecords={setUsers}
     />
   );
