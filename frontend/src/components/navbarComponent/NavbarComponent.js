@@ -57,20 +57,22 @@ const NavbarComponent = () => {
               </Nav.Link>
             )}
           </Nav>
-          <DarkModeComponent />
-          {currentUser ? (
-            <Button
-              href="/login"
-              variant="outline-danger"
-              onClick={handleLogout}
-            >
-              Logout
-            </Button>
-          ) : (
-            <Button href="/login" variant="outline-success">
-              Login
-            </Button>
-          )}
+          <div className="d-flex align-items-center">
+            <DarkModeComponent />
+            {currentUser ? (
+              <Button
+                href="/login"
+                variant="outline-danger"
+                onClick={handleLogout}
+              >
+                Logout
+              </Button>
+            ) : (
+              <Button href="/login" variant="outline-success">
+                Login
+              </Button>
+            )}
+          </div>
         </Navbar.Collapse>
       </Container>
     </Navbar>
