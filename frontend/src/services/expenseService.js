@@ -17,7 +17,7 @@ const getExpensesByUser = async () => {
     .catch((err) => {
       if (err.response.status === 401) {
         AuthService.logout();
-        window.location = "/";
+        window.location = "/login";
       }
     });
 };
