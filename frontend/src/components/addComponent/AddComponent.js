@@ -3,10 +3,13 @@ import { Col, Container, Row } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import ExpenseService from "../../services/expenseService";
-import Select from "react-select";
-import { dropdownData } from "../../helpers/dropdownData";
+import ThemeModeService from "../../services/themeModeService";
+import SelectComponent from "../selectComponent/SelectComponent";
 
 const AddComponent = ({ setExpenses, currentUser, categories }) => {
+  const inputTheme =
+    ThemeModeService.getCurrentThemeMode() === "dark" ? "darkTheme" : "";
+
   let userId = 0;
   if (currentUser !== undefined) {
     userId = currentUser.id;
@@ -70,6 +73,7 @@ const AddComponent = ({ setExpenses, currentUser, categories }) => {
                 type="date"
                 value={date}
                 onChange={handleInputDate}
+                className={inputTheme}
               />
             </Form.Group>
           </Col>
@@ -82,6 +86,7 @@ const AddComponent = ({ setExpenses, currentUser, categories }) => {
                 placeholder="Multisport subscription"
                 value={title}
                 onChange={handleInputTitle}
+                className={inputTheme}
               />
             </Form.Group>
           </Col>
@@ -95,16 +100,18 @@ const AddComponent = ({ setExpenses, currentUser, categories }) => {
                 placeholder="100,00"
                 value={value}
                 onChange={handleInputValue}
+                className={inputTheme}
               />
             </Form.Group>
           </Col>
           <Col className="mt-3">
             <Form.Group>
               <Form.Label>Category</Form.Label>
-              <Select
-                options={dropdownData(categories)}
-                onChange={handleSelectCategory}
+              <SelectComponent
+                options={categories}
+                handleSelect={handleSelectCategory}
                 placeholder={"Select category"}
+                theme={inputTheme}
               />
             </Form.Group>
           </Col>

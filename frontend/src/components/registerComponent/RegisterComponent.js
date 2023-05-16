@@ -1,10 +1,15 @@
 import Button from "react-bootstrap/Button";
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useContext } from "react";
 import AuthService from "../../services/authService";
 import { Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import { ThemeContext } from "../../App";
 
 const RegisterComponent = () => {
+  const { theme } = useContext(ThemeContext);
+  const reversedTheme = theme === "dark" ? "light" : "dark";
+  const inputTheme = theme === "dark" ? "darkTheme" : "";
+
   const form = useRef();
 
   const [username, setUsername] = useState("");
@@ -64,6 +69,7 @@ const RegisterComponent = () => {
           required
           value={username}
           onChange={onChangeUsername}
+          className={inputTheme}
         />
       </Form.Group>
       <Form.Group className="mb-3">
@@ -74,6 +80,7 @@ const RegisterComponent = () => {
           required
           value={email}
           onChange={onChangeEmail}
+          className={inputTheme}
         />
       </Form.Group>
       <Form.Group className="mb-3">
@@ -84,10 +91,11 @@ const RegisterComponent = () => {
           required
           value={password}
           onChange={onChangePassword}
+          className={inputTheme}
         />
       </Form.Group>
       <Form.Group className="text-center">
-        <Button variant="dark" type="submit">
+        <Button variant={`outline-${reversedTheme}`} type="submit">
           Sign Up
         </Button>
       </Form.Group>

@@ -1,7 +1,9 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Router from "./routes/Router";
 import ExpenseService from "./services/expenseService";
 import AuthService from "./services/authService";
+
+const ThemeContext = React.createContext();
 
 const App = () => {
   const expenseCategories = [
@@ -30,6 +32,7 @@ const App = () => {
     "December",
   ];
 
+  const [theme, setTheme] = useState("light");
   const [expenses, setExpenses] = useState([]);
   const [currentUser, setCurrentUser] = useState(undefined);
 
@@ -54,14 +57,17 @@ const App = () => {
   }, []);
 
   return (
-    <Router
-      expenses={expenses}
-      setExpenses={setExpenses}
-      currentUser={AuthService.getCurrentUser()}
-      setCurrentUser={setCurrentUser}
-      expenseCategories={expenseCategories}
-      months={months}
-    />
+    <ThemeContext.Provider value={{ theme, setTheme }}>
+      <Router
+        expenses={expenses}
+        setExpenses={setExpenses}
+        currentUser={AuthService.getCurrentUser()}
+        setCurrentUser={setCurrentUser}
+        expenseCategories={expenseCategories}
+        months={months}
+      />
+    </ThemeContext.Provider>
   );
 };
 export default App;
+export { ThemeContext };

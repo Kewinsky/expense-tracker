@@ -1,11 +1,16 @@
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { useParams } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import UserService from "../../services/userService";
+import { ThemeContext } from "../../App";
 const UpdateAdminComponent = ({ users, setUsers }) => {
   const { id } = useParams();
+  const { theme } = useContext(ThemeContext);
+
   const userId = id;
+  const reversedTheme = theme === "dark" ? "light" : "dark";
+  const inputTheme = theme === "dark" ? "darkTheme" : "";
 
   const selectedUser = users.find((item) => {
     return item.id === parseInt(userId);
@@ -70,6 +75,7 @@ const UpdateAdminComponent = ({ users, setUsers }) => {
           onChange={handleInputUsername}
           value={username}
           type="text"
+          className={inputTheme}
         />
       </Form.Group>
 
@@ -80,6 +86,7 @@ const UpdateAdminComponent = ({ users, setUsers }) => {
           value={email}
           type="text"
           placeholder="Multisport subscription"
+          className={inputTheme}
         />
       </Form.Group>
 
@@ -100,7 +107,7 @@ const UpdateAdminComponent = ({ users, setUsers }) => {
       </Form.Group>
       <Form.Group className="mt-2">
         <Button
-          variant="outline-dark"
+          variant={`outline-${reversedTheme}`}
           type="submit"
           className="w-100"
           href="/usermanagement"
