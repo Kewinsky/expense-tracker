@@ -1,9 +1,10 @@
 import Form from "react-bootstrap/Form";
 import { Col, Container, Row } from "react-bootstrap";
 import ThemeModeService from "../../services/themeModeService";
-import { useEffect } from "react";
+import { useEffect, useContext } from "react";
 import { dropdownData } from "../../helpers/dropdownData";
 import SelectComponent from "../selectComponent/SelectComponent";
+import { ThemeContext } from "../../App";
 
 const FilteringComponent = ({
   categories,
@@ -13,10 +14,9 @@ const FilteringComponent = ({
   setCategory,
   months,
   filterExpenses,
-  theme,
 }) => {
-  const inputTheme =
-    ThemeModeService.getCurrentThemeMode() === "dark" ? "darkTheme" : "";
+  const { theme } = useContext(ThemeContext);
+  const inputTheme = theme === "dark" ? "darkTheme" : "";
 
   const getDefaultValue = () => {
     return dropdownData(months)[months.indexOf(month)];

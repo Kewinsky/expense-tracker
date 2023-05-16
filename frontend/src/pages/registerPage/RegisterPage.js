@@ -1,9 +1,9 @@
 import RegisterComponent from "../../components/registerComponent/RegisterComponent";
-const RegisterPage = ({ theme }) => {
+const RegisterPage = () => {
   return (
     <div className="d-flex justify-content-center">
       <div className="m-5 w-50">
-        <RegisterComponent theme={theme} />
+        <RegisterComponent />
       </div>
     </div>
   );

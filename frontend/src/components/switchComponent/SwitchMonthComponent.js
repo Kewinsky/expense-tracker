@@ -7,6 +7,8 @@ import { Link } from "react-router-dom";
 import { getSavedSum, sumAllByMonth } from "../../helpers/analyzerMethods";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleArrowRight } from "@fortawesome/free-solid-svg-icons";
+import { useContext } from "react";
+import { ThemeContext } from "../../App";
 
 const SwitchMonthComponent = ({
   expenses,
@@ -18,8 +20,8 @@ const SwitchMonthComponent = ({
   setSavings,
   setPreviousSavings,
   filterExpenses,
-  theme,
 }) => {
+  const { theme } = useContext(ThemeContext);
   const reversedTheme = theme === "dark" ? "light" : "dark";
 
   const handleRightButton = () => {

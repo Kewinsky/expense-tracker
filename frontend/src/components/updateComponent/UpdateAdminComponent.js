@@ -1,15 +1,16 @@
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { useParams } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import UserService from "../../services/userService";
-import ThemeModeService from "../../services/themeModeService";
-const UpdateAdminComponent = ({ users, setUsers, theme }) => {
+import { ThemeContext } from "../../App";
+const UpdateAdminComponent = ({ users, setUsers }) => {
   const { id } = useParams();
+  const { theme } = useContext(ThemeContext);
+
   const userId = id;
-  const buttonTheme = theme === "dark" ? "light" : "dark";
-  const inputTheme =
-    ThemeModeService.getCurrentThemeMode() === "dark" ? "darkTheme" : "";
+  const reversedTheme = theme === "dark" ? "light" : "dark";
+  const inputTheme = theme === "dark" ? "darkTheme" : "";
 
   const selectedUser = users.find((item) => {
     return item.id === parseInt(userId);
@@ -106,7 +107,7 @@ const UpdateAdminComponent = ({ users, setUsers, theme }) => {
       </Form.Group>
       <Form.Group className="mt-2">
         <Button
-          variant={`outline-${buttonTheme}`}
+          variant={`outline-${reversedTheme}`}
           type="submit"
           className="w-100"
           href="/usermanagement"

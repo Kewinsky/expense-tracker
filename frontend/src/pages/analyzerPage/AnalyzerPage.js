@@ -18,7 +18,7 @@ import {
 } from "../../helpers/analyzerMethods";
 import { expenseFilter } from "../../helpers/expenseFilter";
 
-const AnalyzerPage = ({ expenses, months, theme }) => {
+const AnalyzerPage = ({ expenses, months }) => {
   const currentDate = new Date();
   const totalSumByMonth = sumAllMonths(expenses);
 
@@ -119,7 +119,6 @@ const AnalyzerPage = ({ expenses, months, theme }) => {
         setPreviousSavings={setPreviousSavings}
         filterExpenses={filterExpenses}
         setFilteredExpenses={setFilteredExpenses}
-        theme={theme}
       />
       <SummaryComponent
         outcome={outcome}

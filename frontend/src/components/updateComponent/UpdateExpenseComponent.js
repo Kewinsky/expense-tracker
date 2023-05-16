@@ -1,23 +1,24 @@
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { useParams } from "react-router-dom";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import ExpenseService from "../../services/expenseService";
 import Select from "react-select";
 import { dropdownData } from "../../helpers/dropdownData";
 import ThemeModeService from "../../services/themeModeService";
 import SelectComponent from "../selectComponent/SelectComponent";
+import { ThemeContext } from "../../App";
 const UpdateExpenseComponent = ({
   expenses,
   setExpenses,
   expenseCategories,
-  theme,
 }) => {
   const { id } = useParams();
   const expenseId = id;
-  const buttonTheme = theme === "dark" ? "light" : "dark";
-  const inputTheme =
-    ThemeModeService.getCurrentThemeMode() === "dark" ? "darkTheme" : "";
+
+  const { theme } = useContext(ThemeContext);
+  const reversedTheme = theme === "dark" ? "light" : "dark";
+  const inputTheme = theme === "dark" ? "darkTheme" : "";
 
   const selectedExpense = expenses.find((item) => {
     return item.id === parseInt(expenseId);
@@ -120,7 +121,7 @@ const UpdateExpenseComponent = ({
       </Form.Group>
       <Form.Group className="mt-2">
         <Button
-          variant={`outline-${buttonTheme}`}
+          variant={`outline-${reversedTheme}`}
           type="submit"
           className="w-100"
           href="/tracker"

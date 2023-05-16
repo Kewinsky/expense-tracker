@@ -1,14 +1,14 @@
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import React, { useState, useRef } from "react";
+import { useState, useRef, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthService from "../../services/authService";
-import ThemeModeService from "../../services/themeModeService";
+import { ThemeContext } from "../../App";
 
-const LoginComponent = ({ theme }) => {
+const LoginComponent = () => {
+  const { theme } = useContext(ThemeContext);
   const reversedTheme = theme === "dark" ? "light" : "dark";
-  const inputTheme =
-    ThemeModeService.getCurrentThemeMode() === "dark" ? "darkTheme" : "";
+  const inputTheme = theme === "dark" ? "darkTheme" : "";
 
   const form = useRef();
 
@@ -78,7 +78,7 @@ const LoginComponent = ({ theme }) => {
         </span>
       </div>
       <div className="text-center">
-        <Button variant={reversedTheme} type="submit">
+        <Button variant={`outline-${reversedTheme}`} type="submit">
           Login
         </Button>
       </div>

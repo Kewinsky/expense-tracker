@@ -1,16 +1,16 @@
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import UserService from "../../services/userService";
-import ThemeModeService from "../../services/themeModeService";
+import { ThemeContext } from "../../App";
 
-const UpdateUserComponent = ({ currentUser, setCurrentUser, theme }) => {
+const UpdateUserComponent = ({ currentUser, setCurrentUser }) => {
   const [username, setUsername] = useState(currentUser.username);
   const [email, setEmail] = useState(currentUser.email);
 
-  const buttonTheme = theme === "dark" ? "light" : "dark";
-  const inputTheme =
-    ThemeModeService.getCurrentThemeMode() === "dark" ? "darkTheme" : "";
+  const { theme } = useContext(ThemeContext);
+  const reversedTheme = theme === "dark" ? "light" : "dark";
+  const inputTheme = theme === "dark" ? "darkTheme" : "";
 
   const handleInputUsername = (e) => {
     setUsername(e.target.value);
@@ -59,7 +59,7 @@ const UpdateUserComponent = ({ currentUser, setCurrentUser, theme }) => {
       </Form.Group>
       <Form.Group className="mt-2">
         <Button
-          variant={`outline-${buttonTheme}`}
+          variant={`outline-${reversedTheme}`}
           type="submit"
           className="w-100"
           href="/profile"

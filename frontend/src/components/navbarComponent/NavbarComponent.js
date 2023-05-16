@@ -5,6 +5,7 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import AuthService from "../../services/authService";
 import "./navbarComponent.scss";
+import DarkModeComponent from "../darkModeComponent/DarkModeComponent";
 
 const NavbarComponent = () => {
   const [currentUser, setCurrentUser] = useState(undefined);
@@ -53,6 +54,7 @@ const NavbarComponent = () => {
               </Nav.Link>
             )}
           </Nav>
+          <DarkModeComponent />
           {currentUser ? (
             <Button
               href="/login"

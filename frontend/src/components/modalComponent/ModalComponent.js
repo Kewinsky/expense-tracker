@@ -1,25 +1,22 @@
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-import ThemeModeService from "../../services/themeModeService";
 
 const ModalComponent = ({ handleDelete, record, show, setShow, theme }) => {
   const handleClose = () => setShow(false);
 
-  const buttonTheme = theme === "dark" ? "dark" : "light";
-
-  const modalTheme =
-    ThemeModeService.getCurrentThemeMode() === "dark" ? "darkTheme" : "";
+  // theme is reversed by default
+  const inputTheme = theme !== "dark" ? "darkTheme" : "";
 
   return (
     <Modal show={show} onHide={handleClose}>
-      <Modal.Header closeButton className={modalTheme}>
+      <Modal.Header closeButton className={inputTheme}>
         <Modal.Title>Delete this item?</Modal.Title>
       </Modal.Header>
-      <Modal.Body className={modalTheme}>
+      <Modal.Body className={inputTheme}>
         If you want to delete this item click 'Yes' button.
       </Modal.Body>
-      <Modal.Footer className={modalTheme}>
-        <Button variant={`outline-${buttonTheme}`} onClick={handleClose}>
+      <Modal.Footer className={inputTheme}>
+        <Button variant={`outline-${theme}`} onClick={handleClose}>
           Close
         </Button>
         <Button variant="danger" onClick={() => handleDelete(record.id)}>
