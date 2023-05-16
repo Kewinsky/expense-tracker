@@ -1,3 +1,17 @@
+--create initial roles
+INSERT INTO roles(name) VALUES('ROLE_USER');
+INSERT INTO roles(name) VALUES('ROLE_MODERATOR');
+INSERT INTO roles(name) VALUES('ROLE_ADMIN');
+
+--create initial admin user
+INSERT INTO users (user_email, user_password, user_username) VALUES ("admin@gmail.com", "admin", "Admin");
+
+--provide all roles for admin
+INSERT INTO user_roles (user_id, role_id) VALUES (1, 1);
+INSERT INTO user_roles (user_id, role_id) VALUES (1, 2);
+INSERT INTO user_roles (user_id, role_id) VALUES (1, 3);
+
+--provide test data
 INSERT INTO expenses(category, date, title, user_id, value)
 VALUES
     ("TRANSPORT", "2023-01-02", "Gas", 1, 30),
