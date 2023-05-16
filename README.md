@@ -18,19 +18,19 @@ Spendee is an application, developed with Java, React, and MySQL, empowers users
 5. Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
 ## Stack:
-### Backend: 
-- Java
-- Spring Boot
-- Hibernate
-- Swagger
-- JSON Web Token
+1. Backend: 
+   - Java
+   - Spring Boot
+   - Hibernate
+   - Swagger
+   - JSON Web Token
 
-### Frontend:
-- React
-- React Bootstrap
-- Sass
-- Axios
-- Chart.js
+2. Frontend:
+   - React
+   - React Bootstrap
+   - Sass
+   - Axios
+   - Chart.js
 
-### Database:
-- MySQL
+3. Database:
+   - MySQL
