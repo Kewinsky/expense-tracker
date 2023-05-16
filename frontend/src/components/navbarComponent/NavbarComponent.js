@@ -6,6 +6,7 @@ import Navbar from "react-bootstrap/Navbar";
 import AuthService from "../../services/authService";
 import "./navbarComponent.scss";
 import DarkModeComponent from "../darkModeComponent/DarkModeComponent";
+import logo from "../../assets/icons/logo_2_white.png";
 
 const NavbarComponent = () => {
   const [currentUser, setCurrentUser] = useState(undefined);
@@ -32,7 +33,9 @@ const NavbarComponent = () => {
   return (
     <Navbar bg="dark" variant="dark" expand="lg" className="nav-border">
       <Container fluid>
-        <Navbar.Brand href="/">Spendee</Navbar.Brand>
+        <Navbar.Brand href="/">
+          <img src={logo} height="30" alt="Spendee Logo" />
+        </Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll">
           <Nav className="me-auto my-2 my-lg-0" navbarScroll>
