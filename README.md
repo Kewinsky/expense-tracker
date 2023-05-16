@@ -1,4 +1,4 @@
-# Spendee | expense_tracker
+# Spendee | expenses_tracker
 Spendee is an application, developed with Java, React, and MySQL, empowers users to effectively monitor and manage their financial activities. With a user-friendly interface, the application allows users to easily input and categorize their expenses, track spending trends, and generate insightful reports. By leveraging the power of Java, React, and MySQL, this application provides a reliable and efficient solution for maintaining a clear overview of personal or business expenses.
 
 ## Getting started
