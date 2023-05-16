@@ -10,9 +10,16 @@ const getExpenseById = (id) => {
 
 const userId = AuthService.getCurrentUser();
 const getExpensesByUser = async () => {
-  return await axios.get(API_URL + `getExpensesByUser/${userId.id}`, {
-    headers: authHeader(),
-  });
+  return await axios
+    .get(API_URL + `getExpensesByUser/${userId.id}`, {
+      headers: authHeader(),
+    })
+    .catch((err) => {
+      if (err.response.status === 401) {
+        AuthService.logout();
+        window.location = "/";
+      }
+    });
 };
 
 const addExpense = (expense) => {
