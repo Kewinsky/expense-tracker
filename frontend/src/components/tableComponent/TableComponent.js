@@ -62,7 +62,7 @@ const TableComponent = ({
   }
 
   return (
-    <Table striped bordered hover size="md" variant={theme}>
+    <Table responsive striped bordered hover size="md" variant={theme}>
       <thead>
         <tr>
           {configLabels.map((label) => (
