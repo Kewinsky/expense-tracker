@@ -5,8 +5,6 @@ import {
 } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import { getSavedSum, sumAllByMonth } from "../../helpers/analyzerMethods";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { useContext } from "react";
 import { ThemeContext } from "../../App";
 
