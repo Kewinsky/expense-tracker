@@ -61,7 +61,7 @@ const RegisterComponent = () => {
 
   return (
     <Card className={`bg-${theme}`}>
-      <Card.Header>Login</Card.Header>
+      <Card.Header>Register new account</Card.Header>
       <Form onSubmit={handleRegister} ref={form} className="m-5">
         <Form.Group className="mb-3">
           <Form.Label>Username</Form.Label>

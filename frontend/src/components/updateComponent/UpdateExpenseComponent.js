@@ -8,6 +8,7 @@ import { dropdownData } from "../../helpers/dropdownData";
 import ThemeModeService from "../../services/themeModeService";
 import SelectComponent from "../selectComponent/SelectComponent";
 import { ThemeContext } from "../../App";
+import { Card } from "react-bootstrap";
 const UpdateExpenseComponent = ({
   expenses,
   setExpenses,
@@ -70,66 +71,69 @@ const UpdateExpenseComponent = ({
   };
 
   return (
-    <Form onSubmit={handleUpdateExpense}>
-      <Form.Group className="mt-3">
-        <Form.Label>Date</Form.Label>
-        <Form.Control
-          onChange={handleInputDate}
-          value={date}
-          type="date"
-          className={inputTheme}
-        />
-      </Form.Group>
+    <Card className={`bg-${theme}`}>
+      <Card.Header>Update Expense</Card.Header>
+      <Form onSubmit={handleUpdateExpense} className="mt-1 mb-5 mx-5">
+        <Form.Group className="mt-3">
+          <Form.Label>Date</Form.Label>
+          <Form.Control
+            onChange={handleInputDate}
+            value={date}
+            type="date"
+            className={inputTheme}
+          />
+        </Form.Group>
 
-      <Form.Group className="mt-3">
-        <Form.Label>Title</Form.Label>
-        <Form.Control
-          onChange={handleInputTitle}
-          value={title}
-          type="text"
-          placeholder="Multisport subscription"
-          className={inputTheme}
-        />
-      </Form.Group>
+        <Form.Group className="mt-3">
+          <Form.Label>Title</Form.Label>
+          <Form.Control
+            onChange={handleInputTitle}
+            value={title}
+            type="text"
+            placeholder="Multisport subscription"
+            className={inputTheme}
+          />
+        </Form.Group>
 
-      <Form.Group className="mt-3">
-        <Form.Label>Value</Form.Label>
-        <Form.Control
-          onChange={handleInputValue}
-          value={value}
-          type="number"
-          step={0.5}
-          placeholder="100,00"
-          className={inputTheme}
-        />
-      </Form.Group>
+        <Form.Group className="mt-3">
+          <Form.Label>Value</Form.Label>
+          <Form.Control
+            onChange={handleInputValue}
+            value={value}
+            type="number"
+            step={0.5}
+            placeholder="100,00"
+            className={inputTheme}
+          />
+        </Form.Group>
 
-      <Form.Group className="mt-3">
-        <Form.Label>Category</Form.Label>
-        <SelectComponent
-          options={expenseCategories}
-          handleSelect={handleSelectCategory}
-          theme={inputTheme}
-          defaultValue={getDefaultValue()}
-        />
-      </Form.Group>
+        <Form.Group className="mt-3">
+          <Form.Label>Category</Form.Label>
+          <SelectComponent
+            options={expenseCategories}
+            handleSelect={handleSelectCategory}
+            theme={inputTheme}
+            defaultValue={getDefaultValue()}
+          />
+        </Form.Group>
 
-      <Form.Group className="mt-3">
-        <Button variant="success" type="submit" className="w-100">
-          Submit
-        </Button>
-      </Form.Group>
-      <Form.Group className="mt-2">
-        <Button
-          variant={`outline-${reversedTheme}`}
-          type="submit"
-          className="w-100"
-          href="/tracker"
-        >
-          Cancel
-        </Button>
-      </Form.Group>
-    </Form>
+        <Form.Group className="mt-3">
+          <Button variant="success" type="submit" className="w-100">
+            Submit
+          </Button>
+        </Form.Group>
+        <Form.Group className="mt-2">
+          <Button
+            variant={`outline-${reversedTheme}`}
+            type="submit"
+            className="w-100"
+            href="/tracker"
+          >
+            Cancel
+          </Button>
+        </Form.Group>
+      </Form>
+    </Card>
   );
 };
 
