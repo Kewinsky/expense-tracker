@@ -1,7 +1,7 @@
 import Button from "react-bootstrap/Button";
 import React, { useState, useRef, useContext } from "react";
 import AuthService from "../../services/authService";
-import { Form, Card, CardGroup } from "react-bootstrap";
+import { Form, Card } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { ThemeContext } from "../../App";
 
