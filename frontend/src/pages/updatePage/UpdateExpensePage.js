@@ -1,14 +1,15 @@
+import { Row } from "react-bootstrap";
 import UpdateExpenseComponent from "../../components/updateComponent/UpdateExpenseComponent";
 const UpdateExpensePage = ({ expenses, setExpenses, expenseCategories }) => {
   return (
     <div className="d-flex justify-content-center">
-      <div className="m-5 w-50">
+      <Row className="col col-md-6 m-3">
         <UpdateExpenseComponent
           expenses={expenses}
           setExpenses={setExpenses}
           expenseCategories={expenseCategories}
         />
-      </div>
+      </Row>
     </div>
   );
 };

@@ -1,13 +1,14 @@
 import UpdateUserComponent from "../../components/updateComponent/UpdateUserComponent";
+import { Row } from "react-bootstrap";
 const UpdateUserPage = ({ currentUser, serCurrentUser }) => {
   return (
     <div className="d-flex justify-content-center">
-      <div className="m-5 w-50">
+      <Row className="col col-md-6 m-3">
         <UpdateUserComponent
           currentUser={currentUser}
           serCurrentUser={serCurrentUser}
         />
-      </div>
+      </Row>
     </div>
   );
 };
