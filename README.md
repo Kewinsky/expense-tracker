@@ -13,9 +13,10 @@ Spendee is an application, developed with Java, React, and MySQL, empowers users
    
 2. Insert test data using code from [here](https://github.com/Kewinsky/expense-tracker/blob/main/backend/src/main/java/com/expense_tracker/helpers/test_data.sql)
 
-3. Go to /frontend folder and run `npm install` in terminal to install dependencies.
-4. Type `npm start` to run it.
-5. Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+3. Open /backend folder in IntelliJ and run it.
+4. Go to /frontend folder and run `npm install` in terminal to install dependencies.
+5. Type `npm start` to run it.
+6. Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
 ## Stack:
 1. Backend: 
