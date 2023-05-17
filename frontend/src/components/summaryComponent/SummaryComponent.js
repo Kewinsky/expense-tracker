@@ -21,7 +21,7 @@ const SummaryComponent = ({
 
   return (
     <div className="d-flex text-center justify-content-center">
-      <div className="mx-5">
+      <div className="mx-3">
         <h5>Outcome</h5>
         <p className={"value-main " + outcomeStatus(outcome, previousOutcome)}>
           {outcome}
@@ -33,7 +33,7 @@ const SummaryComponent = ({
         </p>
         <p className="value-last">{previousOutcome}</p>
       </div>
-      <div className="mx-5">
+      <div className="mx-3">
         <h5>Saved</h5>
         <p className={"value-main " + savingsStatus(savings, previousSavings)}>
           {savings}
