@@ -18,7 +18,7 @@ const DarkModeComponent = () => {
   const switchThemes = (theme) => {
     if (theme === "dark") {
       document.body.style.color = "white";
-      document.body.style.backgroundColor = "#212529";
+      document.body.style.backgroundColor = "#323539";
     } else {
       document.body.style.color = "black";
       document.body.style.backgroundColor = "white";

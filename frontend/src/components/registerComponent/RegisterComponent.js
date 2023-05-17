@@ -1,7 +1,7 @@
 import Button from "react-bootstrap/Button";
 import React, { useState, useRef, useContext } from "react";
 import AuthService from "../../services/authService";
-import { Form } from "react-bootstrap";
+import { Form, Card, CardGroup } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { ThemeContext } from "../../App";
 
@@ -60,56 +60,59 @@ const RegisterComponent = () => {
   };
 
   return (
-    <Form onSubmit={handleRegister} ref={form}>
-      <Form.Group className="mb-3">
-        <Form.Label>Username</Form.Label>
-        <Form.Control
-          type="text"
-          placeholder="Enter username"
-          required
-          value={username}
-          onChange={onChangeUsername}
-          className={inputTheme}
-        />
-      </Form.Group>
-      <Form.Group className="mb-3">
-        <Form.Label>Email address</Form.Label>
-        <Form.Control
-          type="email"
-          placeholder="Enter email"
-          required
-          value={email}
-          onChange={onChangeEmail}
-          className={inputTheme}
-        />
-      </Form.Group>
-      <Form.Group className="mb-3">
-        <Form.Label>Password</Form.Label>
-        <Form.Control
-          type="password"
-          placeholder="Enter password"
-          required
-          value={password}
-          onChange={onChangePassword}
-          className={inputTheme}
-        />
-      </Form.Group>
-      <Form.Group className="text-center">
-        <Button variant={`outline-${reversedTheme}`} type="submit">
-          Sign Up
-        </Button>
-      </Form.Group>
-
-      {message && (
-        <Form.Group className="mt-3">
-          <div className="form-group">
-            <div className="alert alert-danger" role="alert">
-              {message}
-            </div>
-          </div>
+    <Card className={`bg-${theme}`}>
+      <Card.Header>Login</Card.Header>
+      <Form onSubmit={handleRegister} ref={form} className="m-5">
+        <Form.Group className="mb-3">
+          <Form.Label>Username</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="Enter username"
+            required
+            value={username}
+            onChange={onChangeUsername}
+            className={inputTheme}
+          />
         </Form.Group>
-      )}
-    </Form>
+        <Form.Group className="mb-3">
+          <Form.Label>Email address</Form.Label>
+          <Form.Control
+            type="email"
+            placeholder="Enter email"
+            required
+            value={email}
+            onChange={onChangeEmail}
+            className={inputTheme}
+          />
+        </Form.Group>
+        <Form.Group className="mb-3">
+          <Form.Label>Password</Form.Label>
+          <Form.Control
+            type="password"
+            placeholder="Enter password"
+            required
+            value={password}
+            onChange={onChangePassword}
+            className={inputTheme}
+          />
+        </Form.Group>
+        <Form.Group className="text-center">
+          <Button variant={`outline-${reversedTheme}`} type="submit">
+            Sign Up
+          </Button>
+        </Form.Group>
+
+        {message && (
+          <Form.Group className="mt-3">
+            <div className="form-group">
+              <div className="alert alert-danger" role="alert">
+                {message}
+              </div>
+            </div>
+          </Form.Group>
+        )}
+      </Form>
+    </Card>
   );
 };
 
