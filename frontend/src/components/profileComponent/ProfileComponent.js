@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { ThemeContext } from "../../App";
 import "./profileComponent.scss";
-import { Card, Image } from "react-bootstrap";
+import { Card, Col, Image, Row } from "react-bootstrap";
 import userImg from "../../assets/images/user_image.png";
 
 const ProfileComponent = ({ currentUser }) => {
@@ -15,19 +15,20 @@ const ProfileComponent = ({ currentUser }) => {
       <Card className={`bg-${theme}`}>
         <Card.Header>Your Profile</Card.Header>
         <Card.Body>
-          <div className="d-flex align-items-center">
-            <Image src={userImg} width={80} height={80} />
-            <div className="m-3">
-              <h4 className="m-0">{currentUser.username}</h4>
-              <p className="m-0">{currentUser.email}</p>
-            </div>
-            <Link
-              className="link-dark mx-3"
-              to={`/update/user/${currentUser.id}`}
-            >
-              <Button variant={`outline-${reversedTheme}`}>Edit</Button>
-            </Link>
-          </div>
+          <Row>
+            <Col className="d-flex col-12 col-md-8 align-items-center">
+              <Image src={userImg} width={80} height={80} />
+              <div className="mx-3">
+                <h4 className="m-0">{currentUser.username}</h4>
+                <p className="m-0">{currentUser.email}</p>
+              </div>
+            </Col>
+            <Col className="col-12 col-md-4 text-center align-self-center">
+              <Link to={`/update/user/${currentUser.id}`}>
+                <Button variant={`outline-${reversedTheme}`}>Edit</Button>
+              </Link>
+            </Col>
+          </Row>
         </Card.Body>
       </Card>
     </div>
