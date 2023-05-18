@@ -149,7 +149,11 @@ const AnalyzerPage = ({ expenses, months }) => {
             <UtilitiesComponent expenses={expenses} month={month} />
           </Col>
           <Col className="col-12 col-lg-6 p-4">
-            <NoteComponent notes={notes} setNotes={setNotes} month={month} />
+            <NoteComponent
+              note={notes.find((note) => note.month === month)}
+              getNotes={getNotes}
+              month={month}
+            />
           </Col>
           <Col className="col-12 col-lg-6 p-4">
             <PieChartComponent chartData={pieChartData} />
