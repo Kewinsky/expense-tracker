@@ -3,7 +3,7 @@ Spendee is an application, developed with Java, React, and MySQL, empowers users
 
 ## Getting started
 1. Configure your local database:
-   - create new schema `CREATE SCHEMA 'spendee'` 
+   - create new schema `CREATE SCHEMA spendee;` 
    - set up credentials in [resources file](https://github.com/Kewinsky/expense-tracker/blob/main/backend/src/main/resources/application.properties)
    
    example:
