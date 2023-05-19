@@ -22,9 +22,9 @@ const SummaryComponent = ({
         <p className={"value-main " + outcomeStatus(outcome, previousOutcome)}>
           {outcome}
           {outcomeStatus(outcome, previousOutcome) === "text-danger" ? (
-            <BsFillBarChartFill size={28} className="mx-1 mirrored" />
-          ) : (
             <BsFillBarChartFill size={28} className="mx-1" />
+          ) : (
+            <BsFillBarChartFill size={28} className="mx-1 mirrored" />
           )}
         </p>
         <p className="value-last">{previousOutcome}</p>
