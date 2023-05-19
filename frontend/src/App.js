@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Router from "./routes/Router";
 import ExpenseService from "./services/expenseService";
 import AuthService from "./services/authService";
+import { ToastContainer } from "react-toastify";
 
 const ThemeContext = React.createContext();
 
@@ -58,6 +59,7 @@ const App = () => {
 
   return (
     <ThemeContext.Provider value={{ theme, setTheme }}>
+      <ToastContainer />
       <Router
         expenses={expenses}
         setExpenses={setExpenses}
