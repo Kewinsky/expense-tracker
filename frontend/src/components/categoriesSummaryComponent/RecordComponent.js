@@ -1,8 +1,9 @@
-import ThemeModeService from "../../services/themeModeService";
+import { useContext } from "react";
+import { ThemeContext } from "../../App";
 
 const RecordComponent = ({ title, value }) => {
-  const storedTheme = ThemeModeService.getCurrentThemeMode();
-  const borderColor = storedTheme === "dark" ? "white" : "black";
+  const { theme } = useContext(ThemeContext);
+  const borderColor = theme === "dark" ? "white" : "black";
 
   return (
     <div

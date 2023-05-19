@@ -1,10 +1,15 @@
 import { Button, Form } from "react-bootstrap";
 import "./noteComponent.scss";
 import NoteService from "../../services/noteService";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import AuthService from "../../services/authService";
+import { ThemeContext } from "../../App";
 
 const NoteComponent = ({ note, getNotes, month }) => {
+  const { theme } = useContext(ThemeContext);
+  const inputTheme = theme === "dark" ? "darkTheme" : "";
+  const reversedTheme = theme === "dark" ? "light" : "dark";
+
   const currentUser = AuthService.getCurrentUser();
 
   const [updatedNote, setUpdatedNote] = useState(note?.note ?? "");
@@ -35,8 +40,13 @@ const NoteComponent = ({ note, getNotes, month }) => {
         defaultValue={updatedNote}
         onChange={handleInputChange}
         value={updatedNote}
+        className={inputTheme}
       />
-      <Button variant="outline-dark" className="mt-3" onClick={handleSaveNote}>
+      <Button
+        variant={`outline-${reversedTheme}`}
+        className="mt-3"
+        onClick={handleSaveNote}
+      >
         Save
       </Button>
     </Form.Group>

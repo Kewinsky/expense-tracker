@@ -1,14 +1,14 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import ExpenseService from "../../services/expenseService";
-import ThemeModeService from "../../services/themeModeService";
 import SelectComponent from "../selectComponent/SelectComponent";
+import { ThemeContext } from "../../App";
 
 const AddComponent = ({ setExpenses, currentUser, categories }) => {
-  const inputTheme =
-    ThemeModeService.getCurrentThemeMode() === "dark" ? "darkTheme" : "";
+  const { theme } = useContext(ThemeContext);
+  const inputTheme = theme === "dark" ? "darkTheme" : "";
 
   let userId = 0;
   if (currentUser !== undefined) {
