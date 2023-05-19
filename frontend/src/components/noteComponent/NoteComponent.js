@@ -37,7 +37,6 @@ const NoteComponent = ({ note, getNotes, month }) => {
       <h4>Notes</h4>
       <Form.Control
         as="textarea"
-        defaultValue={updatedNote}
         onChange={handleInputChange}
         value={updatedNote}
         className={inputTheme}
