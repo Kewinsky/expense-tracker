@@ -1,8 +1,11 @@
 package com.expense_tracker.controllers;
 
+import com.expense_tracker.exceptions.notes.NoteNotFoundException;
 import com.expense_tracker.models.Expense;
 import com.expense_tracker.exceptions.expenses.ExpenseNotFoundException;
+import com.expense_tracker.models.Note;
 import com.expense_tracker.repositories.ExpensesRepository;
+import com.expense_tracker.repositories.NotesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +18,9 @@ public class ExpensesController {
 
     @Autowired
     ExpensesRepository expensesRepository;
+
+    @Autowired
+    NotesRepository notesRepository;
 
     @Autowired
     UserController userController;

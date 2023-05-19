@@ -17,10 +17,14 @@ import {
   getSumCategories,
 } from "../../helpers/analyzerMethods";
 import { expenseFilter } from "../../helpers/expenseFilter";
+import NoteService from "../../services/noteService";
 
 const AnalyzerPage = ({ expenses, months }) => {
   const currentDate = new Date();
   const totalSumByMonth = sumAllMonths(expenses);
+
+  // notes
+  const [notes, setNotes] = useState([]);
 
   // summary info
   const [outcome, setOutcome] = useState(0);
@@ -90,6 +94,11 @@ const AnalyzerPage = ({ expenses, months }) => {
     }
   };
 
+  const getNotes = async () => {
+    const response = await NoteService.getNotesByUser();
+    setNotes(response.data);
+  };
+
   const filterExpenses = (month) => {
     const response = expenseFilter(expenses, month, null);
     setFilteredExpenses(response);
@@ -99,6 +108,7 @@ const AnalyzerPage = ({ expenses, months }) => {
 
   useEffect(() => {
     filterExpenses(month);
+    getNotes();
     setOutcome(sumAllByMonth(expenses, month));
     setPreviousOutcome(sumAllByMonth(expenses, month - 1));
     setSavings(getSavedSum(expenses, month));
@@ -139,7 +149,11 @@ const AnalyzerPage = ({ expenses, months }) => {
             <UtilitiesComponent expenses={expenses} month={month} />
           </Col>
           <Col className="col-12 col-lg-6 p-4">
-            <NoteComponent />
+            <NoteComponent
+              note={notes.find((note) => note.month === month)}
+              getNotes={getNotes}
+              month={month}
+            />
           </Col>
           <Col className="col-12 col-lg-6 p-4">
             <PieChartComponent chartData={pieChartData} />
