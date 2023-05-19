@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import SwitchMonthComponent from "../../components/switchComponent/SwitchMonthComponent";
+import SwitchMonthComponent from "../../components/switchMonthComponent/SwitchMonthComponent";
 import SummaryComponent from "../../components/summaryComponent/SummaryComponent";
 import SeparatorComponent from "../../components/separatorComponent/SeparatorComponent";
 import LineChartComponent from "../../components/lineChartComponent/LineChartComponent";

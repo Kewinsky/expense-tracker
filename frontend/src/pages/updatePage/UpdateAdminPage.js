@@ -2,6 +2,7 @@ import UpdateAdminComponent from "../../components/updateComponent/UpdateAdminCo
 import UserService from "../../services/userService";
 import { useEffect, useState } from "react";
 import SpinnerComponent from "../../components/spinnerComponent/SpinnerComponent";
+import { Row } from "react-bootstrap";
 const UpdateAdminPage = () => {
   const [users, setUsers] = useState([]);
 
@@ -20,9 +21,9 @@ const UpdateAdminPage = () => {
 
   return (
     <div className="d-flex justify-content-center">
-      <div className="m-5 w-50">
+      <Row className="col col-md-6 m-3">
         <UpdateAdminComponent users={users} setUsers={setUsers} />
-      </div>
+      </Row>
     </div>
   );
 };

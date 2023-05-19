@@ -136,7 +136,7 @@ export const Router = ({
         element={
           <MainLayout pageTitle={"Unauthorized"}>
             <ProtectedRoute currentUser={currentUser}>
-              <UnauthorizedPage currentUser={currentUser} />
+              <UnauthorizedPage />
             </ProtectedRoute>
           </MainLayout>
         }

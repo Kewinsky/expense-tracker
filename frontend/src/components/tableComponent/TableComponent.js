@@ -1,8 +1,10 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, useContext } from "react";
 import Table from "react-bootstrap/Table";
 import ActionButtonsComponents from "./ActionButtonsComponent";
 import SpinnerComponent from "../spinnerComponent/SpinnerComponent";
 import "./sortableTableComponent.scss";
+import { Button } from "react-bootstrap";
+import { ThemeContext } from "../../App";
 
 const useSortableData = (recordsList, config = null) => {
   const [sortConfig, setSortConfig] = useState(config);
@@ -44,6 +46,9 @@ const TableComponent = ({
   handleDelete,
   records,
 }) => {
+  const { theme } = useContext(ThemeContext);
+  const reversedTheme = theme === "dark" ? "light" : "dark";
+
   const { sortedRecords, requestSort, sortConfig } = useSortableData(records);
   const getClassNamesFor = (name) => {
     if (!sortConfig) {
@@ -57,18 +62,19 @@ const TableComponent = ({
   }
 
   return (
-    <Table striped bordered hover size="md">
+    <Table responsive striped bordered hover size="md" variant={theme}>
       <thead>
         <tr>
           {configLabels.map((label) => (
             <th key={label}>
-              <button
+              <Button
                 type="button"
                 onClick={() => requestSort(label)}
                 className={getClassNamesFor(label)}
+                variant={`outline-${reversedTheme}`}
               >
                 {label.charAt(0).toUpperCase() + label.slice(1)}
-              </button>
+              </Button>
             </th>
           ))}
           <th>Action</th>
@@ -84,6 +90,7 @@ const TableComponent = ({
               handleUpdate={handleUpdate}
               handleDelete={handleDelete}
               record={record}
+              theme={reversedTheme}
             />
           </tr>
         ))}

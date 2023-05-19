@@ -1,8 +1,10 @@
 import Form from "react-bootstrap/Form";
 import { Col, Container, Row } from "react-bootstrap";
-import { useEffect } from "react";
-import Select from "react-select";
+import ThemeModeService from "../../services/themeModeService";
+import { useEffect, useContext } from "react";
 import { dropdownData } from "../../helpers/dropdownData";
+import SelectComponent from "../selectComponent/SelectComponent";
+import { ThemeContext } from "../../App";
 
 const FilteringComponent = ({
   categories,
@@ -13,6 +15,13 @@ const FilteringComponent = ({
   months,
   filterExpenses,
 }) => {
+  const { theme } = useContext(ThemeContext);
+  const inputTheme = theme === "dark" ? "darkTheme" : "";
+
+  const getDefaultValue = () => {
+    return dropdownData(months)[months.indexOf(month)];
+  };
+
   const handleSelectMonth = (e) => {
     setMonth(e.value);
   };
@@ -32,22 +41,23 @@ const FilteringComponent = ({
           <Col className="mt-3">
             <Form.Group>
               <Form.Label>Choose month</Form.Label>
-              <Select
-                options={dropdownData(months)}
-                onChange={handleSelectMonth}
-                defaultValue={dropdownData(months)[months.indexOf(month)]}
+              <SelectComponent
+                options={months}
+                handleSelect={handleSelectMonth}
+                theme={inputTheme}
+                defaultValue={getDefaultValue()}
               />
             </Form.Group>
           </Col>
           <Col className="mt-3">
             <Form.Group>
               <Form.Label>Choose category</Form.Label>
-              <Select
-                isMulti
+              <SelectComponent
+                isMulti={true}
                 closeMenuOnSelect={false}
-                options={dropdownData(categories)}
-                onChange={handleSelectCategory}
-                placeholder={"Select categories"}
+                options={categories}
+                handleSelect={handleSelectCategory}
+                theme={inputTheme}
               />
             </Form.Group>
           </Col>

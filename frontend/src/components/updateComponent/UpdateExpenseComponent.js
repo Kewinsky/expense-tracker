@@ -1,10 +1,12 @@
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { useParams } from "react-router-dom";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import ExpenseService from "../../services/expenseService";
-import Select from "react-select";
 import { dropdownData } from "../../helpers/dropdownData";
+import SelectComponent from "../selectComponent/SelectComponent";
+import { ThemeContext } from "../../App";
+import { Card } from "react-bootstrap";
 const UpdateExpenseComponent = ({
   expenses,
   setExpenses,
@@ -13,9 +15,17 @@ const UpdateExpenseComponent = ({
   const { id } = useParams();
   const expenseId = id;
 
+  const { theme } = useContext(ThemeContext);
+  const reversedTheme = theme === "dark" ? "light" : "dark";
+  const inputTheme = theme === "dark" ? "darkTheme" : "";
+
   const selectedExpense = expenses.find((item) => {
     return item.id === parseInt(expenseId);
   });
+
+  const getDefaultValue = () => {
+    return dropdownData(expenseCategories)[expenseCategories.indexOf(category)];
+  };
 
   const [date, setDate] = useState(selectedExpense.date);
   const [title, setTitle] = useState(selectedExpense.title);
@@ -59,60 +69,69 @@ const UpdateExpenseComponent = ({
   };
 
   return (
-    <Form onSubmit={handleUpdateExpense}>
-      <Form.Group className="mt-3">
-        <Form.Label>Date</Form.Label>
-        <Form.Control onChange={handleInputDate} value={date} type="date" />
-      </Form.Group>
+    <Card className={`bg-${theme}`}>
+      <Card.Header>Update Expense</Card.Header>
+      <Form onSubmit={handleUpdateExpense} className="mt-1 mb-5 mx-5">
+        <Form.Group className="mt-3">
+          <Form.Label>Date</Form.Label>
+          <Form.Control
+            onChange={handleInputDate}
+            value={date}
+            type="date"
+            className={inputTheme}
+          />
+        </Form.Group>
 
-      <Form.Group className="mt-3">
-        <Form.Label>Title</Form.Label>
-        <Form.Control
-          onChange={handleInputTitle}
-          value={title}
-          type="text"
-          placeholder="Multisport subscription"
-        />
-      </Form.Group>
+        <Form.Group className="mt-3">
+          <Form.Label>Title</Form.Label>
+          <Form.Control
+            onChange={handleInputTitle}
+            value={title}
+            type="text"
+            placeholder="Multisport subscription"
+            className={inputTheme}
+          />
+        </Form.Group>
 
-      <Form.Group className="mt-3">
-        <Form.Label>Value</Form.Label>
-        <Form.Control
-          onChange={handleInputValue}
-          value={value}
-          type="number"
-          step={0.5}
-          placeholder="100,00"
-        />
-      </Form.Group>
+        <Form.Group className="mt-3">
+          <Form.Label>Value</Form.Label>
+          <Form.Control
+            onChange={handleInputValue}
+            value={value}
+            type="number"
+            step={0.5}
+            placeholder="100,00"
+            className={inputTheme}
+          />
+        </Form.Group>
 
-      <Form.Group className="mt-3">
-        <Form.Label>Category</Form.Label>
-        <Select
-          options={dropdownData(expenseCategories)}
-          defaultValue={
-            dropdownData(expenseCategories)[expenseCategories.indexOf(category)]
-          }
-          onChange={handleSelectCategory}
-        />
-      </Form.Group>
+        <Form.Group className="mt-3">
+          <Form.Label>Category</Form.Label>
+          <SelectComponent
+            options={expenseCategories}
+            handleSelect={handleSelectCategory}
+            theme={inputTheme}
+            defaultValue={getDefaultValue()}
+          />
+        </Form.Group>
 
-      <Form.Group className="mt-3">
-        <Button variant="success" type="submit" className="w-100">
-          Submit
-        </Button>
-      </Form.Group>
-      <Form.Group className="mt-2">
-        <Button
-          variant="outline-dark"
-          type="submit"
-          className="w-100"
-          href="/tracker"
-        >
-          Cancel
-        </Button>
-      </Form.Group>
-    </Form>
+        <Form.Group className="mt-3">
+          <Button variant="success" type="submit" className="w-100">
+            Submit
+          </Button>
+        </Form.Group>
+        <Form.Group className="mt-2">
+          <Button
+            variant={`outline-${reversedTheme}`}
+            type="submit"
+            className="w-100"
+            href="/tracker"
+          >
+            Cancel
+          </Button>
+        </Form.Group>
+      </Form>
+    </Card>
   );
 };
 

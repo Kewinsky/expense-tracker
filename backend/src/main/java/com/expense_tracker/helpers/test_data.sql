@@ -1,3 +1,19 @@
+USE spendee;
+
+--create initial roles
+INSERT INTO roles(name) VALUES('ROLE_USER');
+INSERT INTO roles(name) VALUES('ROLE_MODERATOR');
+INSERT INTO roles(name) VALUES('ROLE_ADMIN');
+
+--create initial admin user
+INSERT INTO users (email, password, username) VALUES ("admin@gmail.com", "$2a$10$6E72jUTcv/iGlTM9kJAXm.W/hUjI128bCQltvSzW3a3ZiHPUsVz6C", "Admin");
+
+--provide all roles for admin
+INSERT INTO user_roles (user_id, role_id) VALUES (1, 1);
+INSERT INTO user_roles (user_id, role_id) VALUES (1, 2);
+INSERT INTO user_roles (user_id, role_id) VALUES (1, 3);
+
+--provide test data
 INSERT INTO expenses(category, date, title, user_id, value)
 VALUES
     ("TRANSPORT", "2023-01-02", "Gas", 1, 30),
@@ -64,7 +80,7 @@ VALUES
     ("UTILITIES", "2023-04-15", "Internet Subscribtion", 1, 60),
     ("HOUSING", "2023-04-25", "Home repairs", 1, 250),
     ("SAVINGS", "2023-04-30", "401k Contribution", 1, 600),
-    ("FOOD", "2023-04-30", "Takeout", 1, 40);
+    ("FOOD", "2023-04-30", "Takeout", 1, 40),
 
 
     ("FOOD", "2023-05-01", "Groceries", 1, 80),
