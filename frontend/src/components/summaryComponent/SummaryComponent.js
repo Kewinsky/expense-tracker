@@ -15,10 +15,6 @@ const SummaryComponent = ({
     return current >= previous ? "text-success" : "text-danger";
   };
 
-  console.log(savings);
-  console.log(previousSavings);
-  console.log(savingsStatus(savings, previousSavings));
-
   return (
     <div className="d-flex text-center justify-content-center">
       <div className="mx-3">
