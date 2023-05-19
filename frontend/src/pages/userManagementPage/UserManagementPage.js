@@ -1,10 +1,14 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import UserService from "../../services/userService";
 import TableComponent from "../../components/tableComponent/TableComponent";
+import { toast } from "react-toastify";
+import { ThemeContext } from "../../App";
 const UserManagementPage = ({ currentUser }) => {
   const configLabels = ["username", "email", "roles"];
   const handleUpdate = "/update/userByAdmin";
+
+  const { theme } = useContext(ThemeContext);
 
   const [users, setUsers] = useState([]);
 
@@ -27,10 +31,26 @@ const UserManagementPage = ({ currentUser }) => {
     setUsers(response.data);
   };
 
+  const showToastMessageOnDelete = () => {
+    toast.success("User deleted!", {
+      theme: theme,
+    });
+  };
+
+  const showToastErrorMessage = () => {
+    toast.error("Something went wrong!", {
+      theme: theme,
+    });
+  };
+
   const handleDelete = async (id) => {
     await UserService.deleteUser(id)
       .then(() => getAllUsers())
-      .catch((err) => console.log(err.response.data));
+      .catch((err) => {
+        showToastErrorMessage();
+        console.log(err.response.data);
+      })
+      .then(() => showToastMessageOnDelete());
   };
 
   useEffect(() => {

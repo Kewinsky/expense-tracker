@@ -51,7 +51,7 @@ const AddComponent = ({ setExpenses, currentUser, categories }) => {
     setExpenses(response.data);
   };
 
-  const showToastMessageWhenAdd = () => {
+  const showToastMessageOnAdd = () => {
     toast.success("New expense added!", {
       theme: theme,
     });
@@ -77,7 +77,7 @@ const AddComponent = ({ setExpenses, currentUser, categories }) => {
         showToastErrorMessage();
         console.log(err.response.data);
       })
-      .then(() => showToastMessageWhenAdd());
+      .then(() => showToastMessageOnAdd());
   };
 
   return (

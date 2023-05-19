@@ -30,8 +30,8 @@ const TrackerPage = ({
     setExpenses(response.data);
   };
 
-  const showToastMessageWhenDelete = () => {
-    toast.success("New expense deleted!", {
+  const showToastMessageOnDelete = () => {
+    toast.success("Expense deleted!", {
       theme: theme,
     });
   };
@@ -49,7 +49,7 @@ const TrackerPage = ({
         showToastErrorMessage();
         console.log(err.response.data);
       })
-      .then(() => showToastMessageWhenDelete());
+      .then(() => showToastMessageOnDelete());
   };
 
   const filterExpenses = () => {
