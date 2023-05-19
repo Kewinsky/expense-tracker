@@ -34,20 +34,18 @@ const NoteComponent = ({ note, getNotes, month }) => {
 
   return (
     <Form.Group>
-      <h4>Notes</h4>
+      <div className="d-flex justify-content-between align-items-center mb-3">
+        <h4 className="m-0">Notes</h4>
+        <Button variant={`outline-${reversedTheme}`} onClick={handleSaveNote}>
+          Save
+        </Button>
+      </div>
       <Form.Control
         as="textarea"
         onChange={handleInputChange}
         value={updatedNote}
         className={inputTheme}
       />
-      <Button
-        variant={`outline-${reversedTheme}`}
-        className="mt-3"
-        onClick={handleSaveNote}
-      >
-        Save
-      </Button>
     </Form.Group>
   );
 };
