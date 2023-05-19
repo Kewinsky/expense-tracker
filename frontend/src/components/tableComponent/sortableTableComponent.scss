@@ -8,3 +8,15 @@ button {
     background-color: #f2f2f2;
   }
 }
+
+thead button.ascending::after {
+  content: "⬇️";
+  display: inline-block;
+  margin-left: 0.5rem;
+}
+
+thead button.descending::after {
+  content: "⬆️";
+  display: inline-block;
+  margin-left: 0.5rem;
+}
