@@ -1,6 +1,5 @@
 import Form from "react-bootstrap/Form";
 import { Col, Container, Row } from "react-bootstrap";
-import ThemeModeService from "../../services/themeModeService";
 import { useEffect, useContext } from "react";
 import { dropdownData } from "../../helpers/dropdownData";
 import SelectComponent from "../selectComponent/SelectComponent";
