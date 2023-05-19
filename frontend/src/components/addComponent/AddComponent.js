@@ -5,6 +5,7 @@ import Form from "react-bootstrap/Form";
 import ExpenseService from "../../services/expenseService";
 import SelectComponent from "../selectComponent/SelectComponent";
 import { ThemeContext } from "../../App";
+import { toast } from "react-toastify";
 
 const AddComponent = ({ setExpenses, currentUser, categories }) => {
   const { theme } = useContext(ThemeContext);
@@ -50,6 +51,18 @@ const AddComponent = ({ setExpenses, currentUser, categories }) => {
     setExpenses(response.data);
   };
 
+  const showToastMessageOnAdd = () => {
+    toast.success("New expense added!", {
+      theme: theme,
+    });
+  };
+
+  const showToastErrorMessage = () => {
+    toast.error("Something went wrong!", {
+      theme: theme,
+    });
+  };
+
   const handleAddExpense = async (e) => {
     e.preventDefault();
 
@@ -58,7 +71,13 @@ const AddComponent = ({ setExpenses, currentUser, categories }) => {
     setValue("");
     setCategory("");
 
-    await ExpenseService.addExpense(newExpense).then(() => reloadData());
+    await ExpenseService.addExpense(newExpense)
+      .then(() => reloadData())
+      .catch((err) => {
+        showToastErrorMessage();
+        console.log(err.response.data);
+      })
+      .then(() => showToastMessageOnAdd());
   };
 
   return (

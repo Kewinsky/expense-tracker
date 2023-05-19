@@ -27,7 +27,6 @@ const SelectComponent = ({
             background: "#212529",
           }),
           option: (styles, { data, isDisabled, isFocused, isSelected }) => {
-            console.log({ data, isDisabled, isFocused, isSelected });
             return {
               ...styles,
               backgroundColor: isFocused ? "#323539" : null,
