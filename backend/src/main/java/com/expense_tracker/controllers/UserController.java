@@ -1,6 +1,5 @@
 package com.expense_tracker.controllers;
 
-import com.expense_tracker.exceptions.expenses.ExpenseNotFoundException;
 import com.expense_tracker.models.User;
 import com.expense_tracker.exceptions.users.UserNotFoundException;
 import com.expense_tracker.payloads.requests.SignupRequest;
@@ -8,9 +7,10 @@ import com.expense_tracker.repositories.UserRepository;
 import com.expense_tracker.utils.RoleConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/users")
 @PreAuthorize("hasRole('ADMIN')")

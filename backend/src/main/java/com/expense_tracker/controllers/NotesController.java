@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Objects;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/notes")
-@CrossOrigin
 @PreAuthorize("hasRole('USER')")
 public class NotesController {
     @Autowired
