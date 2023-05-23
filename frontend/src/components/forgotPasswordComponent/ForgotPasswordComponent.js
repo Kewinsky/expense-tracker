@@ -1,27 +1,28 @@
+import React, { useRef } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import { useState, useRef, useContext } from "react";
-import { useNavigate } from "react-router-dom";
-import AuthService from "../../services/authService";
-import { ThemeContext } from "../../App";
 import { Card } from "react-bootstrap";
+import { useContext, useState } from "react";
+import { ThemeContext } from "../../App";
+import AuthService from "../../services/authService";
+import { useNavigate } from "react-router-dom";
 
-const LoginComponent = () => {
+const ForgotPasswordComponent = () => {
   const { theme } = useContext(ThemeContext);
   const reversedTheme = theme === "dark" ? "light" : "dark";
   const inputTheme = theme === "dark" ? "darkTheme" : "";
 
   const form = useRef();
 
-  const [username, setUsername] = useState("");
+  const navigate = useNavigate();
+
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
 
-  const navigate = useNavigate();
-
-  const onChangeUsername = (e) => {
-    const username = e.target.value;
-    setUsername(username);
+  const onChangeEmail = (e) => {
+    const email = e.target.value;
+    setEmail(email);
   };
 
   const onChangePassword = (e) => {
@@ -29,40 +30,42 @@ const LoginComponent = () => {
     setPassword(password);
   };
 
-  const handleLogin = (e) => {
+  const newPassword = {
+    email,
+    password,
+  };
+
+  const handleUpdatePassword = (e) => {
     e.preventDefault();
 
     setMessage("");
 
-    AuthService.login(username, password).then(
-      () => {
+    AuthService.forgotPassword(newPassword)
+      .then(() => {
         navigate("/");
         window.location.reload();
-      },
-      () => {
-        setMessage("Invalid credentials.");
-      }
-    );
+      })
+      .catch((err) => setMessage(err.response.data.message));
   };
 
   return (
     <Card className={`bg-${theme}`}>
       <Card.Header>Login</Card.Header>
-      <Form onSubmit={handleLogin} ref={form} className="m-5">
+      <Form onSubmit={handleUpdatePassword} ref={form} className="m-5">
         <Form.Group className="mb-3">
-          <Form.Label>Username</Form.Label>
+          <Form.Label>Email</Form.Label>
           <Form.Control
             type="text"
-            placeholder="Enter username"
+            placeholder="Enter email"
             required
-            value={username}
-            onChange={onChangeUsername}
+            value={email}
+            onChange={onChangeEmail}
             className={inputTheme}
           />
         </Form.Group>
 
         <Form.Group className="mb-3">
-          <Form.Label>Password</Form.Label>
+          <Form.Label>New password</Form.Label>
           <Form.Control
             type="password"
             placeholder="Enter password"
@@ -72,22 +75,9 @@ const LoginComponent = () => {
             className={inputTheme}
           />
         </Form.Group>
-        <div className="text-center mb-3">
-          <p>
-            No account? Go to{" "}
-            <a href="/register" className={`link-${reversedTheme}`}>
-              register page
-            </a>
-          </p>
-          <p>
-            <a href="/forgotPassword" className={`link-${reversedTheme}`}>
-              Forgot password?
-            </a>
-          </p>
-        </div>
         <div className="text-center">
           <Button variant={`outline-${reversedTheme}`} type="submit">
-            Login
+            Update password
           </Button>
         </div>
         {message && (
@@ -104,4 +94,4 @@ const LoginComponent = () => {
   );
 };
 
-export default LoginComponent;
+export default ForgotPasswordComponent;

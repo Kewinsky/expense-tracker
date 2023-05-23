@@ -13,6 +13,7 @@ import ProtectedRoute from "./ProtectedRoute";
 import UpdateExpensePage from "../pages/updatePage/UpdateExpensePage";
 import UpdateUserPage from "../pages/updatePage/UpdateUserPage";
 import UpdateAdminPage from "../pages/updatePage/UpdateAdminPage";
+import ForgotPasswordPage from "../pages/forgotPasswordPage/ForgotPasswordPage";
 
 export const Router = ({
   expenses,
@@ -45,6 +46,14 @@ export const Router = ({
         element={
           <MainLayout pageTitle={"Spendee | Login"}>
             <LoginPage />
+          </MainLayout>
+        }
+      />
+      <Route
+        path="/forgotPassword"
+        element={
+          <MainLayout pageTitle={"Spendee | Forgot Password"}>
+            <ForgotPasswordPage />
           </MainLayout>
         }
       />

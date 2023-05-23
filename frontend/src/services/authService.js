@@ -25,6 +25,10 @@ const login = (username, password) => {
     });
 };
 
+const forgotPassword = (newPassword) => {
+  return axios.put(API_URL + "forgotPassword", newPassword);
+};
+
 const logout = () => {
   localStorage.removeItem("user");
 };
@@ -36,6 +40,7 @@ const getCurrentUser = () => {
 const AuthService = {
   register,
   login,
+  forgotPassword,
   logout,
   getCurrentUser,
 };
