@@ -39,24 +39,16 @@ const RegisterComponent = () => {
 
     setMessage("");
 
-    AuthService.register(username, email, password).then(
-      () => {
+    AuthService.register(username, email, password)
+      .then(() => {
         AuthService.login(username, password).then(() => {
           navigate("/");
           window.location.reload();
         });
-      },
-      (error) => {
-        const resMessage =
-          (error.response &&
-            error.response.data &&
-            error.response.data.message) ||
-          error.message ||
-          error.toString();
-
-        setMessage(resMessage);
-      }
-    );
+      })
+      .catch((err) => {
+        setMessage(err.response.data.message);
+      });
   };
 
   return (

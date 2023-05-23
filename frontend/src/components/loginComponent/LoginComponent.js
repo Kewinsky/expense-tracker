@@ -34,15 +34,14 @@ const LoginComponent = () => {
 
     setMessage("");
 
-    AuthService.login(username, password).then(
-      () => {
+    AuthService.login(username, password)
+      .then(() => {
         navigate("/");
         window.location.reload();
-      },
-      () => {
-        setMessage("Invalid credentials.");
-      }
-    );
+      })
+      .catch((err) => {
+        setMessage(err.response.data.message);
+      });
   };
 
   return (
