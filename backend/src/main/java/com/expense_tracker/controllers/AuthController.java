@@ -95,12 +95,18 @@ public class AuthController {
     }
 
     @PutMapping("/forgotPassword")
-    public String forgotPassword(@Valid @RequestBody ForgotPasswordRequest forgotPasswordRequest) {
+    public ResponseEntity<?> forgotPassword(@Valid @RequestBody ForgotPasswordRequest forgotPasswordRequest) {
+        if (!userRepository.existsByEmail(forgotPasswordRequest.getEmail())) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(new MessageResponse("Error: Email not found!"));
+        }
+
         return userRepository.findByEmail(forgotPasswordRequest.getEmail())
                 .map(user -> {
                     user.setPassword(encoder.encode(forgotPasswordRequest.getPassword()));
                     userRepository.save(user);
-                    return "Password updated.";
+                    return ResponseEntity.ok(new MessageResponse("Password updated successfully!"));
                 })
                 .orElseThrow(() -> new UserNotFoundException(forgotPasswordRequest.getEmail()));
     }
