@@ -55,7 +55,7 @@ const ForgotPasswordComponent = () => {
         <Form.Group className="mb-3">
           <Form.Label>Email</Form.Label>
           <Form.Control
-            type="text"
+            type="email"
             placeholder="Enter email"
             required
             value={email}
