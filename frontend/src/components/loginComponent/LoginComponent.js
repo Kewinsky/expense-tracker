@@ -71,11 +71,11 @@ const LoginComponent = () => {
             className={inputTheme}
           />
         </Form.Group>
-        <div className="text-center mb-3">
+        <div className="d-flex justify-content-between mb-3">
           <p>
-            No account? Go to{" "}
+            No account?{" "}
             <a href="/register" className={`link-${reversedTheme}`}>
-              register page
+              Sign up
             </a>
           </p>
           <p>
