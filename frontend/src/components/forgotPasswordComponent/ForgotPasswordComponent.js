@@ -40,15 +40,12 @@ const ForgotPasswordComponent = () => {
 
     setMessage("");
 
-    AuthService.forgotPassword(newPassword).then(
-      () => {
+    AuthService.forgotPassword(newPassword)
+      .then(() => {
         navigate("/");
         window.location.reload();
-      },
-      () => {
-        setMessage("Email does not exist.");
-      }
-    );
+      })
+      .catch((err) => setMessage(err.response.data.message));
   };
 
   return (
