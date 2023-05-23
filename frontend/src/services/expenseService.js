@@ -2,7 +2,7 @@ import axios from "axios";
 import { authHeader } from "./authHeader";
 import AuthService from "./authService";
 
-const API_URL = "http://localhost:8080/api/expenses/";
+const API_URL = process.env.REACT_APP_API_URL + "/expenses/";
 
 const getExpenseById = (id) => {
   return axios.get(API_URL + `getExpense/${id}`, { headers: authHeader() });
