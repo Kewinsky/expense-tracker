@@ -16,8 +16,11 @@ public class Note {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private int year;
+
     private int month;
 
     private String note;
+
     private Long userId;
 }
