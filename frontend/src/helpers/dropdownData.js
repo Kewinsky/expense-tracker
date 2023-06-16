@@ -4,3 +4,10 @@ export const dropdownData = (items) => {
     label: item.charAt(0) + item.slice(1).toLowerCase(),
   }));
 };
+
+export const dropdownDataNumber = (items) => {
+  return items.map((item) => ({
+    value: item,
+    label: item,
+  }));
+};
