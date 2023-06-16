@@ -6,8 +6,12 @@ const UtilitiesComponent = ({ expenses, month }) => {
   return (
     <>
       <h4>Utilities</h4>
-      {array.map((item) => (
-        <RecordComponent title={item.title.toUpperCase()} value={item.value} />
+      {array.map((item, index) => (
+        <RecordComponent
+          key={index}
+          title={item.title.toUpperCase()}
+          value={item.value}
+        />
       ))}
     </>
   );

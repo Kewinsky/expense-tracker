@@ -7,10 +7,14 @@ const CategoriesSummaryComponent = ({ expenses, month }) => {
   return (
     <>
       <h4>Top 5 Spendings</h4>
-      {array.map((item) => (
-        <RecordComponent title={item.category} value={item.value} />
+      {array.map((item, index) => (
+        <RecordComponent key={index} title={item.category} value={item.value} />
       ))}
-      {Array(blank_items).fill(<RecordComponent title={"-"} value={0} />)}
+      {Array(blank_items)
+        .fill()
+        .map((_, index) => (
+          <RecordComponent key={`blank_${index}`} title={"-"} value={0} />
+        ))}
     </>
   );
 };
