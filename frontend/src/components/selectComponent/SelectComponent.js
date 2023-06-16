@@ -1,5 +1,4 @@
 import Select from "react-select";
-import { dropdownData } from "../../helpers/dropdownData";
 
 const SelectComponent = ({
   options,
@@ -48,7 +47,7 @@ const SelectComponent = ({
 
   return (
     <Select
-      options={dropdownData(options)}
+      options={options}
       onChange={handleSelect}
       placeholder={placeholder}
       styles={darkMode}

@@ -4,6 +4,7 @@
   display: flex;
   margin: 1rem;
   justify-content: center;
+  align-items: center;
 }
 
 .switch-button {
@@ -13,4 +14,20 @@
 .month-title {
   width: 150px;
   text-align: center;
+}
+
+.switch-container select {
+  border: none;
+  border-bottom: 1px solid black;
+  font-size: 17px;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.select-dark {
+  background-color: $lightDark;
+  color: white;
+  border-bottom: 1px solid !important;
 }

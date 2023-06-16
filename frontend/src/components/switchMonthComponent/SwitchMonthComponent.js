@@ -9,10 +9,13 @@ import { useContext } from "react";
 import { ThemeContext } from "../../App";
 
 const SwitchMonthComponent = ({
-  expenses,
+  expensesOfYear,
   months,
+  years,
   month,
   setMonth,
+  year,
+  setYear,
   setOutcome,
   setPreviousOutcome,
   setSavings,
@@ -26,11 +29,11 @@ const SwitchMonthComponent = ({
     if (month < 11) {
       month = month + 1;
       setMonth(month);
-      setOutcome(sumAllByMonth(expenses, month));
-      setPreviousOutcome(sumAllByMonth(expenses, month - 1));
-      setSavings(getSavedSum(expenses, month));
-      setPreviousSavings(getSavedSum(expenses, month - 1));
-      filterExpenses(month);
+      setOutcome(sumAllByMonth(expensesOfYear, month));
+      setPreviousOutcome(sumAllByMonth(expensesOfYear, month - 1));
+      setSavings(getSavedSum(expensesOfYear, month));
+      setPreviousSavings(getSavedSum(expensesOfYear, month - 1));
+      filterExpenses(year, month);
     }
   };
 
@@ -38,19 +41,39 @@ const SwitchMonthComponent = ({
     if (month > 0) {
       month = month - 1;
       setMonth(month);
-      setOutcome(sumAllByMonth(expenses, month));
-      setPreviousOutcome(sumAllByMonth(expenses, month - 1));
-      setSavings(getSavedSum(expenses, month));
-      setPreviousSavings(getSavedSum(expenses, month - 1));
-      filterExpenses(month);
+      setOutcome(sumAllByMonth(expensesOfYear, month));
+      setPreviousOutcome(sumAllByMonth(expensesOfYear, month - 1));
+      setSavings(getSavedSum(expensesOfYear, month));
+      setPreviousSavings(getSavedSum(expensesOfYear, month - 1));
+      filterExpenses(year, month);
     }
   };
+
+  const handleYearChange = (e) => {
+    e.preventDefault();
+    setYear(e.target.value);
+    filterExpenses(year, month);
+  };
+
   return (
     <div className="switch-container">
       <Link className={`link-${reversedTheme}`} onClick={handleLeftButton}>
         <BsFillArrowLeftCircleFill size={28} />
       </Link>
-      <h5 className="month-title">{months[month]}</h5>
+      <div className="text-center">
+        <h5 className="month-title">{months[month]}</h5>
+        <select
+          value={year}
+          onChange={handleYearChange}
+          className={`select-${theme}`}
+        >
+          {years.map((year) => (
+            <option key={year} value={year} className="month-title">
+              {year}
+            </option>
+          ))}
+        </select>
+      </div>
       <Link className={`link-${reversedTheme}`} onClick={handleRightButton}>
         <BsFillArrowRightCircleFill size={28} />
       </Link>
