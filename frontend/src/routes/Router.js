@@ -22,6 +22,7 @@ export const Router = ({
   setCurrentUser,
   expenseCategories,
   months,
+  years,
 }) => {
   return (
     <Routes>
@@ -68,6 +69,7 @@ export const Router = ({
                 currentUser={currentUser}
                 expenseCategories={expenseCategories}
                 months={months}
+                years={years}
               />
             </ProtectedRoute>
           </MainLayout>
@@ -78,7 +80,7 @@ export const Router = ({
         element={
           <MainLayout pageTitle={"Spendee | Analyzer"}>
             <ProtectedRoute currentUser={currentUser}>
-              <AnalyzerPage expenses={expenses} months={months} />
+              <AnalyzerPage expenses={expenses} months={months} years={years} />
             </ProtectedRoute>
           </MainLayout>
         }

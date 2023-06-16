@@ -6,7 +6,7 @@ import AuthService from "../../services/authService";
 import { ThemeContext } from "../../App";
 import { toast } from "react-toastify";
 
-const NoteComponent = ({ note, getNotes, month }) => {
+const NoteComponent = ({ note, getNotes, month, year }) => {
   const { theme } = useContext(ThemeContext);
   const inputTheme = theme === "dark" ? "darkTheme" : "";
   const reversedTheme = theme === "dark" ? "light" : "dark";
@@ -37,6 +37,7 @@ const NoteComponent = ({ note, getNotes, month }) => {
       userId: currentUser.id,
       note: updatedNote,
       month: month,
+      year: year,
     })
       .catch((err) => {
         showToastErrorMessage();

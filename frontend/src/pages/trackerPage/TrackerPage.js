@@ -14,6 +14,7 @@ const TrackerPage = ({
   currentUser,
   expenseCategories,
   months,
+  years,
 }) => {
   const configLabels = ["date", "title", "value", "category"];
   const handleUpdate = "/update/expense";
@@ -23,6 +24,7 @@ const TrackerPage = ({
 
   const [category, setCategory] = useState([]);
   const [month, setMonth] = useState(months[currentDate.getMonth()]);
+  const [year, setYear] = useState(currentDate.getFullYear());
   const [filteredExpenses, setFilteredExpenses] = useState([]);
 
   const reloadData = async () => {
@@ -53,7 +55,12 @@ const TrackerPage = ({
   };
 
   const filterExpenses = () => {
-    const response = expenseFilter(expenses, months.indexOf(month), category);
+    const response = expenseFilter(
+      expenses,
+      year,
+      months.indexOf(month),
+      category
+    );
     setFilteredExpenses(response);
   };
 
@@ -73,10 +80,13 @@ const TrackerPage = ({
         categories={expenseCategories}
         month={month}
         setMonth={setMonth}
+        year={year}
+        setYear={setYear}
         category={category}
         setCategory={setCategory}
         filterExpenses={filterExpenses}
         months={months}
+        years={years}
       />
       <SeparatorComponent />
       <TableComponent

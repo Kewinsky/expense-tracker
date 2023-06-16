@@ -16,12 +16,15 @@ import {
   sumAllMonths,
   getSumCategories,
 } from "../../helpers/analyzerMethods";
-import { expenseFilter } from "../../helpers/expenseFilter";
+import {
+  expenseFilter,
+  expenseFilterByYear,
+} from "../../helpers/expenseFilter";
 import NoteService from "../../services/noteService";
+import { noteFilterByYear } from "../../helpers/noteFilter";
 
-const AnalyzerPage = ({ expenses, months }) => {
+const AnalyzerPage = ({ expenses, years, months }) => {
   const currentDate = new Date();
-  const totalSumByMonth = sumAllMonths(expenses);
 
   // notes
   const [notes, setNotes] = useState([]);
@@ -32,8 +35,12 @@ const AnalyzerPage = ({ expenses, months }) => {
   const [savings, setSavings] = useState(0);
   const [previousSavings, setPreviousSavings] = useState(0);
 
+  const [year, setYear] = useState(currentDate.getFullYear());
   const [month, setMonth] = useState(currentDate.getMonth());
   const [filteredExpenses, setFilteredExpenses] = useState([]);
+
+  const expensesOfYear = expenseFilterByYear(expenses, parseInt(year));
+  const totalSumByMonth = sumAllMonths(expensesOfYear);
 
   // charts data
   const [pieChartData, setPieChartData] = useState({
@@ -96,32 +103,38 @@ const AnalyzerPage = ({ expenses, months }) => {
 
   const getNotes = async () => {
     const response = await NoteService.getNotesByUser();
-    setNotes(response.data);
+    const filteredNotes = noteFilterByYear(response.data, parseInt(year));
+    setNotes(filteredNotes);
   };
 
-  const filterExpenses = (month) => {
-    const response = expenseFilter(expenses, month, null);
+  const filterExpenses = (year, month) => {
+    console.log(expenses);
+    const response = expenseFilter(expenses, parseInt(year), month, null);
     setFilteredExpenses(response);
+    console.log(filteredExpenses);
     mountPieChartData(getSumCategories(response, month), "Expenses");
     mountLineChart(expenses, "Total of Year");
   };
 
   useEffect(() => {
-    filterExpenses(month);
+    filterExpenses(year, month);
     getNotes();
-    setOutcome(sumAllByMonth(expenses, month));
-    setPreviousOutcome(sumAllByMonth(expenses, month - 1));
-    setSavings(getSavedSum(expenses, month));
-    setPreviousSavings(getSavedSum(expenses, month - 1));
-  }, [expenses]);
+    setOutcome(sumAllByMonth(expensesOfYear, month));
+    setPreviousOutcome(sumAllByMonth(expensesOfYear, month - 1));
+    setSavings(getSavedSum(expensesOfYear, month));
+    setPreviousSavings(getSavedSum(expensesOfYear, month - 1));
+  }, [year, expenses]);
 
   return (
     <>
       <SwitchMonthComponent
-        expenses={expenses}
+        expensesOfYear={expensesOfYear}
         month={month}
         setMonth={setMonth}
         months={months}
+        year={year}
+        setYear={setYear}
+        years={years}
         currentDate={currentDate}
         setOutcome={setOutcome}
         setPreviousOutcome={setPreviousOutcome}
@@ -143,21 +156,27 @@ const AnalyzerPage = ({ expenses, months }) => {
             <LineChartComponent chartData={lineChartData} />
           </Col>
           <Col className="col-12 col-lg-6 p-4">
-            <CategoriesSummaryComponent expenses={expenses} month={month} />
+            <CategoriesSummaryComponent
+              expenses={expensesOfYear}
+              month={month}
+            />
           </Col>
           <Col className="col-12 col-lg-6 p-4">
-            <UtilitiesComponent expenses={expenses} month={month} />
+            <UtilitiesComponent expenses={expensesOfYear} month={month} />
           </Col>
           <Col className="col-12 col-lg-6 p-4">
             <NoteComponent
               note={notes.find((note) => note.month === month)}
               getNotes={getNotes}
               month={month}
+              year={year}
             />
           </Col>
-          <Col className="col-12 col-lg-6 p-4">
-            <PieChartComponent chartData={pieChartData} />
-          </Col>
+          {outcome !== 0 ? (
+            <Col className="col-12 col-lg-6 p-4">
+              <PieChartComponent chartData={pieChartData} />
+            </Col>
+          ) : null}
         </Row>
       </Container>
     </>
