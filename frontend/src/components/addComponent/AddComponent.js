@@ -6,6 +6,7 @@ import ExpenseService from "../../services/expenseService";
 import SelectComponent from "../selectComponent/SelectComponent";
 import { ThemeContext } from "../../App";
 import { toast } from "react-toastify";
+import { dropdownData } from "../../helpers/dropdownData";
 
 const AddComponent = ({ setExpenses, currentUser, categories }) => {
   const { theme } = useContext(ThemeContext);
@@ -127,7 +128,7 @@ const AddComponent = ({ setExpenses, currentUser, categories }) => {
             <Form.Group>
               <Form.Label>Category</Form.Label>
               <SelectComponent
-                options={categories}
+                options={dropdownData(categories)}
                 handleSelect={handleSelectCategory}
                 placeholder={"Select category"}
                 theme={inputTheme}

@@ -108,7 +108,7 @@ const UpdateExpenseComponent = ({
         <Form.Group className="mt-3">
           <Form.Label>Category</Form.Label>
           <SelectComponent
-            options={expenseCategories}
+            options={dropdownData(expenseCategories)}
             handleSelect={handleSelectCategory}
             theme={inputTheme}
             defaultValue={getDefaultValue()}
