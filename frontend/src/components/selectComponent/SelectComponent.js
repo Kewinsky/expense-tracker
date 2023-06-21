@@ -48,7 +48,7 @@ const SelectComponent = ({
 
   return (
     <Select
-      options={dropdownData(options)}
+      options={options}
       onChange={handleSelect}
       placeholder={placeholder}
       styles={darkMode}
