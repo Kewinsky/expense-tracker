@@ -4,36 +4,12 @@ import ExpenseService from "./services/expenseService";
 import AuthService from "./services/authService";
 import { ToastContainer } from "react-toastify";
 import { getYearArray } from "./helpers/yearData";
+import { expenseCategories } from "./helpers/expenseCategoriesData";
+import { months } from "./helpers/monthsData";
 
 const ThemeContext = React.createContext();
 
 const App = () => {
-  const expenseCategories = [
-    "FOOD",
-    "TRANSPORT",
-    "UTILITIES",
-    "PERSONAL",
-    "HOUSING",
-    "MEDICAL",
-    "ENTERTAINMENT",
-    "SAVINGS",
-  ];
-
-  const months = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
-
   const years = getYearArray();
 
   const [theme, setTheme] = useState("light");
