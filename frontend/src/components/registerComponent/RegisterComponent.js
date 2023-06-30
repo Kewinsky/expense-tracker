@@ -4,6 +4,7 @@ import AuthService from "../../services/authService";
 import { Form, Card } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { ThemeContext } from "../../App";
+import SpinnerComponent from "../spinnerComponent/SpinnerComponent";
 
 const RegisterComponent = () => {
   const { theme } = useContext(ThemeContext);
@@ -16,6 +17,8 @@ const RegisterComponent = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
+  const [isPending, setIsPending] = useState(false);
 
   const navigate = useNavigate();
 
@@ -38,17 +41,28 @@ const RegisterComponent = () => {
     e.preventDefault();
 
     setMessage("");
+    setError("");
 
     AuthService.register(username, email, password)
       .then(() => {
-        AuthService.login(username, password).then(() => {
-          navigate("/");
-          window.location.reload();
-        });
+        setIsPending(true);
+        setTimeout(() => {
+          setIsPending(false);
+          setMessage("New user registered successfully");
+        }, 1000);
       })
       .catch((err) => {
-        setMessage(err.response.data.message);
+        setError(err.message);
       });
+  };
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+
+    AuthService.login(username, password).then(() => {
+      navigate("/tracker");
+      window.location.reload();
+    });
   };
 
   return (
@@ -64,6 +78,7 @@ const RegisterComponent = () => {
             value={username}
             onChange={onChangeUsername}
             className={inputTheme}
+            disabled={message}
           />
         </Form.Group>
         <Form.Group className="mb-3">
@@ -75,9 +90,10 @@ const RegisterComponent = () => {
             value={email}
             onChange={onChangeEmail}
             className={inputTheme}
+            disabled={message}
           />
         </Form.Group>
-        <Form.Group className="mb-3">
+        <Form.Group className="mb-5">
           <Form.Label>Password</Form.Label>
           <Form.Control
             type="password"
@@ -86,19 +102,41 @@ const RegisterComponent = () => {
             value={password}
             onChange={onChangePassword}
             className={inputTheme}
+            disabled={message}
           />
         </Form.Group>
         <Form.Group className="text-center">
-          <Button variant={`outline-${reversedTheme}`} type="submit">
-            Sign Up
-          </Button>
+          {isPending && (
+            <div>
+              <SpinnerComponent />
+            </div>
+          )}
+          {!isPending && !message && (
+            <Button variant={`outline-${reversedTheme}`} type="submit">
+              Sign Up
+            </Button>
+          )}
         </Form.Group>
-
         {message && (
-          <Form.Group className="mt-3">
+          <Form.Group className="mt-5">
+            <div className="alert alert-success m-0" role="alert">
+              {message}
+            </div>
+            <div className="mt-5 text-center">
+              <Button
+                variant={`outline-${reversedTheme}`}
+                onClick={handleLogin}
+              >
+                Start tracking!
+              </Button>
+            </div>
+          </Form.Group>
+        )}
+        {error && (
+          <Form.Group className="mt-5">
             <div className="form-group">
-              <div className="alert alert-danger" role="alert">
-                {message}
+              <div className="alert alert-danger m-0" role="alert">
+                {error}
               </div>
             </div>
           </Form.Group>

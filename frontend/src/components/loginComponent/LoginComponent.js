@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import AuthService from "../../services/authService";
 import { ThemeContext } from "../../App";
 import { Card } from "react-bootstrap";
+import SpinnerComponent from "../spinnerComponent/SpinnerComponent";
 
 const LoginComponent = () => {
   const { theme } = useContext(ThemeContext);
@@ -15,7 +16,8 @@ const LoginComponent = () => {
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
+  const [isPending, setIsPending] = useState(false);
 
   const navigate = useNavigate();
 
@@ -32,15 +34,18 @@ const LoginComponent = () => {
   const handleLogin = (e) => {
     e.preventDefault();
 
-    setMessage("");
+    setError("");
 
     AuthService.login(username, password)
       .then(() => {
-        navigate("/");
-        window.location.reload();
+        setIsPending(true);
+        setTimeout(() => {
+          navigate("/");
+          window.location.reload();
+        }, 1000);
       })
       .catch((err) => {
-        setMessage(err.response.data.message);
+        setError(err.message);
       });
   };
 
@@ -71,30 +76,35 @@ const LoginComponent = () => {
             className={inputTheme}
           />
         </Form.Group>
-        <div className="row d-flex justify-content-between mb-3 text-center">
-          <p className="col-12 col-md-6">
+        <Form.Group className="row">
+          <div className="mb-5 col-12 col-md-6">
             No account?{" "}
             <a href="/register" className={`link-${reversedTheme}`}>
               Sign up
             </a>
-          </p>
-          <p className="col-12 col-md-6">
-            <a href="/forgotPassword" className={`link-${reversedTheme}`}>
+          </div>
+          <div className="mb-5 col-12 col-md-6 text-md-end">
+            <a href="/forgotPassword" className={`link-${reversedTheme} `}>
               Forgot password
             </a>
-          </p>
-        </div>
-        <div className="text-center">
-          <Button variant={`outline-${reversedTheme}`} type="submit">
-            Login
-          </Button>
-        </div>
-        {message && (
-          <Form.Group className="mt-3">
-            <div className="form-group">
-              <div className="alert alert-danger" role="alert">
-                {message}
-              </div>
+          </div>
+        </Form.Group>
+        <Form.Group className="text-center">
+          {isPending && (
+            <div>
+              <SpinnerComponent />
+            </div>
+          )}
+          {!isPending && (
+            <Button variant={`outline-${reversedTheme}`} type="submit">
+              Login
+            </Button>
+          )}
+        </Form.Group>
+        {error && (
+          <Form.Group className="mt-5">
+            <div className="alert alert-danger m-0" role="alert">
+              {error}
             </div>
           </Form.Group>
         )}

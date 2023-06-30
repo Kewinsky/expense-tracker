@@ -5,7 +5,7 @@ import { Card } from "react-bootstrap";
 import { useContext, useState } from "react";
 import { ThemeContext } from "../../App";
 import AuthService from "../../services/authService";
-import { useNavigate } from "react-router-dom";
+import SpinnerComponent from "../spinnerComponent/SpinnerComponent";
 
 const ForgotPasswordComponent = () => {
   const { theme } = useContext(ThemeContext);
@@ -14,11 +14,11 @@ const ForgotPasswordComponent = () => {
 
   const form = useRef();
 
-  const navigate = useNavigate();
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
+  const [isPending, setIsPending] = useState(false);
 
   const onChangeEmail = (e) => {
     const email = e.target.value;
@@ -39,13 +39,19 @@ const ForgotPasswordComponent = () => {
     e.preventDefault();
 
     setMessage("");
+    setError("");
 
     AuthService.forgotPassword(newPassword)
       .then(() => {
-        navigate("/");
-        window.location.reload();
+        setIsPending(true);
+        setTimeout(() => {
+          setIsPending(false);
+          setMessage("Password updated successfully");
+        }, 1000);
       })
-      .catch((err) => setMessage(err.response.data.message));
+      .catch((err) => {
+        setError(err.message);
+      });
   };
 
   return (
@@ -61,10 +67,11 @@ const ForgotPasswordComponent = () => {
             value={email}
             onChange={onChangeEmail}
             className={inputTheme}
+            disabled={message}
           />
         </Form.Group>
 
-        <Form.Group className="mb-3">
+        <Form.Group className="mb-5">
           <Form.Label>New password</Form.Label>
           <Form.Control
             type="password"
@@ -73,19 +80,37 @@ const ForgotPasswordComponent = () => {
             value={password}
             onChange={onChangePassword}
             className={inputTheme}
+            disabled={message}
           />
         </Form.Group>
-        <div className="text-center">
-          <Button variant={`outline-${reversedTheme}`} type="submit">
-            Update password
-          </Button>
-        </div>
+        <Form.Group className="text-center">
+          {isPending && (
+            <div>
+              <SpinnerComponent />
+            </div>
+          )}
+          {!isPending && !message && (
+            <Button variant={`outline-${reversedTheme}`} type="submit">
+              Reset password
+            </Button>
+          )}
+        </Form.Group>
         {message && (
-          <Form.Group className="mt-3">
-            <div className="form-group">
-              <div className="alert alert-danger" role="alert">
-                {message}
-              </div>
+          <Form.Group className="mt-5">
+            <div className="alert alert-success m-0" role="alert">
+              {message}
+            </div>
+            <div className="mt-5 text-center">
+              <a href="/" className={`link-${reversedTheme} `}>
+                Back to home
+              </a>
+            </div>
+          </Form.Group>
+        )}
+        {error && (
+          <Form.Group className="mt-5">
+            <div className="alert alert-danger m-0" role="alert">
+              {error}
             </div>
           </Form.Group>
         )}
