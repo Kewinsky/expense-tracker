@@ -1,15 +1,12 @@
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import UserService from "../../services/userService";
 import TableComponent from "../../components/tableComponent/TableComponent";
-import { toast } from "react-toastify";
-import { ThemeContext } from "../../App";
+import { userManagementTableHeaders } from "../../helpers/tableHeaders";
+import { updateUserURL } from "../../helpers/updateURL";
+import { useDeleteItem } from "../../hooks/useDeleteItem";
+
 const UserManagementPage = ({ currentUser }) => {
-  const configLabels = ["username", "email", "roles"];
-  const handleUpdate = "/update/userByAdmin";
-
-  const { theme } = useContext(ThemeContext);
-
   const [users, setUsers] = useState([]);
 
   const roleMapping = {
@@ -26,46 +23,30 @@ const UserManagementPage = ({ currentUser }) => {
 
   const navigate = useNavigate();
 
-  const getAllUsers = async () => {
+  const getUsers = async () => {
     const response = await UserService.getUsers();
     setUsers(response.data);
   };
 
-  const showToastMessageOnDelete = () => {
-    toast.success("User deleted!", {
-      theme: theme,
-    });
-  };
-
-  const showToastErrorMessage = () => {
-    toast.error("Something went wrong!", {
-      theme: theme,
-    });
-  };
-
-  const handleDelete = async (id) => {
-    await UserService.deleteUser(id)
-      .then(() => getAllUsers())
-      .catch((err) => {
-        showToastErrorMessage();
-        console.log(err.response.data);
-      })
-      .then(() => showToastMessageOnDelete());
-  };
+  const handleDelete = useDeleteItem(
+    UserService.deleteUser,
+    UserService.getUsers,
+    setUsers
+  );
 
   useEffect(() => {
     if (!currentUser?.roles.includes("ROLE_ADMIN")) {
       navigate("/unauthorized");
     } else {
-      getAllUsers();
+      getUsers();
     }
-  }, [currentUser?.roles, navigate]);
+  }, []);
 
   return (
     <TableComponent
-      handleUpdate={handleUpdate}
+      handleUpdate={updateUserURL}
       handleDelete={handleDelete}
-      configLabels={configLabels}
+      configLabels={userManagementTableHeaders}
       records={simplifiedUsers.slice(1)}
       setRecords={setUsers}
     />

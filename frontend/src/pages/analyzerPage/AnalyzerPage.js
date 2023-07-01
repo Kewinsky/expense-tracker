@@ -22,9 +22,12 @@ import {
 } from "../../helpers/expenseFilter";
 import NoteService from "../../services/noteService";
 import { noteFilterByYear } from "../../helpers/noteFilter";
+import { getYearArray } from "../../helpers/yearData";
+import { months } from "../../helpers/monthsData";
 
-const AnalyzerPage = ({ expenses, years, months }) => {
+const AnalyzerPage = ({ expenses }) => {
   const currentDate = new Date();
+  const years = getYearArray();
 
   // notes
   const [notes, setNotes] = useState([]);

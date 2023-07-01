@@ -4,6 +4,7 @@ import { useEffect, useContext } from "react";
 import { dropdownData, dropdownDataNumber } from "../../helpers/dropdownData";
 import SelectComponent from "../selectComponent/SelectComponent";
 import { ThemeContext } from "../../App";
+import { getYearArray } from "../../helpers/yearData";
 
 const FilteringComponent = ({
   categories,
@@ -14,9 +15,10 @@ const FilteringComponent = ({
   category,
   setCategory,
   months,
-  years,
   filterExpenses,
 }) => {
+  const years = getYearArray();
+
   const { theme } = useContext(ThemeContext);
   const inputTheme = theme === "dark" ? "darkTheme" : "";
 

@@ -20,9 +20,6 @@ export const Router = ({
   setExpenses,
   currentUser,
   setCurrentUser,
-  expenseCategories,
-  months,
-  years,
 }) => {
   const appName = "Spendee";
 
@@ -69,9 +66,6 @@ export const Router = ({
                 expenses={expenses}
                 setExpenses={setExpenses}
                 currentUser={currentUser}
-                expenseCategories={expenseCategories}
-                months={months}
-                years={years}
               />
             </ProtectedRoute>
           </MainLayout>
@@ -82,7 +76,7 @@ export const Router = ({
         element={
           <MainLayout pageTitle={`${appName} | Analyzer`}>
             <ProtectedRoute>
-              <AnalyzerPage expenses={expenses} months={months} years={years} />
+              <AnalyzerPage expenses={expenses} />
             </ProtectedRoute>
           </MainLayout>
         }
@@ -95,7 +89,6 @@ export const Router = ({
               <UpdateExpensePage
                 expenses={expenses}
                 setExpenses={setExpenses}
-                expenseCategories={expenseCategories}
               />
             </ProtectedRoute>
           </MainLayout>
