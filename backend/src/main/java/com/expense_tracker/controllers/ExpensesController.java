@@ -22,18 +22,7 @@ public class ExpensesController {
 
     @Autowired
     UserController userController;
-
-    @GetMapping(path="/getExpenses")
-    @ResponseBody Iterable<Expense> getExpenses() {
-        return expensesRepository.findAll();
-    }
-
-    @GetMapping(path="/getExpense/{id}")
-    Expense getExpense(@PathVariable Long id) {
-        return expensesRepository.findById(id)
-                .orElseThrow(() -> new ExpenseNotFoundException(id));
-    }
-
+    
     @GetMapping(path="/getExpensesByUser/{id}")
     @ResponseBody Iterable<Expense> getExpensesByUser(@PathVariable Long id) {
         return expensesRepository.findByUserId(id);
