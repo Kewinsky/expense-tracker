@@ -1,5 +1,4 @@
 import Select from "react-select";
-import { dropdownData } from "../../helpers/dropdownData";
 
 const SelectComponent = ({
   options,
