@@ -24,12 +24,14 @@ export const Router = ({
   months,
   years,
 }) => {
+  const appName = "Spendee";
+
   return (
     <Routes>
       <Route
         path="/"
         element={
-          <MainLayout pageTitle={"Spendee | Home"}>
+          <MainLayout pageTitle={`${appName} | Home`}>
             <HomePage />
           </MainLayout>
         }
@@ -37,7 +39,7 @@ export const Router = ({
       <Route
         path="/register"
         element={
-          <MainLayout pageTitle={"Spendee | Register"}>
+          <MainLayout pageTitle={`${appName} | Register`}>
             <RegisterPage />
           </MainLayout>
         }
@@ -45,7 +47,7 @@ export const Router = ({
       <Route
         path="/login"
         element={
-          <MainLayout pageTitle={"Spendee | Login"}>
+          <MainLayout pageTitle={`${appName} | Login`}>
             <LoginPage />
           </MainLayout>
         }
@@ -53,7 +55,7 @@ export const Router = ({
       <Route
         path="/forgotPassword"
         element={
-          <MainLayout pageTitle={"Spendee | Forgot Password"}>
+          <MainLayout pageTitle={`${appName} | Reset password`}>
             <ForgotPasswordPage />
           </MainLayout>
         }
@@ -61,8 +63,8 @@ export const Router = ({
       <Route
         path="/tracker"
         element={
-          <MainLayout pageTitle={"Spendee | Tracker"}>
-            <ProtectedRoute currentUser={currentUser}>
+          <MainLayout pageTitle={`${appName} | Tracker`}>
+            <ProtectedRoute>
               <TrackerPage
                 expenses={expenses}
                 setExpenses={setExpenses}
@@ -78,8 +80,8 @@ export const Router = ({
       <Route
         path="/analyzer"
         element={
-          <MainLayout pageTitle={"Spendee | Analyzer"}>
-            <ProtectedRoute currentUser={currentUser}>
+          <MainLayout pageTitle={`${appName} | Analyzer`}>
+            <ProtectedRoute>
               <AnalyzerPage expenses={expenses} months={months} years={years} />
             </ProtectedRoute>
           </MainLayout>
@@ -88,8 +90,8 @@ export const Router = ({
       <Route
         path="/update/expense/:id"
         element={
-          <MainLayout pageTitle={"Spendee | Update Expense"}>
-            <ProtectedRoute currentUser={currentUser}>
+          <MainLayout pageTitle={`${appName} | Update expense`}>
+            <ProtectedRoute>
               <UpdateExpensePage
                 expenses={expenses}
                 setExpenses={setExpenses}
@@ -102,8 +104,8 @@ export const Router = ({
       <Route
         path="/update/user/:id"
         element={
-          <MainLayout pageTitle={"Spendee | Update User"}>
-            <ProtectedRoute currentUser={currentUser}>
+          <MainLayout pageTitle={`${appName} | Update user`}>
+            <ProtectedRoute>
               <UpdateUserPage
                 currentUser={currentUser}
                 setCurrentUser={setCurrentUser}
@@ -116,7 +118,7 @@ export const Router = ({
         path="/update/userByAdmin/:id"
         element={
           <MainLayout pageTitle={"Spendee | Update User"}>
-            <ProtectedRoute currentUser={currentUser}>
+            <ProtectedRoute>
               <UpdateAdminPage />
             </ProtectedRoute>
           </MainLayout>
@@ -125,8 +127,8 @@ export const Router = ({
       <Route
         path="/usermanagement"
         element={
-          <MainLayout pageTitle={"Spendee | User Management"}>
-            <ProtectedRoute currentUser={currentUser}>
+          <MainLayout pageTitle={`${appName} | User management`}>
+            <ProtectedRoute>
               <UserManagementPage currentUser={currentUser} />
             </ProtectedRoute>
           </MainLayout>
@@ -135,8 +137,8 @@ export const Router = ({
       <Route
         path="/profile"
         element={
-          <MainLayout pageTitle={"Spendee | Profile"}>
-            <ProtectedRoute currentUser={currentUser}>
+          <MainLayout pageTitle={`${appName} | Profile`}>
+            <ProtectedRoute>
               <ProfilePage currentUser={currentUser} />
             </ProtectedRoute>
           </MainLayout>
@@ -146,7 +148,7 @@ export const Router = ({
         path="/unauthorized"
         element={
           <MainLayout pageTitle={"Unauthorized"}>
-            <ProtectedRoute currentUser={currentUser}>
+            <ProtectedRoute>
               <UnauthorizedPage />
             </ProtectedRoute>
           </MainLayout>

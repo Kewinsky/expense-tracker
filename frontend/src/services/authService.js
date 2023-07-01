@@ -2,31 +2,57 @@ import axios from "axios";
 
 const API_URL = process.env.REACT_APP_API_URL + "/auth/";
 
-const register = (username, email, password) => {
-  return axios.post(API_URL + "signup", {
-    username,
-    email,
-    password,
-  });
+const register = async (username, email, password) => {
+  try {
+    return await axios.post(API_URL + "signup", {
+      username,
+      email,
+      password,
+    });
+  } catch (err) {
+    if (err.response) {
+      throw new Error(err.response.data.message);
+    } else if (err.request) {
+      throw new Error("Server is not responding. Please try again later.");
+    } else {
+      throw new Error("An error occurred. Please try again.");
+    }
+  }
 };
 
-const login = (username, password) => {
-  return axios
-    .post(API_URL + "signin", {
+const login = async (username, password) => {
+  try {
+    const response = await axios.post(API_URL + "signin", {
       username,
       password,
-    })
-    .then((response) => {
-      if (response.data.username) {
-        localStorage.setItem("user", JSON.stringify(response.data));
-      }
-
-      return response.data;
     });
+    if (response.data.username) {
+      localStorage.setItem("user", JSON.stringify(response.data));
+    }
+    return response.data;
+  } catch (err) {
+    if (err.response) {
+      throw new Error(err.response.data.message);
+    } else if (err.request) {
+      throw new Error("Server is not responding. Please try again later.");
+    } else {
+      throw new Error("An error occurred. Please try again.");
+    }
+  }
 };
 
-const forgotPassword = (newPassword) => {
-  return axios.put(API_URL + "forgotPassword", newPassword);
+const forgotPassword = async (newPassword) => {
+  try {
+    return await axios.put(API_URL + "forgotPassword", newPassword);
+  } catch (err) {
+    if (err.response) {
+      throw new Error(err.response.data.message);
+    } else if (err.request) {
+      throw new Error("Server is not responding. Please try again later.");
+    } else {
+      throw new Error("An error occurred. Please try again.");
+    }
+  }
 };
 
 const logout = () => {

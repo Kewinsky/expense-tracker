@@ -1,7 +1,8 @@
 import { Navigate } from "react-router-dom";
+import AuthService from "../services/authService";
 
-const ProtectedRoute = ({ currentUser, children }) => {
-  if (currentUser === undefined) {
+const ProtectedRoute = ({ children }) => {
+  if (AuthService.getCurrentUser() === undefined) {
     return <Navigate to="/login" replace />;
   }
 
