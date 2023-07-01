@@ -1,12 +1,14 @@
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useState, useContext } from "react";
 import ExpenseService from "../../services/expenseService";
 import { dropdownData } from "../../helpers/dropdownData";
 import SelectComponent from "../selectComponent/SelectComponent";
 import { ThemeContext } from "../../App";
 import { Card } from "react-bootstrap";
+import { reloadData } from "../../helpers/reloadData";
+
 const UpdateExpenseComponent = ({
   expenses,
   setExpenses,
@@ -14,6 +16,7 @@ const UpdateExpenseComponent = ({
 }) => {
   const { id } = useParams();
   const expenseId = id;
+  const navigate = useNavigate();
 
   const { theme } = useContext(ThemeContext);
   const reversedTheme = theme === "dark" ? "light" : "dark";
@@ -55,17 +58,11 @@ const UpdateExpenseComponent = ({
     category: category.toUpperCase(),
   };
 
-  const reloadData = async () => {
-    const response = await ExpenseService.getExpensesByUser();
-
-    setExpenses(response.data);
-  };
-
   const handleUpdateExpense = async (e) => {
     e.preventDefault();
     await ExpenseService.updateExpense(expenseId, updatedExpense)
-      .then(() => reloadData())
-      .then((window.location = "/tracker"));
+      .then(() => reloadData(ExpenseService.getExpensesByUser, setExpenses))
+      .then(navigate("/tracker"));
   };
 
   return (

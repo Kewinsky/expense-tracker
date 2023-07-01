@@ -4,8 +4,11 @@ import { useContext, useState } from "react";
 import UserService from "../../services/userService";
 import { ThemeContext } from "../../App";
 import { Card } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 const UpdateUserComponent = ({ currentUser, setCurrentUser }) => {
+  const navigate = useNavigate();
+
   const [username, setUsername] = useState(currentUser.username);
   const [email, setEmail] = useState(currentUser.email);
 
@@ -29,7 +32,7 @@ const UpdateUserComponent = ({ currentUser, setCurrentUser }) => {
   const handleUpdateUser = async (e) => {
     e.preventDefault();
     await UserService.updateCurrentUser(currentUser.id, updatedUser)
-      .then((window.location = "/profile"))
+      .then(navigate("/profile"))
       .catch((err) => console.log(err.response.data));
   };
 

@@ -1,13 +1,16 @@
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
 import UserService from "../../services/userService";
 import { ThemeContext } from "../../App";
 import { Card } from "react-bootstrap";
+import { reloadData } from "../../helpers/reloadData";
+
 const UpdateAdminComponent = ({ users, setUsers }) => {
   const { id } = useParams();
   const { theme } = useContext(ThemeContext);
+  const navigate = useNavigate();
 
   const userId = id;
   const reversedTheme = theme === "dark" ? "light" : "dark";
@@ -48,16 +51,11 @@ const UpdateAdminComponent = ({ users, setUsers }) => {
     role: roles,
   };
 
-  const reloadData = async () => {
-    const response = await UserService.getUsers();
-    setUsers(response.data);
-  };
-
   const handleUpdateUser = async (e) => {
     e.preventDefault();
     await UserService.updateUserByAdmin(userId, updatedUser)
-      .then(() => reloadData())
-      .then((window.location = "/usermanagement"))
+      .then(() => reloadData(UserService.getUsers, setUsers))
+      .then(navigate("/usermanagement"))
       .catch((err) => console.log(err.response.data));
   };
 

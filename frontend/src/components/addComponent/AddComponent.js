@@ -7,6 +7,7 @@ import SelectComponent from "../selectComponent/SelectComponent";
 import { ThemeContext } from "../../App";
 import { toast } from "react-toastify";
 import { dropdownData } from "../../helpers/dropdownData";
+import { reloadData } from "../../helpers/reloadData";
 
 const AddComponent = ({ setExpenses, currentUser, categories }) => {
   const { theme } = useContext(ThemeContext);
@@ -46,12 +47,6 @@ const AddComponent = ({ setExpenses, currentUser, categories }) => {
     userId: userId,
   };
 
-  const reloadData = async () => {
-    const response = await ExpenseService.getExpensesByUser();
-
-    setExpenses(response.data);
-  };
-
   const showToastMessageOnAdd = () => {
     toast.success("New expense added!", {
       theme: theme,
@@ -73,7 +68,7 @@ const AddComponent = ({ setExpenses, currentUser, categories }) => {
     setCategory("");
 
     await ExpenseService.addExpense(newExpense)
-      .then(() => reloadData())
+      .then(() => reloadData(ExpenseService.getExpensesByUser, setExpenses))
       .catch((err) => {
         showToastErrorMessage();
         console.log(err.response.data);
