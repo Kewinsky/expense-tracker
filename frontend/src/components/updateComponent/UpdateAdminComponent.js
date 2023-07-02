@@ -1,16 +1,15 @@
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
 import UserService from "../../services/userService";
 import { ThemeContext } from "../../App";
 import { Card } from "react-bootstrap";
-import { reloadData } from "../../helpers/reloadData";
+import SpinnerComponent from "../spinnerComponent/SpinnerComponent";
 
-const UpdateAdminComponent = ({ users, setUsers }) => {
+const UpdateAdminComponent = ({ users }) => {
   const { id } = useParams();
   const { theme } = useContext(ThemeContext);
-  const navigate = useNavigate();
 
   const userId = id;
   const reversedTheme = theme === "dark" ? "light" : "dark";
@@ -26,6 +25,9 @@ const UpdateAdminComponent = ({ users, setUsers }) => {
   const [roles, setRoles] = useState(
     selectedUser.roles.map((role) => role.name)
   );
+  const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
+  const [isPending, setIsPending] = useState(false);
 
   const handleInputUsername = (e) => {
     setUsername(e.target.value);
@@ -53,10 +55,21 @@ const UpdateAdminComponent = ({ users, setUsers }) => {
 
   const handleUpdateUser = async (e) => {
     e.preventDefault();
-    await UserService.updateUserByAdmin(userId, updatedUser)
-      .then(() => reloadData(UserService.getUsers, setUsers))
-      .then(navigate("/usermanagement"))
-      .catch((err) => console.log(err.response.data));
+
+    setMessage("");
+    setError("");
+
+    try {
+      const response = await UserService.updateUserByAdmin(userId, updatedUser);
+      setIsPending(true);
+
+      setTimeout(() => {
+        setIsPending(false);
+        setMessage(response.data);
+      }, 1000);
+    } catch (err) {
+      setError(err.message);
+    }
   };
 
   useEffect(() => {
@@ -102,20 +115,42 @@ const UpdateAdminComponent = ({ users, setUsers }) => {
         </Form.Group>
 
         <Form.Group className="mt-3">
-          <Button variant="success" type="submit" className="w-100">
-            Submit
-          </Button>
+          {isPending && <SpinnerComponent />}
+          {!isPending && !message && (
+            <>
+              <Button variant="success" type="submit" className="w-100">
+                Submit
+              </Button>
+              <Button
+                variant={`outline-${reversedTheme}`}
+                type="submit"
+                className="w-100 mt-2"
+                href="/usermanagement"
+              >
+                Cancel
+              </Button>
+            </>
+          )}
         </Form.Group>
-        <Form.Group className="mt-2">
-          <Button
-            variant={`outline-${reversedTheme}`}
-            type="submit"
-            className="w-100"
-            href="/usermanagement"
-          >
-            Cancel
-          </Button>
-        </Form.Group>
+        {message && (
+          <Form.Group className="mt-5">
+            <div className="alert alert-success m-0" role="alert">
+              {message}
+            </div>
+            <div className="mt-5 text-center">
+              <a href="/usermanagement" className={`link-${reversedTheme} `}>
+                Back
+              </a>
+            </div>
+          </Form.Group>
+        )}
+        {error && (
+          <Form.Group className="mt-5">
+            <div className="alert alert-danger m-0" role="alert">
+              {error}
+            </div>
+          </Form.Group>
+        )}
       </Form>
     </Card>
   );
