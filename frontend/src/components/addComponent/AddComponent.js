@@ -11,6 +11,7 @@ import { reloadData } from "../../helpers/reloadData";
 
 const AddComponent = ({ setExpenses, currentUser, categories }) => {
   const { theme } = useContext(ThemeContext);
+  // TODO: theme refactor
   const inputTheme = theme === "dark" ? "darkTheme" : "";
 
   let userId = 0;
@@ -47,14 +48,14 @@ const AddComponent = ({ setExpenses, currentUser, categories }) => {
     userId: userId,
   };
 
-  const showToastMessageOnAdd = () => {
-    toast.success("New expense added!", {
+  const showToastMessageOnAdd = (message) => {
+    toast.success(message, {
       theme: theme,
     });
   };
 
-  const showToastErrorMessage = () => {
-    toast.error("Something went wrong!", {
+  const showToastErrorMessage = (message) => {
+    toast.error(message, {
       theme: theme,
     });
   };
@@ -65,15 +66,16 @@ const AddComponent = ({ setExpenses, currentUser, categories }) => {
     setDate("");
     setTitle("");
     setValue("");
+    // TODO: handle clearing select
     setCategory("");
 
-    await ExpenseService.addExpense(newExpense)
-      .then(() => reloadData(ExpenseService.getExpensesByUser, setExpenses))
-      .catch((err) => {
-        showToastErrorMessage();
-        console.log(err.response.data);
-      })
-      .then(() => showToastMessageOnAdd());
+    try {
+      const response = await ExpenseService.addExpense(newExpense);
+      reloadData(ExpenseService.getExpensesByUser, setExpenses);
+      showToastMessageOnAdd(response);
+    } catch (err) {
+      showToastErrorMessage(err.message);
+    }
   };
 
   return (
