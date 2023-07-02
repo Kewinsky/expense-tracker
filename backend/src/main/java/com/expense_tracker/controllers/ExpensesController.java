@@ -18,13 +18,11 @@ public class ExpensesController {
     ExpensesRepository expensesRepository;
 
     @Autowired
-    NotesRepository notesRepository;
-
-    @Autowired
     UserController userController;
     
     @GetMapping(path="/getExpensesByUser/{id}")
     @ResponseBody Iterable<Expense> getExpensesByUser(@PathVariable Long id) {
+        userController.getUserById(id);
         return expensesRepository.findByUserId(id);
     }
 
