@@ -4,7 +4,6 @@ import Modal from "react-bootstrap/Modal";
 const ModalComponent = ({ handleDelete, record, show, setShow, theme }) => {
   const handleClose = () => setShow(false);
 
-  // theme is reversed by default
   const inputTheme = theme !== "dark" ? "darkTheme" : "";
 
   return (
