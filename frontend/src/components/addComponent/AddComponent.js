@@ -5,9 +5,12 @@ import Form from "react-bootstrap/Form";
 import ExpenseService from "../../services/expenseService";
 import SelectComponent from "../selectComponent/SelectComponent";
 import { ThemeContext } from "../../App";
-import { toast } from "react-toastify";
 import { dropdownData } from "../../helpers/dropdownData";
 import { reloadData } from "../../helpers/reloadData";
+import {
+  errorNotification,
+  successNotification,
+} from "../../helpers/toastNotifications";
 
 const AddComponent = ({ setExpenses, currentUser, categories }) => {
   const { theme } = useContext(ThemeContext);
@@ -48,18 +51,6 @@ const AddComponent = ({ setExpenses, currentUser, categories }) => {
     userId: userId,
   };
 
-  const showToastMessageOnAdd = (message) => {
-    toast.success(message, {
-      theme: theme,
-    });
-  };
-
-  const showToastErrorMessage = (message) => {
-    toast.error(message, {
-      theme: theme,
-    });
-  };
-
   const handleAddExpense = async (e) => {
     e.preventDefault();
 
@@ -72,9 +63,9 @@ const AddComponent = ({ setExpenses, currentUser, categories }) => {
     try {
       const response = await ExpenseService.addExpense(newExpense);
       reloadData(ExpenseService.getExpensesByUser, setExpenses);
-      showToastMessageOnAdd(response);
+      successNotification(response);
     } catch (err) {
-      showToastErrorMessage(err.message);
+      errorNotification(err.message);
     }
   };
 

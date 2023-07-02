@@ -4,7 +4,10 @@ import NoteService from "../../services/noteService";
 import { useEffect, useState, useContext } from "react";
 import AuthService from "../../services/authService";
 import { ThemeContext } from "../../App";
-import { toast } from "react-toastify";
+import {
+  errorNotification,
+  successNotification,
+} from "../../helpers/toastNotifications";
 
 const NoteComponent = ({ note, getNotes, month, year }) => {
   const { theme } = useContext(ThemeContext);
@@ -19,30 +22,20 @@ const NoteComponent = ({ note, getNotes, month, year }) => {
     setUpdatedNote(e.target.value);
   };
 
-  const showToastMessageOnSave = () => {
-    toast.success("Note saved!", {
-      theme: theme,
-    });
-  };
-
-  const showToastErrorMessage = (message) => {
-    toast.error(message, {
-      theme: theme,
-    });
-  };
-
   const handleSaveNote = async (e) => {
     e.preventDefault();
-    await NoteService.updateNote(note?.id, {
-      userId: currentUser.id,
-      note: updatedNote,
-      month: month,
-      year: year,
-    })
-      .then(() => showToastMessageOnSave())
-      .catch((err) => {
-        showToastErrorMessage(err.message);
+
+    try {
+      const response = await NoteService.updateNote(note?.id, {
+        userId: currentUser.id,
+        note: updatedNote,
+        month: month,
+        year: year,
       });
+      successNotification(response);
+    } catch (err) {
+      errorNotification(err.message);
+    }
     getNotes();
   };
 
