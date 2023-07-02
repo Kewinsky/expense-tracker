@@ -45,7 +45,7 @@ const UpdateUserComponent = ({ currentUser }) => {
 
       setTimeout(() => {
         setIsPending(false);
-        setMessage(response.data);
+        setMessage(response);
       }, 1000);
     } catch (err) {
       setError(err.message);

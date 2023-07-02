@@ -47,7 +47,7 @@ const ForgotPasswordComponent = () => {
 
       setTimeout(() => {
         setIsPending(false);
-        setMessage(response.data.message);
+        setMessage(response);
       }, 1000);
     } catch (err) {
       setError(err.message);

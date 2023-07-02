@@ -32,9 +32,13 @@ const updateCurrentUser = async (id, newUser) => {
   user.email = newUser.email;
   localStorage.setItem("user", JSON.stringify(user));
   try {
-    return await axios.put(API_URL + `updateUser/${id}`, newUser, {
-      headers: authHeader(),
-    });
+    return await axios
+      .put(API_URL + `updateUser/${id}`, newUser, {
+        headers: authHeader(),
+      })
+      .then((res) => {
+        return res.data;
+      });
   } catch (err) {
     if (err.response) {
       throw new Error(err.response.data);
@@ -48,9 +52,13 @@ const updateCurrentUser = async (id, newUser) => {
 
 const updateUserByAdmin = async (id, newUser) => {
   try {
-    return await axios.put(API_URL + `updateUserByAdmin/${id}`, newUser, {
-      headers: authHeader(),
-    });
+    return await axios
+      .put(API_URL + `updateUserByAdmin/${id}`, newUser, {
+        headers: authHeader(),
+      })
+      .then((res) => {
+        return res.data;
+      });
   } catch (err) {
     if (err.response) {
       throw new Error(err.response.data);
@@ -64,9 +72,13 @@ const updateUserByAdmin = async (id, newUser) => {
 
 const deleteUser = async (id) => {
   try {
-    return await axios.delete(API_URL + `deleteUser/${id}`, {
-      headers: authHeader(),
-    });
+    return await axios
+      .delete(API_URL + `deleteUser/${id}`, {
+        headers: authHeader(),
+      })
+      .then((res) => {
+        return res.data;
+      });
   } catch (err) {
     if (err.response) {
       throw new Error(err.response.data);
