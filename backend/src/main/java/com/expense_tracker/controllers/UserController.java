@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/users")
@@ -44,7 +43,7 @@ public class UserController {
                     user1.setUsername(user.getUsername());
                     user1.setEmail(user.getEmail());
                     userRepository.save(user1);
-                    return "User updated.";
+                    return "User updated successfully";
                 })
                 .orElseThrow(() -> new UserNotFoundException(id));
     }
@@ -58,7 +57,7 @@ public class UserController {
                     user1.setEmail(user.getEmail());
                     user1.setRoles(converter.toRoleSet(user.getRole()));
                     userRepository.save(user1);
-                    return "User updated.";
+                    return "User updated successfully";
                 })
                 .orElseThrow(() -> new UserNotFoundException(id));
     }
@@ -69,7 +68,7 @@ public class UserController {
             throw new UserNotFoundException(id);
         }
         userRepository.deleteById(id);
-        return "User with id: " + id + " has been removed.";
+        return "User deleted successfully";
     }
 
 

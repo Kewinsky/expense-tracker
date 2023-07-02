@@ -33,11 +33,11 @@ public class NotesController {
                 .map(nt -> {
                     nt.setNote(note.getNote());
                     notesRepository.save(nt);
-                    return "Note updated.";
+                    return "Note updated successfully";
                 })
                 .orElseThrow(() -> new NoteNotFoundException(Long.parseLong(id)));
         }
         notesRepository.save(note);
-        return "Note added.";
+        return "Note added successfully";
     }
 }

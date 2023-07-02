@@ -30,7 +30,7 @@ public class ExpensesController {
     String addExpense (@RequestBody Expense expense) {
         userController.getUserById(expense.getUserId());
         expensesRepository.save(expense);
-        return "Expense saved.";
+        return "Expense added successfully";
     }
 
     @PutMapping("updateExpense/{id}")
@@ -43,7 +43,7 @@ public class ExpensesController {
                     exp.setCategory(expense.getCategory());
                     exp.setDate(expense.getDate());
                     expensesRepository.save(exp);
-                    return "Expense updated.";
+                    return "Expense updated successfully";
                 })
                 .orElseThrow(() -> new ExpenseNotFoundException(id));
     }
@@ -54,6 +54,6 @@ public class ExpensesController {
             throw new ExpenseNotFoundException(id);
         }
         expensesRepository.deleteById(id);
-        return "Expense with id: " + id + " has been removed.";
+        return "Expense deleted successfully";
     }
 }
