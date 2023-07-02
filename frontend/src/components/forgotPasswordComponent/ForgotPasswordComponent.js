@@ -35,23 +35,23 @@ const ForgotPasswordComponent = () => {
     password,
   };
 
-  const handleUpdatePassword = (e) => {
+  const handleUpdatePassword = async (e) => {
     e.preventDefault();
 
     setMessage("");
     setError("");
 
-    AuthService.forgotPassword(newPassword)
-      .then(() => {
-        setIsPending(true);
-        setTimeout(() => {
-          setIsPending(false);
-          setMessage("Password updated successfully");
-        }, 1000);
-      })
-      .catch((err) => {
-        setError(err.message);
-      });
+    try {
+      const response = await AuthService.forgotPassword(newPassword);
+      setIsPending(true);
+
+      setTimeout(() => {
+        setIsPending(false);
+        setMessage(response.data.message);
+      }, 1000);
+    } catch (err) {
+      setError(err.message);
+    }
   };
 
   return (
