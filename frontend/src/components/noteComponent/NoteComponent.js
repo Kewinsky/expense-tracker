@@ -25,8 +25,8 @@ const NoteComponent = ({ note, getNotes, month, year }) => {
     });
   };
 
-  const showToastErrorMessage = () => {
-    toast.error("Something went wrong!", {
+  const showToastErrorMessage = (message) => {
+    toast.error(message, {
       theme: theme,
     });
   };
@@ -39,11 +39,10 @@ const NoteComponent = ({ note, getNotes, month, year }) => {
       month: month,
       year: year,
     })
+      .then(() => showToastMessageOnSave())
       .catch((err) => {
-        showToastErrorMessage();
-        console.log(err.response.data);
-      })
-      .then(() => showToastMessageOnSave());
+        showToastErrorMessage(err.message);
+      });
     getNotes();
   };
 
