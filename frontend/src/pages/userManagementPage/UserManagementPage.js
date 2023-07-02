@@ -5,9 +5,12 @@ import TableComponent from "../../components/tableComponent/TableComponent";
 import { userManagementTableHeaders } from "../../helpers/tableHeaders";
 import { updateUserURL } from "../../helpers/updateURL";
 import { useDeleteItem } from "../../hooks/useDeleteItem";
+import SeparatorComponent from "../../components/separatorComponent/SeparatorComponent";
 
 const UserManagementPage = ({ currentUser }) => {
   const [users, setUsers] = useState([]);
+  const [isPending, setIsPending] = useState(true);
+  const [error, setError] = useState("");
 
   const roleMapping = {
     ROLE_USER: "User",
@@ -25,7 +28,18 @@ const UserManagementPage = ({ currentUser }) => {
 
   const getUsers = async () => {
     const response = await UserService.getUsers();
+
+    setError(null);
+
     setUsers(response.data);
+
+    if (response.length === 0) {
+      setError("No data");
+    }
+
+    setTimeout(() => {
+      setIsPending(false);
+    }, 1000);
   };
 
   const handleDelete = useDeleteItem(
@@ -43,13 +57,21 @@ const UserManagementPage = ({ currentUser }) => {
   }, []);
 
   return (
-    <TableComponent
-      handleUpdate={updateUserURL}
-      handleDelete={handleDelete}
-      configLabels={userManagementTableHeaders}
-      records={simplifiedUsers.slice(1)}
-      setRecords={setUsers}
-    />
+    <>
+      <div className="m-5 text-center">
+        <h3>User management</h3>
+      </div>
+      <SeparatorComponent />
+      <TableComponent
+        handleUpdate={updateUserURL}
+        handleDelete={handleDelete}
+        configLabels={userManagementTableHeaders}
+        records={simplifiedUsers.slice(1)}
+        setRecords={setUsers}
+        isPending={isPending}
+        error={error}
+      />
+    </>
   );
 };
 

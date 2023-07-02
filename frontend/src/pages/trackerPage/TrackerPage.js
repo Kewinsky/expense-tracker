@@ -18,6 +18,8 @@ const TrackerPage = ({ expenses, setExpenses, currentUser }) => {
   const [month, setMonth] = useState(months[currentDate.getMonth()]);
   const [year, setYear] = useState(currentDate.getFullYear());
   const [filteredExpenses, setFilteredExpenses] = useState([]);
+  const [isPending, setIsPending] = useState(true);
+  const [error, setError] = useState(null);
 
   const handleDelete = useDeleteItem(
     ExpenseService.deleteExpense,
@@ -32,7 +34,16 @@ const TrackerPage = ({ expenses, setExpenses, currentUser }) => {
       months.indexOf(month),
       category
     );
+    setError(null);
     setFilteredExpenses(response);
+
+    if (response.length === 0) {
+      setError("No data");
+    }
+
+    setTimeout(() => {
+      setIsPending(false);
+    }, 1000);
   };
 
   useEffect(() => {
@@ -65,6 +76,8 @@ const TrackerPage = ({ expenses, setExpenses, currentUser }) => {
         configLabels={trackerTableHeaders}
         records={filteredExpenses}
         setRecords={setExpenses}
+        isPending={isPending}
+        error={error}
       />
     </>
   );
