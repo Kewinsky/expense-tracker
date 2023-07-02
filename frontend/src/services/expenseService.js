@@ -4,42 +4,89 @@ import AuthService from "./authService";
 
 const API_URL = process.env.REACT_APP_API_URL + "/expenses/";
 
-const getExpenseById = (id) => {
-  return axios.get(API_URL + `getExpense/${id}`, { headers: authHeader() });
-};
+const userId = AuthService.getCurrentUser()?.id;
 
-const userId = AuthService.getCurrentUser();
 const getExpensesByUser = async () => {
   return await axios
-    .get(API_URL + `getExpensesByUser/${userId.id}`, {
+    .get(API_URL + `getExpensesByUser/${userId}`, {
       headers: authHeader(),
     })
+
     .catch((err) => {
       if (err.response.status === 401) {
         AuthService.logout();
         window.location = "/login";
+      } else if (err.response) {
+        throw new Error(err.response.data);
+      } else if (err.request) {
+        throw new Error("Server is not responding. Please try again later.");
+      } else {
+        throw new Error("An error occurred. Please try again.");
       }
     });
 };
 
-const addExpense = (expense) => {
-  return axios.post(API_URL + "addExpense", expense, { headers: authHeader() });
+const addExpense = async (expense) => {
+  try {
+    return await axios
+      .post(API_URL + "addExpense", expense, {
+        headers: authHeader(),
+      })
+      .then((res) => {
+        return res.data;
+      });
+  } catch (err) {
+    if (err.response) {
+      throw new Error(err.response.data);
+    } else if (err.request) {
+      throw new Error("Server is not responding. Please try again later.");
+    } else {
+      throw new Error("An error occurred. Please try again.");
+    }
+  }
 };
 
-const updateExpense = (id, newExpense) => {
-  return axios.put(API_URL + `updateExpense/${id}`, newExpense, {
-    headers: authHeader(),
-  });
+const updateExpense = async (id, newExpense) => {
+  try {
+    return await axios
+      .put(API_URL + `updateExpense/${id}`, newExpense, {
+        headers: authHeader(),
+      })
+      .then((res) => {
+        return res.data;
+      });
+  } catch (err) {
+    if (err.response) {
+      throw new Error(err.response.data);
+    } else if (err.request) {
+      throw new Error("Server is not responding. Please try again later.");
+    } else {
+      throw new Error("An error occurred. Please try again.");
+    }
+  }
 };
 
-const deleteExpense = (id) => {
-  return axios.delete(API_URL + `deleteExpense/${id}`, {
-    headers: authHeader(),
-  });
+const deleteExpense = async (id) => {
+  try {
+    return await axios
+      .delete(API_URL + `deleteExpense/${id}`, {
+        headers: authHeader(),
+      })
+      .then((res) => {
+        return res.data;
+      });
+  } catch (err) {
+    if (err.response) {
+      throw new Error(err.response.data);
+    } else if (err.request) {
+      throw new Error("Server is not responding. Please try again later.");
+    } else {
+      throw new Error("An error occurred. Please try again.");
+    }
+  }
 };
 
 const ExpenseService = {
-  getExpenseById,
   getExpensesByUser,
   addExpense,
   updateExpense,

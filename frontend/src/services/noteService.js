@@ -11,14 +11,36 @@ const getNotesByUser = async () => {
   });
 };
 
-const addNote = (note) => {
-  return axios.post(API_URL + "addNote", note, { headers: authHeader() });
+const addNote = async (note) => {
+  try {
+    return await axios.post(API_URL + "addNote", note, {
+      headers: authHeader(),
+    });
+  } catch (err) {
+    if (err.response) {
+      throw new Error(err.response.data);
+    } else if (err.request) {
+      throw new Error("Server is not responding. Please try again later.");
+    } else {
+      throw new Error("An error occurred. Please try again.");
+    }
+  }
 };
 
-const updateNote = (id, newNote) => {
-  return axios.put(API_URL + `updateNote/${id}`, newNote, {
-    headers: authHeader(),
-  });
+const updateNote = async (id, newNote) => {
+  try {
+    return await axios.put(API_URL + `updateNote/${id}`, newNote, {
+      headers: authHeader(),
+    });
+  } catch (err) {
+    if (err.response) {
+      throw new Error(err.response.data);
+    } else if (err.request) {
+      throw new Error("Server is not responding. Please try again later.");
+    } else {
+      throw new Error("An error occurred. Please try again.");
+    }
+  }
 };
 
 const NoteService = {
