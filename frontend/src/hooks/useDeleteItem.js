@@ -20,11 +20,11 @@ export const useDeleteItem = (deleteServiceFn, fetchDataFn, setData) => {
 
   const deleteItem = async (itemId) => {
     try {
-      await deleteServiceFn(itemId);
-      showToastMessage("Item deleted!");
+      const response = await deleteServiceFn(itemId);
+      showToastMessage(response);
       reloadData(fetchDataFn, setData);
     } catch (err) {
-      showToastErrorMessage("Something went wrong!");
+      showToastErrorMessage(err.message);
     }
   };
 
