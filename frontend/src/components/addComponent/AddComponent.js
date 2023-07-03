@@ -11,14 +11,11 @@ import {
   errorNotification,
   successNotification,
 } from "../../helpers/toastNotifications";
+import AuthService from "../../services/authService";
 
-const AddComponent = ({ setExpenses, currentUser, categories }) => {
+const AddComponent = ({ setExpenses, categories }) => {
   const { theme } = useContext(ThemeContext);
-
-  let userId = 0;
-  if (currentUser !== undefined) {
-    userId = currentUser.id;
-  }
+  const currentUser = AuthService.getCurrentUser();
 
   const [date, setDate] = useState("");
   const [title, setTitle] = useState("");
@@ -48,7 +45,7 @@ const AddComponent = ({ setExpenses, currentUser, categories }) => {
     title,
     value,
     category: category,
-    userId: userId,
+    userId: currentUser.id,
   };
 
   const handleAddExpense = async (e) => {

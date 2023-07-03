@@ -8,10 +8,9 @@ import { Card } from "react-bootstrap";
 import SpinnerComponent from "../spinnerComponent/SpinnerComponent";
 
 const UpdateAdminComponent = ({ users }) => {
-  const { id } = useParams();
+  const { id: userId } = useParams();
   const { theme } = useContext(ThemeContext);
 
-  const userId = id;
   const reversedTheme = theme === "dark" ? "light" : "dark";
 
   const selectedUser = users.find((item) => {

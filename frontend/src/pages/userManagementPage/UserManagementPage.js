@@ -6,17 +6,19 @@ import { userManagementTableHeaders } from "../../helpers/tableHeaders";
 import { updateUserURL } from "../../helpers/updateURL";
 import { useDeleteItem } from "../../hooks/useDeleteItem";
 import SeparatorComponent from "../../components/separatorComponent/SeparatorComponent";
+import AuthService from "../../services/authService";
 
-const UserManagementPage = ({ currentUser }) => {
-  const [users, setUsers] = useState([]);
-  const [isPending, setIsPending] = useState(true);
-  const [error, setError] = useState("");
-
+const UserManagementPage = () => {
   const roleMapping = {
     ROLE_USER: "User",
     ROLE_ADMIN: "Admin",
     ROLE_MODERATOR: "Moderator",
   };
+  const currentUser = AuthService.getCurrentUser();
+
+  const [users, setUsers] = useState([]);
+  const [isPending, setIsPending] = useState(true);
+  const [error, setError] = useState("");
 
   const simplifiedUsers = users.map((user) => {
     const roles = user.roles.map((role) => roleMapping[role.name]).join(" | ");
@@ -29,7 +31,7 @@ const UserManagementPage = ({ currentUser }) => {
   const getUsers = async () => {
     const response = await UserService.getUsers();
 
-    setError(null);
+    setError("");
 
     setUsers(response.data);
 

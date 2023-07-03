@@ -5,16 +5,18 @@ import UserService from "../../services/userService";
 import { ThemeContext } from "../../App";
 import { Card } from "react-bootstrap";
 import SpinnerComponent from "../spinnerComponent/SpinnerComponent";
+import AuthService from "../../services/authService";
 
-const UpdateUserComponent = ({ currentUser }) => {
+const UpdateUserComponent = () => {
+  const { theme } = useContext(ThemeContext);
+  const reversedTheme = theme === "dark" ? "light" : "dark";
+  const currentUser = AuthService.getCurrentUser();
+
   const [username, setUsername] = useState(currentUser.username);
   const [email, setEmail] = useState(currentUser.email);
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const [isPending, setIsPending] = useState(false);
-
-  const { theme } = useContext(ThemeContext);
-  const reversedTheme = theme === "dark" ? "light" : "dark";
 
   const handleInputUsername = (e) => {
     setUsername(e.target.value);

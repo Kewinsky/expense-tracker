@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import AddComponent from "../../components/addComponent/AddComponent";
 import FilteringComponent from "../../components/filteringComponent/FilteringComponent";
 import SeparatorComponent from "../../components/separatorComponent/SeparatorComponent";
@@ -10,8 +10,10 @@ import { expenseCategories } from "../../helpers/expenseCategoriesData";
 import { trackerTableHeaders } from "../../helpers/tableHeaders";
 import { updateExpenseURL } from "../../helpers/updateURL";
 import { useDeleteItem } from "../../hooks/useDeleteItem";
+import { ThemeContext } from "../../App";
 
-const TrackerPage = ({ expenses, setExpenses, currentUser }) => {
+const TrackerPage = () => {
+  const { expenses, setExpenses } = useContext(ThemeContext);
   const currentDate = new Date();
 
   const [category, setCategory] = useState([]);
@@ -55,7 +57,6 @@ const TrackerPage = ({ expenses, setExpenses, currentUser }) => {
       <AddComponent
         expenses={expenses}
         setExpenses={setExpenses}
-        currentUser={currentUser}
         categories={expenseCategories}
       />
       <FilteringComponent

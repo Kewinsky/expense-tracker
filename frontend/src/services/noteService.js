@@ -4,9 +4,10 @@ import AuthService from "./authService";
 
 const API_URL = process.env.REACT_APP_API_URL + "/notes/";
 
-const userId = AuthService.getCurrentUser();
+const userId = AuthService.getCurrentUser()?.id;
+
 const getNotesByUser = async () => {
-  return await axios.get(API_URL + `getNotesByUser/${userId.id}`, {
+  return await axios.get(API_URL + `getNotesByUser/${userId}`, {
     headers: authHeader(),
   });
 };

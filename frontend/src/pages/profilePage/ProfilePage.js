@@ -1,6 +1,6 @@
 import ProfileComponent from "../../components/profileComponent/ProfileComponent";
-const ProfilePage = ({ currentUser }) => {
-  return <ProfileComponent currentUser={currentUser} />;
+const ProfilePage = () => {
+  return <ProfileComponent />;
 };
 
 export default ProfilePage;

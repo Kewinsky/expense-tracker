@@ -26,18 +26,13 @@ const App = () => {
   }, []);
 
   return (
-    <ThemeContext.Provider value={{ theme, setTheme }}>
+    <ThemeContext.Provider value={{ theme, setTheme, expenses, setExpenses }}>
       <ToastContainer
         hideProgressBar={true}
         pauseOnHover={false}
         theme={theme}
       />
-      <Router
-        expenses={expenses}
-        setExpenses={setExpenses}
-        currentUser={AuthService.getCurrentUser()}
-        setCurrentUser={setCurrentUser}
-      />
+      <Router />
     </ThemeContext.Provider>
   );
 };

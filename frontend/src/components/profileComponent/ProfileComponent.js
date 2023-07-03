@@ -5,10 +5,12 @@ import { ThemeContext } from "../../App";
 import "./profileComponent.scss";
 import { Card, Col, Image, Row } from "react-bootstrap";
 import userImg from "../../assets/images/user_image.png";
+import AuthService from "../../services/authService";
 
-const ProfileComponent = ({ currentUser }) => {
+const ProfileComponent = () => {
   const { theme } = useContext(ThemeContext);
   const reversedTheme = theme === "dark" ? "light" : "dark";
+  const currentUser = AuthService.getCurrentUser();
 
   return (
     <div className="d-flex justify-content-center m-3">

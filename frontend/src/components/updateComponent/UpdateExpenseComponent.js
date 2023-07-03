@@ -9,16 +9,12 @@ import { ThemeContext } from "../../App";
 import { Card } from "react-bootstrap";
 import { reloadData } from "../../helpers/reloadData";
 import SpinnerComponent from "../spinnerComponent/SpinnerComponent";
+import { expenseCategories } from "../../helpers/expenseCategoriesData";
 
-const UpdateExpenseComponent = ({
-  expenses,
-  setExpenses,
-  expenseCategories,
-}) => {
-  const { id } = useParams();
-  const expenseId = id;
+const UpdateExpenseComponent = () => {
+  const { id: expenseId } = useParams();
 
-  const { theme } = useContext(ThemeContext);
+  const { theme, expenses, setExpenses } = useContext(ThemeContext);
   const reversedTheme = theme === "dark" ? "light" : "dark";
 
   const selectedExpense = expenses.find((item) => {
