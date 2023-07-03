@@ -15,7 +15,6 @@ const UpdateUserComponent = ({ currentUser }) => {
 
   const { theme } = useContext(ThemeContext);
   const reversedTheme = theme === "dark" ? "light" : "dark";
-  const inputTheme = theme === "dark" ? "darkTheme" : "";
 
   const handleInputUsername = (e) => {
     setUsername(e.target.value);
@@ -62,7 +61,7 @@ const UpdateUserComponent = ({ currentUser }) => {
             onChange={handleInputUsername}
             value={username}
             type="text"
-            className={inputTheme}
+            className={`${theme}Theme`}
           />
         </Form.Group>
         <Form.Group className="mt-3">
@@ -71,7 +70,7 @@ const UpdateUserComponent = ({ currentUser }) => {
             onChange={handleInputEmail}
             value={email}
             type="email"
-            className={inputTheme}
+            className={`${theme}Theme`}
           />
         </Form.Group>
         <Form.Group className="mt-3">

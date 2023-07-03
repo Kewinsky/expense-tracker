@@ -11,7 +11,6 @@ import {
 
 const NoteComponent = ({ note, getNotes, month, year }) => {
   const { theme } = useContext(ThemeContext);
-  const inputTheme = theme === "dark" ? "darkTheme" : "";
   const reversedTheme = theme === "dark" ? "light" : "dark";
 
   const currentUser = AuthService.getCurrentUser();
@@ -55,7 +54,7 @@ const NoteComponent = ({ note, getNotes, month, year }) => {
         as="textarea"
         onChange={handleInputChange}
         value={updatedNote}
-        className={inputTheme}
+        className={`${theme}Theme`}
       />
     </Form.Group>
   );

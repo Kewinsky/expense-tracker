@@ -20,7 +20,6 @@ const FilteringComponent = ({
   const years = getYearArray();
 
   const { theme } = useContext(ThemeContext);
-  const inputTheme = theme === "dark" ? "darkTheme" : "";
 
   const getDefaultMonth = () => {
     return dropdownData(months)[months.indexOf(month)];
@@ -56,7 +55,7 @@ const FilteringComponent = ({
               <SelectComponent
                 options={dropdownDataNumber(years)}
                 handleSelect={handleSelectYear}
-                theme={inputTheme}
+                theme={`${theme}Theme`}
                 defaultValue={getDefaultYear()}
                 placeholder={"Select year"}
               />
@@ -68,7 +67,7 @@ const FilteringComponent = ({
               <SelectComponent
                 options={dropdownData(months)}
                 handleSelect={handleSelectMonth}
-                theme={inputTheme}
+                theme={`${theme}Theme`}
                 defaultValue={getDefaultMonth()}
                 placeholder={"Select month"}
               />
@@ -82,7 +81,7 @@ const FilteringComponent = ({
                 closeMenuOnSelect={false}
                 options={dropdownData(categories)}
                 handleSelect={handleSelectCategory}
-                theme={inputTheme}
+                theme={`${theme}Theme`}
                 placeholder={"Select category"}
               />
             </Form.Group>

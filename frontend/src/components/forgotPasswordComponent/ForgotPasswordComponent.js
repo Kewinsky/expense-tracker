@@ -10,7 +10,6 @@ import SpinnerComponent from "../spinnerComponent/SpinnerComponent";
 const ForgotPasswordComponent = () => {
   const { theme } = useContext(ThemeContext);
   const reversedTheme = theme === "dark" ? "light" : "dark";
-  const inputTheme = theme === "dark" ? "darkTheme" : "";
 
   const form = useRef();
 
@@ -66,7 +65,7 @@ const ForgotPasswordComponent = () => {
             required
             value={email}
             onChange={onChangeEmail}
-            className={inputTheme}
+            className={`${theme}Theme`}
             disabled={message}
           />
         </Form.Group>
@@ -79,7 +78,7 @@ const ForgotPasswordComponent = () => {
             required
             value={password}
             onChange={onChangePassword}
-            className={inputTheme}
+            className={`${theme}Theme`}
             disabled={message}
           />
         </Form.Group>

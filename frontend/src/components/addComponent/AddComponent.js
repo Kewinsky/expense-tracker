@@ -14,8 +14,6 @@ import {
 
 const AddComponent = ({ setExpenses, currentUser, categories }) => {
   const { theme } = useContext(ThemeContext);
-  // TODO: theme refactor
-  const inputTheme = theme === "dark" ? "darkTheme" : "";
 
   let userId = 0;
   if (currentUser !== undefined) {
@@ -26,6 +24,7 @@ const AddComponent = ({ setExpenses, currentUser, categories }) => {
   const [title, setTitle] = useState("");
   const [value, setValue] = useState("");
   const [category, setCategory] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState(null);
 
   const handleInputDate = (e) => {
     setDate(e.target.value);
@@ -41,13 +40,14 @@ const AddComponent = ({ setExpenses, currentUser, categories }) => {
 
   const handleSelectCategory = (e) => {
     setCategory(e.value);
+    setSelectedCategory(e);
   };
 
   const newExpense = {
     date,
     title,
     value,
-    category: category.toUpperCase(),
+    category: category,
     userId: userId,
   };
 
@@ -57,8 +57,8 @@ const AddComponent = ({ setExpenses, currentUser, categories }) => {
     setDate("");
     setTitle("");
     setValue("");
-    // TODO: handle clearing select
     setCategory("");
+    setSelectedCategory(null);
 
     try {
       const response = await ExpenseService.addExpense(newExpense);
@@ -81,7 +81,7 @@ const AddComponent = ({ setExpenses, currentUser, categories }) => {
                 type="date"
                 value={date}
                 onChange={handleInputDate}
-                className={inputTheme}
+                className={`${theme}Theme`}
               />
             </Form.Group>
           </Col>
@@ -94,7 +94,7 @@ const AddComponent = ({ setExpenses, currentUser, categories }) => {
                 placeholder="Multisport subscription"
                 value={title}
                 onChange={handleInputTitle}
-                className={inputTheme}
+                className={`${theme}Theme`}
               />
             </Form.Group>
           </Col>
@@ -108,7 +108,7 @@ const AddComponent = ({ setExpenses, currentUser, categories }) => {
                 placeholder="100,00"
                 value={value}
                 onChange={handleInputValue}
-                className={inputTheme}
+                className={`${theme}Theme`}
               />
             </Form.Group>
           </Col>
@@ -117,9 +117,10 @@ const AddComponent = ({ setExpenses, currentUser, categories }) => {
               <Form.Label>Category</Form.Label>
               <SelectComponent
                 options={dropdownData(categories)}
+                value={selectedCategory}
                 handleSelect={handleSelectCategory}
                 placeholder={"Select category"}
-                theme={inputTheme}
+                theme={`${theme}Theme`}
               />
             </Form.Group>
           </Col>

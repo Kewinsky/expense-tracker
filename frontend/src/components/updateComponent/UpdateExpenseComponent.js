@@ -20,7 +20,6 @@ const UpdateExpenseComponent = ({
 
   const { theme } = useContext(ThemeContext);
   const reversedTheme = theme === "dark" ? "light" : "dark";
-  const inputTheme = theme === "dark" ? "darkTheme" : "";
 
   const selectedExpense = expenses.find((item) => {
     return item.id === parseInt(expenseId);
@@ -94,7 +93,7 @@ const UpdateExpenseComponent = ({
             onChange={handleInputDate}
             value={date}
             type="date"
-            className={inputTheme}
+            className={`${theme}Theme`}
             disabled={message}
           />
         </Form.Group>
@@ -106,7 +105,7 @@ const UpdateExpenseComponent = ({
             value={title}
             type="text"
             placeholder="Multisport subscription"
-            className={inputTheme}
+            className={`${theme}Theme`}
             disabled={message}
           />
         </Form.Group>
@@ -119,7 +118,7 @@ const UpdateExpenseComponent = ({
             type="number"
             step={0.5}
             placeholder="100,00"
-            className={inputTheme}
+            className={`${theme}Theme`}
             disabled={message}
           />
         </Form.Group>
@@ -129,7 +128,7 @@ const UpdateExpenseComponent = ({
           <SelectComponent
             options={dropdownData(expenseCategories)}
             handleSelect={handleSelectCategory}
-            theme={inputTheme}
+            theme={`${theme}Theme`}
             defaultValue={getDefaultValue()}
           />
         </Form.Group>

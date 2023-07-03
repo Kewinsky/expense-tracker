@@ -13,7 +13,6 @@ const UpdateAdminComponent = ({ users }) => {
 
   const userId = id;
   const reversedTheme = theme === "dark" ? "light" : "dark";
-  const inputTheme = theme === "dark" ? "darkTheme" : "";
 
   const selectedUser = users.find((item) => {
     return item.id === parseInt(userId);
@@ -89,7 +88,7 @@ const UpdateAdminComponent = ({ users }) => {
             onChange={handleInputUsername}
             value={username}
             type="text"
-            className={inputTheme}
+            className={`${theme}Theme`}
           />
         </Form.Group>
 
@@ -100,7 +99,7 @@ const UpdateAdminComponent = ({ users }) => {
             value={email}
             type="text"
             placeholder="Multisport subscription"
-            className={inputTheme}
+            className={`${theme}Theme`}
           />
         </Form.Group>
 
