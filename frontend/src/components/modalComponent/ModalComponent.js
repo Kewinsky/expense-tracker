@@ -4,18 +4,15 @@ import Modal from "react-bootstrap/Modal";
 const ModalComponent = ({ handleDelete, record, show, setShow, theme }) => {
   const handleClose = () => setShow(false);
 
-  // theme is reversed by default
-  const inputTheme = theme !== "dark" ? "darkTheme" : "";
-
   return (
     <Modal show={show} onHide={handleClose}>
-      <Modal.Header closeButton className={inputTheme}>
+      <Modal.Header closeButton className={`${theme}Theme`}>
         <Modal.Title>Delete this item?</Modal.Title>
       </Modal.Header>
-      <Modal.Body className={inputTheme}>
+      <Modal.Body className={`${theme}Theme`}>
         If you want to delete this item click 'Yes' button.
       </Modal.Body>
-      <Modal.Footer className={inputTheme}>
+      <Modal.Footer className={`${theme}Theme`}>
         <Button variant={`outline-${theme}`} onClick={handleClose}>
           Close
         </Button>

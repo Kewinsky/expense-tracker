@@ -1,22 +1,24 @@
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import UserService from "../../services/userService";
 import TableComponent from "../../components/tableComponent/TableComponent";
-import { toast } from "react-toastify";
-import { ThemeContext } from "../../App";
-const UserManagementPage = ({ currentUser }) => {
-  const configLabels = ["username", "email", "roles"];
-  const handleUpdate = "/update/userByAdmin";
+import { userManagementTableHeaders } from "../../helpers/tableHeaders";
+import { updateUserURL } from "../../helpers/updateURL";
+import { useDeleteItem } from "../../hooks/useDeleteItem";
+import SeparatorComponent from "../../components/separatorComponent/SeparatorComponent";
+import AuthService from "../../services/authService";
 
-  const { theme } = useContext(ThemeContext);
-
-  const [users, setUsers] = useState([]);
-
+const UserManagementPage = () => {
   const roleMapping = {
     ROLE_USER: "User",
     ROLE_ADMIN: "Admin",
     ROLE_MODERATOR: "Moderator",
   };
+  const currentUser = AuthService.getCurrentUser();
+
+  const [users, setUsers] = useState([]);
+  const [isPending, setIsPending] = useState(true);
+  const [error, setError] = useState("");
 
   const simplifiedUsers = users.map((user) => {
     const roles = user.roles.map((role) => roleMapping[role.name]).join(" | ");
@@ -26,49 +28,52 @@ const UserManagementPage = ({ currentUser }) => {
 
   const navigate = useNavigate();
 
-  const getAllUsers = async () => {
+  const getUsers = async () => {
     const response = await UserService.getUsers();
+
+    setError("");
+
     setUsers(response.data);
+
+    if (response.length === 0) {
+      setError("No data");
+    }
+
+    setTimeout(() => {
+      setIsPending(false);
+    }, 1000);
   };
 
-  const showToastMessageOnDelete = () => {
-    toast.success("User deleted!", {
-      theme: theme,
-    });
-  };
-
-  const showToastErrorMessage = () => {
-    toast.error("Something went wrong!", {
-      theme: theme,
-    });
-  };
-
-  const handleDelete = async (id) => {
-    await UserService.deleteUser(id)
-      .then(() => getAllUsers())
-      .catch((err) => {
-        showToastErrorMessage();
-        console.log(err.response.data);
-      })
-      .then(() => showToastMessageOnDelete());
-  };
+  const handleDelete = useDeleteItem(
+    UserService.deleteUser,
+    UserService.getUsers,
+    setUsers
+  );
 
   useEffect(() => {
     if (!currentUser?.roles.includes("ROLE_ADMIN")) {
       navigate("/unauthorized");
     } else {
-      getAllUsers();
+      getUsers();
     }
-  }, [currentUser?.roles, navigate]);
+  }, []);
 
   return (
-    <TableComponent
-      handleUpdate={handleUpdate}
-      handleDelete={handleDelete}
-      configLabels={configLabels}
-      records={simplifiedUsers.slice(1)}
-      setRecords={setUsers}
-    />
+    <>
+      <div className="m-5 text-center">
+        <h3>User management</h3>
+      </div>
+      <SeparatorComponent />
+      <TableComponent
+        handleUpdate={updateUserURL}
+        handleDelete={handleDelete}
+        configLabels={userManagementTableHeaders}
+        records={simplifiedUsers.slice(1)}
+        setRecords={setUsers}
+        isPending={isPending}
+        error={error}
+      />
+    </>
   );
 };
 

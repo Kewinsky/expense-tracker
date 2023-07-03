@@ -5,54 +5,29 @@ import SeparatorComponent from "../../components/separatorComponent/SeparatorCom
 import TableComponent from "../../components/tableComponent/TableComponent";
 import ExpenseService from "../../services/expenseService";
 import { expenseFilter } from "../../helpers/expenseFilter";
-import { toast } from "react-toastify";
+import { months } from "../../helpers/monthsData";
+import { expenseCategories } from "../../helpers/expenseCategoriesData";
+import { trackerTableHeaders } from "../../helpers/tableHeaders";
+import { updateExpenseURL } from "../../helpers/updateURL";
+import { useDeleteItem } from "../../hooks/useDeleteItem";
 import { ThemeContext } from "../../App";
 
-const TrackerPage = ({
-  expenses,
-  setExpenses,
-  currentUser,
-  expenseCategories,
-  months,
-  years,
-}) => {
-  const configLabels = ["date", "title", "value", "category"];
-  const handleUpdate = "/update/expense";
+const TrackerPage = () => {
+  const { expenses, setExpenses } = useContext(ThemeContext);
   const currentDate = new Date();
-
-  const { theme } = useContext(ThemeContext);
 
   const [category, setCategory] = useState([]);
   const [month, setMonth] = useState(months[currentDate.getMonth()]);
   const [year, setYear] = useState(currentDate.getFullYear());
   const [filteredExpenses, setFilteredExpenses] = useState([]);
+  const [isPending, setIsPending] = useState(true);
+  const [error, setError] = useState(null);
 
-  const reloadData = async () => {
-    const response = await ExpenseService.getExpensesByUser();
-    setExpenses(response.data);
-  };
-
-  const showToastMessageOnDelete = () => {
-    toast.success("Expense deleted!", {
-      theme: theme,
-    });
-  };
-
-  const showToastErrorMessage = () => {
-    toast.error("Something went wrong!", {
-      theme: theme,
-    });
-  };
-
-  const handleDelete = async (id) => {
-    await ExpenseService.deleteExpense(id)
-      .then(() => reloadData())
-      .catch((err) => {
-        showToastErrorMessage();
-        console.log(err.response.data);
-      })
-      .then(() => showToastMessageOnDelete());
-  };
+  const handleDelete = useDeleteItem(
+    ExpenseService.deleteExpense,
+    ExpenseService.getExpensesByUser,
+    setExpenses
+  );
 
   const filterExpenses = () => {
     const response = expenseFilter(
@@ -61,7 +36,16 @@ const TrackerPage = ({
       months.indexOf(month),
       category
     );
+    setError(null);
     setFilteredExpenses(response);
+
+    if (response.length === 0) {
+      setError("No data");
+    }
+
+    setTimeout(() => {
+      setIsPending(false);
+    }, 1000);
   };
 
   useEffect(() => {
@@ -73,7 +57,6 @@ const TrackerPage = ({
       <AddComponent
         expenses={expenses}
         setExpenses={setExpenses}
-        currentUser={currentUser}
         categories={expenseCategories}
       />
       <FilteringComponent
@@ -86,15 +69,16 @@ const TrackerPage = ({
         setCategory={setCategory}
         filterExpenses={filterExpenses}
         months={months}
-        years={years}
       />
       <SeparatorComponent />
       <TableComponent
-        handleUpdate={handleUpdate}
+        handleUpdate={updateExpenseURL}
         handleDelete={handleDelete}
-        configLabels={configLabels}
+        configLabels={trackerTableHeaders}
         records={filteredExpenses}
         setRecords={setExpenses}
+        isPending={isPending}
+        error={error}
       />
     </>
   );

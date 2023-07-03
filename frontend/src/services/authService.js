@@ -43,7 +43,11 @@ const login = async (username, password) => {
 
 const forgotPassword = async (newPassword) => {
   try {
-    return await axios.put(API_URL + "forgotPassword", newPassword);
+    return await axios
+      .put(API_URL + "forgotPassword", newPassword)
+      .then((res) => {
+        return res.data.message;
+      });
   } catch (err) {
     if (err.response) {
       throw new Error(err.response.data.message);

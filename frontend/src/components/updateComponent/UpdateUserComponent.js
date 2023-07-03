@@ -4,14 +4,19 @@ import { useContext, useState } from "react";
 import UserService from "../../services/userService";
 import { ThemeContext } from "../../App";
 import { Card } from "react-bootstrap";
+import SpinnerComponent from "../spinnerComponent/SpinnerComponent";
+import AuthService from "../../services/authService";
 
-const UpdateUserComponent = ({ currentUser, setCurrentUser }) => {
-  const [username, setUsername] = useState(currentUser.username);
-  const [email, setEmail] = useState(currentUser.email);
-
+const UpdateUserComponent = () => {
   const { theme } = useContext(ThemeContext);
   const reversedTheme = theme === "dark" ? "light" : "dark";
-  const inputTheme = theme === "dark" ? "darkTheme" : "";
+  const currentUser = AuthService.getCurrentUser();
+
+  const [username, setUsername] = useState(currentUser.username);
+  const [email, setEmail] = useState(currentUser.email);
+  const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
+  const [isPending, setIsPending] = useState(false);
 
   const handleInputUsername = (e) => {
     setUsername(e.target.value);
@@ -28,9 +33,24 @@ const UpdateUserComponent = ({ currentUser, setCurrentUser }) => {
 
   const handleUpdateUser = async (e) => {
     e.preventDefault();
-    await UserService.updateCurrentUser(currentUser.id, updatedUser)
-      .then((window.location = "/profile"))
-      .catch((err) => console.log(err.response.data));
+
+    setMessage("");
+    setError("");
+
+    try {
+      const response = await UserService.updateCurrentUser(
+        currentUser.id,
+        updatedUser
+      );
+      setIsPending(true);
+
+      setTimeout(() => {
+        setIsPending(false);
+        setMessage(response);
+      }, 1000);
+    } catch (err) {
+      setError(err.message);
+    }
   };
 
   return (
@@ -43,7 +63,7 @@ const UpdateUserComponent = ({ currentUser, setCurrentUser }) => {
             onChange={handleInputUsername}
             value={username}
             type="text"
-            className={inputTheme}
+            className={`${theme}Theme`}
           />
         </Form.Group>
         <Form.Group className="mt-3">
@@ -52,24 +72,46 @@ const UpdateUserComponent = ({ currentUser, setCurrentUser }) => {
             onChange={handleInputEmail}
             value={email}
             type="email"
-            className={inputTheme}
+            className={`${theme}Theme`}
           />
         </Form.Group>
         <Form.Group className="mt-3">
-          <Button variant="success" type="submit" className="w-100">
-            Submit
-          </Button>
+          {isPending && <SpinnerComponent />}
+          {!isPending && !message && (
+            <>
+              <Button variant="success" type="submit" className="w-100">
+                Submit
+              </Button>
+              <Button
+                variant={`outline-${reversedTheme}`}
+                type="submit"
+                className="w-100 mt-2"
+                href="/profile"
+              >
+                Cancel
+              </Button>
+            </>
+          )}
         </Form.Group>
-        <Form.Group className="mt-2">
-          <Button
-            variant={`outline-${reversedTheme}`}
-            type="submit"
-            className="w-100"
-            href="/profile"
-          >
-            Cancel
-          </Button>
-        </Form.Group>
+        {message && (
+          <Form.Group className="mt-5">
+            <div className="alert alert-success m-0" role="alert">
+              {message}
+            </div>
+            <div className="mt-5 text-center">
+              <a href="/profile" className={`link-${reversedTheme} `}>
+                Back
+              </a>
+            </div>
+          </Form.Group>
+        )}
+        {error && (
+          <Form.Group className="mt-5">
+            <div className="alert alert-danger m-0" role="alert">
+              {error}
+            </div>
+          </Form.Group>
+        )}
       </Form>
     </Card>
   );

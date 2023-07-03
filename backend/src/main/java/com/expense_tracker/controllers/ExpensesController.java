@@ -18,24 +18,11 @@ public class ExpensesController {
     ExpensesRepository expensesRepository;
 
     @Autowired
-    NotesRepository notesRepository;
-
-    @Autowired
     UserController userController;
-
-    @GetMapping(path="/getExpenses")
-    @ResponseBody Iterable<Expense> getExpenses() {
-        return expensesRepository.findAll();
-    }
-
-    @GetMapping(path="/getExpense/{id}")
-    Expense getExpense(@PathVariable Long id) {
-        return expensesRepository.findById(id)
-                .orElseThrow(() -> new ExpenseNotFoundException(id));
-    }
-
+    
     @GetMapping(path="/getExpensesByUser/{id}")
     @ResponseBody Iterable<Expense> getExpensesByUser(@PathVariable Long id) {
+        userController.getUserById(id);
         return expensesRepository.findByUserId(id);
     }
 
@@ -43,7 +30,7 @@ public class ExpensesController {
     String addExpense (@RequestBody Expense expense) {
         userController.getUserById(expense.getUserId());
         expensesRepository.save(expense);
-        return "Expense saved.";
+        return "Expense added successfully";
     }
 
     @PutMapping("updateExpense/{id}")
@@ -56,7 +43,7 @@ public class ExpensesController {
                     exp.setCategory(expense.getCategory());
                     exp.setDate(expense.getDate());
                     expensesRepository.save(exp);
-                    return "Expense updated.";
+                    return "Expense updated successfully";
                 })
                 .orElseThrow(() -> new ExpenseNotFoundException(id));
     }
@@ -67,6 +54,6 @@ public class ExpensesController {
             throw new ExpenseNotFoundException(id);
         }
         expensesRepository.deleteById(id);
-        return "Expense with id: " + id + " has been removed.";
+        return "Expense deleted successfully";
     }
 }

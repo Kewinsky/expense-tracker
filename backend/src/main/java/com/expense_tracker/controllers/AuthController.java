@@ -71,7 +71,7 @@ public class AuthController {
         } catch (AuthenticationException ex) {
             return ResponseEntity
                     .badRequest()
-                    .body(new MessageResponse("Error: Invalid username or password!"));
+                    .body(new MessageResponse("Invalid username or password!"));
         }
     }
 
@@ -80,13 +80,13 @@ public class AuthController {
         if (userRepository.existsByUsername(signUpRequest.getUsername())) {
             return ResponseEntity
                     .badRequest()
-                    .body(new MessageResponse("Error: Username is already taken!"));
+                    .body(new MessageResponse("Username is already taken!"));
         }
 
         if (userRepository.existsByEmail(signUpRequest.getEmail())) {
             return ResponseEntity
                     .badRequest()
-                    .body(new MessageResponse("Error: Email is already in use!"));
+                    .body(new MessageResponse("Email is already in use!"));
         }
 
         User user = new User(signUpRequest.getUsername(),
@@ -97,7 +97,7 @@ public class AuthController {
         user.setRoles(converter.toRoleSet(strRoles));
         userRepository.save(user);
 
-        return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
+        return ResponseEntity.ok(new MessageResponse("User registered successfully"));
     }
 
     @PutMapping("/forgotPassword")
@@ -105,14 +105,14 @@ public class AuthController {
         if (!userRepository.existsByEmail(forgotPasswordRequest.getEmail())) {
             return ResponseEntity
                     .badRequest()
-                    .body(new MessageResponse("Error: Email not found!"));
+                    .body(new MessageResponse("Email not found!"));
         }
 
         return userRepository.findByEmail(forgotPasswordRequest.getEmail())
                 .map(user -> {
                     user.setPassword(encoder.encode(forgotPasswordRequest.getPassword()));
                     userRepository.save(user);
-                    return ResponseEntity.ok(new MessageResponse("Password updated successfully!"));
+                    return ResponseEntity.ok(new MessageResponse("Password updated successfully"));
                 })
                 .orElseThrow(() -> new UserNotFoundException(forgotPasswordRequest.getEmail()));
     }

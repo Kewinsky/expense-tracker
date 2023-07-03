@@ -23,7 +23,7 @@ const UpdateAdminPage = () => {
   return (
     <div className="d-flex justify-content-center">
       <div className="m-3 set-width">
-        <UpdateAdminComponent users={users} setUsers={setUsers} />
+        <UpdateAdminComponent users={users} />
       </div>
     </div>
   );

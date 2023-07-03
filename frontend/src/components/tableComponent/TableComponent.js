@@ -45,6 +45,8 @@ const TableComponent = ({
   handleUpdate,
   handleDelete,
   records,
+  isPending,
+  error,
 }) => {
   const { theme } = useContext(ThemeContext);
   const reversedTheme = theme === "dark" ? "light" : "dark";
@@ -57,8 +59,10 @@ const TableComponent = ({
     return sortConfig.key === name ? sortConfig.direction : undefined;
   };
 
-  if (!records.length) {
+  if (isPending) {
     return <SpinnerComponent />;
+  } else if (error) {
+    return <div className="text-center m-5">{error}</div>;
   }
 
   return (

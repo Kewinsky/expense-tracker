@@ -1,5 +1,4 @@
 import Select from "react-select";
-import { dropdownData } from "../../helpers/dropdownData";
 
 const SelectComponent = ({
   options,
@@ -7,6 +6,7 @@ const SelectComponent = ({
   placeholder,
   theme,
   defaultValue,
+  value,
   isMulti,
   closeMenuOnSelect,
 }) => {
@@ -26,7 +26,7 @@ const SelectComponent = ({
             ...base,
             background: "#212529",
           }),
-          option: (styles, { data, isDisabled, isFocused, isSelected }) => {
+          option: (styles, { isFocused }) => {
             return {
               ...styles,
               backgroundColor: isFocused ? "#323539" : null,
@@ -53,6 +53,7 @@ const SelectComponent = ({
       placeholder={placeholder}
       styles={darkMode}
       defaultValue={defaultValue}
+      value={value}
       isMulti={isMulti}
       closeMenuOnSelect={closeMenuOnSelect}
     />

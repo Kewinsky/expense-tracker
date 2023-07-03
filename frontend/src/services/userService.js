@@ -10,30 +10,84 @@ const getUsers = async () => {
   });
 };
 
-const getUserById = (id) => {
-  return axios.get(API_URL + `getUserById/${id}`, { headers: authHeader() });
+const getUserById = async (id) => {
+  try {
+    return await axios.get(API_URL + `getUserById/${id}`, {
+      headers: authHeader(),
+    });
+  } catch (err) {
+    if (err.response) {
+      throw new Error(err.response.data);
+    } else if (err.request) {
+      throw new Error("Server is not responding. Please try again later.");
+    } else {
+      throw new Error("An error occurred. Please try again.");
+    }
+  }
 };
 
-const updateCurrentUser = (id, newUser) => {
+const updateCurrentUser = async (id, newUser) => {
   const user = AuthService.getCurrentUser();
   user.username = newUser.username;
   user.email = newUser.email;
   localStorage.setItem("user", JSON.stringify(user));
-  return axios.put(API_URL + `updateUser/${id}`, newUser, {
-    headers: authHeader(),
-  });
+  try {
+    return await axios
+      .put(API_URL + `updateUser/${id}`, newUser, {
+        headers: authHeader(),
+      })
+      .then((res) => {
+        return res.data;
+      });
+  } catch (err) {
+    if (err.response) {
+      throw new Error(err.response.data);
+    } else if (err.request) {
+      throw new Error("Server is not responding. Please try again later.");
+    } else {
+      throw new Error("An error occurred. Please try again.");
+    }
+  }
 };
 
-const updateUserByAdmin = (id, newUser) => {
-  return axios.put(API_URL + `updateUserByAdmin/${id}`, newUser, {
-    headers: authHeader(),
-  });
+const updateUserByAdmin = async (id, newUser) => {
+  try {
+    return await axios
+      .put(API_URL + `updateUserByAdmin/${id}`, newUser, {
+        headers: authHeader(),
+      })
+      .then((res) => {
+        return res.data;
+      });
+  } catch (err) {
+    if (err.response) {
+      throw new Error(err.response.data);
+    } else if (err.request) {
+      throw new Error("Server is not responding. Please try again later.");
+    } else {
+      throw new Error("An error occurred. Please try again.");
+    }
+  }
 };
 
-const deleteUser = (id) => {
-  return axios.delete(API_URL + `deleteUser/${id}`, {
-    headers: authHeader(),
-  });
+const deleteUser = async (id) => {
+  try {
+    return await axios
+      .delete(API_URL + `deleteUser/${id}`, {
+        headers: authHeader(),
+      })
+      .then((res) => {
+        return res.data;
+      });
+  } catch (err) {
+    if (err.response) {
+      throw new Error(err.response.data);
+    } else if (err.request) {
+      throw new Error("Server is not responding. Please try again later.");
+    } else {
+      throw new Error("An error occurred. Please try again.");
+    }
+  }
 };
 
 const UserService = {

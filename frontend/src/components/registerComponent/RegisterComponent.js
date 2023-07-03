@@ -9,7 +9,6 @@ import SpinnerComponent from "../spinnerComponent/SpinnerComponent";
 const RegisterComponent = () => {
   const { theme } = useContext(ThemeContext);
   const reversedTheme = theme === "dark" ? "light" : "dark";
-  const inputTheme = theme === "dark" ? "darkTheme" : "";
 
   const form = useRef();
 
@@ -77,7 +76,7 @@ const RegisterComponent = () => {
             required
             value={username}
             onChange={onChangeUsername}
-            className={inputTheme}
+            className={`${theme}Theme`}
             disabled={message}
           />
         </Form.Group>
@@ -89,7 +88,7 @@ const RegisterComponent = () => {
             required
             value={email}
             onChange={onChangeEmail}
-            className={inputTheme}
+            className={`${theme}Theme`}
             disabled={message}
           />
         </Form.Group>
@@ -101,7 +100,7 @@ const RegisterComponent = () => {
             required
             value={password}
             onChange={onChangePassword}
-            className={inputTheme}
+            className={`${theme}Theme`}
             disabled={message}
           />
         </Form.Group>

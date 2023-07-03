@@ -4,11 +4,13 @@ import NoteService from "../../services/noteService";
 import { useEffect, useState, useContext } from "react";
 import AuthService from "../../services/authService";
 import { ThemeContext } from "../../App";
-import { toast } from "react-toastify";
+import {
+  errorNotification,
+  successNotification,
+} from "../../helpers/toastNotifications";
 
 const NoteComponent = ({ note, getNotes, month, year }) => {
   const { theme } = useContext(ThemeContext);
-  const inputTheme = theme === "dark" ? "darkTheme" : "";
   const reversedTheme = theme === "dark" ? "light" : "dark";
 
   const currentUser = AuthService.getCurrentUser();
@@ -19,31 +21,20 @@ const NoteComponent = ({ note, getNotes, month, year }) => {
     setUpdatedNote(e.target.value);
   };
 
-  const showToastMessageOnSave = () => {
-    toast.success("Note saved!", {
-      theme: theme,
-    });
-  };
-
-  const showToastErrorMessage = () => {
-    toast.error("Something went wrong!", {
-      theme: theme,
-    });
-  };
-
   const handleSaveNote = async (e) => {
     e.preventDefault();
-    await NoteService.updateNote(note?.id, {
-      userId: currentUser.id,
-      note: updatedNote,
-      month: month,
-      year: year,
-    })
-      .catch((err) => {
-        showToastErrorMessage();
-        console.log(err.response.data);
-      })
-      .then(() => showToastMessageOnSave());
+
+    try {
+      const response = await NoteService.updateNote(note?.id, {
+        userId: currentUser.id,
+        note: updatedNote,
+        month: month,
+        year: year,
+      });
+      successNotification(response);
+    } catch (err) {
+      errorNotification(err.message);
+    }
     getNotes();
   };
 
@@ -63,7 +54,7 @@ const NoteComponent = ({ note, getNotes, month, year }) => {
         as="textarea"
         onChange={handleInputChange}
         value={updatedNote}
-        className={inputTheme}
+        className={`${theme}Theme`}
       />
     </Form.Group>
   );

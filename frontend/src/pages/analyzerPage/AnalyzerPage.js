@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import SwitchMonthComponent from "../../components/switchMonthComponent/SwitchMonthComponent";
 import SummaryComponent from "../../components/summaryComponent/SummaryComponent";
 import SeparatorComponent from "../../components/separatorComponent/SeparatorComponent";
@@ -22,19 +22,20 @@ import {
 } from "../../helpers/expenseFilter";
 import NoteService from "../../services/noteService";
 import { noteFilterByYear } from "../../helpers/noteFilter";
+import { getYearArray } from "../../helpers/yearData";
+import { months } from "../../helpers/monthsData";
+import { ThemeContext } from "../../App";
 
-const AnalyzerPage = ({ expenses, years, months }) => {
+const AnalyzerPage = () => {
   const currentDate = new Date();
+  const years = getYearArray();
+  const { expenses } = useContext(ThemeContext);
 
-  // notes
   const [notes, setNotes] = useState([]);
-
-  // summary info
   const [outcome, setOutcome] = useState(0);
   const [previousOutcome, setPreviousOutcome] = useState(0);
   const [savings, setSavings] = useState(0);
   const [previousSavings, setPreviousSavings] = useState(0);
-
   const [year, setYear] = useState(currentDate.getFullYear());
   const [month, setMonth] = useState(currentDate.getMonth());
   const [filteredExpenses, setFilteredExpenses] = useState([]);

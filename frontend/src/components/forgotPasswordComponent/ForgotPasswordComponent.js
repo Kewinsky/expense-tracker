@@ -10,7 +10,6 @@ import SpinnerComponent from "../spinnerComponent/SpinnerComponent";
 const ForgotPasswordComponent = () => {
   const { theme } = useContext(ThemeContext);
   const reversedTheme = theme === "dark" ? "light" : "dark";
-  const inputTheme = theme === "dark" ? "darkTheme" : "";
 
   const form = useRef();
 
@@ -35,23 +34,23 @@ const ForgotPasswordComponent = () => {
     password,
   };
 
-  const handleUpdatePassword = (e) => {
+  const handleUpdatePassword = async (e) => {
     e.preventDefault();
 
     setMessage("");
     setError("");
 
-    AuthService.forgotPassword(newPassword)
-      .then(() => {
-        setIsPending(true);
-        setTimeout(() => {
-          setIsPending(false);
-          setMessage("Password updated successfully");
-        }, 1000);
-      })
-      .catch((err) => {
-        setError(err.message);
-      });
+    try {
+      const response = await AuthService.forgotPassword(newPassword);
+      setIsPending(true);
+
+      setTimeout(() => {
+        setIsPending(false);
+        setMessage(response);
+      }, 1000);
+    } catch (err) {
+      setError(err.message);
+    }
   };
 
   return (
@@ -66,7 +65,7 @@ const ForgotPasswordComponent = () => {
             required
             value={email}
             onChange={onChangeEmail}
-            className={inputTheme}
+            className={`${theme}Theme`}
             disabled={message}
           />
         </Form.Group>
@@ -79,7 +78,7 @@ const ForgotPasswordComponent = () => {
             required
             value={password}
             onChange={onChangePassword}
-            className={inputTheme}
+            className={`${theme}Theme`}
             disabled={message}
           />
         </Form.Group>

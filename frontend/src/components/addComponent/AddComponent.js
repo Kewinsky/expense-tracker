@@ -5,22 +5,23 @@ import Form from "react-bootstrap/Form";
 import ExpenseService from "../../services/expenseService";
 import SelectComponent from "../selectComponent/SelectComponent";
 import { ThemeContext } from "../../App";
-import { toast } from "react-toastify";
 import { dropdownData } from "../../helpers/dropdownData";
+import { reloadData } from "../../helpers/reloadData";
+import {
+  errorNotification,
+  successNotification,
+} from "../../helpers/toastNotifications";
+import AuthService from "../../services/authService";
 
-const AddComponent = ({ setExpenses, currentUser, categories }) => {
+const AddComponent = ({ setExpenses, categories }) => {
   const { theme } = useContext(ThemeContext);
-  const inputTheme = theme === "dark" ? "darkTheme" : "";
-
-  let userId = 0;
-  if (currentUser !== undefined) {
-    userId = currentUser.id;
-  }
+  const currentUser = AuthService.getCurrentUser();
 
   const [date, setDate] = useState("");
   const [title, setTitle] = useState("");
   const [value, setValue] = useState("");
   const [category, setCategory] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState(null);
 
   const handleInputDate = (e) => {
     setDate(e.target.value);
@@ -36,32 +37,15 @@ const AddComponent = ({ setExpenses, currentUser, categories }) => {
 
   const handleSelectCategory = (e) => {
     setCategory(e.value);
+    setSelectedCategory(e);
   };
 
   const newExpense = {
     date,
     title,
     value,
-    category: category.toUpperCase(),
-    userId: userId,
-  };
-
-  const reloadData = async () => {
-    const response = await ExpenseService.getExpensesByUser();
-
-    setExpenses(response.data);
-  };
-
-  const showToastMessageOnAdd = () => {
-    toast.success("New expense added!", {
-      theme: theme,
-    });
-  };
-
-  const showToastErrorMessage = () => {
-    toast.error("Something went wrong!", {
-      theme: theme,
-    });
+    category: category,
+    userId: currentUser.id,
   };
 
   const handleAddExpense = async (e) => {
@@ -71,14 +55,15 @@ const AddComponent = ({ setExpenses, currentUser, categories }) => {
     setTitle("");
     setValue("");
     setCategory("");
+    setSelectedCategory(null);
 
-    await ExpenseService.addExpense(newExpense)
-      .then(() => reloadData())
-      .catch((err) => {
-        showToastErrorMessage();
-        console.log(err.response.data);
-      })
-      .then(() => showToastMessageOnAdd());
+    try {
+      const response = await ExpenseService.addExpense(newExpense);
+      reloadData(ExpenseService.getExpensesByUser, setExpenses);
+      successNotification(response);
+    } catch (err) {
+      errorNotification(err.message);
+    }
   };
 
   return (
@@ -93,7 +78,7 @@ const AddComponent = ({ setExpenses, currentUser, categories }) => {
                 type="date"
                 value={date}
                 onChange={handleInputDate}
-                className={inputTheme}
+                className={`${theme}Theme`}
               />
             </Form.Group>
           </Col>
@@ -106,7 +91,7 @@ const AddComponent = ({ setExpenses, currentUser, categories }) => {
                 placeholder="Multisport subscription"
                 value={title}
                 onChange={handleInputTitle}
-                className={inputTheme}
+                className={`${theme}Theme`}
               />
             </Form.Group>
           </Col>
@@ -120,7 +105,7 @@ const AddComponent = ({ setExpenses, currentUser, categories }) => {
                 placeholder="100,00"
                 value={value}
                 onChange={handleInputValue}
-                className={inputTheme}
+                className={`${theme}Theme`}
               />
             </Form.Group>
           </Col>
@@ -129,9 +114,10 @@ const AddComponent = ({ setExpenses, currentUser, categories }) => {
               <Form.Label>Category</Form.Label>
               <SelectComponent
                 options={dropdownData(categories)}
+                value={selectedCategory}
                 handleSelect={handleSelectCategory}
                 placeholder={"Select category"}
-                theme={inputTheme}
+                theme={`${theme}Theme`}
               />
             </Form.Group>
           </Col>
