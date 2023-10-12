@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/users")
-@PreAuthorize("hasRole('USER') or hasRole('MODERATOR')")
+@PreAuthorize("hasRole('ADMIN') or hasRole('MODERATOR')")
 public class UserController {
 
     @Autowired
@@ -26,13 +26,22 @@ public class UserController {
         return userRepository.findAll();
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('USER')")
     @GetMapping(path = "/getUserById/{id}")
     void getUserById(@PathVariable Long id) {
         userRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException(id));
     }
 
+    @PreAuthorize("hasRole('USER')")
+    @GetMapping(path = "/getUserCategories/{id}")
+    String getUserCategories(@PathVariable Long id) {
+        return userRepository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException(id))
+                .getCategories();
+    }
+
+    @PreAuthorize("hasRole('USER')")
     @PutMapping("updateUser/{id}")
     String updateUser(@RequestBody User user,
                       @PathVariable Long id) {
@@ -48,7 +57,6 @@ public class UserController {
                 .orElseThrow(() -> new UserNotFoundException(id));
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("updateUserByAdmin/{id}")
     String updateUserByAdmin(@RequestBody SignupRequest user,
                              @PathVariable Long id) {
@@ -63,7 +71,6 @@ public class UserController {
                 .orElseThrow(() -> new UserNotFoundException(id));
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/deleteUser/{id}")
     String deleteUser(@PathVariable Long id) {
         if (!userRepository.existsById(id)) {
@@ -72,6 +79,4 @@ public class UserController {
         userRepository.deleteById(id);
         return "User deleted successfully";
     }
-
-
 }
