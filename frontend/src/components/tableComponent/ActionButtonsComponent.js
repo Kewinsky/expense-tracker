@@ -9,6 +9,8 @@ const ActionButtonsComponents = ({
   record,
   theme,
 }) => {
+  const reversedTheme = theme === "dark" ? "light" : "dark";
+
   const [show, setShow] = useState(false);
 
   const handleShow = () => setShow(true);
@@ -29,7 +31,7 @@ const ActionButtonsComponents = ({
         record={record}
         show={show}
         setShow={setShow}
-        theme={theme}
+        theme={reversedTheme}
       />
     </td>
   );
