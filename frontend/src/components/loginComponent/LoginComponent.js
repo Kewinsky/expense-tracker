@@ -34,18 +34,21 @@ const LoginComponent = () => {
     e.preventDefault();
 
     setError("");
+    setIsPending(true);
 
-    AuthService.login(username, password)
-      .then(() => {
-        setIsPending(true);
-        setTimeout(() => {
+    setTimeout(() => {
+      AuthService.login(username, password)
+        .then(() => {
           navigate("/");
           window.location.reload();
-        }, 1000);
-      })
-      .catch((err) => {
-        setError(err.message);
-      });
+        })
+        .catch((err) => {
+          setError(err.message);
+        })
+        .finally(() => {
+          setIsPending(false);
+        });
+    }, 1000);
   };
 
   return (
@@ -89,11 +92,7 @@ const LoginComponent = () => {
           </div>
         </Form.Group>
         <Form.Group className="text-center">
-          {isPending && (
-            <div>
-              <SpinnerComponent />
-            </div>
-          )}
+          {isPending && <SpinnerComponent />}
           {!isPending && (
             <Button variant={`outline-${reversedTheme}`} type="submit">
               Login

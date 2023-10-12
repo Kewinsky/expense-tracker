@@ -56,18 +56,20 @@ const UpdateAdminComponent = ({ users }) => {
 
     setMessage("");
     setError("");
+    setIsPending(true);
 
-    try {
-      const response = await UserService.updateUserByAdmin(userId, updatedUser);
-      setIsPending(true);
-
-      setTimeout(() => {
-        setIsPending(false);
-        setMessage(response);
-      }, 1000);
-    } catch (err) {
-      setError(err.message);
-    }
+    setTimeout(() => {
+      UserService.updateUserByAdmin(userId, updatedUser)
+        .then(() => {
+          setMessage("User updated successfully");
+        })
+        .catch((err) => {
+          setError(err.message);
+        })
+        .finally(() => {
+          setIsPending(false);
+        });
+    }, 1000);
   };
 
   useEffect(() => {
@@ -112,7 +114,7 @@ const UpdateAdminComponent = ({ users }) => {
           />
         </Form.Group>
 
-        <Form.Group className="mt-3">
+        <Form.Group className="mt-5">
           {isPending && <SpinnerComponent />}
           {!isPending && !message && (
             <>

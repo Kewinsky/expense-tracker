@@ -36,20 +36,20 @@ const UpdateUserComponent = () => {
 
     setMessage("");
     setError("");
+    setIsPending(true);
 
-    try {
-      const response = await UserService.updateCurrentUser(
-        updatedUser
-      );
-      setIsPending(true);
-
-      setTimeout(() => {
-        setIsPending(false);
-        setMessage(response);
-      }, 1000);
-    } catch (err) {
-      setError(err.message);
-    }
+    setTimeout(() => {
+      UserService.updateCurrentUser(currentUser.id, updatedUser)
+        .then(() => {
+          setMessage("User updated successfully");
+        })
+        .catch((err) => {
+          setError(err.message);
+        })
+        .finally(() => {
+          setIsPending(false);
+        });
+    }, 1000);
   };
 
   return (
@@ -74,7 +74,7 @@ const UpdateUserComponent = () => {
             className={`${theme}Theme`}
           />
         </Form.Group>
-        <Form.Group className="mt-3">
+        <Form.Group className="mt-5">
           {isPending && <SpinnerComponent />}
           {!isPending && !message && (
             <>

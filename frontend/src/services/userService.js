@@ -44,9 +44,8 @@ const getUserCategories = async () => {
   }
 };
 
-const updateCurrentUser = async (newUser) => {
-  const user = AuthService.getCurrentUser();
-
+const updateCurrentUser = async (id, newUser) => {
+  const user = await AuthService.getCurrentUser();
   user.username = newUser.username;
   user.email = newUser.email;
 
