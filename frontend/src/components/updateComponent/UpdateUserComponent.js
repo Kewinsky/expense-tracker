@@ -74,7 +74,6 @@ const UpdateUserComponent = () => {
             className={`${theme}Theme`}
           />
         </Form.Group>
-
         <Form.Group className="mt-5">
           {isPending && <SpinnerComponent />}
           {!isPending && !message && (
