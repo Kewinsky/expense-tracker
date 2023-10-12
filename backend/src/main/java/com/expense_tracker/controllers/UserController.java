@@ -50,9 +50,22 @@ public class UserController {
                 .map(user1 -> {
                     user1.setUsername(user.getUsername());
                     user1.setEmail(user.getEmail());
-                    user1.setCategories(user.getCategories());
                     userRepository.save(user1);
                     return "User updated successfully";
+                })
+                .orElseThrow(() -> new UserNotFoundException(id));
+    }
+
+    @PreAuthorize("hasRole('USER')")
+    @PutMapping("updateUserCategories/{id}")
+    String updateUserCategories(@RequestBody String categories,
+                                @PathVariable Long id) {
+
+        return userRepository.findById(id)
+                .map(user1 -> {
+                    user1.setCategories(categories);
+                    userRepository.save(user1);
+                    return "User categories updated successfully";
                 })
                 .orElseThrow(() -> new UserNotFoundException(id));
     }
