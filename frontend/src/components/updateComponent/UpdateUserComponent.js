@@ -39,7 +39,6 @@ const UpdateUserComponent = () => {
 
     try {
       const response = await UserService.updateCurrentUser(
-        currentUser.id,
         updatedUser
       );
       setIsPending(true);
