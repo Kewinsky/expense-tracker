@@ -39,18 +39,20 @@ const ForgotPasswordComponent = () => {
 
     setMessage("");
     setError("");
+    setIsPending(true);
 
-    try {
-      const response = await AuthService.forgotPassword(newPassword);
-      setIsPending(true);
-
-      setTimeout(() => {
-        setIsPending(false);
-        setMessage(response);
-      }, 1000);
-    } catch (err) {
-      setError(err.message);
-    }
+    setTimeout(() => {
+      AuthService.forgotPassword(newPassword)
+        .then(() => {
+          setMessage("Password updated successfully");
+        })
+        .catch((err) => {
+          setError(err.message);
+        })
+        .finally(() => {
+          setIsPending(false);
+        });
+    }, 1000);
   };
 
   return (
@@ -83,11 +85,7 @@ const ForgotPasswordComponent = () => {
           />
         </Form.Group>
         <Form.Group className="text-center">
-          {isPending && (
-            <div>
-              <SpinnerComponent />
-            </div>
-          )}
+          {isPending && <SpinnerComponent />}
           {!isPending && !message && (
             <Button variant={`outline-${reversedTheme}`} type="submit">
               Reset password
@@ -100,8 +98,8 @@ const ForgotPasswordComponent = () => {
               {message}
             </div>
             <div className="mt-5 text-center">
-              <a href="/" className={`link-${reversedTheme} `}>
-                Back to home
+              <a href="/login" className={`link-${reversedTheme} `}>
+                Back
               </a>
             </div>
           </Form.Group>

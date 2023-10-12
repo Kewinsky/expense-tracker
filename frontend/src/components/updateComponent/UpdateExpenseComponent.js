@@ -61,22 +61,20 @@ const UpdateExpenseComponent = () => {
 
     setMessage("");
     setError("");
+    setIsPending(true);
 
-    try {
-      const response = await ExpenseService.updateExpense(
-        expenseId,
-        updatedExpense
-      );
-      setIsPending(true);
-
-      setTimeout(() => {
-        setIsPending(false);
-        setMessage(response);
-      }, 1000);
-      reloadData(ExpenseService.getExpensesByUser, setExpenses);
-    } catch (err) {
-      setError(err.message);
-    }
+    setTimeout(() => {
+      ExpenseService.updateExpense(expenseId, updatedExpense)
+        .then(() => {
+          setMessage("Expense updated successfully");
+        })
+        .catch((err) => {
+          setError(err.message);
+        })
+        .finally(() => {
+          setIsPending(false);
+        });
+    }, 1000);
   };
 
   return (
@@ -129,7 +127,7 @@ const UpdateExpenseComponent = () => {
           />
         </Form.Group>
 
-        <Form.Group className="mt-3">
+        <Form.Group className="mt-5">
           {isPending && <SpinnerComponent />}
           {!isPending && !message && (
             <>

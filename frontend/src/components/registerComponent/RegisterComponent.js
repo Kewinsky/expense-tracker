@@ -41,18 +41,20 @@ const RegisterComponent = () => {
 
     setMessage("");
     setError("");
+    setIsPending(true);
 
-    AuthService.register(username, email, password)
-      .then(() => {
-        setIsPending(true);
-        setTimeout(() => {
-          setIsPending(false);
+    setTimeout(() => {
+      AuthService.register(username, email, password)
+        .then(() => {
           setMessage("New user registered successfully");
-        }, 1000);
-      })
-      .catch((err) => {
-        setError(err.message);
-      });
+        })
+        .catch((err) => {
+          setError(err.message);
+        })
+        .finally(() => {
+          setIsPending(false);
+        });
+    }, 1000);
   };
 
   const handleLogin = (e) => {
@@ -105,11 +107,7 @@ const RegisterComponent = () => {
           />
         </Form.Group>
         <Form.Group className="text-center">
-          {isPending && (
-            <div>
-              <SpinnerComponent />
-            </div>
-          )}
+          {isPending && <SpinnerComponent />}
           {!isPending && !message && (
             <Button variant={`outline-${reversedTheme}`} type="submit">
               Sign Up

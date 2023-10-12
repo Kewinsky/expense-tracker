@@ -27,7 +27,7 @@ const getUserById = async (id) => {
 };
 
 const updateCurrentUser = async (id, newUser) => {
-  const user = AuthService.getCurrentUser();
+  const user = await AuthService.getCurrentUser();
   user.username = newUser.username;
   user.email = newUser.email;
   localStorage.setItem("user", JSON.stringify(user));
