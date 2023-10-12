@@ -46,6 +46,27 @@ const getUserCategories = async () => {
 
 const updateCurrentUser = async (id, newUser) => {
   const user = await AuthService.getCurrentUser();
+const getUserCategories = async () => {
+  const user = AuthService.getCurrentUser();
+
+  try {
+    return await axios.get(API_URL + `getUserCategories/${user.id}`, {
+      headers: authHeader(),
+    });
+  } catch (err) {
+    if (err.response) {
+      throw new Error(err.response.data);
+    } else if (err.request) {
+      throw new Error("Server is not responding. Please try again later.");
+    } else {
+      throw new Error("An error occurred. Please try again.");
+    }
+  }
+};
+
+const updateCurrentUser = async (newUser) => {
+  const user = AuthService.getCurrentUser();
+
   user.username = newUser.username;
   user.email = newUser.email;
 
