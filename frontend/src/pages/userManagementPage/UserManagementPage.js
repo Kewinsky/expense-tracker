@@ -18,7 +18,7 @@ const UserManagementPage = () => {
 
   const [users, setUsers] = useState([]);
   const [isPending, setIsPending] = useState(true);
-  const [error, setError] = useState("");
+  const [error, setError] = useState(null);
 
   const simplifiedUsers = users.map((user) => {
     const roles = user.roles.map((role) => roleMapping[role.name]).join(" | ");
@@ -31,12 +31,11 @@ const UserManagementPage = () => {
   const getUsers = async () => {
     const response = await UserService.getUsers();
 
-    setError("");
-
+    setError(null);
     setUsers(response.data);
 
-    if (response.length === 0) {
-      setError("No data");
+    if (response.data.length === 1) {
+      setError("No users");
     }
 
     setTimeout(() => {
