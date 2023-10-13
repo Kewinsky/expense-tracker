@@ -48,7 +48,7 @@ const ProfileComponent = () => {
               <h4 className="m-0">Budgeting</h4>
             </Col>
             <Col className="d-flex justify-content-end">
-              <Link to={"/updateUserBudgets"}>
+              <Link to={"/updateUserBudgeting"}>
                 <Button variant={`outline-${reversedTheme}`}>Edit</Button>
               </Link>
             </Col>
