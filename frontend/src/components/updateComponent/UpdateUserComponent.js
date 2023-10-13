@@ -39,7 +39,7 @@ const UpdateUserComponent = () => {
     setIsPending(true);
 
     setTimeout(() => {
-      UserService.updateCurrentUser(currentUser.id, updatedUser)
+      UserService.updateCurrentUser(updatedUser)
         .then(() => {
           setMessage("User updated successfully");
         })
