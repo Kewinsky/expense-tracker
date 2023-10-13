@@ -58,12 +58,12 @@ public class UserController {
 
     @PreAuthorize("hasRole('USER')")
     @PutMapping("updateUserCategories/{id}")
-    String updateUserCategories(@RequestBody String categories,
+    String updateUserCategories(@RequestBody User user,
                                 @PathVariable Long id) {
 
         return userRepository.findById(id)
                 .map(user1 -> {
-                    user1.setCategories(categories);
+                    user1.setCategories(user.getCategories());
                     userRepository.save(user1);
                     return "User categories updated successfully";
                 })

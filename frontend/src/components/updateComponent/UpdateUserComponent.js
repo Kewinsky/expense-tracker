@@ -55,7 +55,7 @@ const UpdateUserComponent = () => {
   return (
     <Card className={`bg-${theme}`}>
       <Card.Header>Update Profile</Card.Header>
-      <Form onSubmit={handleUpdateUser} className="mt-1 mb-5 mx-5">
+      <Form onSubmit={handleUpdateUser} className="m-5">
         <Form.Group className="mt-3">
           <Form.Label>Username</Form.Label>
           <Form.Control
@@ -74,6 +74,7 @@ const UpdateUserComponent = () => {
             className={`${theme}Theme`}
           />
         </Form.Group>
+
         <Form.Group className="mt-5">
           {isPending && <SpinnerComponent />}
           {!isPending && !message && (
@@ -92,6 +93,7 @@ const UpdateUserComponent = () => {
             </>
           )}
         </Form.Group>
+
         {message && (
           <Form.Group className="mt-5">
             <div className="alert alert-success m-0" role="alert">
@@ -104,6 +106,7 @@ const UpdateUserComponent = () => {
             </div>
           </Form.Group>
         )}
+
         {error && (
           <Form.Group className="mt-5">
             <div className="alert alert-danger m-0" role="alert">

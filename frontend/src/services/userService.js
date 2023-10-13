@@ -74,10 +74,6 @@ const updateCurrentUser = async (newUser) => {
 const updateCurrentUserCategories = async (newUser) => {
   const user = AuthService.getCurrentUser();
 
-  user.categories = newUser.categories;
-
-  localStorage.setItem("user", JSON.stringify(user));
-
   try {
     return await axios
       .put(API_URL + `updateUserCategories/${user.id}`, newUser, {

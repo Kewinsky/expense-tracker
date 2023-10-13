@@ -14,7 +14,7 @@ import UpdateExpensePage from "../pages/updatePage/UpdateExpensePage";
 import UpdateUserPage from "../pages/updatePage/UpdateUserPage";
 import UpdateAdminPage from "../pages/updatePage/UpdateAdminPage";
 import ForgotPasswordPage from "../pages/forgotPasswordPage/ForgotPasswordPage";
-import UpdateCategoryPage from "../pages/updateCategoryPage/UpdateCategoryPage";
+import UpdateCategoryPage from "../pages/updatePage/UpdateCategoryPage";
 import BudgetingPage from "../pages/budgetingPage/BudgetingPage";
 
 export const Router = () => {
