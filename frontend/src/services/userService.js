@@ -27,7 +27,7 @@ const getUserById = async (id) => {
 };
 
 const getUserCategories = async () => {
-  const user = await AuthService.getCurrentUser();
+  const user = AuthService.getCurrentUser();
 
   try {
     return await axios.get(API_URL + `getUserCategories/${user.id}`, {
