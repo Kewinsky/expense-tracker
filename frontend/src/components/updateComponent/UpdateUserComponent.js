@@ -6,6 +6,7 @@ import { ThemeContext } from "../../App";
 import { Card } from "react-bootstrap";
 import SpinnerComponent from "../spinnerComponent/SpinnerComponent";
 import AuthService from "../../services/authService";
+import { Link } from "react-router-dom";
 
 const UpdateUserComponent = () => {
   const { theme } = useContext(ThemeContext);
@@ -99,9 +100,9 @@ const UpdateUserComponent = () => {
               {message}
             </div>
             <div className="mt-5 text-center">
-              <a href="/profile" className={`link-${reversedTheme} `}>
+              <Link to={"/profile"} className={`link-${reversedTheme} `}>
                 Back
-              </a>
+              </Link>
             </div>
           </Form.Group>
         )}

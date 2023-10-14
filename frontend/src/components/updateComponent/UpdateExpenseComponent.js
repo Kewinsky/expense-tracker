@@ -1,6 +1,6 @@
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useState, useContext, useEffect } from "react";
 import ExpenseService from "../../services/expenseService";
 import { dropdownData } from "../../helpers/dropdownData";
@@ -166,9 +166,9 @@ const UpdateExpenseComponent = () => {
               {message}
             </div>
             <div className="mt-5 text-center">
-              <a href="/tracker" className={`link-${reversedTheme} `}>
+              <Link to={"/tracker"} className={`link-${reversedTheme} `}>
                 Back
-              </a>
+              </Link>
             </div>
           </Form.Group>
         )}

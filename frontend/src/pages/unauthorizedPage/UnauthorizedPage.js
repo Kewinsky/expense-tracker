@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import { ThemeContext } from "../../App";
+import { Link } from "react-router-dom";
 const UnauthorizedPage = () => {
   const { theme } = useContext(ThemeContext);
   const reversedTheme = theme === "dark" ? "light" : "dark";
@@ -8,9 +9,9 @@ const UnauthorizedPage = () => {
       <h1>Error 401</h1>
       <div>
         You have no privileges to access this content. Go to{" "}
-        <a href="/" className={`link-${reversedTheme}`}>
+        <Link to={"/"} className={`link-${reversedTheme}`}>
           home page
-        </a>
+        </Link>
       </div>
     </div>
   );

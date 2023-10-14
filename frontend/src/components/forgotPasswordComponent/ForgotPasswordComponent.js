@@ -6,6 +6,7 @@ import { useContext, useState } from "react";
 import { ThemeContext } from "../../App";
 import AuthService from "../../services/authService";
 import SpinnerComponent from "../spinnerComponent/SpinnerComponent";
+import { Link } from "react-router-dom";
 
 const ForgotPasswordComponent = () => {
   const { theme } = useContext(ThemeContext);
@@ -98,9 +99,9 @@ const ForgotPasswordComponent = () => {
               {message}
             </div>
             <div className="mt-5 text-center">
-              <a href="/login" className={`link-${reversedTheme} `}>
+              <Link to={"/login"} className={`link-${reversedTheme} `}>
                 Back
-              </a>
+              </Link>
             </div>
           </Form.Group>
         )}

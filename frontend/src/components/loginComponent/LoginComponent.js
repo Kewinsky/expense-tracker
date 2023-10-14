@@ -1,7 +1,7 @@
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { useState, useRef, useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import AuthService from "../../services/authService";
 import { ThemeContext } from "../../App";
 import { Card } from "react-bootstrap";
@@ -81,14 +81,14 @@ const LoginComponent = () => {
         <Form.Group className="row">
           <div className="mb-5 col-12 col-md-6">
             No account?{" "}
-            <a href="/register" className={`link-${reversedTheme}`}>
+            <Link to={"/register"} className={`link-${reversedTheme}`}>
               Sign up
-            </a>
+            </Link>
           </div>
           <div className="mb-5 col-12 col-md-6 text-md-end">
-            <a href="/forgotPassword" className={`link-${reversedTheme} `}>
+            <Link to={"/forgotPassword"} className={`link-${reversedTheme} `}>
               Forgot password
-            </a>
+            </Link>
           </div>
         </Form.Group>
         <Form.Group className="text-center">

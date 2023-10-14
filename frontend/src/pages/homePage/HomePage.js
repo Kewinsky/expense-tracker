@@ -1,5 +1,5 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleArrowRight } from "@fortawesome/free-solid-svg-icons";
+import { BsArrowRightCircleFill } from "react-icons/bs";
+import { Link } from "react-router-dom";
 
 const HomePage = () => {
   return (
@@ -7,9 +7,9 @@ const HomePage = () => {
       <h1>Welcome to Spendee</h1>
       <h4>
         don't hesitate to add new expense{" "}
-        <a href="/tracker" className="link-success">
-          <FontAwesomeIcon icon={faCircleArrowRight} />
-        </a>
+        <Link to={"/tracker"} className="link-success">
+          <BsArrowRightCircleFill />
+        </Link>
       </h4>
     </div>
   );

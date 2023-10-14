@@ -8,6 +8,7 @@ import {
 } from "../../helpers/categoriesMapper";
 import { BsFillTrash2Fill, BsFillPlusCircleFill } from "react-icons/bs";
 import SpinnerComponent from "../spinnerComponent/SpinnerComponent";
+import { Link } from "react-router-dom";
 
 const CategoryManagerComponent = () => {
   const { theme } = useContext(ThemeContext);
@@ -138,9 +139,9 @@ const CategoryManagerComponent = () => {
               {message}
             </div>
             <div className="mt-5 text-center">
-              <a href="/profile" className={`link-${reversedTheme} `}>
+              <Link to={"/profile"} className={`link-${reversedTheme} `}>
                 Back
-              </a>
+              </Link>
             </div>
           </Form.Group>
         )}

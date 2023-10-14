@@ -1,6 +1,6 @@
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
 import UserService from "../../services/userService";
 import { ThemeContext } from "../../App";
@@ -82,7 +82,7 @@ const UpdateAdminComponent = ({ users }) => {
   return (
     <Card className={`bg-${theme}`}>
       <Card.Header>Update User</Card.Header>
-      <Form onSubmit={handleUpdateUser} className="mt-1 mb-5 mx-5">
+      <Form onSubmit={handleUpdateUser} className="m-5">
         <Form.Group className="mt-3">
           <Form.Label>Username</Form.Label>
           <Form.Control
@@ -138,9 +138,9 @@ const UpdateAdminComponent = ({ users }) => {
               {message}
             </div>
             <div className="mt-5 text-center">
-              <a href="/usermanagement" className={`link-${reversedTheme} `}>
+              <Link to={"/usermanagement"} className={`link-${reversedTheme} `}>
                 Back
-              </a>
+              </Link>
             </div>
           </Form.Group>
         )}

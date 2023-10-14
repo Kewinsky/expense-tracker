@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import { ThemeContext } from "../../App";
+import { Link } from "react-router-dom";
 const ErrorPage = () => {
   const { theme } = useContext(ThemeContext);
   const reversedTheme = theme === "dark" ? "light" : "dark";
@@ -9,9 +10,9 @@ const ErrorPage = () => {
       <h1>Error 404</h1>
       <div>
         Not found. Go to{" "}
-        <a href="/" className={`link-${reversedTheme}`}>
+        <Link to={"/"} className={`link-${reversedTheme}`}>
           home page
-        </a>
+        </Link>
       </div>
     </div>
   );
