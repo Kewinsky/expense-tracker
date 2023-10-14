@@ -6,27 +6,53 @@ import "./profileComponent.scss";
 import { Card, Col, Image, Row } from "react-bootstrap";
 import userImg from "../../assets/images/user_image.png";
 import AuthService from "../../services/authService";
+import UserService from "../../services/userService";
 
 const ProfileComponent = () => {
   const { theme } = useContext(ThemeContext);
   const reversedTheme = theme === "dark" ? "light" : "dark";
   const currentUser = AuthService.getCurrentUser();
+  const categories = UserService.getUserCategories();
+
+  console.log(categories);
 
   return (
     <div className="d-flex justify-content-center m-3">
-      <Card className={`bg-${theme}`}>
+      <Card className={`bg-${theme} card-width`}>
         <Card.Header>Your Profile</Card.Header>
-        <Card.Body>
-          <Row>
-            <Col className="d-flex col-12 col-md-8 align-items-center">
-              <Image src={userImg} width={80} height={80} />
-              <div className="mx-3">
+        <Card.Body className="m-4">
+          <div className="mb-5 text-center">
+            <Image src={userImg} height={80} />
+          </div>
+          <Row className="mb-5 ">
+            <Col className="d-flex align-items-center">
+              <div>
                 <h4 className="m-0">{currentUser.username}</h4>
                 <p className="m-0">{currentUser.email}</p>
               </div>
             </Col>
-            <Col className="col-12 col-md-4 text-center align-self-center">
+            <Col className="d-flex justify-content-end">
               <Link to={`/update/user/${currentUser.id}`}>
+                <Button variant={`outline-${reversedTheme}`}>Edit</Button>
+              </Link>
+            </Col>
+          </Row>
+          <Row className="mb-5">
+            <Col className="d-flex align-items-center">
+              <h4 className="m-0">Categories</h4>
+            </Col>
+            <Col className="d-flex justify-content-end">
+              <Link to={"/updateUserCategories"}>
+                <Button variant={`outline-${reversedTheme}`}>Edit</Button>
+              </Link>
+            </Col>
+          </Row>
+          <Row>
+            <Col className="d-flex align-items-center">
+              <h4 className="m-0">Budgeting</h4>
+            </Col>
+            <Col className="d-flex justify-content-end">
+              <Link to={"/updateUserBudgeting"}>
                 <Button variant={`outline-${reversedTheme}`}>Edit</Button>
               </Link>
             </Col>

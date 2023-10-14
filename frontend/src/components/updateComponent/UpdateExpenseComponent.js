@@ -1,34 +1,31 @@
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { useParams } from "react-router-dom";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import ExpenseService from "../../services/expenseService";
 import { dropdownData } from "../../helpers/dropdownData";
 import SelectComponent from "../selectComponent/SelectComponent";
 import { ThemeContext } from "../../App";
 import { Card } from "react-bootstrap";
-import { reloadData } from "../../helpers/reloadData";
 import SpinnerComponent from "../spinnerComponent/SpinnerComponent";
-import { expenseCategories } from "../../helpers/expenseCategoriesData";
+import UserService from "../../services/userService";
+import { deserializeCategories } from "../../helpers/categoriesMapper";
 
 const UpdateExpenseComponent = () => {
   const { id: expenseId } = useParams();
 
-  const { theme, expenses, setExpenses } = useContext(ThemeContext);
+  const { theme, expenses } = useContext(ThemeContext);
   const reversedTheme = theme === "dark" ? "light" : "dark";
 
   const selectedExpense = expenses.find((item) => {
     return item.id === parseInt(expenseId);
   });
 
-  const getDefaultValue = () => {
-    return dropdownData(expenseCategories)[expenseCategories.indexOf(category)];
-  };
-
   const [date, setDate] = useState(selectedExpense.date);
   const [title, setTitle] = useState(selectedExpense.title);
   const [value, setValue] = useState(selectedExpense.value);
   const [category, setCategory] = useState(selectedExpense.category);
+  const [categories, setCategories] = useState([]);
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const [isPending, setIsPending] = useState(false);
@@ -53,7 +50,7 @@ const UpdateExpenseComponent = () => {
     date,
     title,
     value,
-    category: category.toUpperCase(),
+    category,
   };
 
   const handleUpdateExpense = async (e) => {
@@ -77,10 +74,28 @@ const UpdateExpenseComponent = () => {
     }, 1000);
   };
 
+  const getUserCategories = async () => {
+    const response = await UserService.getUserCategories();
+
+    const mappedCategories = deserializeCategories(response.data);
+
+    setCategories(mappedCategories);
+  };
+
+  const getDefaultValue = () => {
+    if (categories.length) {
+      return dropdownData(categories)[categories.indexOf(category)];
+    }
+  };
+
+  useEffect(() => {
+    getUserCategories();
+  }, []);
+
   return (
     <Card className={`bg-${theme}`}>
       <Card.Header>Update Expense</Card.Header>
-      <Form onSubmit={handleUpdateExpense} className="mt-1 mb-5 mx-5">
+      <Form onSubmit={handleUpdateExpense} className="m-5">
         <Form.Group className="mt-3">
           <Form.Label>Date</Form.Label>
           <Form.Control
@@ -120,7 +135,7 @@ const UpdateExpenseComponent = () => {
         <Form.Group className="mt-3">
           <Form.Label>Category</Form.Label>
           <SelectComponent
-            options={dropdownData(expenseCategories)}
+            options={dropdownData(categories)}
             handleSelect={handleSelectCategory}
             theme={`${theme}Theme`}
             defaultValue={getDefaultValue()}

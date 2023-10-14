@@ -14,6 +14,8 @@ import UpdateExpensePage from "../pages/updatePage/UpdateExpensePage";
 import UpdateUserPage from "../pages/updatePage/UpdateUserPage";
 import UpdateAdminPage from "../pages/updatePage/UpdateAdminPage";
 import ForgotPasswordPage from "../pages/forgotPasswordPage/ForgotPasswordPage";
+import UpdateCategoryPage from "../pages/updatePage/UpdateCategoryPage";
+import BudgetingPage from "../pages/budgetingPage/BudgetingPage";
 
 export const Router = () => {
   const appName = "Spendee";
@@ -118,6 +120,26 @@ export const Router = () => {
           <MainLayout pageTitle={`${appName} | Profile`}>
             <ProtectedRoute>
               <ProfilePage />
+            </ProtectedRoute>
+          </MainLayout>
+        }
+      />
+      <Route
+        path="/updateUserCategories"
+        element={
+          <MainLayout pageTitle={`${appName} | Update Category`}>
+            <ProtectedRoute>
+              <UpdateCategoryPage />
+            </ProtectedRoute>
+          </MainLayout>
+        }
+      />
+      <Route
+        path="/updateUserBudgeting"
+        element={
+          <MainLayout pageTitle={`${appName} | Budgeting`}>
+            <ProtectedRoute>
+              <BudgetingPage />
             </ProtectedRoute>
           </MainLayout>
         }

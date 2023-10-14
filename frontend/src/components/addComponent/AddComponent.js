@@ -116,7 +116,7 @@ const AddComponent = ({ setExpenses, categories }) => {
                 options={dropdownData(categories)}
                 value={selectedCategory}
                 handleSelect={handleSelectCategory}
-                placeholder={"Select category"}
+                placeholder={"Select"}
                 theme={`${theme}Theme`}
               />
             </Form.Group>

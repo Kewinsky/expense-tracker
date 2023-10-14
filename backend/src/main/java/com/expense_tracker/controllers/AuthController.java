@@ -1,9 +1,5 @@
 package com.expense_tracker.controllers;
 
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
-
 import com.expense_tracker.exceptions.users.UserNotFoundException;
 import com.expense_tracker.models.User;
 import com.expense_tracker.payloads.requests.ForgotPasswordRequest;
@@ -14,6 +10,7 @@ import com.expense_tracker.payloads.responses.MessageResponse;
 import com.expense_tracker.repositories.UserRepository;
 import com.expense_tracker.security.jwt.JwtUtils;
 import com.expense_tracker.security.services.UserDetailsImpl;
+import com.expense_tracker.utils.CategoryProvider;
 import com.expense_tracker.utils.RoleConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -21,11 +18,14 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -57,7 +57,7 @@ public class AuthController {
 
             UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
             List<String> roles = userDetails.getAuthorities().stream()
-                    .map(item -> item.getAuthority())
+                    .map(GrantedAuthority::getAuthority)
                     .collect(Collectors.toList());
 
             return ResponseEntity.ok(
@@ -89,11 +89,15 @@ public class AuthController {
                     .body(new MessageResponse("Email is already in use!"));
         }
 
-        User user = new User(signUpRequest.getUsername(),
+        User user = new User(
+                signUpRequest.getUsername(),
                 signUpRequest.getEmail(),
-                encoder.encode(signUpRequest.getPassword()));
+                encoder.encode(signUpRequest.getPassword())
+        );
 
-        Set<String> strRoles = signUpRequest.getRole();
+        user.setCategories(CategoryProvider.getPredefinedCategories().toString());
+
+        var strRoles = signUpRequest.getRole();
         user.setRoles(converter.toRoleSet(strRoles));
         userRepository.save(user);
 

@@ -6,16 +6,18 @@ import TableComponent from "../../components/tableComponent/TableComponent";
 import ExpenseService from "../../services/expenseService";
 import { expenseFilter } from "../../helpers/expenseFilter";
 import { months } from "../../helpers/monthsData";
-import { expenseCategories } from "../../helpers/expenseCategoriesData";
 import { trackerTableHeaders } from "../../helpers/tableHeaders";
 import { updateExpenseURL } from "../../helpers/updateURL";
 import { useDeleteItem } from "../../hooks/useDeleteItem";
 import { ThemeContext } from "../../App";
+import { deserializeCategories } from "../../helpers/categoriesMapper";
+import UserService from "../../services/userService";
 
 const TrackerPage = () => {
   const { expenses, setExpenses } = useContext(ThemeContext);
   const currentDate = new Date();
 
+  const [categories, setCategories] = useState([]);
   const [category, setCategory] = useState([]);
   const [month, setMonth] = useState(months[currentDate.getMonth()]);
   const [year, setYear] = useState(currentDate.getFullYear());
@@ -48,8 +50,17 @@ const TrackerPage = () => {
     }, 1000);
   };
 
+  const getUserCategories = async () => {
+    const response = await UserService.getUserCategories();
+
+    const mappedCategories = deserializeCategories(response.data);
+
+    setCategories(mappedCategories);
+  };
+
   useEffect(() => {
     filterExpenses();
+    getUserCategories();
   }, [expenses]);
 
   return (
@@ -57,10 +68,10 @@ const TrackerPage = () => {
       <AddComponent
         expenses={expenses}
         setExpenses={setExpenses}
-        categories={expenseCategories}
+        categories={categories}
       />
       <FilteringComponent
-        categories={expenseCategories}
+        categories={categories}
         month={month}
         setMonth={setMonth}
         year={year}

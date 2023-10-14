@@ -82,7 +82,7 @@ const FilteringComponent = ({
                 options={dropdownData(categories)}
                 handleSelect={handleSelectCategory}
                 theme={`${theme}Theme`}
-                placeholder={"Select category"}
+                placeholder={"Select"}
               />
             </Form.Group>
           </Col>
