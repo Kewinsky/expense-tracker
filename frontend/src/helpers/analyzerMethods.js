@@ -53,10 +53,13 @@ const getSumCategories = (items, month) => {
   return sortedData;
 };
 
-const getTopCategories = (items, month) => {
+const getTopCategories = (items, month, range) => {
   const sumByCategoryData = sumByCategory(items, month);
   const sortedData = sumByCategoryData.sort((a, b) => b.value - a.value);
-  return sortedData.slice(0, 5);
+  if (range) {
+    return sortedData.slice(0, range);
+  }
+  return sortedData;
 };
 
 const sumUtilities = (items, month) => {
@@ -107,6 +110,67 @@ const getSavedSum = (items, month) => {
   return sum;
 };
 
+const getSavedSumForYear = (items) => {
+  let sum = 0;
+  const savingsItems = items.filter((item) => item.category === "SAVINGS");
+
+  savingsItems.forEach((item) => {
+    sum += item.value;
+  });
+
+  return sum;
+};
+
+const getSavedSumByMonth = (items) => {
+  const sumByMonth = {};
+
+  // Initialize sumByMonth with zeros for each month (0-11)
+  for (let i = 0; i < 12; i++) {
+    sumByMonth[i] = 0;
+  }
+
+  items.forEach((item) => {
+    if (item.category === "SAVINGS") {
+      const month = new Date(item.date).getMonth();
+      sumByMonth[month] += item.value;
+    }
+  });
+
+  return sumByMonth;
+};
+
+const getRoundedCategoryAverages = (items, year) => {
+  let sumByCategoryAndYear = {};
+
+  for (let i = 0; i < items.length; i++) {
+    const category = items[i].category;
+    const value = items[i].value;
+    const date = new Date(items[i].date);
+    const dataYear = date.getFullYear();
+
+    if (year === null || dataYear === year) {
+      if (sumByCategoryAndYear[category]) {
+        sumByCategoryAndYear[category].sum += value;
+        sumByCategoryAndYear[category].count += 1;
+      } else {
+        sumByCategoryAndYear[category] = { sum: value, count: 1 };
+      }
+    }
+  }
+
+  const categoryAverages = Object.keys(sumByCategoryAndYear).map(
+    (category) => ({
+      category,
+      average: Math.round(
+        sumByCategoryAndYear[category].sum /
+          sumByCategoryAndYear[category].count
+      ),
+    })
+  );
+
+  return categoryAverages;
+};
+
 export {
   sumAllMonths,
   sumAllByMonth,
@@ -115,4 +179,7 @@ export {
   getTopCategories,
   sumUtilities,
   getSavedSum,
+  getSavedSumForYear,
+  getSavedSumByMonth,
+  getRoundedCategoryAverages,
 };

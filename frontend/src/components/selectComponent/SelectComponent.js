@@ -5,7 +5,6 @@ const SelectComponent = ({
   handleSelect,
   placeholder,
   theme,
-  defaultValue,
   value,
   isMulti,
   closeMenuOnSelect,
@@ -52,7 +51,6 @@ const SelectComponent = ({
       onChange={handleSelect}
       placeholder={placeholder}
       styles={darkMode}
-      defaultValue={defaultValue}
       value={value}
       isMulti={isMulti}
       closeMenuOnSelect={closeMenuOnSelect}

@@ -1,0 +1,18 @@
+@import "../../utils/theme.scss";
+
+.summary-table {
+  font-size: 1.1rem;
+  width: 100%;
+}
+
+.summary-table tr {
+  height: 2.5rem;
+}
+
+.summary-table .white-row-color {
+  border-bottom: 1px solid white;
+}
+
+.summary-table .black-row-color {
+  border-bottom: 1px solid black;
+}

@@ -15,6 +15,8 @@ import {
   sumAllByMonth,
   sumAllMonths,
   getSumCategories,
+  getSavedSumForYear,
+  getSavedSumByMonth,
 } from "../../helpers/analyzerMethods";
 import {
   expenseFilter,
@@ -41,10 +43,10 @@ const AnalyzerPage = () => {
   const [filteredExpenses, setFilteredExpenses] = useState([]);
 
   const expensesOfYear = expenseFilterByYear(expenses, parseInt(year));
-  const totalSumByMonth = sumAllMonths(expensesOfYear);
+  const totalOutcomeByMonth = sumAllMonths(expensesOfYear);
 
   // charts data
-  const [pieChartData, setPieChartData] = useState({
+  const [barChartData, setBarChartData] = useState({
     labels: filteredExpenses.map((item) => item.category),
     datasets: [
       {
@@ -55,18 +57,18 @@ const AnalyzerPage = () => {
   });
 
   const [lineChartData, setLineChartData] = useState({
-    labels: totalSumByMonth.map((item) => item.month),
+    labels: totalOutcomeByMonth.map((item) => item.month),
     datasets: [
       {
         label: "Total Year",
-        data: totalSumByMonth.map((data) => data.total),
+        data: totalOutcomeByMonth.map((data) => data.total),
       },
     ],
   });
 
-  const mountPieChartData = (items, label) => {
+  const mountBarChartData = (items, label) => {
     if (items.length) {
-      setPieChartData({
+      setBarChartData({
         labels: items.map((item) => item.category),
         datasets: [
           {
@@ -88,14 +90,14 @@ const AnalyzerPage = () => {
     }
   };
 
-  const mountLineChart = (items, label) => {
+  const mountLineChartData = (items, label) => {
     if (items.length) {
       setLineChartData({
-        labels: totalSumByMonth.map((item) => item.month),
+        labels: totalOutcomeByMonth.map((item) => item.month),
         datasets: [
           {
             label: label,
-            data: totalSumByMonth.map((data) => data.total),
+            data: totalOutcomeByMonth.map((data) => data.total),
           },
         ],
       });
@@ -111,8 +113,8 @@ const AnalyzerPage = () => {
   const filterExpenses = (year, month) => {
     const response = expenseFilter(expenses, parseInt(year), month, null);
     setFilteredExpenses(response);
-    mountPieChartData(getSumCategories(response, month), "Expenses");
-    mountLineChart(expenses, "Total of Year");
+    mountBarChartData(getSumCategories(response, month), "Expenses");
+    mountLineChartData(expenses, "Total Outcome");
   };
 
   useEffect(() => {
@@ -148,6 +150,7 @@ const AnalyzerPage = () => {
         savings={savings}
         previousSavings={previousSavings}
       />
+
       <SeparatorComponent />
       <Container>
         <Row className="justify-content-center">
@@ -156,7 +159,9 @@ const AnalyzerPage = () => {
           </Col>
           <Col className="col-12 col-lg-6 p-4">
             <CategoriesSummaryComponent
+              barChartData={barChartData}
               expenses={expensesOfYear}
+              outcome={outcome}
               month={month}
             />
           </Col>
@@ -173,7 +178,7 @@ const AnalyzerPage = () => {
           </Col>
           {outcome !== 0 ? (
             <Col className="col-12 col-lg-6 p-4">
-              <PieChartComponent chartData={pieChartData} />
+              <PieChartComponent chartData={barChartData} />
             </Col>
           ) : null}
         </Row>

@@ -83,9 +83,7 @@ const UpdateExpenseComponent = () => {
   };
 
   const getDefaultValue = () => {
-    if (categories.length) {
-      return dropdownData(categories)[categories.indexOf(category)];
-    }
+    return dropdownData(categories)[categories.indexOf(category)];
   };
 
   useEffect(() => {
@@ -138,7 +136,7 @@ const UpdateExpenseComponent = () => {
             options={dropdownData(categories)}
             handleSelect={handleSelectCategory}
             theme={`${theme}Theme`}
-            defaultValue={getDefaultValue()}
+            value={getDefaultValue()}
           />
         </Form.Group>
 

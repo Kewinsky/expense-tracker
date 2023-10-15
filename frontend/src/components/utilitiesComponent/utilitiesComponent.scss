@@ -1,0 +1,18 @@
+@import "../../utils/theme.scss";
+
+.utl-table {
+  font-size: 1.1rem;
+  width: 100%;
+}
+
+.utl-table tr {
+  height: 2.5rem;
+}
+
+.utl-table .white-row-color {
+  border-bottom: 1px solid white;
+}
+
+.utl-table .black-row-color {
+  border-bottom: 1px solid black;
+}
