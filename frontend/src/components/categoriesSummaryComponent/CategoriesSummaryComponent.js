@@ -2,6 +2,7 @@ import { useContext, useState } from "react";
 import {
   getTopCategories,
   getRoundedCategoryAverages,
+  getSumCategories,
 } from "../../helpers/analyzerMethods";
 import RecordComponent from "./RecordComponent";
 import BarChartComponent from "../barChartComponent/BarChartComponent";
@@ -26,17 +27,14 @@ const CategoriesSummaryComponent = ({
   const [isExpanded, setIsExpanded] = useState(false);
   const [isChart, setIsChart] = useState(false);
 
+  const allCategories = getSumCategories(expenses, month);
   const array = getTopCategories(expenses, month, range);
-  const blank_items = 5 - array.length;
+  const blankRows = range - allCategories.length;
 
   const handleOnExpand = () => {
     setIsExpanded(!isExpanded);
 
-    if (isExpanded) {
-      setRange(5);
-    } else {
-      setRange(undefined);
-    }
+    setRange(isExpanded ? 5 : undefined);
   };
 
   const handleOnSwitch = () => {
@@ -48,7 +46,11 @@ const CategoriesSummaryComponent = ({
       <div className="d-flex justify-content-between">
         <h4>Top 5 Spendings</h4>
         <div>
-          <Button variant={`outline-${reversedTheme}`} onClick={handleOnExpand}>
+          <Button
+            variant={`outline-${reversedTheme}`}
+            onClick={handleOnExpand}
+            disabled={blankRows >= 0}
+          >
             {isExpanded ? "Collapse" : "Expand"}
           </Button>
           <Button variant={`outline-${reversedTheme}`} onClick={handleOnSwitch}>
@@ -88,8 +90,8 @@ const CategoriesSummaryComponent = ({
                 />
               );
             })}
-            {range < 5 &&
-              Array(blank_items)
+            {allCategories.length < range &&
+              Array(blankRows)
                 .fill()
                 .map((_, index) => (
                   <RecordComponent
