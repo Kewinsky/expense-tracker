@@ -4,9 +4,13 @@ import com.expense_tracker.models.Expense;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-@Repository
-public interface ExpensesRepository extends JpaRepository<Expense, Long> {
+import java.util.List;
 
-    Iterable<Expense> findByUserId(Long userId);
+@Repository
+public interface ExpenseRepository extends JpaRepository<Expense, Long> {
+
+    List<Expense> findByUserId(Long userId);
+
+    void deleteAllByUserId(Long userId);
 
 }

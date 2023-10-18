@@ -8,9 +8,9 @@ import javax.persistence.*;
 import java.time.LocalDate;
 
 @Data
+@Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
 @Table(name = "expenses")
 public class Expense {
     @Id
@@ -21,7 +21,7 @@ public class Expense {
 
     private float value;
 
-    private String category;
+    private Long categoryId;
 
     private LocalDate date;
 
