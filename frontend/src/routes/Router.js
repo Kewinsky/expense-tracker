@@ -14,8 +14,9 @@ import UpdateExpensePage from "../pages/updatePage/UpdateExpensePage";
 import UpdateUserPage from "../pages/updatePage/UpdateUserPage";
 import UpdateAdminPage from "../pages/updatePage/UpdateAdminPage";
 import ForgotPasswordPage from "../pages/forgotPasswordPage/ForgotPasswordPage";
-import UpdateCategoryPage from "../pages/updatePage/UpdateCategoryPage";
 import BudgetingPage from "../pages/budgetingPage/BudgetingPage";
+import UpdateCategoryPage from "../pages/updatePage/UpdateCategoryPage";
+import UserCategoriesPage from "../pages/userCategoriesPage/UserCategoriesPage";
 
 export const Router = () => {
   const appName = "Spendee";
@@ -97,7 +98,7 @@ export const Router = () => {
       <Route
         path="/update/userByAdmin/:id"
         element={
-          <MainLayout pageTitle={"Spendee | Update User"}>
+          <MainLayout pageTitle={`${appName} | Update User`}>
             <ProtectedRoute>
               <UpdateAdminPage />
             </ProtectedRoute>
@@ -105,11 +106,31 @@ export const Router = () => {
         }
       />
       <Route
-        path="/usermanagement"
+        path="/update/category/:id"
+        element={
+          <MainLayout pageTitle={`${appName} | Update Category`}>
+            <ProtectedRoute>
+              <UpdateCategoryPage />
+            </ProtectedRoute>
+          </MainLayout>
+        }
+      />
+      <Route
+        path="/userManagement"
         element={
           <MainLayout pageTitle={`${appName} | User management`}>
             <ProtectedRoute>
               <UserManagementPage />
+            </ProtectedRoute>
+          </MainLayout>
+        }
+      />
+      <Route
+        path="/userCategories"
+        element={
+          <MainLayout pageTitle={`${appName} | User categories`}>
+            <ProtectedRoute>
+              <UserCategoriesPage />
             </ProtectedRoute>
           </MainLayout>
         }
@@ -120,16 +141,6 @@ export const Router = () => {
           <MainLayout pageTitle={`${appName} | Profile`}>
             <ProtectedRoute>
               <ProfilePage />
-            </ProtectedRoute>
-          </MainLayout>
-        }
-      />
-      <Route
-        path="/updateUserCategories"
-        element={
-          <MainLayout pageTitle={`${appName} | Update Category`}>
-            <ProtectedRoute>
-              <UpdateCategoryPage />
             </ProtectedRoute>
           </MainLayout>
         }
