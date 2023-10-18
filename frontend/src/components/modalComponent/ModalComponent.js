@@ -3,6 +3,7 @@ import Modal from "react-bootstrap/Modal";
 
 const ModalComponent = ({ handleDelete, record, show, setShow, theme }) => {
   const handleClose = () => setShow(false);
+  const reversedTheme = theme === "dark" ? "light" : "dark";
 
   return (
     <Modal show={show} onHide={handleClose}>
@@ -13,7 +14,7 @@ const ModalComponent = ({ handleDelete, record, show, setShow, theme }) => {
         If you want to delete this item click 'Yes' button.
       </Modal.Body>
       <Modal.Footer className={`${theme}Theme`}>
-        <Button variant={`outline-${theme}`} onClick={handleClose}>
+        <Button variant={`outline-${reversedTheme}`} onClick={handleClose}>
           Close
         </Button>
         <Button variant="danger" onClick={() => handleDelete(record.id)}>

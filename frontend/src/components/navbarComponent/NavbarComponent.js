@@ -48,7 +48,7 @@ const NavbarComponent = () => {
             )}
             {isAdmin && (
               <>
-                <Nav.Link href="/usermanagement">User Management</Nav.Link>
+                <Nav.Link href="/userManagement">User Management</Nav.Link>
               </>
             )}
             {currentUser && (

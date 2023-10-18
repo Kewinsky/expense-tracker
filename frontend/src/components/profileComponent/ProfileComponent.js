@@ -38,7 +38,7 @@ const ProfileComponent = () => {
               <h4 className="m-0">Categories</h4>
             </Col>
             <Col className="d-flex justify-content-end">
-              <Link to={"/updateUserCategories"}>
+              <Link to={"/userCategories"}>
                 <Button variant={`outline-${reversedTheme}`}>Edit</Button>
               </Link>
             </Col>

@@ -15,6 +15,7 @@ const UpdateUserComponent = () => {
 
   const [username, setUsername] = useState(currentUser.username);
   const [email, setEmail] = useState(currentUser.email);
+
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const [isPending, setIsPending] = useState(false);

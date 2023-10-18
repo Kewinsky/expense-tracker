@@ -9,8 +9,8 @@ import SpinnerComponent from "../spinnerComponent/SpinnerComponent";
 
 const UpdateAdminComponent = ({ users }) => {
   const { id: userId } = useParams();
-  const { theme } = useContext(ThemeContext);
 
+  const { theme } = useContext(ThemeContext);
   const reversedTheme = theme === "dark" ? "light" : "dark";
 
   const selectedUser = users.find((item) => {
@@ -99,7 +99,7 @@ const UpdateAdminComponent = ({ users }) => {
             onChange={handleInputEmail}
             value={email}
             type="text"
-            placeholder="Multisport subscription"
+            placeholder="Sushi"
             className={`${theme}Theme`}
           />
         </Form.Group>
@@ -125,7 +125,7 @@ const UpdateAdminComponent = ({ users }) => {
                 variant={`outline-${reversedTheme}`}
                 type="submit"
                 className="w-100 mt-2"
-                href="/usermanagement"
+                href="/userManagement"
               >
                 Cancel
               </Button>
@@ -138,7 +138,7 @@ const UpdateAdminComponent = ({ users }) => {
               {message}
             </div>
             <div className="mt-5 text-center">
-              <Link to={"/usermanagement"} className={`link-${reversedTheme} `}>
+              <Link to={"/userManagement"} className={`link-${reversedTheme} `}>
                 Back
               </Link>
             </div>

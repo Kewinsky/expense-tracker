@@ -60,7 +60,7 @@ const UserManagementPage = () => {
   return (
     <>
       <div className="m-5 text-center">
-        <h3>User management</h3>
+        <h3>User Management</h3>
       </div>
       <SeparatorComponent />
       <TableComponent

@@ -16,7 +16,7 @@ const ActionButtonsComponents = ({
   const handleShow = () => setShow(true);
 
   return (
-    <td className="text-center">
+    <td className="text-center" style={{ maxWidth: "60px" }}>
       <Link
         className={`link-${theme} mx-3`}
         to={`${handleUpdate}/${record.id}`}
