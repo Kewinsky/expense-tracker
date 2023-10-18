@@ -5,7 +5,7 @@ import Form from "react-bootstrap/Form";
 import ExpenseService from "../../services/expenseService";
 import SelectComponent from "../selectComponent/SelectComponent";
 import { ThemeContext } from "../../App";
-import { dropdownData } from "../../helpers/dropdownData";
+import { dropdownCategory } from "../../helpers/dropdownData";
 import { reloadData } from "../../helpers/reloadData";
 import {
   errorNotification,
@@ -13,15 +13,14 @@ import {
 } from "../../helpers/toastNotifications";
 import AuthService from "../../services/authService";
 
-const AddComponent = ({ setExpenses, categories }) => {
+const AddExpenseComponent = ({ setExpenses, categories }) => {
   const { theme } = useContext(ThemeContext);
   const currentUser = AuthService.getCurrentUser();
 
   const [date, setDate] = useState("");
   const [title, setTitle] = useState("");
   const [value, setValue] = useState("");
-  const [category, setCategory] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [category, setCategory] = useState(null);
 
   const handleInputDate = (e) => {
     setDate(e.target.value);
@@ -36,15 +35,14 @@ const AddComponent = ({ setExpenses, categories }) => {
   };
 
   const handleSelectCategory = (e) => {
-    setCategory(e.value);
-    setSelectedCategory(e);
+    setCategory(e);
   };
 
   const newExpense = {
     date,
     title,
     value,
-    category: category,
+    categoryId: category ? category.id : 0,
     userId: currentUser.id,
   };
 
@@ -54,16 +52,18 @@ const AddComponent = ({ setExpenses, categories }) => {
     setDate("");
     setTitle("");
     setValue("");
-    setCategory("");
-    setSelectedCategory(null);
+    setCategory(null);
 
-    try {
-      const response = await ExpenseService.addExpense(newExpense);
-      reloadData(ExpenseService.getExpensesByUser, setExpenses);
-      successNotification(response);
-    } catch (err) {
-      errorNotification(err.message);
-    }
+    ExpenseService.addExpense(newExpense)
+      .then((res) => {
+        successNotification(res);
+      })
+      .then(() => {
+        reloadData(ExpenseService.getExpensesByUser, setExpenses);
+      })
+      .catch((err) => {
+        errorNotification(err.message);
+      });
   };
 
   return (
@@ -88,7 +88,7 @@ const AddComponent = ({ setExpenses, categories }) => {
               <Form.Control
                 required
                 type="text"
-                placeholder="Multisport subscription"
+                placeholder="Sushi"
                 value={title}
                 onChange={handleInputTitle}
                 className={`${theme}Theme`}
@@ -102,7 +102,8 @@ const AddComponent = ({ setExpenses, categories }) => {
                 required
                 type="number"
                 step={0.5}
-                placeholder="100,00"
+                min="1"
+                placeholder="100"
                 value={value}
                 onChange={handleInputValue}
                 className={`${theme}Theme`}
@@ -113,8 +114,8 @@ const AddComponent = ({ setExpenses, categories }) => {
             <Form.Group>
               <Form.Label>Category</Form.Label>
               <SelectComponent
-                options={dropdownData(categories)}
-                value={selectedCategory}
+                options={dropdownCategory(categories)}
+                value={category}
                 handleSelect={handleSelectCategory}
                 placeholder={"Select"}
                 theme={`${theme}Theme`}
@@ -134,4 +135,4 @@ const AddComponent = ({ setExpenses, categories }) => {
   );
 };
 
-export default AddComponent;
+export default AddExpenseComponent;

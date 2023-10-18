@@ -5,9 +5,10 @@ export const dropdownData = (items) => {
   }));
 };
 
-export const dropdownDataNumber = (items) => {
+export const dropdownCategory = (items) => {
   return items.map((item) => ({
-    value: item,
-    label: item,
+    id: item.id,
+    value: item.title,
+    label: item.title,
   }));
 };

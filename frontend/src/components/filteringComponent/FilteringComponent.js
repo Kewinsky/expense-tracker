@@ -1,7 +1,7 @@
 import Form from "react-bootstrap/Form";
 import { Col, Container, Row } from "react-bootstrap";
 import { useEffect, useContext } from "react";
-import { dropdownData, dropdownDataNumber } from "../../helpers/dropdownData";
+import { dropdownCategory, dropdownData } from "../../helpers/dropdownData";
 import SelectComponent from "../selectComponent/SelectComponent";
 import { ThemeContext } from "../../App";
 import { getYearArray } from "../../helpers/yearData";
@@ -12,8 +12,8 @@ const FilteringComponent = ({
   setMonth,
   year,
   setYear,
-  category,
-  setCategory,
+  filteringCategories,
+  setFilteringCategories,
   months,
   filterExpenses,
 }) => {
@@ -26,7 +26,7 @@ const FilteringComponent = ({
   };
 
   const getDefaultYear = () => {
-    return dropdownDataNumber(years)[years.indexOf(year)];
+    return dropdownData(years)[years.indexOf(year)];
   };
 
   const handleSelectMonth = (e) => {
@@ -38,12 +38,12 @@ const FilteringComponent = ({
   };
 
   const handleSelectCategory = (e) => {
-    setCategory(Array.isArray(e) ? e.map((x) => x.value) : []);
+    setFilteringCategories(Array.isArray(e) ? e.map((x) => x.value) : []);
   };
 
   useEffect(() => {
     filterExpenses();
-  }, [year, month, category]);
+  }, [year, month, filteringCategories]);
 
   return (
     <Container className="my-3">
@@ -53,10 +53,10 @@ const FilteringComponent = ({
             <Form.Group>
               <Form.Label>Choose year</Form.Label>
               <SelectComponent
-                options={dropdownDataNumber(years)}
+                options={dropdownData(years)}
                 handleSelect={handleSelectYear}
                 theme={`${theme}Theme`}
-                defaultValue={getDefaultYear()}
+                value={getDefaultYear()}
                 placeholder={"Select year"}
               />
             </Form.Group>
@@ -68,7 +68,7 @@ const FilteringComponent = ({
                 options={dropdownData(months)}
                 handleSelect={handleSelectMonth}
                 theme={`${theme}Theme`}
-                defaultValue={getDefaultMonth()}
+                value={getDefaultMonth()}
                 placeholder={"Select month"}
               />
             </Form.Group>
@@ -79,7 +79,7 @@ const FilteringComponent = ({
               <SelectComponent
                 isMulti={true}
                 closeMenuOnSelect={false}
-                options={dropdownData(categories)}
+                options={dropdownCategory(categories)}
                 handleSelect={handleSelectCategory}
                 theme={`${theme}Theme`}
                 placeholder={"Select"}

@@ -2,33 +2,43 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { Link, useParams } from "react-router-dom";
 import { useState, useContext, useEffect } from "react";
-import ExpenseService from "../../services/expenseService";
-import { dropdownData } from "../../helpers/dropdownData";
+import { dropdownCategory } from "../../helpers/dropdownData";
 import SelectComponent from "../selectComponent/SelectComponent";
 import { ThemeContext } from "../../App";
 import { Card } from "react-bootstrap";
 import SpinnerComponent from "../spinnerComponent/SpinnerComponent";
-import UserService from "../../services/userService";
-import { deserializeCategories } from "../../helpers/categoriesMapper";
+import CategoryService from "../../services/categoryService";
+import ExpenseService from "../../services/expenseService";
+import { reloadData } from "../../helpers/reloadData";
 
 const UpdateExpenseComponent = () => {
   const { id: expenseId } = useParams();
 
-  const { theme, expenses } = useContext(ThemeContext);
+  const { theme, expenses, setExpenses } = useContext(ThemeContext);
   const reversedTheme = theme === "dark" ? "light" : "dark";
 
-  const selectedExpense = expenses.find((item) => {
-    return item.id === parseInt(expenseId);
-  });
-
-  const [date, setDate] = useState(selectedExpense.date);
-  const [title, setTitle] = useState(selectedExpense.title);
-  const [value, setValue] = useState(selectedExpense.value);
-  const [category, setCategory] = useState(selectedExpense.category);
   const [categories, setCategories] = useState([]);
+  const [selectedExpense, setSelectedExpense] = useState(null);
+
+  const [date, setDate] = useState("");
+  const [title, setTitle] = useState("");
+  const [value, setValue] = useState("");
+  const [category, setCategory] = useState(null);
+
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const [isPending, setIsPending] = useState(false);
+
+  const handleSetDefaults = () => {
+    const dropdownCategoryList = dropdownCategory(categories);
+    const selectedCategory = dropdownCategoryList.find(
+      (cat) => cat.value === selectedExpense.category
+    );
+    setDate(selectedExpense.date);
+    setTitle(selectedExpense.title);
+    setValue(selectedExpense.value);
+    setCategory(selectedCategory);
+  };
 
   const handleInputDate = (e) => {
     setDate(e.target.value);
@@ -43,14 +53,14 @@ const UpdateExpenseComponent = () => {
   };
 
   const handleSelectCategory = (e) => {
-    setCategory(e.value);
+    setCategory(e);
   };
 
   const updatedExpense = {
     date,
     title,
     value,
-    category,
+    categoryId: category ? category.id : 0,
   };
 
   const handleUpdateExpense = async (e) => {
@@ -62,8 +72,11 @@ const UpdateExpenseComponent = () => {
 
     setTimeout(() => {
       ExpenseService.updateExpense(expenseId, updatedExpense)
+        .then((res) => {
+          setMessage(res);
+        })
         .then(() => {
-          setMessage("Expense updated successfully");
+          reloadData(ExpenseService.getExpensesByUser, setExpenses);
         })
         .catch((err) => {
           setError(err.message);
@@ -74,21 +87,28 @@ const UpdateExpenseComponent = () => {
     }, 1000);
   };
 
-  const getUserCategories = async () => {
-    const response = await UserService.getUserCategories();
+  const getCategoriesByUser = async () => {
+    const response = await CategoryService.getCategoriesByUser();
 
-    const mappedCategories = deserializeCategories(response.data);
-
-    setCategories(mappedCategories);
-  };
-
-  const getDefaultValue = () => {
-    return dropdownData(categories)[categories.indexOf(category)];
+    setCategories(response.data);
   };
 
   useEffect(() => {
-    getUserCategories();
+    getCategoriesByUser();
   }, []);
+
+  useEffect(() => {
+    const foundExpense = expenses.find(
+      (item) => item.id === parseInt(expenseId)
+    );
+    setSelectedExpense(foundExpense);
+  }, [expenses, expenseId]);
+
+  useEffect(() => {
+    if (selectedExpense) {
+      handleSetDefaults();
+    }
+  }, [selectedExpense, categories]);
 
   return (
     <Card className={`bg-${theme}`}>
@@ -97,6 +117,7 @@ const UpdateExpenseComponent = () => {
         <Form.Group className="mt-3">
           <Form.Label>Date</Form.Label>
           <Form.Control
+            required
             onChange={handleInputDate}
             value={date}
             type="date"
@@ -108,10 +129,11 @@ const UpdateExpenseComponent = () => {
         <Form.Group className="mt-3">
           <Form.Label>Title</Form.Label>
           <Form.Control
+            required
             onChange={handleInputTitle}
             value={title}
             type="text"
-            placeholder="Multisport subscription"
+            placeholder="Sushi"
             className={`${theme}Theme`}
             disabled={message}
           />
@@ -120,6 +142,7 @@ const UpdateExpenseComponent = () => {
         <Form.Group className="mt-3">
           <Form.Label>Value</Form.Label>
           <Form.Control
+            required
             onChange={handleInputValue}
             value={value}
             type="number"
@@ -133,10 +156,10 @@ const UpdateExpenseComponent = () => {
         <Form.Group className="mt-3">
           <Form.Label>Category</Form.Label>
           <SelectComponent
-            options={dropdownData(categories)}
+            options={dropdownCategory(categories)}
             handleSelect={handleSelectCategory}
             theme={`${theme}Theme`}
-            value={getDefaultValue()}
+            value={category}
           />
         </Form.Group>
 
