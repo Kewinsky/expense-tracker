@@ -1,21 +1,39 @@
 package com.expense_tracker.utils;
 
-import java.util.HashSet;
-import java.util.Set;
+import com.expense_tracker.models.Category;
+import com.expense_tracker.models.User;
+import com.expense_tracker.repositories.CategoryRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
+import java.util.List;
+
+@Service
 public class CategoryProvider {
-    public static Set<String> getPredefinedCategories() {
-        Set<String> predefinedCategories = new HashSet<>();
 
-        predefinedCategories.add("Food");
-        predefinedCategories.add("Transport");
-        predefinedCategories.add("Utilities");
-        predefinedCategories.add("Personal");
-        predefinedCategories.add("Housing");
-        predefinedCategories.add("Medical");
-        predefinedCategories.add("Entertainment");
-        predefinedCategories.add("Savings");
+    @Autowired
+    CategoryRepository categoryRepository;
 
-        return predefinedCategories;
+    public void addPredefinedCategoriesToUser(User user) {
+        List<String> predefinedCategoryTitles = Arrays.asList(
+                "Food",
+                "Transport",
+                "Utilities",
+                "Personal",
+                "Housing",
+                "Medical",
+                "Entertainment",
+                "Gifts"
+        );
+
+        for (String categoryTitle : predefinedCategoryTitles) {
+            Category category = new Category();
+
+            category.setTitle(categoryTitle);
+            category.setUserId(user.getId());
+
+            categoryRepository.save(category);
+        }
     }
 }

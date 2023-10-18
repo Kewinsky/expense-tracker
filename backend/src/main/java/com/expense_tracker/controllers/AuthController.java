@@ -44,6 +44,9 @@ public class AuthController {
     JwtUtils jwtUtils;
 
     @Autowired
+    CategoryProvider categoryProvider;
+
+    @Autowired
     private RoleConverter converter;
 
     @PostMapping("/signin")
@@ -95,11 +98,14 @@ public class AuthController {
                 encoder.encode(signUpRequest.getPassword())
         );
 
-        user.setCategories(CategoryProvider.getPredefinedCategories().toString());
-
+        // Set roles for new User
         var strRoles = signUpRequest.getRole();
         user.setRoles(converter.toRoleSet(strRoles));
+
         userRepository.save(user);
+
+        // Set predefined categories for new User
+        categoryProvider.addPredefinedCategoriesToUser(user);
 
         return ResponseEntity.ok(new MessageResponse("User registered successfully"));
     }
