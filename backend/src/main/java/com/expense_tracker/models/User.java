@@ -32,9 +32,6 @@ public class User {
     @NotBlank
     private String password;
 
-    @NotBlank
-    private String categories;
-
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "user_roles",
