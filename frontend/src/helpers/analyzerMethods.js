@@ -1,17 +1,43 @@
+import { months } from "./monthsData";
+
 const sumAllMonths = (items) => {
   const result = [];
-  const groupedByMonth = items.reduce((acc, expense) => {
+
+  months.forEach((monthName) => {
+    result.push({ label: monthName, total: 0 });
+  });
+
+  items.forEach((expense) => {
     const date = new Date(expense.date);
-    const monthName = date.toLocaleString("default", { month: "long" }); // Get month name
-    if (!acc[monthName]) {
-      acc[monthName] = 0; // Initialize sum for this month to 0
-      result.push({ month: monthName, total: 0 }); // Add a new object to the result array
+    const monthName = date.toLocaleString("default", { month: "long" });
+
+    const index = result.findIndex((obj) => obj.label === monthName);
+    if (index !== -1) {
+      result[index].total += expense.value;
     }
-    acc[monthName] += expense.value;
-    const index = result.findIndex((obj) => obj.month === monthName);
-    result[index].total = acc[monthName]; // Update the total for this month in the result array
-    return acc;
-  }, {});
+  });
+
+  return result;
+};
+
+const sumAllByRange = (items, step) => {
+  const result = [];
+
+  // Initialize the result array with entries for all possible keys within the range
+  for (let i = 1; i <= 31; i += step) {
+    result.push({ label: i.toString(), total: 0 });
+  }
+
+  items.forEach((expense) => {
+    const date = new Date(expense.date);
+    const key = `${Math.floor(date.getDate() / step) * step + 1}`; // Combine month and range key
+
+    const index = result.findIndex((obj) => obj.label === key);
+    if (index !== -1) {
+      result[index].total += expense.value;
+    }
+  });
+
   return result;
 };
 
@@ -173,6 +199,7 @@ const getRoundedCategoryAverages = (items, year) => {
 
 export {
   sumAllMonths,
+  sumAllByRange,
   sumAllByMonth,
   getSumCategories,
   sumByCategory,

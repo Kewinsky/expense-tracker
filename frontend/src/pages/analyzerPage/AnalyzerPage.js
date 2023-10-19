@@ -3,7 +3,6 @@ import SwitchMonthComponent from "../../components/switchMonthComponent/SwitchMo
 import SummaryComponent from "../../components/summaryComponent/SummaryComponent";
 import SeparatorComponent from "../../components/separatorComponent/SeparatorComponent";
 import LineChartComponent from "../../components/lineChartComponent/LineChartComponent";
-import PieChartComponent from "../../components/pieChartComponent/PieChartComponent";
 import NoteComponent from "../../components/noteComponent/NoteComponent";
 import CategoriesSummaryComponent from "../../components/categoriesSummaryComponent/CategoriesSummaryComponent";
 import { Chart as ChartJS } from "chart.js/auto";
@@ -15,11 +14,11 @@ import {
   sumAllByMonth,
   sumAllMonths,
   getSumCategories,
-  getSavedSumForYear,
-  getSavedSumByMonth,
+  sumAllByRange,
 } from "../../helpers/analyzerMethods";
 import {
   expenseFilter,
+  expenseFilterByMonth,
   expenseFilterByYear,
 } from "../../helpers/expenseFilter";
 import NoteService from "../../services/noteService";
@@ -41,9 +40,13 @@ const AnalyzerPage = () => {
   const [year, setYear] = useState(currentDate.getFullYear());
   const [month, setMonth] = useState(currentDate.getMonth());
   const [filteredExpenses, setFilteredExpenses] = useState([]);
+  const [isYear, setIsYear] = useState(true);
+  const [range, setRange] = useState(3);
 
   const expensesOfYear = expenseFilterByYear(expenses, parseInt(year));
   const totalOutcomeByMonth = sumAllMonths(expensesOfYear);
+  const expensesOfMonth = expenseFilterByMonth(expenses, parseInt(month));
+  const totalOutcomeByRange = sumAllByRange(expensesOfMonth, range);
 
   // charts data
   const [barChartData, setBarChartData] = useState({
@@ -57,7 +60,7 @@ const AnalyzerPage = () => {
   });
 
   const [lineChartData, setLineChartData] = useState({
-    labels: totalOutcomeByMonth.map((item) => item.month),
+    labels: totalOutcomeByMonth.map((item) => item.label),
     datasets: [
       {
         label: "Total Year",
@@ -90,14 +93,14 @@ const AnalyzerPage = () => {
     }
   };
 
-  const mountLineChartData = (items, label) => {
+  const mountLineChartData = (data, items, label) => {
     if (items.length) {
       setLineChartData({
-        labels: totalOutcomeByMonth.map((item) => item.month),
+        labels: data.map((item) => item.label),
         datasets: [
           {
             label: label,
-            data: totalOutcomeByMonth.map((data) => data.total),
+            data: data.map((data) => data.total),
           },
         ],
       });
@@ -113,8 +116,9 @@ const AnalyzerPage = () => {
   const filterExpenses = (year, month) => {
     const response = expenseFilter(expenses, parseInt(year), month, null);
     setFilteredExpenses(response);
+
     mountBarChartData(getSumCategories(response, month), "Expenses");
-    mountLineChartData(expenses, "Total Outcome");
+    mountLineChartData(totalOutcomeByMonth, expenses, "Total Outcome");
   };
 
   useEffect(() => {
@@ -124,7 +128,16 @@ const AnalyzerPage = () => {
     setPreviousOutcome(sumAllByMonth(expensesOfYear, month - 1));
     setSavings(getSavedSum(expensesOfYear, month));
     setPreviousSavings(getSavedSum(expensesOfYear, month - 1));
-  }, [year, expenses]);
+    setIsYear(true);
+  }, [year, month, expenses]);
+
+  useEffect(() => {
+    if (isYear) {
+      mountLineChartData(totalOutcomeByMonth, expenses, "Total Outcome");
+    } else {
+      mountLineChartData(totalOutcomeByRange, expenses, "Total Outcome");
+    }
+  }, [isYear, range]);
 
   return (
     <>
@@ -155,7 +168,13 @@ const AnalyzerPage = () => {
       <Container>
         <Row className="justify-content-center">
           <Col className="col-12 col-lg-6 p-4">
-            <LineChartComponent chartData={lineChartData} />
+            <LineChartComponent
+              chartData={lineChartData}
+              range={range}
+              setRange={setRange}
+              isYear={isYear}
+              setIsYear={setIsYear}
+            />
           </Col>
           <Col className="col-12 col-lg-6 p-4">
             <CategoriesSummaryComponent
@@ -176,11 +195,6 @@ const AnalyzerPage = () => {
               year={year}
             />
           </Col>
-          {outcome !== 0 ? (
-            <Col className="col-12 col-lg-6 p-4">
-              <PieChartComponent chartData={barChartData} />
-            </Col>
-          ) : null}
         </Row>
       </Container>
     </>

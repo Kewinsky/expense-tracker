@@ -19,3 +19,9 @@ export const expenseFilterByYear = (items, year) => {
     return new Date(item.date).getFullYear() === year;
   });
 };
+
+export const expenseFilterByMonth = (items, month) => {
+  return items.filter((item) => {
+    return new Date(item.date).getMonth() === month;
+  });
+};
