@@ -5,6 +5,7 @@ import com.expense_tracker.models.Category;
 import com.expense_tracker.repositories.CategoryRepository;
 import com.expense_tracker.services.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -60,8 +61,7 @@ public class CategoryController {
     }
 
     @DeleteMapping("/deleteCategory/{id}")
-    String deleteCategory(@PathVariable Long id) {
-        categoryService.deleteCategory(id);
-        return "Category deleted successfully";
+    ResponseEntity<?> deleteCategory(@PathVariable Long id) {
+        return categoryService.deleteCategory(id);
     }
 }

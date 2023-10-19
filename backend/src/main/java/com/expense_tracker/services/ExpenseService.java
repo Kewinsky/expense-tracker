@@ -20,7 +20,7 @@ public class ExpenseService {
     public List<ExpenseDTO> getExpensesWithCategory(Long userId) {
         List<ExpenseDTO> expensesWithCategory = new ArrayList<>();
 
-        List<Expense> expenses = expenseRepository.findByUserId(userId);
+        List<Expense> expenses = expenseRepository.findByUserIdOrderByDate(userId);
 
         for (Expense expense : expenses) {
             ExpenseDTO dto = new ExpenseDTO();
