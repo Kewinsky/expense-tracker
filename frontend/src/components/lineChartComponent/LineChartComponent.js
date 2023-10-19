@@ -10,6 +10,8 @@ const LineChartComponent = ({
   setRange,
   isYear,
   setIsYear,
+  periodable,
+  header,
 }) => {
   const { theme } = useContext(ThemeContext);
   const reversedTheme = theme === "dark" ? "light" : "dark";
@@ -26,22 +28,27 @@ const LineChartComponent = ({
   return (
     <>
       <div className="d-flex justify-content-between">
-        <h4>Outcome Summary</h4>
-        <div className="d-flex">
-          {!isYear && (
-            <SelectComponent
-              options={dropdownData(availableRanges)}
-              value={{ value: range, label: range }}
-              handleSelect={handleSelectRange}
-              placeholder={"Select"}
-              theme={`${theme}Theme`}
-            />
-          )}
+        {header && <h4>{header}</h4>}
+        {periodable && (
+          <div className="d-flex">
+            {!isYear && (
+              <SelectComponent
+                options={dropdownData(availableRanges)}
+                value={{ value: range, label: range }}
+                handleSelect={handleSelectRange}
+                placeholder={"Select"}
+                theme={`${theme}Theme`}
+              />
+            )}
 
-          <Button variant={`outline-${reversedTheme}`} onClick={handleOnSwitch}>
-            {isYear ? "Month" : "Year"}
-          </Button>
-        </div>
+            <Button
+              variant={`outline-${reversedTheme}`}
+              onClick={handleOnSwitch}
+            >
+              {isYear ? "Month" : "Year"}
+            </Button>
+          </div>
+        )}
       </div>
       <Line data={chartData} />
     </>
