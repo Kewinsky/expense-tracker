@@ -64,7 +64,7 @@ const CategoriesSummaryComponent = ({
         <table className="summary-table">
           <thead>
             <tr className={`${borderColor}-row-color`}>
-              <th></th>
+              <th>Title</th>
               <th>Value</th>
               <th>Average</th>
               <th>[%]</th>

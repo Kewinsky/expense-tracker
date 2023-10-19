@@ -86,6 +86,7 @@ const UpdateAdminComponent = ({ users }) => {
         <Form.Group className="mt-3">
           <Form.Label>Username</Form.Label>
           <Form.Control
+            required
             onChange={handleInputUsername}
             value={username}
             type="text"
@@ -96,6 +97,7 @@ const UpdateAdminComponent = ({ users }) => {
         <Form.Group className="mt-3">
           <Form.Label>Email</Form.Label>
           <Form.Control
+            required
             onChange={handleInputEmail}
             value={email}
             type="text"

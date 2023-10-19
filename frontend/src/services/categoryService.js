@@ -70,11 +70,11 @@ const deleteCategory = async (id) => {
         headers: authHeader(),
       })
       .then((res) => {
-        return res.data;
+        return res.data.message;
       });
   } catch (err) {
-    if (err.response) {
-      throw new Error(err.response.data.error);
+    if (err) {
+      throw new Error(err.response.data.message);
     } else if (err.request) {
       throw new Error("Server is not responding. Please try again later.");
     } else {

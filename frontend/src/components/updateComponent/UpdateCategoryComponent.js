@@ -64,6 +64,7 @@ const UpdateCategoryComponent = ({ categories }) => {
         <Form.Group className="mt-3">
           <Form.Label>Title</Form.Label>
           <Form.Control
+            required
             onChange={handleInputTitle}
             value={title || ""}
             type="text"
