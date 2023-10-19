@@ -43,16 +43,6 @@ const ProfileComponent = () => {
               </Link>
             </Col>
           </Row>
-          <Row>
-            <Col className="d-flex align-items-center">
-              <h4 className="m-0">Budgeting</h4>
-            </Col>
-            <Col className="d-flex justify-content-end">
-              <Link to={"/updateUserBudgeting"}>
-                <Button variant={`outline-${reversedTheme}`}>Edit</Button>
-              </Link>
-            </Col>
-          </Row>
         </Card.Body>
       </Card>
     </div>
