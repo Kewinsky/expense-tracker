@@ -1,5 +1,4 @@
 import { useEffect, useState, useContext } from "react";
-import AddComponent from "../../components/addComponent/AddComponent";
 import FilteringComponent from "../../components/filteringComponent/FilteringComponent";
 import SeparatorComponent from "../../components/separatorComponent/SeparatorComponent";
 import TableComponent from "../../components/tableComponent/TableComponent";
@@ -10,15 +9,15 @@ import { trackerTableHeaders } from "../../helpers/tableHeaders";
 import { updateExpenseURL } from "../../helpers/updateURL";
 import { useDeleteItem } from "../../hooks/useDeleteItem";
 import { ThemeContext } from "../../App";
-import { deserializeCategories } from "../../helpers/categoriesMapper";
-import UserService from "../../services/userService";
+import CategoryService from "../../services/categoryService";
+import AddExpenseComponent from "../../components/addComponent/AddExpenseComponent";
 
 const TrackerPage = () => {
   const { expenses, setExpenses } = useContext(ThemeContext);
   const currentDate = new Date();
 
   const [categories, setCategories] = useState([]);
-  const [category, setCategory] = useState([]);
+  const [filteringCategories, setFilteringCategories] = useState([]);
   const [month, setMonth] = useState(months[currentDate.getMonth()]);
   const [year, setYear] = useState(currentDate.getFullYear());
   const [filteredExpenses, setFilteredExpenses] = useState([]);
@@ -36,8 +35,9 @@ const TrackerPage = () => {
       expenses,
       year,
       months.indexOf(month),
-      category
+      filteringCategories
     );
+
     setError(null);
     setFilteredExpenses(response);
 
@@ -50,34 +50,28 @@ const TrackerPage = () => {
     }, 1000);
   };
 
-  const getUserCategories = async () => {
-    const response = await UserService.getUserCategories();
+  const getCategoriesByUser = async () => {
+    const response = await CategoryService.getCategoriesByUser();
 
-    const mappedCategories = deserializeCategories(response.data);
-
-    setCategories(mappedCategories);
+    setCategories(response.data);
   };
 
   useEffect(() => {
     filterExpenses();
-    getUserCategories();
+    getCategoriesByUser();
   }, [expenses]);
 
   return (
     <>
-      <AddComponent
-        expenses={expenses}
-        setExpenses={setExpenses}
-        categories={categories}
-      />
+      <AddExpenseComponent setExpenses={setExpenses} categories={categories} />
       <FilteringComponent
         categories={categories}
         month={month}
         setMonth={setMonth}
         year={year}
         setYear={setYear}
-        category={category}
-        setCategory={setCategory}
+        filteringCategories={filteringCategories}
+        setFilteringCategories={setFilteringCategories}
         filterExpenses={filterExpenses}
         months={months}
       />

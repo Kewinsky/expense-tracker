@@ -47,6 +47,7 @@ const SelectComponent = ({
 
   return (
     <Select
+      required
       options={options}
       onChange={handleSelect}
       placeholder={placeholder}

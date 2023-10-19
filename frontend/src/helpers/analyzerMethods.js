@@ -1,17 +1,43 @@
+import { months } from "./monthsData";
+
 const sumAllMonths = (items) => {
   const result = [];
-  const groupedByMonth = items.reduce((acc, expense) => {
+
+  months.forEach((monthName) => {
+    result.push({ label: monthName, total: 0 });
+  });
+
+  items.forEach((expense) => {
     const date = new Date(expense.date);
-    const monthName = date.toLocaleString("default", { month: "long" }); // Get month name
-    if (!acc[monthName]) {
-      acc[monthName] = 0; // Initialize sum for this month to 0
-      result.push({ month: monthName, total: 0 }); // Add a new object to the result array
+    const monthName = date.toLocaleString("default", { month: "long" });
+
+    const index = result.findIndex((obj) => obj.label === monthName);
+    if (index !== -1) {
+      result[index].total += expense.value;
     }
-    acc[monthName] += expense.value;
-    const index = result.findIndex((obj) => obj.month === monthName);
-    result[index].total = acc[monthName]; // Update the total for this month in the result array
-    return acc;
-  }, {});
+  });
+
+  return result;
+};
+
+const sumAllByRange = (items, step) => {
+  const result = [];
+
+  // Initialize the result array with entries for all possible keys within the range
+  for (let i = 1; i <= 31; i += step) {
+    result.push({ label: i.toString(), total: 0 });
+  }
+
+  items.forEach((expense) => {
+    const date = new Date(expense.date);
+    const key = `${Math.floor(date.getDate() / step) * step + 1}`; // Combine month and range key
+
+    const index = result.findIndex((obj) => obj.label === key);
+    if (index !== -1) {
+      result[index].total += expense.value;
+    }
+  });
+
   return result;
 };
 
@@ -24,15 +50,19 @@ const sumAllByMonth = (items, month) => {
   return sum;
 };
 
-const sumByCategory = (items, month) => {
+const sumByCategory = (items, year, month) => {
   let sumByCategory = {};
   for (let i = 0; i < items.length; i++) {
     const category = items[i].category;
     const value = items[i].value;
     const date = new Date(items[i].date);
+    const dataYear = date.getFullYear();
     const dataMonth = date.getMonth();
 
-    if (month === null || dataMonth === month) {
+    if (
+      (year === null || dataYear === year) &&
+      (month === null || dataMonth === month)
+    ) {
       if (sumByCategory[category]) {
         sumByCategory[category] += value;
       } else {
@@ -40,6 +70,7 @@ const sumByCategory = (items, month) => {
       }
     }
   }
+
   const result = Object.keys(sumByCategory).map((category) => {
     return { category, value: sumByCategory[category] };
   });
@@ -47,14 +78,14 @@ const sumByCategory = (items, month) => {
   return result;
 };
 
-const getSumCategories = (items, month) => {
-  const sumByCategoryData = sumByCategory(items, month);
+const getSumCategories = (items, year, month) => {
+  const sumByCategoryData = sumByCategory(items, year, month);
   const sortedData = sumByCategoryData.sort((a, b) => b.value - a.value);
   return sortedData;
 };
 
-const getTopCategories = (items, month, range) => {
-  const sumByCategoryData = sumByCategory(items, month);
+const getTopCategories = (items, year, month, range) => {
+  const sumByCategoryData = sumByCategory(items, year, month);
   const sortedData = sumByCategoryData.sort((a, b) => b.value - a.value);
   if (range) {
     return sortedData.slice(0, range);
@@ -68,7 +99,7 @@ const sumUtilities = (items, month) => {
     gas: 0,
     water: 0,
     rent: 0,
-    subscribtion: 0,
+    subscription: 0,
   };
 
   for (let i = 0; i < items.length; i++) {
@@ -86,8 +117,8 @@ const sumUtilities = (items, month) => {
         sumByTitle.water += value;
       } else if (title.includes("Rent")) {
         sumByTitle.rent += value;
-      } else if (title.includes("Subscribtion")) {
-        sumByTitle.subscribtion += value;
+      } else if (title.includes("Subscription")) {
+        sumByTitle.subscription += value;
       }
     }
   }
@@ -95,6 +126,35 @@ const sumUtilities = (items, month) => {
   const result = Object.keys(sumByTitle).map((title) => {
     return { title, value: sumByTitle[title] };
   });
+
+  return result;
+};
+
+const sumUtilityByYear = (items, year, utilityToSum) => {
+  const result = [];
+
+  for (let i = 0; i < 12; i++) {
+    const monthName = months[i];
+
+    // Initialize the result array with entries for all months
+    result.push({ label: monthName, total: 0 });
+
+    for (let j = 0; j < items.length; j++) {
+      const title = items[j].title.toLowerCase(); // Convert to lowercase
+      const value = items[j].value;
+      const date = new Date(items[j].date);
+      const dataYear = date.getFullYear();
+      const dataMonth = date.getMonth();
+
+      if (
+        dataYear === year &&
+        dataMonth === i &&
+        title.includes(utilityToSum.toLowerCase())
+      ) {
+        result[i].total += value;
+      }
+    }
+  }
 
   return result;
 };
@@ -173,11 +233,13 @@ const getRoundedCategoryAverages = (items, year) => {
 
 export {
   sumAllMonths,
+  sumAllByRange,
   sumAllByMonth,
   getSumCategories,
   sumByCategory,
   getTopCategories,
   sumUtilities,
+  sumUtilityByYear,
   getSavedSum,
   getSavedSumForYear,
   getSavedSumByMonth,

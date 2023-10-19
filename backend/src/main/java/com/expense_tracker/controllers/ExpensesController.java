@@ -1,12 +1,15 @@
 package com.expense_tracker.controllers;
 
-import com.expense_tracker.models.Expense;
+import com.expense_tracker.DTOs.ExpenseDTO;
 import com.expense_tracker.exceptions.expenses.ExpenseNotFoundException;
-import com.expense_tracker.repositories.ExpensesRepository;
-import com.expense_tracker.repositories.NotesRepository;
+import com.expense_tracker.models.Expense;
+import com.expense_tracker.repositories.ExpenseRepository;
+import com.expense_tracker.services.ExpenseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -15,19 +18,22 @@ import org.springframework.web.bind.annotation.*;
 public class ExpensesController {
 
     @Autowired
-    ExpensesRepository expensesRepository;
+    ExpenseRepository expensesRepository;
+
+    @Autowired
+    ExpenseService expenseService;
 
     @Autowired
     UserController userController;
-    
-    @GetMapping(path="/getExpensesByUser/{id}")
-    @ResponseBody Iterable<Expense> getExpensesByUser(@PathVariable Long id) {
-        userController.getUserById(id);
-        return expensesRepository.findByUserId(id);
+
+    @GetMapping(path = "/getExpensesByUser/{id}")
+    @ResponseBody
+    List<ExpenseDTO> getExpensesByUser(@PathVariable Long id) {
+        return expenseService.getExpensesWithCategory(id);
     }
 
-    @PostMapping(path="/addExpense")
-    String addExpense (@RequestBody Expense expense) {
+    @PostMapping(path = "/addExpense")
+    String addExpense(@RequestBody Expense expense) {
         userController.getUserById(expense.getUserId());
         expensesRepository.save(expense);
         return "Expense added successfully";
@@ -35,12 +41,12 @@ public class ExpensesController {
 
     @PutMapping("updateExpense/{id}")
     String updateExpense(@RequestBody Expense expense,
-                          @PathVariable Long id){
+                         @PathVariable Long id) {
         return expensesRepository.findById(id)
                 .map(exp -> {
                     exp.setTitle(expense.getTitle());
                     exp.setValue(expense.getValue());
-                    exp.setCategory(expense.getCategory());
+                    exp.setCategoryId(expense.getCategoryId());
                     exp.setDate(expense.getDate());
                     expensesRepository.save(exp);
                     return "Expense updated successfully";
@@ -50,7 +56,7 @@ public class ExpensesController {
 
     @DeleteMapping("/deleteExpense/{id}")
     String deleteExpense(@PathVariable Long id) {
-        if (!expensesRepository.existsById(id)){
+        if (!expensesRepository.existsById(id)) {
             throw new ExpenseNotFoundException(id);
         }
         expensesRepository.deleteById(id);

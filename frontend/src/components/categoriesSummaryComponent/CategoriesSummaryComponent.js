@@ -2,6 +2,7 @@ import { useContext, useState } from "react";
 import {
   getTopCategories,
   getRoundedCategoryAverages,
+  getSumCategories,
 } from "../../helpers/analyzerMethods";
 import RecordComponent from "./RecordComponent";
 import BarChartComponent from "../barChartComponent/BarChartComponent";
@@ -13,6 +14,7 @@ const CategoriesSummaryComponent = ({
   barChartData,
   expenses,
   outcome,
+  year,
   month,
 }) => {
   const { theme } = useContext(ThemeContext);
@@ -26,17 +28,14 @@ const CategoriesSummaryComponent = ({
   const [isExpanded, setIsExpanded] = useState(false);
   const [isChart, setIsChart] = useState(false);
 
-  const array = getTopCategories(expenses, month, range);
-  const blank_items = 5 - array.length;
+  const allCategories = getSumCategories(expenses, year, month);
+  const array = getTopCategories(expenses, year, month, range);
+  const blankRows = range - allCategories.length;
 
   const handleOnExpand = () => {
     setIsExpanded(!isExpanded);
 
-    if (isExpanded) {
-      setRange(5);
-    } else {
-      setRange(undefined);
-    }
+    setRange(isExpanded ? 5 : undefined);
   };
 
   const handleOnSwitch = () => {
@@ -48,9 +47,16 @@ const CategoriesSummaryComponent = ({
       <div className="d-flex justify-content-between">
         <h4>Top 5 Spendings</h4>
         <div>
-          <Button variant={`outline-${reversedTheme}`} onClick={handleOnExpand}>
-            {isExpanded ? "Collapse" : "Expand"}
-          </Button>
+          {!isChart && (
+            <Button
+              variant={`outline-${reversedTheme}`}
+              onClick={handleOnExpand}
+              disabled={blankRows >= 0}
+            >
+              {isExpanded ? "Collapse" : "Expand"}
+            </Button>
+          )}
+
           <Button variant={`outline-${reversedTheme}`} onClick={handleOnSwitch}>
             {isChart ? "Table" : "Chart"}
           </Button>
@@ -62,7 +68,7 @@ const CategoriesSummaryComponent = ({
         <table className="summary-table">
           <thead>
             <tr className={`${borderColor}-row-color`}>
-              <th></th>
+              <th>Title</th>
               <th>Value</th>
               <th>Average</th>
               <th>[%]</th>
@@ -88,8 +94,8 @@ const CategoriesSummaryComponent = ({
                 />
               );
             })}
-            {range < 5 &&
-              Array(blank_items)
+            {allCategories.length < range &&
+              Array(blankRows)
                 .fill()
                 .map((_, index) => (
                   <RecordComponent

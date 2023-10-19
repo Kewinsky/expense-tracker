@@ -18,8 +18,6 @@ const SwitchMonthComponent = ({
   setYear,
   setOutcome,
   setPreviousOutcome,
-  setSavings,
-  setPreviousSavings,
   filterExpenses,
 }) => {
   const { theme } = useContext(ThemeContext);
@@ -31,8 +29,6 @@ const SwitchMonthComponent = ({
       setMonth(month);
       setOutcome(sumAllByMonth(expensesOfYear, month));
       setPreviousOutcome(sumAllByMonth(expensesOfYear, month - 1));
-      setSavings(getSavedSum(expensesOfYear, month));
-      setPreviousSavings(getSavedSum(expensesOfYear, month - 1));
       filterExpenses(year, month);
     }
   };
@@ -43,8 +39,6 @@ const SwitchMonthComponent = ({
       setMonth(month);
       setOutcome(sumAllByMonth(expensesOfYear, month));
       setPreviousOutcome(sumAllByMonth(expensesOfYear, month - 1));
-      setSavings(getSavedSum(expensesOfYear, month));
-      setPreviousSavings(getSavedSum(expensesOfYear, month - 1));
       filterExpenses(year, month);
     }
   };

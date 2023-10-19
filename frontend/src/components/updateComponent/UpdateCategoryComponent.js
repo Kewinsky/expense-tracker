@@ -1,39 +1,36 @@
-import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
-import { useContext, useState } from "react";
-import UserService from "../../services/userService";
+import { useContext, useEffect, useState } from "react";
+import { Button, Card } from "react-bootstrap";
+import { Link, useParams } from "react-router-dom";
 import { ThemeContext } from "../../App";
-import { Card } from "react-bootstrap";
 import SpinnerComponent from "../spinnerComponent/SpinnerComponent";
-import AuthService from "../../services/authService";
-import { Link } from "react-router-dom";
+import Form from "react-bootstrap/Form";
+import CategoryService from "../../services/categoryService";
 
-const UpdateUserComponent = () => {
+const UpdateCategoryComponent = ({ categories }) => {
+  const { id: categoryId } = useParams();
+
   const { theme } = useContext(ThemeContext);
   const reversedTheme = theme === "dark" ? "light" : "dark";
-  const currentUser = AuthService.getCurrentUser();
 
-  const [username, setUsername] = useState(currentUser.username);
-  const [email, setEmail] = useState(currentUser.email);
+  const selectedCategory = categories.find((item) => {
+    return item.id === parseInt(categoryId);
+  });
+
+  const [title, setTitle] = useState(selectedCategory?.title);
 
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const [isPending, setIsPending] = useState(false);
 
-  const handleInputUsername = (e) => {
-    setUsername(e.target.value);
+  const handleInputTitle = (e) => {
+    setTitle(e.target.value);
   };
 
-  const handleInputEmail = (e) => {
-    setEmail(e.target.value);
+  const updatedCategory = {
+    title,
   };
 
-  const updatedUser = {
-    username,
-    email,
-  };
-
-  const handleUpdateUser = async (e) => {
+  const handleUpdateCategory = async (e) => {
     e.preventDefault();
 
     setMessage("");
@@ -41,9 +38,9 @@ const UpdateUserComponent = () => {
     setIsPending(true);
 
     setTimeout(() => {
-      UserService.updateCurrentUser(updatedUser)
+      CategoryService.updateCategory(categoryId, updatedCategory)
         .then(() => {
-          setMessage("User updated successfully");
+          setMessage("Category updated successfully");
         })
         .catch((err) => {
           setError(err.message);
@@ -54,30 +51,27 @@ const UpdateUserComponent = () => {
     }, 1000);
   };
 
+  useEffect(() => {
+    if (selectedCategory) {
+      setTitle(selectedCategory.title);
+    }
+  }, [selectedCategory]);
+
   return (
     <Card className={`bg-${theme}`}>
-      <Card.Header>Update Profile</Card.Header>
-      <Form onSubmit={handleUpdateUser} className="m-5">
+      <Card.Header>Update Category</Card.Header>
+      <Form onSubmit={handleUpdateCategory} className="m-5">
         <Form.Group className="mt-3">
-          <Form.Label>Username</Form.Label>
+          <Form.Label>Title</Form.Label>
           <Form.Control
             required
-            onChange={handleInputUsername}
-            value={username}
+            onChange={handleInputTitle}
+            value={title || ""}
             type="text"
             className={`${theme}Theme`}
           />
         </Form.Group>
-        <Form.Group className="mt-3">
-          <Form.Label>Email</Form.Label>
-          <Form.Control
-            required
-            onChange={handleInputEmail}
-            value={email}
-            type="email"
-            className={`${theme}Theme`}
-          />
-        </Form.Group>
+
         <Form.Group className="mt-5">
           {isPending && <SpinnerComponent />}
           {!isPending && !message && (
@@ -89,7 +83,7 @@ const UpdateUserComponent = () => {
                 variant={`outline-${reversedTheme}`}
                 type="submit"
                 className="w-100 mt-2"
-                href="/profile"
+                href="/userCategories"
               >
                 Cancel
               </Button>
@@ -103,7 +97,7 @@ const UpdateUserComponent = () => {
               {message}
             </div>
             <div className="mt-5 text-center">
-              <Link to={"/profile"} className={`link-${reversedTheme} `}>
+              <Link to={"/userCategories"} className={`link-${reversedTheme} `}>
                 Back
               </Link>
             </div>
@@ -122,4 +116,4 @@ const UpdateUserComponent = () => {
   );
 };
 
-export default UpdateUserComponent;
+export default UpdateCategoryComponent;
