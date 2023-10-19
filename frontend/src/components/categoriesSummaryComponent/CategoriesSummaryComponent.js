@@ -14,6 +14,7 @@ const CategoriesSummaryComponent = ({
   barChartData,
   expenses,
   outcome,
+  year,
   month,
 }) => {
   const { theme } = useContext(ThemeContext);
@@ -27,8 +28,8 @@ const CategoriesSummaryComponent = ({
   const [isExpanded, setIsExpanded] = useState(false);
   const [isChart, setIsChart] = useState(false);
 
-  const allCategories = getSumCategories(expenses, month);
-  const array = getTopCategories(expenses, month, range);
+  const allCategories = getSumCategories(expenses, year, month);
+  const array = getTopCategories(expenses, year, month, range);
   const blankRows = range - allCategories.length;
 
   const handleOnExpand = () => {
@@ -46,13 +47,16 @@ const CategoriesSummaryComponent = ({
       <div className="d-flex justify-content-between">
         <h4>Top 5 Spendings</h4>
         <div>
-          <Button
-            variant={`outline-${reversedTheme}`}
-            onClick={handleOnExpand}
-            disabled={blankRows >= 0}
-          >
-            {isExpanded ? "Collapse" : "Expand"}
-          </Button>
+          {!isChart && (
+            <Button
+              variant={`outline-${reversedTheme}`}
+              onClick={handleOnExpand}
+              disabled={blankRows >= 0}
+            >
+              {isExpanded ? "Collapse" : "Expand"}
+            </Button>
+          )}
+
           <Button variant={`outline-${reversedTheme}`} onClick={handleOnSwitch}>
             {isChart ? "Table" : "Chart"}
           </Button>

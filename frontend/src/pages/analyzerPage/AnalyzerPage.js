@@ -10,15 +10,14 @@ import UtilitiesComponent from "../../components/utilitiesComponent/UtilitiesCom
 import { Col, Container, Row } from "react-bootstrap";
 import "./analyzerPage.scss";
 import {
-  getSavedSum,
   sumAllByMonth,
   sumAllMonths,
   getSumCategories,
   sumAllByRange,
+  sumUtilityByYear,
 } from "../../helpers/analyzerMethods";
 import {
-  expenseFilter,
-  expenseFilterByMonth,
+  expenseFilterByMonthAndYear,
   expenseFilterByYear,
 } from "../../helpers/expenseFilter";
 import NoteService from "../../services/noteService";
@@ -35,26 +34,37 @@ const AnalyzerPage = () => {
   const [notes, setNotes] = useState([]);
   const [outcome, setOutcome] = useState(0);
   const [previousOutcome, setPreviousOutcome] = useState(0);
-  const [savings, setSavings] = useState(0);
-  const [previousSavings, setPreviousSavings] = useState(0);
   const [year, setYear] = useState(currentDate.getFullYear());
   const [month, setMonth] = useState(currentDate.getMonth());
-  const [filteredExpenses, setFilteredExpenses] = useState([]);
   const [isYear, setIsYear] = useState(true);
   const [range, setRange] = useState(3);
 
   const expensesOfYear = expenseFilterByYear(expenses, parseInt(year));
   const totalOutcomeByMonth = sumAllMonths(expensesOfYear);
-  const expensesOfMonth = expenseFilterByMonth(expenses, parseInt(month));
+  const expensesOfMonth = expenseFilterByMonthAndYear(
+    expenses,
+    parseInt(year),
+    parseInt(month)
+  );
   const totalOutcomeByRange = sumAllByRange(expensesOfMonth, range);
+
+  const sumByCategory = getSumCategories(
+    expensesOfMonth,
+    parseInt(year),
+    month
+  );
+
+  const totalUtilityByYear = (utility) => {
+    return sumUtilityByYear(expenses, parseInt(year), utility);
+  };
 
   // charts data
   const [barChartData, setBarChartData] = useState({
-    labels: filteredExpenses.map((item) => item.category),
+    labels: sumByCategory.map((item) => item.category),
     datasets: [
       {
         label: "Expenses",
-        data: filteredExpenses.map((data) => data.value),
+        data: sumByCategory.map((data) => data.value),
       },
     ],
   });
@@ -69,6 +79,24 @@ const AnalyzerPage = () => {
     ],
   });
 
+  const [utilitiesChartData, setUtilitiesChartData] = useState({
+    labels: totalUtilityByYear("Electricity").map((item) => item.label),
+    datasets: [
+      {
+        label: "Electricity",
+        data: totalUtilityByYear("Electricity").map((data) => data.total),
+      },
+      {
+        label: "Gas",
+        data: totalUtilityByYear("Gas").map((data) => data.total),
+      },
+      {
+        label: "Water",
+        data: totalUtilityByYear("Water").map((data) => data.total),
+      },
+    ],
+  });
+
   const mountBarChartData = (items, label) => {
     if (items.length) {
       setBarChartData({
@@ -77,16 +105,6 @@ const AnalyzerPage = () => {
           {
             label: label,
             data: items.map((data) => data.value),
-            backgroundColor: [
-              "#35A3EB",
-              "#FF6383",
-              "#4BC0C0",
-              "#FF9E40",
-              "#9966FE",
-              "#FFCD56",
-              "#C8CBCF",
-              "#FFD6C4",
-            ],
           },
         ],
       });
@@ -107,18 +125,55 @@ const AnalyzerPage = () => {
     }
   };
 
+  const mountUtilitiesChartData = (data1, data2, data3, items) => {
+    if (items.length) {
+      setUtilitiesChartData({
+        labels: data1.map((item) => item.label),
+        datasets: [
+          {
+            label: "Electricity",
+            data: data1.map((item) => item.total),
+          },
+          {
+            label: "Gas",
+            data: data2.map((data) => data.total),
+          },
+          {
+            label: "Water",
+            data: data3.map((data) => data.total),
+          },
+        ],
+      });
+    }
+  };
+
   const getNotes = async () => {
     const response = await NoteService.getNotesByUser();
     const filteredNotes = noteFilterByYear(response.data, parseInt(year));
     setNotes(filteredNotes);
   };
 
-  const filterExpenses = (year, month) => {
-    const response = expenseFilter(expenses, parseInt(year), month, null);
-    setFilteredExpenses(response);
-
-    mountBarChartData(getSumCategories(response, month), "Expenses");
-    mountLineChartData(totalOutcomeByMonth, expenses, "Total Outcome");
+  const filterExpenses = () => {
+    if (sumByCategory.length === 0) {
+      setBarChartData({
+        labels: [],
+        datasets: [
+          {
+            label: "Expenses",
+            data: [],
+          },
+        ],
+      });
+    } else {
+      mountBarChartData(sumByCategory, "Expenses");
+    }
+    mountLineChartData(totalOutcomeByMonth, expenses, "Total Outcome by Year");
+    mountUtilitiesChartData(
+      totalUtilityByYear("Electricity"),
+      totalUtilityByYear("Gas"),
+      totalUtilityByYear("Water"),
+      expenses
+    );
   };
 
   useEffect(() => {
@@ -126,16 +181,24 @@ const AnalyzerPage = () => {
     getNotes();
     setOutcome(sumAllByMonth(expensesOfYear, month));
     setPreviousOutcome(sumAllByMonth(expensesOfYear, month - 1));
-    setSavings(getSavedSum(expensesOfYear, month));
-    setPreviousSavings(getSavedSum(expensesOfYear, month - 1));
+    // setSavings(getSavedSum(expensesOfYear, month));
+    // setPreviousSavings(getSavedSum(expensesOfYear, month - 1));
     setIsYear(true);
   }, [year, month, expenses]);
 
   useEffect(() => {
     if (isYear) {
-      mountLineChartData(totalOutcomeByMonth, expenses, "Total Outcome");
+      mountLineChartData(
+        totalOutcomeByMonth,
+        expenses,
+        "Total Outcome by Year"
+      );
     } else {
-      mountLineChartData(totalOutcomeByRange, expenses, "Total Outcome");
+      mountLineChartData(
+        totalOutcomeByRange,
+        expenses,
+        "Total Outcome by Month"
+      );
     }
   }, [isYear, range]);
 
@@ -152,17 +215,11 @@ const AnalyzerPage = () => {
         currentDate={currentDate}
         setOutcome={setOutcome}
         setPreviousOutcome={setPreviousOutcome}
-        setSavings={setSavings}
-        setPreviousSavings={setPreviousSavings}
         filterExpenses={filterExpenses}
-        setFilteredExpenses={setFilteredExpenses}
       />
-      <SummaryComponent
-        outcome={outcome}
-        previousOutcome={previousOutcome}
-        savings={savings}
-        previousSavings={previousSavings}
-      />
+      <SeparatorComponent />
+
+      <SummaryComponent outcome={outcome} previousOutcome={previousOutcome} />
 
       <SeparatorComponent />
       <Container>
@@ -174,6 +231,8 @@ const AnalyzerPage = () => {
               setRange={setRange}
               isYear={isYear}
               setIsYear={setIsYear}
+              periodable={true}
+              header={"Outcome Summary"}
             />
           </Col>
           <Col className="col-12 col-lg-6 p-4">
@@ -181,11 +240,16 @@ const AnalyzerPage = () => {
               barChartData={barChartData}
               expenses={expensesOfYear}
               outcome={outcome}
+              year={parseInt(year)}
               month={month}
             />
           </Col>
           <Col className="col-12 col-lg-6 p-4">
-            <UtilitiesComponent expenses={expensesOfYear} month={month} />
+            <UtilitiesComponent
+              lineChartData={utilitiesChartData}
+              expenses={expensesOfYear}
+              month={month}
+            />
           </Col>
           <Col className="col-12 col-lg-6 p-4">
             <NoteComponent
