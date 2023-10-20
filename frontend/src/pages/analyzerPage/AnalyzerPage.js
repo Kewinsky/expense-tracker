@@ -153,6 +153,22 @@ const AnalyzerPage = () => {
     setNotes(filteredNotes);
   };
 
+  const mountSummaryData = () => {
+    if (isYear) {
+      mountLineChartData(
+        totalOutcomeByMonth,
+        expenses,
+        "Total Outcome by Year"
+      );
+    } else {
+      mountLineChartData(
+        totalOutcomeByRange,
+        expenses,
+        "Total Outcome by Month"
+      );
+    }
+  };
+
   const filterExpenses = () => {
     if (sumByCategory.length === 0) {
       setBarChartData({
@@ -167,7 +183,8 @@ const AnalyzerPage = () => {
     } else {
       mountBarChartData(sumByCategory, "Expenses");
     }
-    mountLineChartData(totalOutcomeByMonth, expenses, "Total Outcome by Year");
+
+    mountSummaryData();
     mountUtilitiesChartData(
       totalUtilityByYear("Electricity"),
       totalUtilityByYear("Gas"),
@@ -181,25 +198,10 @@ const AnalyzerPage = () => {
     getNotes();
     setOutcome(sumAllByMonth(expensesOfYear, month));
     setPreviousOutcome(sumAllByMonth(expensesOfYear, month - 1));
-    // setSavings(getSavedSum(expensesOfYear, month));
-    // setPreviousSavings(getSavedSum(expensesOfYear, month - 1));
-    setIsYear(true);
   }, [year, month, expenses]);
 
   useEffect(() => {
-    if (isYear) {
-      mountLineChartData(
-        totalOutcomeByMonth,
-        expenses,
-        "Total Outcome by Year"
-      );
-    } else {
-      mountLineChartData(
-        totalOutcomeByRange,
-        expenses,
-        "Total Outcome by Month"
-      );
-    }
+    mountSummaryData();
   }, [isYear, range]);
 
   return (
