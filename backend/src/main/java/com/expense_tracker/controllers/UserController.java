@@ -7,6 +7,7 @@ import com.expense_tracker.repositories.CategoryRepository;
 import com.expense_tracker.repositories.ExpenseRepository;
 import com.expense_tracker.repositories.NotesRepository;
 import com.expense_tracker.repositories.UserRepository;
+import com.expense_tracker.services.UserService;
 import com.expense_tracker.utils.RoleConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -19,13 +20,7 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     @Autowired
-    CategoryRepository categoryRepository;
-
-    @Autowired
-    ExpenseRepository expensesRepository;
-
-    @Autowired
-    NotesRepository notesRepository;
+    UserService userService;
 
     @Autowired
     private UserRepository userRepository;
@@ -80,11 +75,7 @@ public class UserController {
             throw new UserNotFoundException(id);
         }
 
-        categoryRepository.deleteAllByUserId(id);
-        expensesRepository.deleteAllByUserId(id);
-        notesRepository.deleteAllByUserId(id);
-
-        userRepository.deleteById(id);
+        userService.deleteUser(id);
 
         return "User deleted successfully";
     }
