@@ -1,17 +1,14 @@
 package com.expense_tracker.services;
 
-import com.expense_tracker.exceptions.users.UserNotFoundException;
 import com.expense_tracker.repositories.CategoryRepository;
 import com.expense_tracker.repositories.ExpenseRepository;
 import com.expense_tracker.repositories.NotesRepository;
 import com.expense_tracker.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class UserService {
-
     @Autowired
     UserRepository userRepository;
 
@@ -24,11 +21,16 @@ public class UserService {
     @Autowired
     NotesRepository notesRepository;
 
-    @Transactional
     public void deleteUser(Long userId) {
-        categoryRepository.deleteAllByUserId(userId);
-        expenseRepository.deleteAllByUserId(userId);
-        notesRepository.deleteAllByUserId(userId);
+        var expenses = expenseRepository.findByUserIdOrderByDate(userId);
+        expenseRepository.deleteAll(expenses);
+
+        var categories = categoryRepository.findByUserId(userId);
+        categoryRepository.deleteAll(categories);
+
+        var notes = notesRepository.findByUserId(userId);
+        notesRepository.deleteAll(notes);
+
         userRepository.deleteById(userId);
     }
 }

@@ -1,7 +1,7 @@
 package com.expense_tracker.repositories;
 
-import com.expense_tracker.models.enums.ERole;
 import com.expense_tracker.models.Role;
+import com.expense_tracker.models.enums.ERole;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

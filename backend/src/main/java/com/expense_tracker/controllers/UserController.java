@@ -3,9 +3,6 @@ package com.expense_tracker.controllers;
 import com.expense_tracker.exceptions.users.UserNotFoundException;
 import com.expense_tracker.models.User;
 import com.expense_tracker.payloads.requests.SignupRequest;
-import com.expense_tracker.repositories.CategoryRepository;
-import com.expense_tracker.repositories.ExpenseRepository;
-import com.expense_tracker.repositories.NotesRepository;
 import com.expense_tracker.repositories.UserRepository;
 import com.expense_tracker.services.UserService;
 import com.expense_tracker.utils.RoleConverter;
@@ -13,12 +10,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/users")
 @PreAuthorize("hasRole('ADMIN') or hasRole('MODERATOR')")
 public class UserController {
-
     @Autowired
     UserService userService;
 
@@ -29,7 +27,7 @@ public class UserController {
     private RoleConverter converter;
 
     @GetMapping("/getUsers")
-    public Iterable<User> getUsers() {
+    public List<User> getUsers() {
         return userRepository.findAll();
     }
 
@@ -74,7 +72,6 @@ public class UserController {
         if (!userRepository.existsById(id)) {
             throw new UserNotFoundException(id);
         }
-
         userService.deleteUser(id);
 
         return "User deleted successfully";

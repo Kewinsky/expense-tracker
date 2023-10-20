@@ -1,7 +1,7 @@
 package com.expense_tracker.services;
 
-import com.expense_tracker.DTOs.ExpenseDTO;
 import com.expense_tracker.models.Expense;
+import com.expense_tracker.payloads.responses.ExpenseResponse;
 import com.expense_tracker.repositories.CategoryRepository;
 import com.expense_tracker.repositories.ExpenseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,28 +14,29 @@ import java.util.List;
 public class ExpenseService {
     @Autowired
     CategoryRepository categoryRepository;
+
     @Autowired
     private ExpenseRepository expenseRepository;
 
-    public List<ExpenseDTO> getExpensesWithCategory(Long userId) {
-        List<ExpenseDTO> expensesWithCategory = new ArrayList<>();
+    public List<ExpenseResponse> getExpensesWithCategory(Long userId) {
+        List<ExpenseResponse> expensesWithCategory = new ArrayList<>();
 
         List<Expense> expenses = expenseRepository.findByUserIdOrderByDate(userId);
 
         for (Expense expense : expenses) {
-            ExpenseDTO dto = new ExpenseDTO();
+            ExpenseResponse response = new ExpenseResponse();
 
             var category = categoryRepository.findById(expense.getCategoryId()).orElse(null);
 
-            dto.setId(expense.getId());
-            dto.setTitle(expense.getTitle());
-            dto.setValue(expense.getValue());
+            response.setId(expense.getId());
+            response.setTitle(expense.getTitle());
+            response.setValue(expense.getValue());
             if (category != null) {
-                dto.setCategory(category.getTitle());
+                response.setCategory(category.getTitle());
             }
-            dto.setDate(expense.getDate());
+            response.setDate(expense.getDate());
 
-            expensesWithCategory.add(dto);
+            expensesWithCategory.add(response);
         }
 
         return expensesWithCategory;

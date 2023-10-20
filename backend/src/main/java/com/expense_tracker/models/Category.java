@@ -17,8 +17,4 @@ public class Category {
     private String title;
 
     private Long userId;
-
-    public Category(String title) {
-        this.title = title;
-    }
 }

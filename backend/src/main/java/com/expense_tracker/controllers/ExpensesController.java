@@ -1,8 +1,8 @@
 package com.expense_tracker.controllers;
 
-import com.expense_tracker.DTOs.ExpenseDTO;
 import com.expense_tracker.exceptions.expenses.ExpenseNotFoundException;
 import com.expense_tracker.models.Expense;
+import com.expense_tracker.payloads.responses.ExpenseResponse;
 import com.expense_tracker.repositories.ExpenseRepository;
 import com.expense_tracker.services.ExpenseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +16,6 @@ import java.util.List;
 @RequestMapping("/api/expenses")
 @PreAuthorize("hasRole('USER')")
 public class ExpensesController {
-
     @Autowired
     ExpenseRepository expensesRepository;
 
@@ -26,16 +25,17 @@ public class ExpensesController {
     @Autowired
     UserController userController;
 
-    @GetMapping(path = "/getExpensesByUser/{id}")
+    @GetMapping("/getExpensesByUser/{id}")
     @ResponseBody
-    List<ExpenseDTO> getExpensesByUser(@PathVariable Long id) {
+    List<ExpenseResponse> getExpensesByUser(@PathVariable Long id) {
         return expenseService.getExpensesWithCategory(id);
     }
 
-    @PostMapping(path = "/addExpense")
+    @PostMapping("/addExpense")
     String addExpense(@RequestBody Expense expense) {
         userController.getUserById(expense.getUserId());
         expensesRepository.save(expense);
+
         return "Expense added successfully";
     }
 
@@ -60,6 +60,7 @@ public class ExpensesController {
             throw new ExpenseNotFoundException(id);
         }
         expensesRepository.deleteById(id);
+
         return "Expense deleted successfully";
     }
 }
