@@ -51,7 +51,7 @@ const FilteringComponent = ({
         <Row className="align-items-end" xs={1} md={2} lg={5}>
           <Col className="mt-3">
             <Form.Group>
-              <Form.Label>Choose year</Form.Label>
+              <Form.Label>Filter by Year</Form.Label>
               <SelectComponent
                 options={dropdownData(years)}
                 handleSelect={handleSelectYear}
@@ -63,7 +63,7 @@ const FilteringComponent = ({
           </Col>
           <Col className="mt-3">
             <Form.Group>
-              <Form.Label>Choose month</Form.Label>
+              <Form.Label>Filter by Month</Form.Label>
               <SelectComponent
                 options={dropdownData(months)}
                 handleSelect={handleSelectMonth}
@@ -75,7 +75,7 @@ const FilteringComponent = ({
           </Col>
           <Col className="mt-3">
             <Form.Group>
-              <Form.Label>Choose category</Form.Label>
+              <Form.Label>Filter by Category</Form.Label>
               <SelectComponent
                 isMulti={true}
                 closeMenuOnSelect={false}
