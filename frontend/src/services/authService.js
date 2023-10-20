@@ -3,21 +3,21 @@ import axios from "axios";
 const API_URL = process.env.REACT_APP_API_URL + "/auth/";
 
 const register = async (username, email, password) => {
-  try {
-    return await axios.post(API_URL + "signup", {
+  return await axios
+    .post(API_URL + "signup", {
       username,
       email,
       password,
+    })
+    .catch((err) => {
+      if (err.response) {
+        throw new Error(err.response.data.message);
+      } else if (err.request) {
+        throw new Error("Server is not responding. Please try again later.");
+      } else {
+        throw new Error("An error occurred. Please try again.");
+      }
     });
-  } catch (err) {
-    if (err.response) {
-      throw new Error(err.response.data.message);
-    } else if (err.request) {
-      throw new Error("Server is not responding. Please try again later.");
-    } else {
-      throw new Error("An error occurred. Please try again.");
-    }
-  }
 };
 
 const login = async (username, password) => {
@@ -42,21 +42,20 @@ const login = async (username, password) => {
 };
 
 const forgotPassword = async (newPassword) => {
-  try {
-    return await axios
-      .put(API_URL + "forgotPassword", newPassword)
-      .then((res) => {
-        return res.data.message;
-      });
-  } catch (err) {
-    if (err.response) {
-      throw new Error(err.response.data.message);
-    } else if (err.request) {
-      throw new Error("Server is not responding. Please try again later.");
-    } else {
-      throw new Error("An error occurred. Please try again.");
-    }
-  }
+  return await axios
+    .put(API_URL + "forgotPassword", newPassword)
+    .then((res) => {
+      return res.data.message;
+    })
+    .catch((err) => {
+      if (err.response) {
+        throw new Error(err.response.data.message);
+      } else if (err.request) {
+        throw new Error("Server is not responding. Please try again later.");
+      } else {
+        throw new Error("An error occurred. Please try again.");
+      }
+    });
 };
 
 const logout = () => {

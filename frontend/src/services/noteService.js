@@ -13,23 +13,22 @@ const getNotesByUser = async () => {
 };
 
 const updateNote = async (id, newNote) => {
-  try {
-    return await axios
-      .put(API_URL + `updateNote/${id}`, newNote, {
-        headers: authHeader(),
-      })
-      .then((res) => {
-        return res.data;
-      });
-  } catch (err) {
-    if (err.response) {
-      throw new Error(err.response.data);
-    } else if (err.request) {
-      throw new Error("Server is not responding. Please try again later.");
-    } else {
-      throw new Error("An error occurred. Please try again.");
-    }
-  }
+  return await axios
+    .put(API_URL + `updateNote/${id}`, newNote, {
+      headers: authHeader(),
+    })
+    .then((res) => {
+      return res.data;
+    })
+    .catch((err) => {
+      if (err.response) {
+        throw new Error(err.response.data);
+      } else if (err.request) {
+        throw new Error("Server is not responding. Please try again later.");
+      } else {
+        throw new Error("An error occurred. Please try again.");
+      }
+    });
 };
 
 const NoteService = {

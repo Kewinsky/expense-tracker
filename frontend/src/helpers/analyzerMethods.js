@@ -23,14 +23,13 @@ const sumAllMonths = (items) => {
 const sumAllByRange = (items, step) => {
   const result = [];
 
-  // Initialize the result array with entries for all possible keys within the range
   for (let i = 1; i <= 31; i += step) {
     result.push({ label: i.toString(), total: 0 });
   }
 
   items.forEach((expense) => {
     const date = new Date(expense.date);
-    const key = `${Math.floor(date.getDate() / step) * step + 1}`; // Combine month and range key
+    const key = `${Math.floor(date.getDate() / step) * step + 1}`;
 
     const index = result.findIndex((obj) => obj.label === key);
     if (index !== -1) {
@@ -136,11 +135,10 @@ const sumUtilityByYear = (items, year, utilityToSum) => {
   for (let i = 0; i < 12; i++) {
     const monthName = months[i];
 
-    // Initialize the result array with entries for all months
     result.push({ label: monthName, total: 0 });
 
     for (let j = 0; j < items.length; j++) {
-      const title = items[j].title.toLowerCase(); // Convert to lowercase
+      const title = items[j].title.toLowerCase();
       const value = items[j].value;
       const date = new Date(items[j].date);
       const dataYear = date.getFullYear();
@@ -184,7 +182,6 @@ const getSavedSumForYear = (items) => {
 const getSavedSumByMonth = (items) => {
   const sumByMonth = {};
 
-  // Initialize sumByMonth with zeros for each month (0-11)
   for (let i = 0; i < 12; i++) {
     sumByMonth[i] = 0;
   }
