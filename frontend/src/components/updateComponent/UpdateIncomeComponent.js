@@ -1,0 +1,144 @@
+import React, { useContext, useEffect, useState } from "react";
+import { ThemeContext } from "../../App";
+import { Link, useParams } from "react-router-dom";
+import { Card } from "react-bootstrap";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
+import IncomeService from "../../services/incomeService";
+import SpinnerComponent from "../spinnerComponent/SpinnerComponent";
+
+const UpdateIncomeComponent = ({ incomes }) => {
+  const { id: incomeId } = useParams();
+
+  const { theme } = useContext(ThemeContext);
+  const reversedTheme = theme === "dark" ? "light" : "dark";
+
+  const selectedIncome = incomes.find((item) => {
+    return item.id === parseInt(incomeId);
+  });
+
+  const [date, setDate] = useState("");
+  const [value, setValue] = useState("");
+
+  const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
+  const [isPending, setIsPending] = useState(false);
+
+  const handleSetDefaults = () => {
+    setDate(selectedIncome.date);
+    setValue(selectedIncome.value);
+  };
+
+  const handleInputDate = (e) => {
+    setDate(e.target.value);
+  };
+
+  const handleInputValue = (e) => {
+    setValue(e.target.value);
+  };
+
+  const updatedIncome = {
+    date,
+    value,
+  };
+
+  const handleUpdateIncome = async (e) => {
+    e.preventDefault();
+
+    setMessage("");
+    setError("");
+    setIsPending(true);
+
+    setTimeout(() => {
+      IncomeService.updateIncome(incomeId, updatedIncome)
+        .then((res) => {
+          setMessage(res);
+        })
+        .catch((err) => {
+          setError(err.message);
+        })
+        .finally(() => {
+          setIsPending(false);
+        });
+    }, 1000);
+  };
+
+  useEffect(() => {
+    if (selectedIncome) {
+      handleSetDefaults();
+    }
+  }, [selectedIncome]);
+
+  return (
+    <Card className={`bg-${theme}`}>
+      <Card.Header>Update Expense</Card.Header>
+      <Form onSubmit={handleUpdateIncome} className="m-5">
+        <Form.Group className="mt-3">
+          <Form.Label>Date</Form.Label>
+          <Form.Control
+            required
+            onChange={handleInputDate}
+            value={date}
+            type="date"
+            className={`${theme}Theme`}
+            disabled={message}
+          />
+        </Form.Group>
+
+        <Form.Group className="mt-3">
+          <Form.Label>Value</Form.Label>
+          <Form.Control
+            required
+            onChange={handleInputValue}
+            value={value}
+            type="number"
+            step={1}
+            placeholder="100,00"
+            className={`${theme}Theme`}
+            disabled={message}
+          />
+        </Form.Group>
+
+        <Form.Group className="mt-5">
+          {isPending && <SpinnerComponent />}
+          {!isPending && !message && (
+            <>
+              <Button variant="success" type="submit" className="w-100">
+                Submit
+              </Button>
+              <Button
+                variant={`outline-${reversedTheme}`}
+                type="submit"
+                className="w-100 mt-2"
+                href="/userIncomes"
+              >
+                Cancel
+              </Button>
+            </>
+          )}
+        </Form.Group>
+        {message && (
+          <Form.Group className="mt-5">
+            <div className="alert alert-success m-0" role="alert">
+              {message}
+            </div>
+            <div className="mt-5 text-center">
+              <Link to={"/userIncomes"} className={`link-${reversedTheme} `}>
+                Back
+              </Link>
+            </div>
+          </Form.Group>
+        )}
+        {error && (
+          <Form.Group className="mt-5">
+            <div className="alert alert-danger m-0" role="alert">
+              {error}
+            </div>
+          </Form.Group>
+        )}
+      </Form>
+    </Card>
+  );
+};
+
+export default UpdateIncomeComponent;

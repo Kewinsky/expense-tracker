@@ -17,6 +17,7 @@ import ForgotPasswordPage from "../pages/forgotPasswordPage/ForgotPasswordPage";
 import UpdateCategoryPage from "../pages/updatePage/UpdateCategoryPage";
 import UserCategoriesPage from "../pages/userCategoriesPage/UserCategoriesPage";
 import IncomePage from "../pages/incomePage/IncomePage";
+import UpdateIncomePage from "../pages/updatePage/UpdateIncomePage";
 
 export const Router = () => {
   const appName = "Spendee";
@@ -111,6 +112,16 @@ export const Router = () => {
           <MainLayout pageTitle={`${appName} | Update Category`}>
             <ProtectedRoute>
               <UpdateCategoryPage />
+            </ProtectedRoute>
+          </MainLayout>
+        }
+      />
+      <Route
+        path="/update/income/:id"
+        element={
+          <MainLayout pageTitle={`${appName} | Update Category`}>
+            <ProtectedRoute>
+              <UpdateIncomePage />
             </ProtectedRoute>
           </MainLayout>
         }
