@@ -18,8 +18,8 @@ const TrackerPage = () => {
 
   const [categories, setCategories] = useState([]);
   const [filteringCategories, setFilteringCategories] = useState([]);
-  const [month, setMonth] = useState(months[currentDate.getMonth()]);
   const [year, setYear] = useState(currentDate.getFullYear());
+  const [month, setMonth] = useState(months[currentDate.getMonth()]);
   const [filteredExpenses, setFilteredExpenses] = useState([]);
   const [isPending, setIsPending] = useState(true);
   const [error, setError] = useState(null);
