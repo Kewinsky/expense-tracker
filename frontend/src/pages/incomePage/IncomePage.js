@@ -50,6 +50,9 @@ const IncomePage = () => {
 
   useEffect(() => {
     getIncomes();
+  }, []);
+
+  useEffect(() => {
     filterIncomes();
   }, [incomes]);
 

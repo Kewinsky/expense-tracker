@@ -25,6 +25,7 @@ import { noteFilterByYear } from "../../helpers/noteFilter";
 import { getYearArray } from "../../helpers/yearData";
 import { months } from "../../helpers/monthsData";
 import { ThemeContext } from "../../App";
+import IncomeService from "../../services/incomeService";
 
 const AnalyzerPage = () => {
   const currentDate = new Date();
@@ -32,6 +33,9 @@ const AnalyzerPage = () => {
   const { expenses } = useContext(ThemeContext);
 
   const [notes, setNotes] = useState([]);
+  const [incomes, setIncomes] = useState(0);
+  const [income, setIncome] = useState(0);
+  const [previousIncome, setPreviousIncome] = useState(0);
   const [outcome, setOutcome] = useState(0);
   const [previousOutcome, setPreviousOutcome] = useState(0);
   const [year, setYear] = useState(currentDate.getFullYear());
@@ -147,12 +151,6 @@ const AnalyzerPage = () => {
     }
   };
 
-  const getNotes = async () => {
-    const response = await NoteService.getNotesByUser();
-    const filteredNotes = noteFilterByYear(response.data, parseInt(year));
-    setNotes(filteredNotes);
-  };
-
   const mountSummaryData = () => {
     if (isYear) {
       mountLineChartData(
@@ -167,6 +165,18 @@ const AnalyzerPage = () => {
         "Total Outcome by Month"
       );
     }
+  };
+
+  const getIncomes = async () => {
+    const response = await IncomeService.getIncomes();
+
+    setIncomes(response.data);
+  };
+
+  const getNotes = async () => {
+    const response = await NoteService.getNotesByUser();
+    const filteredNotes = noteFilterByYear(response.data, parseInt(year));
+    setNotes(filteredNotes);
   };
 
   const filterExpenses = () => {
@@ -194,8 +204,16 @@ const AnalyzerPage = () => {
   };
 
   useEffect(() => {
+    getIncomes();
+  }, []);
+
+  useEffect(() => {
     filterExpenses(year, month);
     getNotes();
+    if (incomes) {
+      setIncome(sumAllByMonth(incomes, month));
+      setPreviousIncome(sumAllByMonth(incomes, month - 1));
+    }
     setOutcome(sumAllByMonth(expensesOfYear, month));
     setPreviousOutcome(sumAllByMonth(expensesOfYear, month - 1));
   }, [year, month, expenses]);
@@ -221,7 +239,12 @@ const AnalyzerPage = () => {
       />
       <SeparatorComponent />
 
-      <SummaryComponent outcome={outcome} previousOutcome={previousOutcome} />
+      <SummaryComponent
+        income={income}
+        outcome={outcome}
+        previousIncome={previousIncome}
+        previousOutcome={previousOutcome}
+      />
 
       <SeparatorComponent />
       <Container>
