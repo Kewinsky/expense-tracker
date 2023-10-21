@@ -21,27 +21,6 @@ const getIncomes = async () => {
     });
 };
 
-const getIncomeByMonth = async (year, month) => {
-  return await axios
-    .get(API_URL + "getIncomeByUserAndMonth", {
-      params: {
-        userId: userId,
-        year: year,
-        month: month,
-      },
-      headers: authHeader(),
-    })
-    .catch((err) => {
-      if (err.response) {
-        throw new Error(err.response.data);
-      } else if (err.request) {
-        throw new Error("Server is not responding. Please try again later.");
-      } else {
-        throw new Error("An error occurred. Please try again.");
-      }
-    });
-};
-
 const addIncome = async (income) => {
   return await axios
     .post(API_URL + "addIncome", income, {
@@ -101,7 +80,6 @@ const deleteIncome = async (id) => {
 
 const IncomeService = {
   getIncomes,
-  getIncomeByMonth,
   addIncome,
   updateIncome,
   deleteIncome,

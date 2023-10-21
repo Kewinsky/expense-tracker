@@ -3,12 +3,10 @@ package com.expense_tracker.controllers;
 import com.expense_tracker.exceptions.incomes.IncomeNotFoundException;
 import com.expense_tracker.models.Income;
 import com.expense_tracker.repositories.IncomeRepository;
-import com.expense_tracker.services.IncomeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.Month;
 import java.util.List;
 
 @CrossOrigin(origins = "*")
@@ -21,9 +19,6 @@ public class IncomeController {
     IncomeRepository incomeRepository;
 
     @Autowired
-    IncomeService incomeService;
-
-    @Autowired
     UserController userController;
 
     @GetMapping("/getIncomesByUser/{id}")
@@ -32,12 +27,6 @@ public class IncomeController {
         userController.getUserById(id);
 
         return incomeRepository.findByUserIdOrderByDate(id);
-    }
-
-    @GetMapping("/getIncomeByUserAndMonth")
-    @ResponseBody
-    Income getIncomeByUserAndMonth(@RequestParam Long userId, @RequestParam int year, @RequestParam Month month) {
-        return incomeService.getIncomeByUserAndMonth(userId, year, month);
     }
 
     @PostMapping("/addIncome")
