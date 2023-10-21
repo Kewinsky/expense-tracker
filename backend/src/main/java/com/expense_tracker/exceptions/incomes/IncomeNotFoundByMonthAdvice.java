@@ -7,11 +7,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ControllerAdvice
-public class IncomeNotFoundAdvice {
+public class IncomeNotFoundByMonthAdvice {
     @ResponseBody
-    @ExceptionHandler(IncomeNotFoundException.class)
+    @ExceptionHandler(IncomeNotFoundByMonthException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    String incomeNotFoundHandler(IncomeNotFoundException ex) {
+    String incomeNotFoundHandler(IncomeNotFoundByMonthException ex) {
         return ex.getMessage();
     }
 }
