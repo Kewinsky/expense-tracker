@@ -23,8 +23,7 @@ const ProfileComponent = () => {
           <Row className="mb-5 ">
             <Col className="d-flex align-items-center">
               <div>
-                <h4 className="m-0">{currentUser.username}</h4>
-                <p className="m-0">{currentUser.email}</p>
+                <h4 className="m-0">Credentials</h4>
               </div>
             </Col>
             <Col className="d-flex justify-content-end">
@@ -39,6 +38,16 @@ const ProfileComponent = () => {
             </Col>
             <Col className="d-flex justify-content-end">
               <Link to={"/userCategories"}>
+                <Button variant={`outline-${reversedTheme}`}>Edit</Button>
+              </Link>
+            </Col>
+          </Row>
+          <Row>
+            <Col className="d-flex align-items-center">
+              <h4 className="m-0">Incomes</h4>
+            </Col>
+            <Col className="d-flex justify-content-end">
+              <Link to={"/userIncomes"}>
                 <Button variant={`outline-${reversedTheme}`}>Edit</Button>
               </Link>
             </Col>

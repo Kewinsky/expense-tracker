@@ -16,6 +16,8 @@ import UpdateAdminPage from "../pages/updatePage/UpdateAdminPage";
 import ForgotPasswordPage from "../pages/forgotPasswordPage/ForgotPasswordPage";
 import UpdateCategoryPage from "../pages/updatePage/UpdateCategoryPage";
 import UserCategoriesPage from "../pages/userCategoriesPage/UserCategoriesPage";
+import IncomePage from "../pages/incomePage/IncomePage";
+import UpdateIncomePage from "../pages/updatePage/UpdateIncomePage";
 
 export const Router = () => {
   const appName = "Spendee";
@@ -49,7 +51,7 @@ export const Router = () => {
       <Route
         path="/forgotPassword"
         element={
-          <MainLayout pageTitle={`${appName} | Reset password`}>
+          <MainLayout pageTitle={`${appName} | Reset Password`}>
             <ForgotPasswordPage />
           </MainLayout>
         }
@@ -77,7 +79,7 @@ export const Router = () => {
       <Route
         path="/update/expense/:id"
         element={
-          <MainLayout pageTitle={`${appName} | Update expense`}>
+          <MainLayout pageTitle={`${appName} | Update Expense`}>
             <ProtectedRoute>
               <UpdateExpensePage />
             </ProtectedRoute>
@@ -87,7 +89,7 @@ export const Router = () => {
       <Route
         path="/update/user/:id"
         element={
-          <MainLayout pageTitle={`${appName} | Update user`}>
+          <MainLayout pageTitle={`${appName} | Update User`}>
             <ProtectedRoute>
               <UpdateUserPage />
             </ProtectedRoute>
@@ -115,21 +117,21 @@ export const Router = () => {
         }
       />
       <Route
-        path="/userManagement"
+        path="/update/income/:id"
         element={
-          <MainLayout pageTitle={`${appName} | User management`}>
+          <MainLayout pageTitle={`${appName} | Update Category`}>
             <ProtectedRoute>
-              <UserManagementPage />
+              <UpdateIncomePage />
             </ProtectedRoute>
           </MainLayout>
         }
       />
       <Route
-        path="/userCategories"
+        path="/userManagement"
         element={
-          <MainLayout pageTitle={`${appName} | User categories`}>
+          <MainLayout pageTitle={`${appName} | User Management`}>
             <ProtectedRoute>
-              <UserCategoriesPage />
+              <UserManagementPage />
             </ProtectedRoute>
           </MainLayout>
         }
@@ -140,6 +142,26 @@ export const Router = () => {
           <MainLayout pageTitle={`${appName} | Profile`}>
             <ProtectedRoute>
               <ProfilePage />
+            </ProtectedRoute>
+          </MainLayout>
+        }
+      />
+      <Route
+        path="/userCategories"
+        element={
+          <MainLayout pageTitle={`${appName} | User Categories`}>
+            <ProtectedRoute>
+              <UserCategoriesPage />
+            </ProtectedRoute>
+          </MainLayout>
+        }
+      />
+      <Route
+        path="/userIncomes"
+        element={
+          <MainLayout pageTitle={`${appName} | User Incomes`}>
+            <ProtectedRoute>
+              <IncomePage />
             </ProtectedRoute>
           </MainLayout>
         }
