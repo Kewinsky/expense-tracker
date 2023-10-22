@@ -40,6 +40,15 @@ const sumAllByRange = (items, step) => {
   return result;
 };
 
+const sumAllByYear = (items, year) => {
+  let sum = 0;
+  const array = items.filter((item) => {
+    return new Date(item.date).getFullYear() === year;
+  });
+  array.map((item) => (sum += item.value));
+  return sum;
+};
+
 const sumAllByMonth = (items, month) => {
   let sum = 0;
   const array = items.filter((item) => {
@@ -192,6 +201,7 @@ const getRoundedCategoryAverages = (items, year) => {
 export {
   sumAllMonths,
   sumAllByRange,
+  sumAllByYear,
   sumAllByMonth,
   getSumCategories,
   sumByCategory,
