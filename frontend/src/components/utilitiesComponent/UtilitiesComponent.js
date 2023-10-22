@@ -22,7 +22,7 @@ const UtilitiesComponent = ({ lineChartData, expenses, month }) => {
 
   return (
     <>
-      <div className="d-flex justify-content-between">
+      <div className="d-flex justify-content-between mb-4">
         <h4>Utilities</h4>
         <div>
           <Button variant={`outline-${reversedTheme}`} onClick={handleOnSwitch}>

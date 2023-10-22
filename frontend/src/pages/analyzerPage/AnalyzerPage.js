@@ -226,7 +226,7 @@ const AnalyzerPage = () => {
   }, [isYear, range]);
 
   return (
-    <>
+    <div className="mb-5">
       <SwitchMonthComponent
         expensesOfYear={expensesOfYear}
         month={month}
@@ -260,7 +260,7 @@ const AnalyzerPage = () => {
               isYear={isYear}
               setIsYear={setIsYear}
               periodable={true}
-              header={"Outcome Summary"}
+              header={"Total Outcome"}
             />
           </Col>
           <Col className="col-12 col-lg-6 p-4">
@@ -289,7 +289,7 @@ const AnalyzerPage = () => {
           </Col>
         </Row>
       </Container>
-    </>
+    </div>
   );
 };
 

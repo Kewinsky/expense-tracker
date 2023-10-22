@@ -8,7 +8,7 @@ import userImg from "../../assets/images/user_image.png";
 import AuthService from "../../services/authService";
 import { filterByYear } from "../../helpers/expenseFilter";
 import IncomeService from "../../services/incomeService";
-import { sumAllByYear, sumAllMonths } from "../../helpers/analyzerMethods";
+import { sumAllByYear } from "../../helpers/analyzerMethods";
 
 const ProfileComponent = () => {
   const { theme, expenses } = useContext(ThemeContext);
@@ -53,7 +53,9 @@ const ProfileComponent = () => {
             <Col className="d-flex justify-content-end">
               <div>
                 <h5 className="m-0">
-                  {totalIncomeByYear - totalOutcomeByYear}
+                  {totalIncomeByYear - totalOutcomeByYear > 0
+                    ? totalIncomeByYear - totalOutcomeByYear
+                    : 0}
                 </h5>
               </div>
             </Col>

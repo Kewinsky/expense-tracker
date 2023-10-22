@@ -5,8 +5,13 @@ INSERT INTO roles(name) VALUES('ROLE_USER');
 INSERT INTO roles(name) VALUES('ROLE_MODERATOR');
 INSERT INTO roles(name) VALUES('ROLE_ADMIN');
 
-#create initial admin user
+#create initial user
 INSERT INTO users (email, password, username) VALUES ("admin@gmail.com", "$2a$10$6E72jUTcv/iGlTM9kJAXm.W/hUjI128bCQltvSzW3a3ZiHPUsVz6C", "Admin");
+
+#provide all roles for admin
+INSERT INTO user_roles (user_id, role_id) VALUES (1, 1);
+INSERT INTO user_roles (user_id, role_id) VALUES (1, 2);
+INSERT INTO user_roles (user_id, role_id) VALUES (1, 3);
 
 #provide categories for admin
 INSERT INTO categories (title, user_id) VALUES ("Food", 1);
@@ -18,12 +23,23 @@ INSERT INTO categories (title, user_id) VALUES ("Medical", 1);
 INSERT INTO categories (title, user_id) VALUES ("Entertainment", 1);
 INSERT INTO categories (title, user_id) VALUES ("Gifts", 1);
 
-#provide all roles for admin
-INSERT INTO user_roles (user_id, role_id) VALUES (1, 1);
-INSERT INTO user_roles (user_id, role_id) VALUES (1, 2);
-INSERT INTO user_roles (user_id, role_id) VALUES (1, 3);
+#provide incomes for admin
+INSERT INTO incomes(date, user_id, value)
+VALUES
+    ("2023-01-01", 1, 3000),
+    ("2023-02-01", 1, 3000),
+    ("2023-03-01", 1, 3000),
+    ("2023-04-01", 1, 3000),
+    ("2023-05-01", 1, 3000),
+    ("2023-06-01", 1, 3000),
+    ("2023-07-01", 1, 3000),
+    ("2023-08-01", 1, 3000),
+    ("2023-09-01", 1, 3000),
+    ("2023-10-01", 1, 3000),
+    ("2023-11-01", 1, 3000),
+    ("2023-12-01", 1, 3000);
 
-#provide test data
+#provide expenses for admin
 INSERT INTO expenses(category_id, date, title, user_id, value)
 VALUES
     (2, "2023-01-02", "Gas", 1, 30),

@@ -44,14 +44,15 @@ const CategoriesSummaryComponent = ({
 
   return (
     <>
-      <div className="d-flex justify-content-between">
-        <h4>Top 5 Spendings</h4>
-        <div>
+      <div className="d-flex justify-content-between mb-4">
+        <h4>Top 5</h4>
+        <div className="d-flex">
           {!isChart && (
             <Button
               variant={`outline-${reversedTheme}`}
               onClick={handleOnExpand}
               disabled={blankRows >= 0}
+              className="mx-2"
             >
               {isExpanded ? "Collapse" : "Expand"}
             </Button>

@@ -27,18 +27,20 @@ const LineChartComponent = ({
 
   return (
     <>
-      <div className="d-flex justify-content-between">
+      <div className="d-flex justify-content-between mb-4">
         {header && <h4>{header}</h4>}
         {periodable && (
           <div className="d-flex">
             {!isYear && (
-              <SelectComponent
-                options={dropdownData(availableRanges)}
-                value={{ value: range, label: range }}
-                handleSelect={handleSelectRange}
-                placeholder={"Select"}
-                theme={`${theme}Theme`}
-              />
+              <div className="mx-2">
+                <SelectComponent
+                  options={dropdownData(availableRanges)}
+                  value={{ value: range, label: range }}
+                  handleSelect={handleSelectRange}
+                  placeholder={"Select"}
+                  theme={`${theme}Theme`}
+                />
+              </div>
             )}
 
             <Button
