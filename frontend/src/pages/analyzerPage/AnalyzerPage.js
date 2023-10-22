@@ -17,8 +17,8 @@ import {
   sumUtilityByYear,
 } from "../../helpers/analyzerMethods";
 import {
-  expenseFilterByMonthAndYear,
-  expenseFilterByYear,
+  filterByMonthAndYear,
+  filterByYear,
 } from "../../helpers/expenseFilter";
 import NoteService from "../../services/noteService";
 import { noteFilterByYear } from "../../helpers/noteFilter";
@@ -33,7 +33,7 @@ const AnalyzerPage = () => {
   const { expenses } = useContext(ThemeContext);
 
   const [notes, setNotes] = useState([]);
-  const [incomes, setIncomes] = useState(0);
+  const [incomes, setIncomes] = useState([]);
   const [income, setIncome] = useState(0);
   const [previousIncome, setPreviousIncome] = useState(0);
   const [outcome, setOutcome] = useState(0);
@@ -43,9 +43,10 @@ const AnalyzerPage = () => {
   const [isYear, setIsYear] = useState(true);
   const [range, setRange] = useState(3);
 
-  const expensesOfYear = expenseFilterByYear(expenses, parseInt(year));
+  const expensesOfYear = filterByYear(expenses, parseInt(year));
   const totalOutcomeByMonth = sumAllMonths(expensesOfYear);
-  const expensesOfMonth = expenseFilterByMonthAndYear(
+
+  const expensesOfMonth = filterByMonthAndYear(
     expenses,
     parseInt(year),
     parseInt(month)
@@ -208,12 +209,14 @@ const AnalyzerPage = () => {
   }, []);
 
   useEffect(() => {
-    filterExpenses(year, month);
+    filterExpenses();
+
     getNotes();
-    if (incomes) {
-      setIncome(sumAllByMonth(incomes, month));
-      setPreviousIncome(sumAllByMonth(incomes, month - 1));
-    }
+
+    const incomesByYear = filterByYear(incomes, parseInt(year));
+    setIncome(sumAllByMonth(incomesByYear, month));
+    setPreviousIncome(sumAllByMonth(incomesByYear, month - 1));
+
     setOutcome(sumAllByMonth(expensesOfYear, month));
     setPreviousOutcome(sumAllByMonth(expensesOfYear, month - 1));
   }, [year, month, expenses]);
