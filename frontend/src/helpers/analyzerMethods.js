@@ -157,45 +157,6 @@ const sumUtilityByYear = (items, year, utilityToSum) => {
   return result;
 };
 
-const getSavedSum = (items, month) => {
-  let sum = 0;
-  const array = items.filter((item) => {
-    return (
-      new Date(item.date).getMonth() === month && item.category === "SAVINGS"
-    );
-  });
-  array.map((item) => (sum += item.value));
-  return sum;
-};
-
-const getSavedSumForYear = (items) => {
-  let sum = 0;
-  const savingsItems = items.filter((item) => item.category === "SAVINGS");
-
-  savingsItems.forEach((item) => {
-    sum += item.value;
-  });
-
-  return sum;
-};
-
-const getSavedSumByMonth = (items) => {
-  const sumByMonth = {};
-
-  for (let i = 0; i < 12; i++) {
-    sumByMonth[i] = 0;
-  }
-
-  items.forEach((item) => {
-    if (item.category === "SAVINGS") {
-      const month = new Date(item.date).getMonth();
-      sumByMonth[month] += item.value;
-    }
-  });
-
-  return sumByMonth;
-};
-
 const getRoundedCategoryAverages = (items, year) => {
   let sumByCategoryAndYear = {};
 
@@ -237,8 +198,5 @@ export {
   getTopCategories,
   sumUtilities,
   sumUtilityByYear,
-  getSavedSum,
-  getSavedSumForYear,
-  getSavedSumByMonth,
   getRoundedCategoryAverages,
 };
