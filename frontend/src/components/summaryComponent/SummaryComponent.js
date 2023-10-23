@@ -12,9 +12,7 @@ const SummaryComponent = ({
   };
 
   const balanceStatus = (current, previous) => {
-    return current < 0 || current > Math.abs(previous)
-      ? "text-danger"
-      : "text-success";
+    return current < 0 || current < previous ? "text-danger" : "text-success";
   };
 
   const balance = income - outcome;
