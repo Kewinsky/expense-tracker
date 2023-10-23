@@ -110,6 +110,16 @@ const AnalyzerPage = () => {
           {
             label: label,
             data: items.map((data) => data.value),
+            backgroundColor: [
+              "#35A3EB",
+              "#FF6383",
+              "#4BC0C0",
+              "#FF9E40",
+              "#9966FE",
+              "#FFCD56",
+              "#C8CBCF",
+              "#FFD6C4",
+            ],
           },
         ],
       });
