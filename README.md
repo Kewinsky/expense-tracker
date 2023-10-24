@@ -24,7 +24,7 @@ The application is deployed using the following AWS services:
 
 ## Prerequisites
 To run the application locally, you need to have the following installed:
-- Java Development Kit (JDK) version 8 or higher
+- Java Development Kit (JDK) version 19 or higher
 - Node.js and npm (Node Package Manager)
 - MySQL Server
 
@@ -40,12 +40,12 @@ Create a new MySQL database and note down the database name, username, and passw
 
 Open the [`application.properties`](https://github.com/Kewinsky/expense-tracker/blob/main/backend/src/main/resources/application.properties) file in the Spring Boot project and update the following properties with your database credentials:
 ```
-spring.datasource.url=jdbc:mysql://localhost:3306/your-database-name
-spring.datasource.username=your-username
-spring.datasource.password=your-password
+spring.datasource.url=jdbc:mysql://localhost:3306/your_database_name
+spring.datasource.username=your_username
+spring.datasource.password=your_password
 ```
 
-3. Insert test data using code from [here](https://github.com/Kewinsky/expense-tracker/blob/main/backend/src/main/java/com/expense_tracker/helpers/test_data.sql)
+3. Insert test data using the sample from [here](https://github.com/Kewinsky/expense-tracker/blob/main/backend/src/main/resources/samples/test_data.sql)
 
 4. Install the necessary dependencies.
 - Navigate to the backend project directory.
@@ -81,6 +81,10 @@ npm start
 
 6. Access the application.
 Open your web browser and visit [http://localhost:3000](http://localhost:3000) to view and interact with the application.
+
+7. Create a new user or use admin with already inserted data.
+- Username: `admin`
+- Password: `admin`
 
 ## Directory Structure
 The repository is organized as follows:
