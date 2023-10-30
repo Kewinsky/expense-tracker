@@ -1,7 +1,7 @@
 export const dropdownData = (items) => {
   return items.map((item) => ({
     value: item,
-    label: item,
+    label: item === -1 ? "All" : item,
   }));
 };
 
