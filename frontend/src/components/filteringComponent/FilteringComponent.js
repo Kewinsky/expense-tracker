@@ -8,6 +8,8 @@ import { getYearArray } from "../../helpers/yearData";
 
 const FilteringComponent = ({
   categories,
+  title,
+  setTitle,
   month,
   setMonth,
   year,
@@ -41,6 +43,10 @@ const FilteringComponent = ({
     setFilteringCategories(Array.isArray(e) ? e.map((x) => x.value) : []);
   };
 
+  const handleInputTitle = (e) => {
+    setTitle(e.target.value);
+  };
+
   useEffect(() => {
     filterExpenses();
   }, [year, month, filteringCategories]);
@@ -49,6 +55,19 @@ const FilteringComponent = ({
     <Container className="my-3">
       <Form>
         <Row className="align-items-end" xs={1} md={2} lg={5}>
+          <Col className="mt-3">
+            <Form.Group>
+              <Form.Label>Filter by Title</Form.Label>
+              <Form.Control
+                required
+                type="text"
+                value={title}
+                placeholder="Petrol"
+                onChange={handleInputTitle}
+                className={`${theme}Theme`}
+              />
+            </Form.Group>
+          </Col>
           <Col className="mt-3">
             <Form.Group>
               <Form.Label>Filter by Year</Form.Label>

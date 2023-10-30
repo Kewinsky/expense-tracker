@@ -18,6 +18,7 @@ const TrackerPage = () => {
 
   const [categories, setCategories] = useState([]);
   const [filteringCategories, setFilteringCategories] = useState([]);
+  const [filterTitle, setFilterTitle] = useState("");
   const [year, setYear] = useState(currentDate.getFullYear());
   const [month, setMonth] = useState(months[currentDate.getMonth()]);
   const [filteredExpenses, setFilteredExpenses] = useState([]);
@@ -35,7 +36,8 @@ const TrackerPage = () => {
       expenses,
       year,
       months.indexOf(month),
-      filteringCategories
+      filteringCategories,
+      filterTitle
     );
 
     setError(null);
@@ -58,6 +60,10 @@ const TrackerPage = () => {
 
   useEffect(() => {
     filterExpenses();
+  }, [filterTitle]);
+
+  useEffect(() => {
+    filterExpenses();
     getCategoriesByUser();
   }, [expenses]);
 
@@ -66,6 +72,8 @@ const TrackerPage = () => {
       <AddExpenseComponent setExpenses={setExpenses} categories={categories} />
       <FilteringComponent
         categories={categories}
+        title={filterTitle}
+        setTitle={setFilterTitle}
         month={month}
         setMonth={setMonth}
         year={year}

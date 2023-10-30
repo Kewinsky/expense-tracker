@@ -1,17 +1,30 @@
-export const expenseFilter = (items, year, month, category) => {
+export const expenseFilter = (items, year, month, category, title) => {
   return items.filter((item) => {
-    if (category === null || !category.length) {
-      return (
-        new Date(item.date).getFullYear() === year &&
-        new Date(item.date).getMonth() === month
-      );
-    }
     return (
-      new Date(item.date).getFullYear() === year &&
-      new Date(item.date).getMonth() === month &&
-      category.includes(item.category)
+      isYearMonthMatch(item, year, month) &&
+      isCategoryMatch(item, category) &&
+      isTitleMatch(item, title)
     );
   });
+};
+
+const isYearMonthMatch = (item, year, month) => {
+  const itemDate = new Date(item.date);
+  return itemDate.getFullYear() === year && itemDate.getMonth() === month;
+};
+
+const isCategoryMatch = (item, category) => {
+  return (
+    category === null || !category.length || category.includes(item.category)
+  );
+};
+
+const isTitleMatch = (item, title) => {
+  return (
+    !title ||
+    title.trim() === "" ||
+    item.title.toLowerCase().includes(title.toLowerCase())
+  );
 };
 
 export const filterByYear = (items, year) => {
