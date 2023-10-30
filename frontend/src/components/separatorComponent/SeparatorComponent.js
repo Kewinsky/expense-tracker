@@ -1,7 +1,7 @@
 import "../separatorComponent/separatorComponent.scss";
 
 const SeparatorComponent = () => {
-  return <hr />;
+  return <hr className="my-3" />;
 };
 
 export default SeparatorComponent;
