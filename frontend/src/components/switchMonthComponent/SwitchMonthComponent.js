@@ -4,49 +4,51 @@ import {
   BsFillArrowRightCircleFill,
 } from "react-icons/bs";
 import { Link } from "react-router-dom";
-import { getSavedSum, sumAllByMonth } from "../../helpers/analyzerMethods";
+import { sumAllByMonth } from "../../helpers/summingMethods";
 import { useContext } from "react";
 import { ThemeContext } from "../../App";
+import { getYearArray } from "../../helpers/yearData";
 
 const SwitchMonthComponent = ({
-  expensesOfYear,
   months,
-  years,
   month,
   setMonth,
   year,
   setYear,
   setOutcome,
   setPreviousOutcome,
-  filterExpenses,
+  reloadChartData,
 }) => {
-  const { theme } = useContext(ThemeContext);
+  const { expenses, theme } = useContext(ThemeContext);
+  const years = getYearArray();
   const reversedTheme = theme === "dark" ? "light" : "dark";
 
   const handleRightButton = () => {
     if (month < 11) {
       month = month + 1;
-      setMonth(month);
-      setOutcome(sumAllByMonth(expensesOfYear, month));
-      setPreviousOutcome(sumAllByMonth(expensesOfYear, month - 1));
-      filterExpenses(year, month);
+      handleUpdateData();
     }
   };
 
   const handleLeftButton = () => {
     if (month > 0) {
       month = month - 1;
-      setMonth(month);
-      setOutcome(sumAllByMonth(expensesOfYear, month));
-      setPreviousOutcome(sumAllByMonth(expensesOfYear, month - 1));
-      filterExpenses(year, month);
+      handleUpdateData();
     }
+  };
+
+  const handleUpdateData = () => {
+    setMonth(month);
+    setOutcome(sumAllByMonth(expenses, month));
+    setPreviousOutcome(sumAllByMonth(expenses, month - 1));
+    reloadChartData(year, month);
   };
 
   const handleYearChange = (e) => {
     e.preventDefault();
-    setYear(e.target.value);
-    filterExpenses(year, month);
+
+    setYear(parseInt(e.target.value));
+    reloadChartData(year, month);
   };
 
   return (

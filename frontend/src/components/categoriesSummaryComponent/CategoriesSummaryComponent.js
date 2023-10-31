@@ -1,9 +1,8 @@
 import { useContext, useState } from "react";
 import {
-  getTopCategories,
   getRoundedCategoryAverages,
-  getSumCategories,
-} from "../../helpers/analyzerMethods";
+  sumAllCategories,
+} from "../../helpers/summingMethods";
 import RecordComponent from "./RecordComponent";
 import BarChartComponent from "../barChartComponent/BarChartComponent";
 import { Button } from "react-bootstrap";
@@ -12,24 +11,23 @@ import "./categoriesSummaryComponent.scss";
 
 const CategoriesSummaryComponent = ({
   barChartData,
-  expenses,
+  expensesOfYear,
+  expensesOfMonth,
   outcome,
   year,
-  month,
 }) => {
   const { theme } = useContext(ThemeContext);
   const reversedTheme = theme === "dark" ? "light" : "dark";
   const borderColor = theme === "dark" ? "white" : "black";
 
-  const currentYear = new Date().getFullYear();
-  const averageValues = getRoundedCategoryAverages(expenses, currentYear);
+  const averageValues = getRoundedCategoryAverages(expensesOfYear, year);
 
   const [range, setRange] = useState(5);
   const [isExpanded, setIsExpanded] = useState(false);
   const [isChart, setIsChart] = useState(false);
 
-  const allCategories = getSumCategories(expenses, year, month);
-  const array = getTopCategories(expenses, year, month, range);
+  const allCategories = sumAllCategories(expensesOfMonth);
+  const array = sumAllCategories(expensesOfMonth, range);
   const blankRows = range - allCategories.length;
 
   const handleOnExpand = () => {

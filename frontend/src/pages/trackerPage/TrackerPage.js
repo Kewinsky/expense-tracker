@@ -3,7 +3,7 @@ import FilteringComponent from "../../components/filteringComponent/FilteringCom
 import SeparatorComponent from "../../components/separatorComponent/SeparatorComponent";
 import TableComponent from "../../components/tableComponent/TableComponent";
 import ExpenseService from "../../services/expenseService";
-import { expenseFilter } from "../../helpers/expenseFilter";
+import { expenseFilter } from "../../helpers/filteringMethods";
 import { months } from "../../helpers/monthsData";
 import { trackerTableHeaders } from "../../helpers/tableHeaders";
 import { updateExpenseURL } from "../../helpers/updateURL";

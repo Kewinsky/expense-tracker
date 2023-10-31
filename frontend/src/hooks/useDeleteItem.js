@@ -4,6 +4,9 @@ import {
   successNotification,
 } from "../helpers/toastNotifications";
 
+// Purpose:
+// Parameters:
+// Returns:
 export const useDeleteItem = (deleteServiceFn, fetchDataFn, setData) => {
   const deleteItem = async (itemId) => {
     try {

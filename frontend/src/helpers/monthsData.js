@@ -1,3 +1,4 @@
+// Purpose: provide months data
 export const months = [
   "January",
   "February",

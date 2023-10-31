@@ -6,9 +6,9 @@ import "./profileComponent.scss";
 import { Card, Col, Image, Row } from "react-bootstrap";
 import userImg from "../../assets/images/user_image.png";
 import AuthService from "../../services/authService";
-import { filterByYear } from "../../helpers/expenseFilter";
+import { filterByYearAndMonth } from "../../helpers/filteringMethods";
 import IncomeService from "../../services/incomeService";
-import { sumAllByYear } from "../../helpers/analyzerMethods";
+import { sumAllByYear } from "../../helpers/summingMethods";
 
 const ProfileComponent = () => {
   const { theme, expenses } = useContext(ThemeContext);
@@ -19,17 +19,18 @@ const ProfileComponent = () => {
 
   const [totalIncomeByYear, setTotalIncomeByYear] = useState(0);
 
-  const expensesOfYear = filterByYear(expenses, parseInt(currentYear));
-  const totalOutcomeByYear = sumAllByYear(
-    expensesOfYear,
-    parseInt(currentYear)
-  );
+  const expensesOfYear = filterByYearAndMonth(expenses, currentYear, null);
+  const totalOutcomeByYear = sumAllByYear(expensesOfYear, currentYear);
 
   const getIncomes = async () => {
     const response = await IncomeService.getIncomes();
 
-    const incomesOfYear = filterByYear(response.data, parseInt(currentYear));
-    setTotalIncomeByYear(sumAllByYear(incomesOfYear, parseInt(currentYear)));
+    const incomesOfYear = filterByYearAndMonth(
+      response.data,
+      currentYear,
+      null
+    );
+    setTotalIncomeByYear(sumAllByYear(incomesOfYear, currentYear));
   };
 
   useEffect(() => {

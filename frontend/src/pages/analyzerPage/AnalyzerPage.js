@@ -10,106 +10,105 @@ import UtilitiesComponent from "../../components/utilitiesComponent/UtilitiesCom
 import { Col, Container, Row } from "react-bootstrap";
 import "./analyzerPage.scss";
 import {
-  sumAllByMonth,
   sumAllMonths,
-  getSumCategories,
-  sumAllByRange,
-  sumUtilityByYear,
-} from "../../helpers/analyzerMethods";
+  sumAllCategories,
+  sumAllByMonth,
+  sumAllSteps,
+  sumAllUtilitiesForChart,
+} from "../../helpers/summingMethods";
 import {
-  filterByMonthAndYear,
-  filterByYear,
-} from "../../helpers/expenseFilter";
+  noteFilterByYear,
+  filterByYearAndMonth,
+} from "../../helpers/filteringMethods";
 import NoteService from "../../services/noteService";
-import { noteFilterByYear } from "../../helpers/noteFilter";
-import { getYearArray } from "../../helpers/yearData";
 import { months } from "../../helpers/monthsData";
 import { ThemeContext } from "../../App";
 import IncomeService from "../../services/incomeService";
 
 const AnalyzerPage = () => {
   const currentDate = new Date();
-  const years = getYearArray();
   const { expenses } = useContext(ThemeContext);
 
-  const [notes, setNotes] = useState([]);
+  // SummaryComponent data
   const [incomes, setIncomes] = useState([]);
   const [income, setIncome] = useState(0);
   const [previousIncome, setPreviousIncome] = useState(0);
   const [outcome, setOutcome] = useState(0);
   const [previousOutcome, setPreviousOutcome] = useState(0);
-  const [year, setYear] = useState(currentDate.getFullYear());
-  const [month, setMonth] = useState(currentDate.getMonth());
+
+  // Summary Line Chart
   const [isYear, setIsYear] = useState(true);
   const [range, setRange] = useState(3);
 
-  const expensesOfYear = filterByYear(expenses, parseInt(year));
-  const totalOutcomeByMonth = sumAllMonths(expensesOfYear);
+  const [year, setYear] = useState(currentDate.getFullYear());
+  const [month, setMonth] = useState(currentDate.getMonth());
+  const [notes, setNotes] = useState([]);
 
-  const expensesOfMonth = filterByMonthAndYear(
-    expenses,
-    parseInt(year),
-    parseInt(month)
-  );
-  const totalOutcomeByRange = sumAllByRange(expensesOfMonth, range);
+  // filtered expenses(outcome)/incomes
+  const incomesByYear = filterByYearAndMonth(incomes, year, null);
+  const expensesOfYear = filterByYearAndMonth(expenses, year, null);
+  const expensesOfMonth = filterByYearAndMonth(expenses, year, month);
 
-  const sumByCategory = getSumCategories(
-    expensesOfMonth,
-    parseInt(year),
-    month
-  );
+  // data for summary line chart
+  const totalOutcomesByMonth = sumAllMonths(expensesOfYear);
+  const totalOutcomesByRange = sumAllSteps(expensesOfMonth, range);
 
-  const totalUtilityByYear = (utility) => {
-    return sumUtilityByYear(expenses, parseInt(year), utility);
+  // data for category bar chart
+  const totalValuesByCategory = sumAllCategories(expensesOfMonth, year, month);
+
+  // data for utility line chart
+  const totalValuesByUtility = (utility) => {
+    return sumAllUtilitiesForChart(expensesOfYear, utility);
   };
 
-  // charts data
+  // initial datasets for charts
   const [barChartData, setBarChartData] = useState({
-    labels: sumByCategory.map((item) => item.category),
+    labels: totalValuesByCategory.map((item) => item.category),
     datasets: [
       {
         label: "Expenses",
-        data: sumByCategory.map((data) => data.value),
+        data: totalValuesByCategory.map((data) => data.value),
       },
     ],
   });
 
   const [lineChartData, setLineChartData] = useState({
-    labels: totalOutcomeByMonth.map((item) => item.label),
+    labels: totalOutcomesByMonth.map((item) => item.label),
     datasets: [
       {
         label: "Total Year",
-        data: totalOutcomeByMonth.map((data) => data.total),
+        data: totalOutcomesByMonth.map((data) => data.total),
       },
     ],
   });
 
   const [utilitiesChartData, setUtilitiesChartData] = useState({
-    labels: totalUtilityByYear("Electricity").map((item) => item.label),
+    labels: totalValuesByUtility("Electricity").map((item) => item.label),
     datasets: [
       {
         label: "Electricity",
-        data: totalUtilityByYear("Electricity").map((data) => data.total),
+        data: totalValuesByUtility("Electricity").map((data) => data.total),
       },
       {
         label: "Gas",
-        data: totalUtilityByYear("Gas").map((data) => data.total),
+        data: totalValuesByUtility("Gas").map((data) => data.total),
       },
       {
         label: "Water",
-        data: totalUtilityByYear("Water").map((data) => data.total),
+        data: totalValuesByUtility("Water").map((data) => data.total),
       },
     ],
   });
 
-  const mountBarChartData = (items, label) => {
-    if (items.length) {
+  // reloading methods for charts
+  const mountBarChartData = (data, label) => {
+    if (data.length) {
       setBarChartData({
-        labels: items.map((item) => item.category),
+        labels: data.map((item) => item.category),
         datasets: [
           {
             label: label,
-            data: items.map((data) => data.value),
+            data: data.map((data) => data.value),
             backgroundColor: [
               "#35A3EB",
               "#FF6383",
@@ -126,8 +125,8 @@ const AnalyzerPage = () => {
     }
   };
 
-  const mountLineChartData = (data, items, label) => {
-    if (items.length) {
+  const mountLineChartData = (data, label) => {
+    if (data.length) {
       setLineChartData({
         labels: data.map((item) => item.label),
         datasets: [
@@ -140,14 +139,14 @@ const AnalyzerPage = () => {
     }
   };
 
-  const mountUtilitiesChartData = (data1, data2, data3, items) => {
-    if (items.length) {
+  const mountUtilitiesChartData = (data1, data2, data3) => {
+    if (data1.length) {
       setUtilitiesChartData({
         labels: data1.map((item) => item.label),
         datasets: [
           {
             label: "Electricity",
-            data: data1.map((item) => item.total),
+            data: data1.map((data) => data.total),
           },
           {
             label: "Gas",
@@ -164,17 +163,9 @@ const AnalyzerPage = () => {
 
   const mountSummaryData = () => {
     if (isYear) {
-      mountLineChartData(
-        totalOutcomeByMonth,
-        expenses,
-        "Total Outcome by Year"
-      );
+      mountLineChartData(totalOutcomesByMonth, "Total Outcome by Year");
     } else {
-      mountLineChartData(
-        totalOutcomeByRange,
-        expenses,
-        "Total Outcome by Month"
-      );
+      mountLineChartData(totalOutcomesByRange, "Total Outcome by Month");
     }
   };
 
@@ -186,12 +177,14 @@ const AnalyzerPage = () => {
 
   const getNotes = async () => {
     const response = await NoteService.getNotesByUser();
-    const filteredNotes = noteFilterByYear(response.data, parseInt(year));
+    const filteredNotes = noteFilterByYear(response.data, year);
     setNotes(filteredNotes);
   };
 
-  const filterExpenses = () => {
-    if (sumByCategory.length === 0) {
+  // reloading method to update all charts at once
+  const reloadChartData = () => {
+    // required reset once no data
+    if (totalValuesByCategory.length === 0) {
       setBarChartData({
         labels: [],
         datasets: [
@@ -202,15 +195,14 @@ const AnalyzerPage = () => {
         ],
       });
     } else {
-      mountBarChartData(sumByCategory, "Expenses");
+      mountBarChartData(totalValuesByCategory, "Expenses");
     }
 
     mountSummaryData();
     mountUtilitiesChartData(
-      totalUtilityByYear("Electricity"),
-      totalUtilityByYear("Gas"),
-      totalUtilityByYear("Water"),
-      expenses
+      totalValuesByUtility("Electricity"),
+      totalValuesByUtility("Gas"),
+      totalValuesByUtility("Water")
     );
   };
 
@@ -219,11 +211,10 @@ const AnalyzerPage = () => {
   }, []);
 
   useEffect(() => {
-    filterExpenses();
+    reloadChartData();
 
     getNotes();
 
-    const incomesByYear = filterByYear(incomes, parseInt(year));
     setIncome(sumAllByMonth(incomesByYear, month));
     setPreviousIncome(sumAllByMonth(incomesByYear, month - 1));
 
@@ -238,17 +229,14 @@ const AnalyzerPage = () => {
   return (
     <div className="mb-5">
       <SwitchMonthComponent
-        expensesOfYear={expensesOfYear}
+        months={months}
         month={month}
         setMonth={setMonth}
-        months={months}
         year={year}
         setYear={setYear}
-        years={years}
-        currentDate={currentDate}
         setOutcome={setOutcome}
         setPreviousOutcome={setPreviousOutcome}
-        filterExpenses={filterExpenses}
+        reloadChartData={reloadChartData}
       />
       <SeparatorComponent />
 
@@ -276,10 +264,10 @@ const AnalyzerPage = () => {
           <Col className="col-12 col-lg-6 p-4">
             <CategoriesSummaryComponent
               barChartData={barChartData}
-              expenses={expensesOfYear}
+              expensesOfYear={expensesOfYear}
+              expensesOfMonth={expensesOfMonth}
               outcome={outcome}
-              year={parseInt(year)}
-              month={month}
+              year={year}
             />
           </Col>
           <Col className="col-12 col-lg-6 p-4">

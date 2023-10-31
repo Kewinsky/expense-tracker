@@ -1,5 +1,5 @@
 import RecordComponent from "../categoriesSummaryComponent/RecordComponent";
-import { sumUtilities } from "../../helpers/analyzerMethods";
+import { sumAllUtilitiesForTable } from "../../helpers/summingMethods";
 import "./utilitiesComponent.scss";
 import { ThemeContext } from "../../App";
 import { useContext, useState } from "react";
@@ -13,8 +13,8 @@ const UtilitiesComponent = ({ lineChartData, expenses, month }) => {
 
   const [isChart, setIsChart] = useState(false);
 
-  const currentMonthUtilities = sumUtilities(expenses, month);
-  const prevMonthUtilities = sumUtilities(expenses, month - 1);
+  const currentMonthUtilities = sumAllUtilitiesForTable(expenses, month);
+  const prevMonthUtilities = sumAllUtilitiesForTable(expenses, month - 1);
 
   const handleOnSwitch = () => {
     setIsChart(!isChart);

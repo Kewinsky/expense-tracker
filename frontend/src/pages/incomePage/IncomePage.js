@@ -7,8 +7,8 @@ import { useDeleteItem } from "../../hooks/useDeleteItem";
 import { incomesTableHeaders } from "../../helpers/tableHeaders";
 import { updateIncomeURL } from "../../helpers/updateURL";
 import { months } from "../../helpers/monthsData";
-import { incomeFilter } from "../../helpers/incomeFilter";
 import FilteringIncomesComponent from "../../components/filteringComponent/FilteringIncomesComponent";
+import { filterByYearAndMonth } from "../../helpers/filteringMethods";
 
 const IncomePage = () => {
   const currentDate = new Date();
@@ -34,7 +34,7 @@ const IncomePage = () => {
   );
 
   const filterIncomes = () => {
-    const response = incomeFilter(incomes, year, months.indexOf(month));
+    const response = filterByYearAndMonth(incomes, year, months.indexOf(month));
 
     setError(null);
     setFilteredIncomes(response);
