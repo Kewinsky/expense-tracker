@@ -1,38 +1,28 @@
 @import "../../utils/theme.scss";
 
-.page-item:focus {
-  outline: none;
-}
-
-.page-item .page-link {
-  color: #000;
-}
-
-.page-item.active .page-link {
-  background-color: #dee2e6;
-  border-color: #dee2e6;
+// Light mode
+.pagination .page-link {
   color: #000;
 }
 
 .pagination .page-link:hover {
-  background-color: #dee2e6;
+  background-color: #fff;
+  border-color: #000;
   color: #000;
 }
 
 .pagination .page-link:focus {
+  background-color: #dee2e6;
   color: #000;
 }
 
-.dark-pagination {
+.page-item.active .page-link {
+  background-color: $dark;
+  border-color: $dark;
   color: #fff;
 }
 
-.dark-pagination .page-item.active .page-link {
-  background-color: #373b3e;
-  border-color: #373b3e;
-  color: #fff;
-}
-
+// Dark mode
 .dark-pagination .page-link {
   background-color: $dark;
   border-color: #373b3e;
@@ -40,12 +30,18 @@
 }
 
 .dark-pagination .page-link:hover {
-  background-color: #373b3e;
-  border-color: #373b3e;
+  background-color: $dark;
+  border-color: #fff;
   color: #fff;
 }
 
 .dark-pagination .page-link:focus {
-  background-color: #373b3e;
+  background-color: $dark;
   color: #fff;
+}
+
+.dark-pagination .page-item.active .page-link {
+  background-color: #fff;
+  border-color: #fff;
+  color: #000;
 }

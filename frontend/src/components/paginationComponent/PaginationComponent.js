@@ -19,8 +19,8 @@ const PaginationComponent = ({
         theme === "dark" ? "dark-pagination" : ""
       }`}
     >
-      <li class="page-item">
-        <button onClick={handlePreviousPage} class="page-link">
+      <li className="page-item">
+        <button onClick={handlePreviousPage} className="page-link">
           <BsArrowLeft />
         </button>
       </li>
@@ -34,8 +34,8 @@ const PaginationComponent = ({
           </button>
         </li>
       ))}
-      <li class="page-item">
-        <button onClick={handleNextPage} class="page-link">
+      <li className="page-item">
+        <button onClick={handleNextPage} className="page-link">
           <BsArrowRight />
         </button>
       </li>
