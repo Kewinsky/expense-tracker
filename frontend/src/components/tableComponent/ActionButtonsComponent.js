@@ -18,7 +18,7 @@ const ActionButtonsComponents = ({
   return (
     <td className="text-center">
       <Link className="mx-3" to={`${handleUpdate}/${record.id}`}>
-        <Button variant="outline-warning">Edit</Button>
+        <Button variant={`outline-${theme}`}>Edit</Button>
       </Link>
       <Button variant="outline-danger" type="submit" onClick={handleShow}>
         Delete
