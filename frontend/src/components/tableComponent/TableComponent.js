@@ -53,7 +53,7 @@ const TableComponent = ({
 }) => {
   const { theme } = useContext(ThemeContext);
   const reversedTheme = theme === "dark" ? "light" : "dark";
-  const availableLimits = [10, 20, 40, -1];
+  const availableLimits = [5, 10, 20, 40];
 
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
@@ -111,7 +111,7 @@ const TableComponent = ({
           options={dropdownData(availableLimits)}
           value={{
             value: itemsPerPage,
-            label: itemsPerPage === -1 ? "All" : itemsPerPage,
+            label: itemsPerPage,
           }}
           handleSelect={handleSelectLimit}
           placeholder={"Select"}
