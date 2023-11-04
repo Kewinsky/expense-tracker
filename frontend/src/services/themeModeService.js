@@ -1,14 +1,14 @@
-const getCurrentThemeMode = () => {
+const getThemeFromLS = () => {
   return JSON.parse(localStorage.getItem("local_theme"));
 };
 
-const setThemeMode = (theme) => {
+const setThemeToLS = (theme) => {
   localStorage.setItem("local_theme", JSON.stringify(theme));
 };
 
 const ThemeModeService = {
-  getCurrentThemeMode,
-  setThemeMode,
+  getThemeFromLS,
+  setThemeToLS,
 };
 
 export default ThemeModeService;
