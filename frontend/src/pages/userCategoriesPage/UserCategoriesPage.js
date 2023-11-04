@@ -36,6 +36,10 @@ const UserCategoriesPage = () => {
 
   return (
     <>
+      <div className="m-5 text-center">
+        <h3>Manage Categories</h3>
+      </div>
+      <SeparatorComponent />
       <AddCategoryComponent
         categories={categories}
         setCategories={setCategories}
