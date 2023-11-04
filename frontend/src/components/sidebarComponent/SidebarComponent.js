@@ -129,15 +129,16 @@ const SidebarComponent = () => {
           </a>
           <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
             <li>
-              <a class="dropdown-item" href="/settings">
-                Settings
-              </a>
-            </li>
-            <li>
               <a class="dropdown-item" href="/profile">
                 Profile
               </a>
             </li>
+            <li>
+              <a class="dropdown-item" href="/settings">
+                Settings
+              </a>
+            </li>
+
             <li>
               <hr class="dropdown-divider" />
             </li>

@@ -17,6 +17,7 @@ import ForgotPasswordPage from "../pages/forgotPasswordPage/ForgotPasswordPage";
 import UpdateCategoryPage from "../pages/updatePage/UpdateCategoryPage";
 import UserCategoriesPage from "../pages/userCategoriesPage/UserCategoriesPage";
 import IncomePage from "../pages/incomePage/IncomePage";
+import SettingsPage from "../pages/settingsPage/SettingsPage";
 import UpdateIncomePage from "../pages/updatePage/UpdateIncomePage";
 
 export const Router = () => {
@@ -162,6 +163,16 @@ export const Router = () => {
           <MainLayout pageTitle={`${appName} | User Incomes`}>
             <ProtectedRoute>
               <IncomePage />
+            </ProtectedRoute>
+          </MainLayout>
+        }
+      />
+      <Route
+        path="/settings"
+        element={
+          <MainLayout pageTitle={`${appName} | Settings`}>
+            <ProtectedRoute>
+              <SettingsPage />
             </ProtectedRoute>
           </MainLayout>
         }

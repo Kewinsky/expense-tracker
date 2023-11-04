@@ -1,0 +1,11 @@
+@import "../utils/theme.scss";
+
+.layout {
+  background-color: white;
+  color: black;
+}
+
+.layout.dark-theme {
+  background-color: $lightDark;
+  color: white;
+}

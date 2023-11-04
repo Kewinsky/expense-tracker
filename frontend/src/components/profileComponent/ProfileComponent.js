@@ -73,26 +73,6 @@ const ProfileComponent = () => {
               </Link>
             </Col>
           </Row>
-          <Row className="mb-5">
-            <Col className="d-flex align-items-center">
-              <h5 className="m-0">Categories</h5>
-            </Col>
-            <Col className="d-flex justify-content-end">
-              <Link to={"/userCategories"}>
-                <Button variant={`outline-${reversedTheme}`}>Edit</Button>
-              </Link>
-            </Col>
-          </Row>
-          <Row>
-            <Col className="d-flex align-items-center">
-              <h5 className="m-0">Incomes</h5>
-            </Col>
-            <Col className="d-flex justify-content-end">
-              <Link to={"/userIncomes"}>
-                <Button variant={`outline-${reversedTheme}`}>Edit</Button>
-              </Link>
-            </Col>
-          </Row>
         </Card.Body>
       </Card>
     </div>
