@@ -12,7 +12,7 @@ const SettingsComponent = () => {
         <Card className={`bg-${theme} card-width`}>
           <Card.Header>Settings</Card.Header>
           <Card.Body className="m-4">
-            <Row className="mb-5 ">
+            <Row>
               <Col className="d-flex align-items-center">
                 <div>
                   <h5 className="m-0">Dark Mode</h5>

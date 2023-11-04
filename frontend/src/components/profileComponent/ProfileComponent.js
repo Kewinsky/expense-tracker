@@ -3,12 +3,12 @@ import { Link } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import { ThemeContext } from "../../App";
 import "./profileComponent.scss";
-import { Card, Col, Image, Row } from "react-bootstrap";
-import userImg from "../../assets/images/user_image.png";
+import { Card, Col, Row } from "react-bootstrap";
 import AuthService from "../../services/authService";
 import { filterByYearAndMonth } from "../../helpers/filteringMethods";
 import IncomeService from "../../services/incomeService";
 import { sumAllByYear } from "../../helpers/summingMethods";
+import { BsPersonCircle } from "react-icons/bs";
 
 const ProfileComponent = () => {
   const { theme, expenses } = useContext(ThemeContext);
@@ -43,9 +43,9 @@ const ProfileComponent = () => {
         <Card.Header>Your Profile</Card.Header>
         <Card.Body className="m-4">
           <div className="mb-5 text-center">
-            <Image src={userImg} height={80} />
+            <BsPersonCircle size={80} />
           </div>
-          <Row className="mb-5 ">
+          <Row className="mb-5">
             <Col className="d-flex align-items-center">
               <div>
                 <h5 className="m-0">Saved money</h5>
@@ -61,7 +61,7 @@ const ProfileComponent = () => {
               </div>
             </Col>
           </Row>
-          <Row className="mb-5 ">
+          <Row className="">
             <Col className="d-flex align-items-center">
               <div>
                 <h5 className="m-0">Credentials</h5>
