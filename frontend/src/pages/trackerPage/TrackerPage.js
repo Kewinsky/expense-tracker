@@ -69,6 +69,11 @@ const TrackerPage = () => {
 
   return (
     <>
+      <div className="m-5 text-center">
+        <h3>Manage Expenses</h3>
+      </div>
+      <SeparatorComponent />
+
       <AddExpenseComponent setExpenses={setExpenses} categories={categories} />
       <FilteringComponent
         categories={categories}

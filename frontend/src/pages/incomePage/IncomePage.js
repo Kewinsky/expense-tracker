@@ -58,6 +58,10 @@ const IncomePage = () => {
 
   return (
     <>
+      <div className="m-5 text-center">
+        <h3>Manage Incomes</h3>
+      </div>
+      <SeparatorComponent />
       <AddIncomeComponent setIncomes={setIncomes} />
       <FilteringIncomesComponent
         month={month}

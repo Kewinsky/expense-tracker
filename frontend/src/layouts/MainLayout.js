@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import NavbarComponent from "../components/navbarComponent/NavbarComponent";
+import SidebarComponent from "../components/sidebarComponent/SidebarComponent";
 
 const MainLayout = ({ children, pageTitle }) => {
   useEffect(() => {
@@ -7,10 +7,16 @@ const MainLayout = ({ children, pageTitle }) => {
   }, [pageTitle]);
 
   return (
-    <>
-      <NavbarComponent />
-      <main>{children}</main>
-    </>
+    <div class="container-fluid">
+      <div class="row flex-nowrap">
+        <div class="col-auto col-md-3 col-xl-2 bg-dark px-3">
+          <SidebarComponent />
+        </div>
+        <div className="col px-4">
+          <main>{children}</main>
+        </div>
+      </div>
+    </div>
   );
 };
 
