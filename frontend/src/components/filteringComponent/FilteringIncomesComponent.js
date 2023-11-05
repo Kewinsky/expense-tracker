@@ -41,7 +41,7 @@ const FilteringIncomesComponent = ({
   return (
     <Container className="my-3">
       <Form>
-        <Row className="align-items-end" xs={1} md={2} lg={5}>
+        <Row className="align-items-end" xs={1} md={2} lg={4}>
           <Col className="mt-3">
             <Form.Group>
               <Form.Label>Filter by Year</Form.Label>

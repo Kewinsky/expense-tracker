@@ -29,9 +29,10 @@ const App = () => {
   return (
     <ThemeContext.Provider value={{ theme, setTheme, expenses, setExpenses }}>
       <ToastContainer
+        closeButton={false}
         hideProgressBar={true}
         pauseOnHover={false}
-        theme={theme}
+        toastStyle={{ backgroundColor: "#212529", color: "white" }}
       />
       <Router />
     </ThemeContext.Provider>
