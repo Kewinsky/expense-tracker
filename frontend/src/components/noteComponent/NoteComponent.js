@@ -1,4 +1,4 @@
-import { Button, Form } from "react-bootstrap";
+import { Button, Form, Card } from "react-bootstrap";
 import "./noteComponent.scss";
 import NoteService from "../../services/noteService";
 import { useEffect, useState, useContext } from "react";
@@ -43,20 +43,29 @@ const NoteComponent = ({ note, getNotes, month, year }) => {
   }, [note]);
 
   return (
-    <Form.Group>
-      <div className="d-flex justify-content-between align-items-center mb-3">
-        <h4 className="m-0">Notes</h4>
-        <Button variant={`outline-${reversedTheme}`} onClick={handleSaveNote}>
-          Save
-        </Button>
-      </div>
-      <Form.Control
-        as="textarea"
-        onChange={handleInputChange}
-        value={updatedNote}
-        className={`${theme}Theme`}
-      />
-    </Form.Group>
+    <Card className={`bg-${theme} dashboard-card`}>
+      <Form.Group>
+        <Card.Header>
+          <div className="d-flex justify-content-between align-items-center">
+            <h4 className="align-self-center m-0">Notes</h4>
+            <Button
+              variant={`outline-${reversedTheme}`}
+              onClick={handleSaveNote}
+            >
+              Save
+            </Button>
+          </div>
+        </Card.Header>
+        <Card.Body className="vertical-center">
+          <Form.Control
+            as="textarea"
+            onChange={handleInputChange}
+            value={updatedNote}
+            className={`${theme}Theme`}
+          />
+        </Card.Body>
+      </Form.Group>
+    </Card>
   );
 };
 

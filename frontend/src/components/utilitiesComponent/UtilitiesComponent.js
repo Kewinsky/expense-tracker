@@ -3,8 +3,9 @@ import { sumAllUtilitiesForTable } from "../../helpers/summingMethods";
 import "./utilitiesComponent.scss";
 import { ThemeContext } from "../../App";
 import { useContext, useState } from "react";
-import { Button } from "react-bootstrap";
+import { Button, Card } from "react-bootstrap";
 import LineChartComponent from "../lineChartComponent/LineChartComponent";
+import { BsTable, BsFillBarChartFill } from "react-icons/bs";
 
 const UtilitiesComponent = ({ lineChartData, expenses, month }) => {
   const { theme } = useContext(ThemeContext);
@@ -21,52 +22,59 @@ const UtilitiesComponent = ({ lineChartData, expenses, month }) => {
   };
 
   return (
-    <>
-      <div className="d-flex justify-content-between mb-4">
-        <h4>Utilities</h4>
-        <div>
-          <Button variant={`outline-${reversedTheme}`} onClick={handleOnSwitch}>
-            {isChart ? "Table" : "Chart"}
-          </Button>
+    <Card className={`bg-${theme} dashboard-card`}>
+      <Card.Header>
+        <div className="d-flex justify-content-between">
+          <h4 className="align-self-center m-0">Utilities</h4>
+          <div>
+            <Button
+              variant={`outline-${reversedTheme}`}
+              onClick={handleOnSwitch}
+            >
+              {isChart ? <BsTable /> : <BsFillBarChartFill />}
+            </Button>
+          </div>
         </div>
-      </div>
-      {isChart ? (
-        <LineChartComponent chartData={lineChartData} />
-      ) : (
-        <table className="utl-table">
-          <thead>
-            <tr className={`${borderColor}-row-color`}>
-              <th></th>
-              <th>Curr</th>
-              <th>Prev</th>
-              <th>[%]</th>
-            </tr>
-          </thead>
-          <tbody>
-            {currentMonthUtilities.map((item, index) => {
-              const currMonthUtil = item.value;
-              const prevMonthUtil = prevMonthUtilities[index].value;
-              const percentageDiff =
-                prevMonthUtil === 0
-                  ? 0
-                  : Math.round(
-                      ((currMonthUtil - prevMonthUtil) / prevMonthUtil) * 100
-                    );
-              return (
-                <RecordComponent
-                  key={index}
-                  title={item.title.toUpperCase()}
-                  type={"utilities"}
-                  value1={currMonthUtil}
-                  value2={prevMonthUtil}
-                  value3={percentageDiff}
-                />
-              );
-            })}
-          </tbody>
-        </table>
-      )}
-    </>
+      </Card.Header>
+      <Card.Body className="vertical-center">
+        {isChart ? (
+          <LineChartComponent chartData={lineChartData} />
+        ) : (
+          <table className="utl-table">
+            <thead>
+              <tr className={`${borderColor}-row-color`}>
+                <th></th>
+                <th>Curr</th>
+                <th>Prev</th>
+                <th>[%]</th>
+              </tr>
+            </thead>
+            <tbody>
+              {currentMonthUtilities.map((item, index) => {
+                const currMonthUtil = item.value;
+                const prevMonthUtil = prevMonthUtilities[index].value;
+                const percentageDiff =
+                  prevMonthUtil === 0
+                    ? 0
+                    : Math.round(
+                        ((currMonthUtil - prevMonthUtil) / prevMonthUtil) * 100
+                      );
+                return (
+                  <RecordComponent
+                    key={index}
+                    title={item.title.toUpperCase()}
+                    type={"utilities"}
+                    value1={currMonthUtil}
+                    value2={prevMonthUtil}
+                    value3={percentageDiff}
+                  />
+                );
+              })}
+            </tbody>
+          </table>
+        )}
+      </Card.Body>
+    </Card>
   );
 };
 

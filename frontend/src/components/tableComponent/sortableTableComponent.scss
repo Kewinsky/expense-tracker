@@ -21,3 +21,8 @@ thead button.descending::after {
   display: inline-block;
   margin-left: 0.5rem;
 }
+
+table th,
+td {
+  vertical-align: middle;
+}

@@ -43,7 +43,7 @@ const SidebarComponent = () => {
         >
           <img
             src={logo}
-            height="40"
+            height="30"
             alt="Spendee Logo"
             className="mt-4 d-none d-sm-inline"
           />
@@ -55,7 +55,7 @@ const SidebarComponent = () => {
               <li className="nav-item">
                 <a
                   href="/analyzer"
-                  className="nav-link text-white px-sm-3 pt-sm-3 p-3 pt-4"
+                  className="nav-link text-white px-sm-2 pt-sm-2 p-2 mt-sm-0 mt-4"
                 >
                   <div className="d-flex align-items-center flex-nowrap">
                     <BsTable />
@@ -64,7 +64,10 @@ const SidebarComponent = () => {
                 </a>
               </li>
               <li className="nav-item">
-                <a href="/tracker" className="nav-link text-white px-sm-3 p-3">
+                <a
+                  href="/tracker"
+                  className="nav-link text-white px-sm-2 p-2 mt-sm-0 mt-2"
+                >
                   <div className="d-flex align-items-center flex-nowrap">
                     <BsCart3 />
                     <span className="ms-2 d-none d-sm-inline">Expenses</span>
@@ -74,7 +77,7 @@ const SidebarComponent = () => {
               <li className="nav-item">
                 <a
                   href="/userIncomes"
-                  className="nav-link text-white px-sm-3 p-3"
+                  className="nav-link text-white px-sm-2 p-2 mt-sm-0 mt-2"
                 >
                   <div className="d-flex align-items-center flex-nowrap">
                     <BsCashCoin />
@@ -85,7 +88,7 @@ const SidebarComponent = () => {
               <li className="nav-item">
                 <a
                   href="userCategories"
-                  className="nav-link text-white px-sm-3 p-3"
+                  className="nav-link text-white px-sm-2 p-2 mt-sm-0 mt-2"
                 >
                   <div className="d-flex align-items-center flex-nowrap">
                     <BsPieChart />
@@ -98,7 +101,7 @@ const SidebarComponent = () => {
             <li className="nav-item">
               <a
                 href="userCategories"
-                className="nav-link text-white px-sm-3 p-3"
+                className="nav-link text-white px-sm-2 p-2 mt-sm-0 mt-2"
               >
                 <div className="d-flex align-items-center flex-nowrap">
                   <BsBoxArrowUpRight />
@@ -111,7 +114,7 @@ const SidebarComponent = () => {
             <li className="nav-item">
               <a
                 href="/userManagement"
-                className="nav-link text-white px-sm-3 p-3"
+                className="nav-link text-white px-sm-2 p-2 mt-sm-0 mt-2"
               >
                 <div className="d-flex align-items-center flex-nowrap">
                   <BsFillPeopleFill />
@@ -133,7 +136,7 @@ const SidebarComponent = () => {
           >
             <BsPersonCircle />
             <span className="ms-2 d-none d-sm-inline">
-              {currentUser.username}'s Profile
+              {currentUser.username}
             </span>
           </a>
           <ul className="dropdown-menu dropdown-menu-dark text-small shadow">

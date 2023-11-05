@@ -4,10 +4,16 @@ import {
   sumAllCategories,
 } from "../../helpers/summingMethods";
 import RecordComponent from "./RecordComponent";
-import BarChartComponent from "../barChartComponent/BarChartComponent";
-import { Button } from "react-bootstrap";
+import { Button, Card } from "react-bootstrap";
 import { ThemeContext } from "../../App";
 import "./categoriesSummaryComponent.scss";
+import {
+  BsTable,
+  BsChevronBarContract,
+  BsChevronBarExpand,
+  BsFillPieChartFill,
+} from "react-icons/bs";
+import PieChartComponent from "../pieChartComponent/PieChartComponent";
 
 const CategoriesSummaryComponent = ({
   barChartData,
@@ -41,74 +47,81 @@ const CategoriesSummaryComponent = ({
   };
 
   return (
-    <>
-      <div className="d-flex justify-content-between mb-4">
-        <h4>Top 5</h4>
-        <div className="d-flex">
-          {!isChart && (
+    <Card className={`bg-${theme} dashboard-card`}>
+      <Card.Header>
+        <div className="d-flex justify-content-between">
+          <h4 className="align-self-center m-0">Top 5 Categories</h4>
+          <div className="d-flex">
+            {!isChart && (
+              <Button
+                variant={`outline-${reversedTheme}`}
+                onClick={handleOnExpand}
+                disabled={blankRows >= 0}
+                className="mx-2"
+              >
+                {isExpanded ? <BsChevronBarContract /> : <BsChevronBarExpand />}
+              </Button>
+            )}
+
             <Button
               variant={`outline-${reversedTheme}`}
-              onClick={handleOnExpand}
-              disabled={blankRows >= 0}
-              className="mx-2"
+              onClick={handleOnSwitch}
             >
-              {isExpanded ? "Collapse" : "Expand"}
+              {isChart ? <BsTable /> : <BsFillPieChartFill />}
             </Button>
-          )}
-
-          <Button variant={`outline-${reversedTheme}`} onClick={handleOnSwitch}>
-            {isChart ? "Table" : "Chart"}
-          </Button>
+          </div>
         </div>
-      </div>
-      {isChart ? (
-        <BarChartComponent chartData={barChartData} />
-      ) : (
-        <table className="summary-table">
-          <thead>
-            <tr className={`${borderColor}-row-color`}>
-              <th>Title</th>
-              <th>Value</th>
-              <th>Average</th>
-              <th>[%]</th>
-            </tr>
-          </thead>
-          <tbody>
-            {array.map((item, index) => {
-              const averageValue = averageValues.find(
-                (avg) => avg.category === item.category
-              );
+      </Card.Header>
+      <Card.Body className="vertical-center">
+        {isChart ? (
+          <PieChartComponent chartData={barChartData} />
+        ) : (
+          <table className="summary-table">
+            <thead>
+              <tr className={`${borderColor}-row-color`}>
+                <th>Title</th>
+                <th>Value</th>
+                <th>Average</th>
+                <th>[%]</th>
+              </tr>
+            </thead>
+            <tbody>
+              {array.map((item, index) => {
+                const averageValue = averageValues.find(
+                  (avg) => avg.category === item.category
+                );
 
-              const percentageOfTotal = Math.round(
-                (item.value / outcome) * 100
-              );
+                const percentageOfTotal = Math.round(
+                  (item.value / outcome) * 100
+                );
 
-              return (
-                <RecordComponent
-                  key={index}
-                  title={item.category}
-                  value1={item.value}
-                  value2={averageValue.average}
-                  value3={percentageOfTotal}
-                />
-              );
-            })}
-            {allCategories.length < range &&
-              Array(blankRows)
-                .fill()
-                .map((_, index) => (
+                return (
                   <RecordComponent
-                    key={`blank_${index}`}
-                    title={"-"}
-                    value1={0}
-                    value2={0}
-                    value3={0}
+                    key={index}
+                    title={item.category}
+                    value1={item.value}
+                    value2={averageValue.average}
+                    value3={percentageOfTotal}
                   />
-                ))}
-          </tbody>
-        </table>
-      )}
-    </>
+                );
+              })}
+              {allCategories.length < range &&
+                Array(blankRows)
+                  .fill()
+                  .map((_, index) => (
+                    <RecordComponent
+                      key={`blank_${index}`}
+                      title={"-"}
+                      value1={0}
+                      value2={0}
+                      value3={0}
+                    />
+                  ))}
+            </tbody>
+          </table>
+        )}
+      </Card.Body>
+    </Card>
   );
 };
 
