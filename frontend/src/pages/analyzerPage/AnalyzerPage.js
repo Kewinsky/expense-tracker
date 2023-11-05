@@ -2,7 +2,6 @@ import { useEffect, useState, useContext } from "react";
 import SwitchMonthComponent from "../../components/switchMonthComponent/SwitchMonthComponent";
 import SummaryComponent from "../../components/summaryComponent/SummaryComponent";
 import SeparatorComponent from "../../components/separatorComponent/SeparatorComponent";
-import LineChartComponent from "../../components/lineChartComponent/LineChartComponent";
 import NoteComponent from "../../components/noteComponent/NoteComponent";
 import CategoriesSummaryComponent from "../../components/categoriesSummaryComponent/CategoriesSummaryComponent";
 import { Chart as ChartJS } from "chart.js/auto";
@@ -24,6 +23,8 @@ import NoteService from "../../services/noteService";
 import { months } from "../../helpers/monthsData";
 import { ThemeContext } from "../../App";
 import IncomeService from "../../services/incomeService";
+import TotalOutcomeComponent from "../../components/totalOutcomeComponent/TotalOutcomeComponent";
+import "./analyzerPage.scss";
 
 const AnalyzerPage = () => {
   const currentDate = new Date();
@@ -239,29 +240,27 @@ const AnalyzerPage = () => {
         reloadChartData={reloadChartData}
       />
       <SeparatorComponent />
-
       <SummaryComponent
+        year={year}
         income={income}
         outcome={outcome}
         previousIncome={previousIncome}
         previousOutcome={previousOutcome}
       />
-
       <SeparatorComponent />
       <Container>
         <Row className="justify-content-center">
-          <Col className="col-12 col-lg-6 p-4">
-            <LineChartComponent
+          <Col className="col-12 col-xl-6 p-4">
+            <TotalOutcomeComponent
               chartData={lineChartData}
               range={range}
               setRange={setRange}
               isYear={isYear}
               setIsYear={setIsYear}
               periodable={true}
-              header={"Total Outcome"}
             />
           </Col>
-          <Col className="col-12 col-lg-6 p-4">
+          <Col className="col-12 col-xl-6 p-4">
             <CategoriesSummaryComponent
               barChartData={barChartData}
               expensesOfYear={expensesOfYear}
@@ -270,14 +269,14 @@ const AnalyzerPage = () => {
               year={year}
             />
           </Col>
-          <Col className="col-12 col-lg-6 p-4">
+          <Col className="col-12 col-xl-6 p-4">
             <UtilitiesComponent
               lineChartData={utilitiesChartData}
               expenses={expensesOfYear}
               month={month}
             />
           </Col>
-          <Col className="col-12 col-lg-6 p-4">
+          <Col className="col-12 col-xl-6 p-4">
             <NoteComponent
               note={notes.find((note) => note.month === month)}
               getNotes={getNotes}

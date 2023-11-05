@@ -1,1 +1,12 @@
 @import "../../utils/theme.scss";
+
+.dashboard-card {
+  min-height: 350px;
+}
+
+.vertical-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
