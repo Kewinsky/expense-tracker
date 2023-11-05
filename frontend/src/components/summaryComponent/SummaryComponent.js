@@ -1,9 +1,9 @@
 import { BsFillBarChartFill } from "react-icons/bs";
-import { Card } from "react-bootstrap";
+import { Card, Col, Container, Row } from "react-bootstrap";
 import { useContext, useState, useEffect } from "react";
 import { ThemeContext } from "../../App";
 import { filterByYearAndMonth } from "../../helpers/filteringMethods";
-import { sumAllByYear } from "../../helpers/summingMethods";
+import { sumAll } from "../../helpers/summingMethods";
 import IncomeService from "../../services/incomeService";
 import "./summaryComponent.scss";
 
@@ -15,17 +15,27 @@ const SummaryComponent = ({
   previousOutcome,
 }) => {
   const { expenses, theme } = useContext(ThemeContext);
+  const expensesOfCurrentYear = filterByYearAndMonth(expenses, year, null);
+  const expensesOfPreviousYear = filterByYearAndMonth(expenses, year - 1, null);
 
-  const [totalIncomeByYear, setTotalIncomeByYear] = useState(0);
+  const [incomesOfCurrentYear, setIncomesOfCurrentYear] = useState(0);
+  const [incomesOfPreviousYear, setIncomesOfPreviousYear] = useState(0);
 
-  const expensesOfYear = filterByYearAndMonth(expenses, year, null);
-  const totalOutcomeByYear = sumAllByYear(expensesOfYear, year);
+  // Current Year
+  const totalOutcomeCurrrentYear = sumAll(expensesOfCurrentYear);
+  const totalIncomeCurrrentYear = sumAll(incomesOfCurrentYear);
+
+  // Previous Year
+  const totalOutcomePreviousYear = sumAll(expensesOfPreviousYear);
+  const totalIncomePreviousYear = sumAll(incomesOfPreviousYear);
 
   const getIncomes = async () => {
     const response = await IncomeService.getIncomes();
 
-    const incomesOfYear = filterByYearAndMonth(response.data, year, null);
-    setTotalIncomeByYear(sumAllByYear(incomesOfYear, year));
+    setIncomesOfCurrentYear(filterByYearAndMonth(response.data, year, null));
+    setIncomesOfPreviousYear(
+      filterByYearAndMonth(response.data, year - 1, null)
+    );
   };
 
   useEffect(() => {
@@ -44,58 +54,73 @@ const SummaryComponent = ({
   const previousBalance = previousIncome - previousOutcome;
 
   return (
-    <div className="d-flex text-center justify-content-center">
-      <Card className={`bg-${theme} mx-3`}>
-        <Card.Header>
-          <h5 className="m-0">Outcome</h5>
-        </Card.Header>
-        <Card.Body>
-          <p
-            className={"value-main " + outcomeStatus(outcome, previousOutcome)}
-          >
-            {outcome}
-            {outcomeStatus(outcome, previousOutcome) === "text-danger" ? (
-              <BsFillBarChartFill size={28} className="mx-1" />
-            ) : (
-              <BsFillBarChartFill size={28} className="mx-1 mirrored" />
-            )}
-          </p>
-          <p className="value-last">{previousOutcome}</p>
-        </Card.Body>
-      </Card>
-
-      <Card className={`bg-${theme} mx-3`}>
-        <Card.Header>
-          <h5 className="m-0">Balance</h5>
-        </Card.Header>
-        <Card.Body>
-          <p
-            className={"value-main " + balanceStatus(balance, previousBalance)}
-          >
-            {balance}
-            {balanceStatus(balance, previousBalance) === "text-danger" ? (
-              <BsFillBarChartFill size={28} className="mx-1" />
-            ) : (
-              <BsFillBarChartFill size={28} className="mx-1 mirrored" />
-            )}
-          </p>
-          <p className="value-last">{previousBalance}</p>
-        </Card.Body>
-      </Card>
-
-      <Card className={`bg-${theme} mx-3`}>
-        <Card.Header>
-          <h5 className="m-0">Saved</h5>
-        </Card.Header>
-        <Card.Body className="vertical-center">
-          <p className={"value-main text-success"}>
-            {totalIncomeByYear - totalOutcomeByYear > 0
-              ? totalIncomeByYear - totalOutcomeByYear
-              : 0}
-          </p>
-        </Card.Body>
-      </Card>
-    </div>
+    <Container>
+      <Row className="d-flex text-center justify-content-center p-4">
+        <Col className="d-flex justify-content-center col-12 col-md-4 mb-4 mb-md-0">
+          <Card className={`bg-${theme} summary-tile`}>
+            <Card.Header>
+              <h5 className="m-0">Outcome</h5>
+            </Card.Header>
+            <Card.Body className="align-self-center">
+              <p
+                className={
+                  "value-main " + outcomeStatus(outcome, previousOutcome)
+                }
+              >
+                {outcome}
+                {outcomeStatus(outcome, previousOutcome) === "text-danger" ? (
+                  <BsFillBarChartFill size={28} className="mx-1" />
+                ) : (
+                  <BsFillBarChartFill size={28} className="mx-1 mirrored" />
+                )}
+              </p>
+              <p className="value-last">{previousOutcome}</p>
+            </Card.Body>
+          </Card>
+        </Col>
+        <Col className="d-flex justify-content-center col-12 col-md-4 mb-4 mb-md-0">
+          <Card className={`bg-${theme} summary-tile`}>
+            <Card.Header>
+              <h5 className="m-0">Balance</h5>
+            </Card.Header>
+            <Card.Body className="align-self-center">
+              <p
+                className={
+                  "value-main " + balanceStatus(balance, previousBalance)
+                }
+              >
+                {balance}
+                {balanceStatus(balance, previousBalance) === "text-danger" ? (
+                  <BsFillBarChartFill size={28} className="mx-1" />
+                ) : (
+                  <BsFillBarChartFill size={28} className="mx-1 mirrored" />
+                )}
+              </p>
+              <p className="value-last">{previousBalance}</p>
+            </Card.Body>
+          </Card>
+        </Col>
+        <Col className="d-flex justify-content-center col-12 col-md-4">
+          <Card className={`bg-${theme} summary-tile`}>
+            <Card.Header>
+              <h5 className="m-0">Saved</h5>
+            </Card.Header>
+            <Card.Body className="align-self-center">
+              <p className={"value-main text-success"}>
+                {totalIncomeCurrrentYear - totalOutcomeCurrrentYear > 0
+                  ? totalIncomeCurrrentYear - totalOutcomeCurrrentYear
+                  : 0}
+              </p>
+              <p className="value-last">
+                {totalIncomePreviousYear - totalOutcomePreviousYear > 0
+                  ? totalIncomePreviousYear - totalOutcomePreviousYear
+                  : 0}
+              </p>
+            </Card.Body>
+          </Card>
+        </Col>
+      </Row>
+    </Container>
   );
 };
 

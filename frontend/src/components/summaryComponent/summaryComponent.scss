@@ -18,3 +18,12 @@
 .mirrored {
   transform: scaleX(-1);
 }
+
+.summary-tile {
+  width: 200px;
+}
+
+.custom-col {
+  display: flex;
+  justify-content: center;
+}

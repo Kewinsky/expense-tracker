@@ -102,15 +102,15 @@ export const sumAllUtilitiesForChart = (items, utilityToSum) => {
   return result;
 };
 
-// Purpose: sum up values of items by year and
+// Purpose: sum up values of items
 // return integer with total value
-// used for calculating YEAR balance (income - outcome)
-export const sumAllByYear = (items, year) => {
+// used for calculating total outcome/income
+export const sumAll = (items) => {
   let sum = 0;
-  const array = items.filter((item) => {
-    return new Date(item.date).getFullYear() === year;
-  });
-  array.map((item) => (sum += item.value));
+  if (!items) {
+    return sum;
+  }
+  items.map((item) => (sum += item.value));
   return sum;
 };
 
