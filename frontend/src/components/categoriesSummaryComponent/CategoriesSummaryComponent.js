@@ -9,8 +9,8 @@ import { ThemeContext } from "../../App";
 import "./categoriesSummaryComponent.scss";
 import {
   BsTable,
-  BsChevronBarContract,
-  BsChevronBarExpand,
+  BsChevronContract,
+  BsChevronExpand,
   BsFillPieChartFill,
 } from "react-icons/bs";
 import PieChartComponent from "../pieChartComponent/PieChartComponent";
@@ -25,6 +25,7 @@ const CategoriesSummaryComponent = ({
   const { theme } = useContext(ThemeContext);
   const reversedTheme = theme === "dark" ? "light" : "dark";
   const borderColor = theme === "dark" ? "white" : "black";
+  const iconSize = 20;
 
   const averageValues = getRoundedCategoryAverages(expensesOfYear, year);
 
@@ -59,7 +60,11 @@ const CategoriesSummaryComponent = ({
                 disabled={blankRows >= 0}
                 className="mx-2"
               >
-                {isExpanded ? <BsChevronBarContract /> : <BsChevronBarExpand />}
+                {isExpanded ? (
+                  <BsChevronContract size={iconSize} />
+                ) : (
+                  <BsChevronExpand size={iconSize} />
+                )}
               </Button>
             )}
 
@@ -67,7 +72,11 @@ const CategoriesSummaryComponent = ({
               variant={`outline-${reversedTheme}`}
               onClick={handleOnSwitch}
             >
-              {isChart ? <BsTable /> : <BsFillPieChartFill />}
+              {isChart ? (
+                <BsTable size={iconSize} />
+              ) : (
+                <BsFillPieChartFill size={iconSize} />
+              )}
             </Button>
           </div>
         </div>

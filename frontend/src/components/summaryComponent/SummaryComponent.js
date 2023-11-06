@@ -1,46 +1,34 @@
 import { BsFillBarChartFill } from "react-icons/bs";
 import { Card, Col, Container, Row } from "react-bootstrap";
-import { useContext, useState, useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { ThemeContext } from "../../App";
 import { filterByYearAndMonth } from "../../helpers/filteringMethods";
 import { sumAll } from "../../helpers/summingMethods";
-import IncomeService from "../../services/incomeService";
 import "./summaryComponent.scss";
 
 const SummaryComponent = ({
   year,
+  incomes,
   income,
   outcome,
   previousIncome,
   previousOutcome,
 }) => {
   const { expenses, theme } = useContext(ThemeContext);
+
   const expensesOfCurrentYear = filterByYearAndMonth(expenses, year, null);
   const expensesOfPreviousYear = filterByYearAndMonth(expenses, year - 1, null);
 
-  const [incomesOfCurrentYear, setIncomesOfCurrentYear] = useState(0);
-  const [incomesOfPreviousYear, setIncomesOfPreviousYear] = useState(0);
+  const incomesOfCurrentYear = filterByYearAndMonth(incomes, year, null);
+  const incomesOfPreviousYear = filterByYearAndMonth(incomes, year - 1, null);
 
   // Current Year
-  const totalOutcomeCurrrentYear = sumAll(expensesOfCurrentYear);
-  const totalIncomeCurrrentYear = sumAll(incomesOfCurrentYear);
+  const totalOutcomeCurrentYear = sumAll(expensesOfCurrentYear);
+  const totalIncomeCurrentYear = sumAll(incomesOfCurrentYear);
 
   // Previous Year
   const totalOutcomePreviousYear = sumAll(expensesOfPreviousYear);
   const totalIncomePreviousYear = sumAll(incomesOfPreviousYear);
-
-  const getIncomes = async () => {
-    const response = await IncomeService.getIncomes();
-
-    setIncomesOfCurrentYear(filterByYearAndMonth(response.data, year, null));
-    setIncomesOfPreviousYear(
-      filterByYearAndMonth(response.data, year - 1, null)
-    );
-  };
-
-  useEffect(() => {
-    getIncomes();
-  }, [year]);
 
   const outcomeStatus = (current, previous) => {
     return current > previous ? "text-danger" : "text-success";
@@ -111,8 +99,8 @@ const SummaryComponent = ({
             </Card.Header>
             <Card.Body className="align-self-center">
               <p className={"value-main text-success"}>
-                {totalIncomeCurrrentYear - totalOutcomeCurrrentYear > 0
-                  ? totalIncomeCurrrentYear - totalOutcomeCurrrentYear
+                {totalIncomeCurrentYear - totalOutcomeCurrentYear > 0
+                  ? totalIncomeCurrentYear - totalOutcomeCurrentYear
                   : 0}
               </p>
               <p className="value-last">

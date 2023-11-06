@@ -46,7 +46,7 @@ const AnalyzerPage = () => {
   const [notes, setNotes] = useState([]);
 
   // filtered expenses(outcome)/incomes
-  const incomesByYear = filterByYearAndMonth(incomes, year, null);
+  const incomesOfYear = filterByYearAndMonth(incomes, year, null);
   const expensesOfYear = filterByYearAndMonth(expenses, year, null);
   const expensesOfMonth = filterByYearAndMonth(expenses, year, month);
 
@@ -216,8 +216,8 @@ const AnalyzerPage = () => {
 
     getNotes();
 
-    setIncome(sumAllByMonth(incomesByYear, month));
-    setPreviousIncome(sumAllByMonth(incomesByYear, month - 1));
+    setIncome(sumAllByMonth(incomesOfYear, month));
+    setPreviousIncome(sumAllByMonth(incomesOfYear, month - 1));
 
     setOutcome(sumAllByMonth(expensesOfYear, month));
     setPreviousOutcome(sumAllByMonth(expensesOfYear, month - 1));
@@ -242,6 +242,7 @@ const AnalyzerPage = () => {
       <SeparatorComponent />
       <SummaryComponent
         year={year}
+        incomes={incomes}
         income={income}
         outcome={outcome}
         previousIncome={previousIncome}

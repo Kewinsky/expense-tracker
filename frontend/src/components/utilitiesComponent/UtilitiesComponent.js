@@ -31,7 +31,11 @@ const UtilitiesComponent = ({ lineChartData, expenses, month }) => {
               variant={`outline-${reversedTheme}`}
               onClick={handleOnSwitch}
             >
-              {isChart ? <BsTable /> : <BsFillBarChartFill />}
+              {isChart ? (
+                <BsTable size={20} />
+              ) : (
+                <BsFillBarChartFill size={20} />
+              )}
             </Button>
           </div>
         </div>
