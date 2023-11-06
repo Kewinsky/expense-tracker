@@ -1,10 +1,11 @@
 import { useContext, useEffect, useState } from "react";
 import { Button, Card } from "react-bootstrap";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { ThemeContext } from "../../App";
 import SpinnerComponent from "../spinnerComponent/SpinnerComponent";
 import Form from "react-bootstrap/Form";
 import CategoryService from "../../services/categoryService";
+import { validateUser } from "../../helpers/selectItemToUpdate";
 
 const UpdateCategoryComponent = ({ categories }) => {
   const { id: categoryId } = useParams();
@@ -16,7 +17,7 @@ const UpdateCategoryComponent = ({ categories }) => {
     return item.id === parseInt(categoryId);
   });
 
-  const [title, setTitle] = useState(selectedCategory?.title);
+  const [title, setTitle] = useState("");
 
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
@@ -66,7 +67,7 @@ const UpdateCategoryComponent = ({ categories }) => {
           <Form.Control
             required
             onChange={handleInputTitle}
-            value={title || ""}
+            value={title}
             type="text"
             className={`${theme}Theme`}
           />

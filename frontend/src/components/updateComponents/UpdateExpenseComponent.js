@@ -1,6 +1,6 @@
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import { useState, useContext, useEffect } from "react";
 import { dropdownCategory } from "../../helpers/dropdownData";
 import SelectComponent from "../selectComponent/SelectComponent";
@@ -10,15 +10,23 @@ import SpinnerComponent from "../spinnerComponent/SpinnerComponent";
 import CategoryService from "../../services/categoryService";
 import ExpenseService from "../../services/expenseService";
 import { reloadData } from "../../helpers/reloadData";
+import { selectItemToUpdate } from "../../helpers/selectItemToUpdate";
 
 const UpdateExpenseComponent = () => {
   const { id: expenseId } = useParams();
+  const navigate = useNavigate();
 
   const { theme, expenses, setExpenses } = useContext(ThemeContext);
   const reversedTheme = theme === "dark" ? "light" : "dark";
 
+  // const selectedExpense = expenses.find((item) => {
+  //   return item.id === parseInt(expenseId);
+  // });
+
+  const selectedExpense = selectItemToUpdate(expenses, expenseId, navigate);
+  console.log(selectedExpense);
+
   const [categories, setCategories] = useState([]);
-  const [selectedExpense, setSelectedExpense] = useState(null);
 
   const [date, setDate] = useState("");
   const [title, setTitle] = useState("");
@@ -93,16 +101,13 @@ const UpdateExpenseComponent = () => {
     setCategories(response.data);
   };
 
+  // useEffect(() => {
+  //   validateUser(selectedExpense?.userId, navigate);
+  // }, []);
+
   useEffect(() => {
     getCategoriesByUser();
   }, []);
-
-  useEffect(() => {
-    const foundExpense = expenses.find(
-      (item) => item.id === parseInt(expenseId)
-    );
-    setSelectedExpense(foundExpense);
-  }, [expenses, expenseId]);
 
   useEffect(() => {
     if (selectedExpense) {
