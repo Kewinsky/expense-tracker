@@ -55,8 +55,12 @@ const SummaryComponent = ({
 
   return (
     <Container>
-      <Row className="d-flex text-center justify-content-center p-4">
-        <Col className="d-flex justify-content-center col-12 col-md-4 mb-4 mb-md-0">
+      <Row
+        className="d-flex text-center justify-content-center p-4"
+        xs={1}
+        md={3}
+      >
+        <Col className="d-flex justify-content-center mb-4 mb-md-0">
           <Card className={`bg-${theme} summary-tile`}>
             <Card.Header>
               <h5 className="m-0">Outcome</h5>
@@ -78,7 +82,7 @@ const SummaryComponent = ({
             </Card.Body>
           </Card>
         </Col>
-        <Col className="d-flex justify-content-center col-12 col-md-4 mb-4 mb-md-0">
+        <Col className="d-flex justify-content-center mb-4 mb-md-0">
           <Card className={`bg-${theme} summary-tile`}>
             <Card.Header>
               <h5 className="m-0">Balance</h5>
@@ -100,7 +104,7 @@ const SummaryComponent = ({
             </Card.Body>
           </Card>
         </Col>
-        <Col className="d-flex justify-content-center col-12 col-md-4">
+        <Col className="d-flex justify-content-center">
           <Card className={`bg-${theme} summary-tile`}>
             <Card.Header>
               <h5 className="m-0">Saved</h5>

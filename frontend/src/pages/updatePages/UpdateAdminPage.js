@@ -1,8 +1,8 @@
-import UpdateAdminComponent from "../../components/updateComponent/UpdateAdminComponent";
+import UpdateAdminComponent from "../../components/updateComponents/UpdateAdminComponent";
 import UserService from "../../services/userService";
 import { useEffect, useState } from "react";
 import SpinnerComponent from "../../components/spinnerComponent/SpinnerComponent";
-import "./updatePage.scss";
+import SimplePage from "../simplePage/SimplePage";
 
 const UpdateAdminPage = () => {
   const [users, setUsers] = useState([]);
@@ -21,11 +21,9 @@ const UpdateAdminPage = () => {
   }
 
   return (
-    <div className="d-flex justify-content-center">
-      <div className="m-3 set-width">
-        <UpdateAdminComponent users={users} />
-      </div>
-    </div>
+    <SimplePage>
+      <UpdateAdminComponent users={users} />
+    </SimplePage>
   );
 };
 

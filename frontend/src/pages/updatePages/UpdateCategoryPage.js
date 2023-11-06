@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
-import UpdateCategoryComponent from "../../components/updateComponent/UpdateCategoryComponent";
+import UpdateCategoryComponent from "../../components/updateComponents/UpdateCategoryComponent";
 import CategoryService from "../../services/categoryService";
+import SimplePage from "../simplePage/SimplePage";
 
 const UpdateCategoryPage = () => {
   const [categories, setCategories] = useState([]);
@@ -16,11 +17,9 @@ const UpdateCategoryPage = () => {
   }, []);
 
   return (
-    <div className="d-flex justify-content-center">
-      <div className="m-3 set-width">
-        <UpdateCategoryComponent categories={categories} />
-      </div>
-    </div>
+    <SimplePage>
+      <UpdateCategoryComponent categories={categories} />
+    </SimplePage>
   );
 };
 

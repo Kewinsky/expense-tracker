@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import "./updatePage.scss";
-import UpdateIncomeComponent from "../../components/updateComponent/UpdateIncomeComponent";
+import UpdateIncomeComponent from "../../components/updateComponents/UpdateIncomeComponent";
 import IncomeService from "../../services/incomeService";
+import SimplePage from "../simplePage/SimplePage";
 
 const UpdateIncomePage = () => {
   const [incomes, setIncomes] = useState([]);
@@ -17,11 +17,9 @@ const UpdateIncomePage = () => {
   }, []);
 
   return (
-    <div className="d-flex justify-content-center">
-      <div className="m-3 set-width">
-        <UpdateIncomeComponent incomes={incomes} />
-      </div>
-    </div>
+    <SimplePage>
+      <UpdateIncomeComponent incomes={incomes} />
+    </SimplePage>
   );
 };
 

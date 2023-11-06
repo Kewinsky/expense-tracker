@@ -1,6 +1,12 @@
 import ProfileComponent from "../../components/profileComponent/ProfileComponent";
+import SimplePage from "../simplePage/SimplePage";
+
 const ProfilePage = () => {
-  return <ProfileComponent />;
+  return (
+    <SimplePage>
+      <ProfileComponent />
+    </SimplePage>
+  );
 };
 
 export default ProfilePage;

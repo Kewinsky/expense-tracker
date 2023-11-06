@@ -17,9 +17,9 @@
 }
 
 .page-item.active .page-link {
-  background-color: $dark;
-  border-color: $dark;
-  color: #fff;
+  background-color: $light;
+  border-color: $light;
+  color: #000;
 }
 
 // Dark mode
@@ -31,7 +31,7 @@
 
 .dark-pagination .page-link:hover {
   background-color: $dark;
-  border-color: #fff;
+  border-color: $light;
   color: #fff;
 }
 
@@ -41,7 +41,7 @@
 }
 
 .dark-pagination .page-item.active .page-link {
-  background-color: #fff;
-  border-color: #fff;
-  color: #000;
+  background-color: $lightDark;
+  border-color: #373b3e;
+  color: #fff;
 }

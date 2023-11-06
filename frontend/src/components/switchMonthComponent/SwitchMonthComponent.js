@@ -1,13 +1,10 @@
 import "./switchMonthComponent.scss";
-import {
-  BsFillArrowLeftCircleFill,
-  BsFillArrowRightCircleFill,
-} from "react-icons/bs";
-import { Link } from "react-router-dom";
+import { BsArrowLeft, BsArrowRight } from "react-icons/bs";
 import { sumAllByMonth } from "../../helpers/summingMethods";
 import { useContext } from "react";
 import { ThemeContext } from "../../App";
 import { getYearArray } from "../../helpers/yearData";
+import { Button } from "react-bootstrap";
 
 const SwitchMonthComponent = ({
   months,
@@ -53,9 +50,9 @@ const SwitchMonthComponent = ({
 
   return (
     <div className="switch-container">
-      <Link className={`link-${reversedTheme}`} onClick={handleLeftButton}>
-        <BsFillArrowLeftCircleFill size={28} />
-      </Link>
+      <Button variant={`outline-${reversedTheme}`} onClick={handleLeftButton}>
+        <BsArrowLeft size={25} />
+      </Button>
       <div className="text-center">
         <h5 className="month-title">{months[month]}</h5>
         <select
@@ -70,9 +67,9 @@ const SwitchMonthComponent = ({
           ))}
         </select>
       </div>
-      <Link className={`link-${reversedTheme}`} onClick={handleRightButton}>
-        <BsFillArrowRightCircleFill size={28} />
-      </Link>
+      <Button variant={`outline-${reversedTheme}`} onClick={handleRightButton}>
+        <BsArrowRight size={25} />
+      </Button>
     </div>
   );
 };

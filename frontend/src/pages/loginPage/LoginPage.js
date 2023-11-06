@@ -1,13 +1,11 @@
 import LoginComponent from "../../components/loginComponent/LoginComponent";
-import "./loginPage.scss";
+import SimplePage from "../simplePage/SimplePage";
 
 const LoginPage = () => {
   return (
-    <div className="d-flex justify-content-center">
-      <div className="m-3 set-width">
-        <LoginComponent />
-      </div>
-    </div>
+    <SimplePage>
+      <LoginComponent />
+    </SimplePage>
   );
 };
 

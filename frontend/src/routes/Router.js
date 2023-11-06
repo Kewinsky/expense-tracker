@@ -10,15 +10,15 @@ import TrackerPage from "../pages/trackerPage/TrackerPage";
 import UnauthorizedPage from "../pages/unauthorizedPage/UnauthorizedPage";
 import UserManagementPage from "../pages/userManagementPage/UserManagementPage";
 import ProtectedRoute from "./ProtectedRoute";
-import UpdateExpensePage from "../pages/updatePage/UpdateExpensePage";
-import UpdateUserPage from "../pages/updatePage/UpdateUserPage";
-import UpdateAdminPage from "../pages/updatePage/UpdateAdminPage";
+import UpdateExpensePage from "../pages/updatePages/UpdateExpensePage";
+import UpdateUserPage from "../pages/updatePages/UpdateUserPage";
+import UpdateAdminPage from "../pages/updatePages/UpdateAdminPage";
 import ForgotPasswordPage from "../pages/forgotPasswordPage/ForgotPasswordPage";
-import UpdateCategoryPage from "../pages/updatePage/UpdateCategoryPage";
+import UpdateCategoryPage from "../pages/updatePages/UpdateCategoryPage";
 import UserCategoriesPage from "../pages/userCategoriesPage/UserCategoriesPage";
 import IncomePage from "../pages/incomePage/IncomePage";
 import SettingsPage from "../pages/settingsPage/SettingsPage";
-import UpdateIncomePage from "../pages/updatePage/UpdateIncomePage";
+import UpdateIncomePage from "../pages/updatePages/UpdateIncomePage";
 
 export const Router = () => {
   const appName = "Spendee";

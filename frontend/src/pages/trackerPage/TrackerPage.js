@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext } from "react";
-import FilteringComponent from "../../components/filteringComponent/FilteringComponent";
+import FilteringComponent from "../../components/filteringComponent/FilteringExpensesComponent";
 import SeparatorComponent from "../../components/separatorComponent/SeparatorComponent";
 import TableComponent from "../../components/tableComponent/TableComponent";
 import ExpenseService from "../../services/expenseService";
