@@ -2,6 +2,7 @@ import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
 import ModalComponent from "../modalComponent/ModalComponent";
+import { BsPencilSquare, BsTrashFill } from "react-icons/bs";
 
 const ActionButtonsComponents = ({
   handleUpdate,
@@ -18,10 +19,12 @@ const ActionButtonsComponents = ({
   return (
     <td className="text-center">
       <Link className="mx-3" to={`${handleUpdate}/${record.id}`}>
-        <Button variant={`outline-${theme}`}>Edit</Button>
+        <Button variant={`outline-${theme}`}>
+          <BsPencilSquare size={20} />
+        </Button>
       </Link>
       <Button variant="outline-danger" type="submit" onClick={handleShow}>
-        Delete
+        <BsTrashFill size={20} />
       </Button>
       <ModalComponent
         handleDelete={handleDelete}
