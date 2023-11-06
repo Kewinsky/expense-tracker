@@ -12,7 +12,10 @@ const getCategoriesByUser = async () => {
       headers: authHeader(),
     })
     .catch((err) => {
-      if (err.response) {
+      if (err.response.status === 401) {
+        AuthService.logout();
+        window.location = "/login";
+      } else if (err.response) {
         throw new Error(err.response.data);
       } else if (err.request) {
         throw new Error("Server is not responding. Please try again later.");

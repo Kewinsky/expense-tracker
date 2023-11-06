@@ -5,9 +5,22 @@ import AuthService from "./authService";
 const API_URL = process.env.REACT_APP_API_URL + "/users/";
 
 const getUsers = async () => {
-  return await axios.get(API_URL + "getUsers", {
-    headers: authHeader(),
-  });
+  return await axios
+    .get(API_URL + "getUsers", {
+      headers: authHeader(),
+    })
+    .catch((err) => {
+      if (err.response.status === 401) {
+        AuthService.logout();
+        window.location = "/login";
+      } else if (err.response) {
+        throw new Error(err.response.data);
+      } else if (err.request) {
+        throw new Error("Server is not responding. Please try again later.");
+      } else {
+        throw new Error("An error occurred. Please try again.");
+      }
+    });
 };
 
 const updateCurrentUser = async (newUser) => {
