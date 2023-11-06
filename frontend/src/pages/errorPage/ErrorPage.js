@@ -6,7 +6,7 @@ const ErrorPage = () => {
   const reversedTheme = theme === "dark" ? "light" : "dark";
 
   return (
-    <div className="text-center m-5">
+    <div className="text-center pt-5">
       <h1>Error 404</h1>
       <div>
         Not found. Go to{" "}

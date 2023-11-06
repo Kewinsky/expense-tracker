@@ -5,7 +5,7 @@ const UnauthorizedPage = () => {
   const { theme } = useContext(ThemeContext);
   const reversedTheme = theme === "dark" ? "light" : "dark";
   return (
-    <div className="text-center m-5">
+    <div className="text-center pt-5">
       <h1>Error 401</h1>
       <div>
         You have no privileges to access this content. Go to{" "}
