@@ -11,16 +11,12 @@ const MainLayout = ({ children, pageTitle }) => {
   }, [pageTitle]);
 
   return (
-    <div className="container-fluid">
-      <div className="row flex-nowrap">
-        <div className="col-auto col-md-3 col-xl-2 bg-dark px-3">
-          <SidebarComponent />
-        </div>
-        <div className={`col px-4 layout ${theme}-theme`}>
-          <main>{children}</main>
-        </div>
+    <>
+      <SidebarComponent />
+      <div className={`px-3 layout ${theme}-theme min-vh-100`}>
+        <main>{children}</main>
       </div>
-    </div>
+    </>
   );
 };
 

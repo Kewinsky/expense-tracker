@@ -11,6 +11,7 @@ import { useDeleteItem } from "../../hooks/useDeleteItem";
 import { ThemeContext } from "../../App";
 import CategoryService from "../../services/categoryService";
 import AddExpenseComponent from "../../components/addComponent/AddExpenseComponent";
+import HeaderComponent from "../../components/headerComponent/HeaderComponent";
 
 const TrackerPage = () => {
   const { expenses, setExpenses } = useContext(ThemeContext);
@@ -69,11 +70,8 @@ const TrackerPage = () => {
 
   return (
     <>
-      <div className="m-5 text-center">
-        <h3>Manage Expenses</h3>
-      </div>
+      <HeaderComponent header={"Manage Expenses"} />
       <SeparatorComponent />
-
       <AddExpenseComponent setExpenses={setExpenses} categories={categories} />
       <FilteringComponent
         categories={categories}

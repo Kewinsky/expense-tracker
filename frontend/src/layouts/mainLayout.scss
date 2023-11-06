@@ -3,9 +3,16 @@
 .layout {
   background-color: white;
   color: black;
+  margin-left: 200px;
 }
 
 .layout.dark-theme {
   background-color: $lightDark;
   color: white;
+}
+
+@media (max-width: 576px) {
+  .layout {
+    margin-left: 67px;
+  }
 }

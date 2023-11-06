@@ -2,20 +2,25 @@
 
 .switch-container {
   display: flex;
-  margin: 1rem;
+  padding-top: 1rem;
   justify-content: center;
   align-items: center;
 }
 
-.month-title {
-  width: 150px;
-  text-align: center;
+.switch-middle {
+  font-size: 1.5rem;
+  width: 300px;
 }
 
-.switch-container select {
+@media (max-width: 576px) {
+  .switch-middle {
+    font-size: 1.3rem;
+    width: 200px;
+  }
+}
+
+.year-selector {
   border: none;
-  border-bottom: 1px solid black;
-  font-size: 17px;
 
   &:focus {
     outline: none;
@@ -25,5 +30,4 @@
 .select-dark {
   background-color: $lightDark;
   color: white;
-  border-bottom: 1px solid !important;
 }

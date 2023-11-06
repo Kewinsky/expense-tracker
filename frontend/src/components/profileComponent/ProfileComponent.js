@@ -19,7 +19,7 @@ const ProfileComponent = () => {
         <div className="mb-5 text-center">
           <BsPersonCircle size={80} />
         </div>
-        <Row className="">
+        <Row>
           <Col className="d-flex align-items-center">
             <div>
               <h5 className="m-0">Credentials</h5>

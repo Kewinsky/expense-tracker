@@ -49,23 +49,25 @@ const SwitchMonthComponent = ({
   };
 
   return (
-    <div className="switch-container">
+    <div className="d-flex justify-content-center align-items-center pt-3">
       <Button variant={`outline-${reversedTheme}`} onClick={handleLeftButton}>
         <BsArrowLeft size={25} />
       </Button>
-      <div className="text-center">
-        <h5 className="month-title">{months[month]}</h5>
-        <select
-          value={year}
-          onChange={handleYearChange}
-          className={`select-${theme}`}
-        >
-          {years.map((year) => (
-            <option key={year} value={year} className="month-title">
-              {year}
-            </option>
-          ))}
-        </select>
+      <div className="d-flex flex-column flex-md-row justify-content-center switch-middle text-center">
+        <span>{months[month]}</span>
+        <span>
+          <select
+            value={year}
+            onChange={handleYearChange}
+            className={`year-selector select-${theme}`}
+          >
+            {years.map((year) => (
+              <option key={year} value={year}>
+                {year}
+              </option>
+            ))}
+          </select>
+        </span>
       </div>
       <Button variant={`outline-${reversedTheme}`} onClick={handleRightButton}>
         <BsArrowRight size={25} />

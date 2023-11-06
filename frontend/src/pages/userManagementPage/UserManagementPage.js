@@ -7,6 +7,7 @@ import { updateUserURL } from "../../helpers/updateURL";
 import { useDeleteItem } from "../../hooks/useDeleteItem";
 import SeparatorComponent from "../../components/separatorComponent/SeparatorComponent";
 import AuthService from "../../services/authService";
+import HeaderComponent from "../../components/headerComponent/HeaderComponent";
 
 const UserManagementPage = () => {
   const roleMapping = {
@@ -59,9 +60,7 @@ const UserManagementPage = () => {
 
   return (
     <>
-      <div className="m-5 text-center">
-        <h3>Manage Users</h3>
-      </div>
+      <HeaderComponent header={"Manage Users"} />
       <SeparatorComponent />
       <TableComponent
         handleUpdate={updateUserURL}

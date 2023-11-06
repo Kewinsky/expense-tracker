@@ -9,6 +9,7 @@ import { updateIncomeURL } from "../../helpers/updateURL";
 import { months } from "../../helpers/monthsData";
 import FilteringIncomesComponent from "../../components/filteringComponent/FilteringIncomesComponent";
 import { filterByYearAndMonth } from "../../helpers/filteringMethods";
+import HeaderComponent from "../../components/headerComponent/HeaderComponent";
 
 const IncomePage = () => {
   const currentDate = new Date();
@@ -58,9 +59,7 @@ const IncomePage = () => {
 
   return (
     <>
-      <div className="m-5 text-center">
-        <h3>Manage Incomes</h3>
-      </div>
+      <HeaderComponent header={"Manage Incomes"} />
       <SeparatorComponent />
       <AddIncomeComponent setIncomes={setIncomes} />
       <FilteringIncomesComponent

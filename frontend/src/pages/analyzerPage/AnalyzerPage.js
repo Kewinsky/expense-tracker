@@ -228,7 +228,7 @@ const AnalyzerPage = () => {
   }, [isYear, range]);
 
   return (
-    <div className="mb-5">
+    <div>
       <SwitchMonthComponent
         months={months}
         month={month}
@@ -250,8 +250,8 @@ const AnalyzerPage = () => {
       />
       <SeparatorComponent />
       <Container>
-        <Row className="justify-content-center" md={1} xl={2}>
-          <Col className="p-4">
+        <Row className="justify-content-center" md={1} lg={2}>
+          <Col className="col-12 py-3 py-md-4 px-0 px-lg-4">
             <TotalOutcomeComponent
               chartData={lineChartData}
               range={range}
@@ -261,7 +261,7 @@ const AnalyzerPage = () => {
               periodable={true}
             />
           </Col>
-          <Col className="p-4">
+          <Col className="col-12 py-3 py-md-4 px-0 px-lg-4">
             <CategoriesSummaryComponent
               barChartData={barChartData}
               expensesOfYear={expensesOfYear}
@@ -270,14 +270,14 @@ const AnalyzerPage = () => {
               year={year}
             />
           </Col>
-          <Col className="p-4">
+          <Col className="col-12 py-3 py-md-4 px-0 px-lg-4">
             <UtilitiesComponent
               lineChartData={utilitiesChartData}
               expenses={expensesOfYear}
               month={month}
             />
           </Col>
-          <Col className="p-4">
+          <Col className="col-12 py-3 py-md-4 px-0 px-lg-4">
             <NoteComponent
               note={notes.find((note) => note.month === month)}
               getNotes={getNotes}

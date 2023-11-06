@@ -6,6 +6,7 @@ import CategoryService from "../../services/categoryService";
 import { useDeleteItem } from "../../hooks/useDeleteItem";
 import { categoriesTableHeaders } from "../../helpers/tableHeaders";
 import AddCategoryComponent from "../../components/addComponent/AddCategoryComponent";
+import HeaderComponent from "../../components/headerComponent/HeaderComponent";
 
 const UserCategoriesPage = () => {
   const [categories, setCategories] = useState([]);
@@ -36,9 +37,7 @@ const UserCategoriesPage = () => {
 
   return (
     <>
-      <div className="m-5 text-center">
-        <h3>Manage Categories</h3>
-      </div>
+      <HeaderComponent header={"Manage Categories"} />
       <SeparatorComponent />
       <AddCategoryComponent
         categories={categories}

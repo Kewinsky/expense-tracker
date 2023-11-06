@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const HomePage = () => {
   return (
-    <div className="container my-5">
+    <div className="pt-3">
       <h1>Welcome to Spendee</h1>
       <h4>
         don't hesitate to add new expense{" "}

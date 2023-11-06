@@ -43,9 +43,9 @@ const SidebarComponent = () => {
         >
           <img
             src={logo}
-            height="30"
+            height="33"
             alt="Spendee Logo"
-            className="mt-4 d-none d-sm-inline"
+            className="mt-3 d-none d-sm-inline"
           />
         </a>
         <hr className="d-none d-sm-block" />
@@ -126,11 +126,11 @@ const SidebarComponent = () => {
         </ul>
       </div>
       {currentUser && (
-        <div className="dropdown mb-4">
+        <div className="dropdown mb-3">
           <hr className="d-none d-sm-block" />
           <a
             href="/"
-            className="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
+            className="d-flex align-items-center text-white text-decoration-none dropdown-toggle px-2"
             data-bs-toggle="dropdown"
             aria-expanded="false"
           >

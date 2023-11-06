@@ -15,7 +15,7 @@ const PaginationComponent = ({
 
   return (
     <ul
-      className={`pagination justify-content-center ${
+      className={`pagination justify-content-center m-0 pb-3 ${
         theme === "dark" ? "dark-pagination" : ""
       }`}
     >
