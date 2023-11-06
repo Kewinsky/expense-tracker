@@ -20,6 +20,7 @@ public class Note {
 
     private int month;
 
+    @Column(length = 1000)
     private String note;
 
     private Long userId;
