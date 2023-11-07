@@ -6,6 +6,7 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import IncomeService from "../../services/incomeService";
 import SpinnerComponent from "../spinnerComponent/SpinnerComponent";
+import { selectItemToUpdate } from "../../helpers/selectItemToUpdate";
 
 const UpdateIncomeComponent = ({ incomes }) => {
   const { id: incomeId } = useParams();
@@ -13,9 +14,7 @@ const UpdateIncomeComponent = ({ incomes }) => {
   const { theme } = useContext(ThemeContext);
   const reversedTheme = theme === "dark" ? "light" : "dark";
 
-  const selectedIncome = incomes.find((item) => {
-    return item.id === parseInt(incomeId);
-  });
+  const selectedIncome = selectItemToUpdate(incomes, incomeId);
 
   const [date, setDate] = useState("");
   const [value, setValue] = useState("");

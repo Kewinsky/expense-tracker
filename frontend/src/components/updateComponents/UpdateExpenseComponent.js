@@ -14,17 +14,11 @@ import { selectItemToUpdate } from "../../helpers/selectItemToUpdate";
 
 const UpdateExpenseComponent = () => {
   const { id: expenseId } = useParams();
-  const navigate = useNavigate();
 
   const { theme, expenses, setExpenses } = useContext(ThemeContext);
   const reversedTheme = theme === "dark" ? "light" : "dark";
 
-  // const selectedExpense = expenses.find((item) => {
-  //   return item.id === parseInt(expenseId);
-  // });
-
-  const selectedExpense = selectItemToUpdate(expenses, expenseId, navigate);
-  console.log(selectedExpense);
+  const selectedExpense = selectItemToUpdate(expenses, expenseId);
 
   const [categories, setCategories] = useState([]);
 

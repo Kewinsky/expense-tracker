@@ -1,11 +1,11 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { Button, Card } from "react-bootstrap";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { ThemeContext } from "../../App";
 import SpinnerComponent from "../spinnerComponent/SpinnerComponent";
 import Form from "react-bootstrap/Form";
+import { selectItemToUpdate } from "../../helpers/selectItemToUpdate";
 import CategoryService from "../../services/categoryService";
-import { validateUser } from "../../helpers/selectItemToUpdate";
 
 const UpdateCategoryComponent = ({ categories }) => {
   const { id: categoryId } = useParams();
@@ -13,9 +13,7 @@ const UpdateCategoryComponent = ({ categories }) => {
   const { theme } = useContext(ThemeContext);
   const reversedTheme = theme === "dark" ? "light" : "dark";
 
-  const selectedCategory = categories.find((item) => {
-    return item.id === parseInt(categoryId);
-  });
+  const selectedCategory = selectItemToUpdate(categories, categoryId);
 
   const [title, setTitle] = useState("");
 
