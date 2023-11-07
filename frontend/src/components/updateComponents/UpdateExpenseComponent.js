@@ -1,6 +1,6 @@
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import { Link, useParams, useNavigate } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useState, useContext, useEffect } from "react";
 import { dropdownCategory } from "../../helpers/dropdownData";
 import SelectComponent from "../selectComponent/SelectComponent";
@@ -94,10 +94,6 @@ const UpdateExpenseComponent = () => {
 
     setCategories(response.data);
   };
-
-  // useEffect(() => {
-  //   validateUser(selectedExpense?.userId, navigate);
-  // }, []);
 
   useEffect(() => {
     getCategoriesByUser();
