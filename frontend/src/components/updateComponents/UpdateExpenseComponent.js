@@ -1,6 +1,6 @@
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useState, useContext, useEffect } from "react";
 import { dropdownCategory } from "../../helpers/dropdownData";
 import SelectComponent from "../selectComponent/SelectComponent";
@@ -14,6 +14,7 @@ import { selectItemToUpdate } from "../../helpers/selectItemToUpdate";
 
 const UpdateExpenseComponent = () => {
   const { id: expenseId } = useParams();
+  const navigate = useNavigate();
 
   const { theme, expenses, setExpenses } = useContext(ThemeContext);
   const reversedTheme = theme === "dark" ? "light" : "dark";
@@ -103,7 +104,11 @@ const UpdateExpenseComponent = () => {
     if (selectedExpense) {
       handleSetDefaults();
     }
-  }, [selectedExpense, categories]);
+
+    if (expenses.length && !selectedExpense) {
+      navigate("/error");
+    }
+  }, [selectedExpense, expenses, categories]);
 
   return (
     <Card className={`bg-${theme}`}>

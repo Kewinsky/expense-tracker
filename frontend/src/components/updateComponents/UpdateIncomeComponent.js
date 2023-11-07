@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { ThemeContext } from "../../App";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { Card } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
@@ -10,6 +10,7 @@ import { selectItemToUpdate } from "../../helpers/selectItemToUpdate";
 
 const UpdateIncomeComponent = ({ incomes }) => {
   const { id: incomeId } = useParams();
+  const navigate = useNavigate();
 
   const { theme } = useContext(ThemeContext);
   const reversedTheme = theme === "dark" ? "light" : "dark";
@@ -66,7 +67,11 @@ const UpdateIncomeComponent = ({ incomes }) => {
     if (selectedIncome) {
       handleSetDefaults();
     }
-  }, [selectedIncome]);
+
+    if (incomes.length && !selectedIncome) {
+      navigate("/error");
+    }
+  }, [selectedIncome, incomes]);
 
   return (
     <Card className={`bg-${theme}`}>
