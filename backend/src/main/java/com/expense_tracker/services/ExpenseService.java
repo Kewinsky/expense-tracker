@@ -35,6 +35,7 @@ public class ExpenseService {
                 response.setCategory(category.getTitle());
             }
             response.setDate(expense.getDate());
+            response.setUserId(expense.getUserId());
 
             expensesWithCategory.add(response);
         }

@@ -1,22 +1,22 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { Button, Card } from "react-bootstrap";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { ThemeContext } from "../../App";
 import SpinnerComponent from "../spinnerComponent/SpinnerComponent";
 import Form from "react-bootstrap/Form";
+import { selectItemToUpdate } from "../../helpers/selectItemToUpdate";
 import CategoryService from "../../services/categoryService";
 
 const UpdateCategoryComponent = ({ categories }) => {
   const { id: categoryId } = useParams();
+  const navigate = useNavigate();
 
   const { theme } = useContext(ThemeContext);
   const reversedTheme = theme === "dark" ? "light" : "dark";
 
-  const selectedCategory = categories.find((item) => {
-    return item.id === parseInt(categoryId);
-  });
+  const selectedCategory = selectItemToUpdate(categories, categoryId);
 
-  const [title, setTitle] = useState(selectedCategory?.title);
+  const [title, setTitle] = useState("");
 
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
@@ -55,7 +55,11 @@ const UpdateCategoryComponent = ({ categories }) => {
     if (selectedCategory) {
       setTitle(selectedCategory.title);
     }
-  }, [selectedCategory]);
+
+    if (categories.length && !selectedCategory) {
+      navigate("/error");
+    }
+  }, [selectedCategory, categories]);
 
   return (
     <Card className={`bg-${theme}`}>
@@ -66,7 +70,7 @@ const UpdateCategoryComponent = ({ categories }) => {
           <Form.Control
             required
             onChange={handleInputTitle}
-            value={title || ""}
+            value={title}
             type="text"
             className={`${theme}Theme`}
           />

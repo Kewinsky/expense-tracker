@@ -1,6 +1,6 @@
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useState, useContext, useEffect } from "react";
 import { dropdownCategory } from "../../helpers/dropdownData";
 import SelectComponent from "../selectComponent/SelectComponent";
@@ -10,15 +10,18 @@ import SpinnerComponent from "../spinnerComponent/SpinnerComponent";
 import CategoryService from "../../services/categoryService";
 import ExpenseService from "../../services/expenseService";
 import { reloadData } from "../../helpers/reloadData";
+import { selectItemToUpdate } from "../../helpers/selectItemToUpdate";
 
 const UpdateExpenseComponent = () => {
   const { id: expenseId } = useParams();
+  const navigate = useNavigate();
 
   const { theme, expenses, setExpenses } = useContext(ThemeContext);
   const reversedTheme = theme === "dark" ? "light" : "dark";
 
+  const selectedExpense = selectItemToUpdate(expenses, expenseId);
+
   const [categories, setCategories] = useState([]);
-  const [selectedExpense, setSelectedExpense] = useState(null);
 
   const [date, setDate] = useState("");
   const [title, setTitle] = useState("");
@@ -98,17 +101,14 @@ const UpdateExpenseComponent = () => {
   }, []);
 
   useEffect(() => {
-    const foundExpense = expenses.find(
-      (item) => item.id === parseInt(expenseId)
-    );
-    setSelectedExpense(foundExpense);
-  }, [expenses, expenseId]);
-
-  useEffect(() => {
     if (selectedExpense) {
       handleSetDefaults();
     }
-  }, [selectedExpense, categories]);
+
+    if (expenses.length && !selectedExpense) {
+      navigate("/error");
+    }
+  }, [selectedExpense, expenses, categories]);
 
   return (
     <Card className={`bg-${theme}`}>
