@@ -32,7 +32,7 @@ const updateCurrentUser = async (newUser) => {
   localStorage.setItem("user", JSON.stringify(user));
 
   return await axios
-    .put(API_URL + `updateUser/${user.id}`, newUser, {
+    .put(API_URL + `updateProfile/${user.id}`, newUser, {
       headers: authHeader(),
     })
     .then((res) => {
@@ -51,7 +51,7 @@ const updateCurrentUser = async (newUser) => {
 
 const updateUserByAdmin = async (id, newUser) => {
   return await axios
-    .put(API_URL + `updateUserByAdmin/${id}`, newUser, {
+    .put(API_URL + `updateUser/${id}`, newUser, {
       headers: authHeader(),
     })
     .then((res) => {

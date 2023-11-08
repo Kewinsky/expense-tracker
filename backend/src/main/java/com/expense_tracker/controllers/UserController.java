@@ -39,7 +39,7 @@ public class UserController {
     }
 
     @PreAuthorize("hasRole('USER')")
-    @PutMapping("updateUser/{id}")
+    @PutMapping("updateProfile/{id}")
     String updateUser(@RequestBody User user,
                       @PathVariable Long id) {
 
@@ -53,7 +53,7 @@ public class UserController {
                 .orElseThrow(() -> new UserNotFoundException(id));
     }
 
-    @PutMapping("updateUserByAdmin/{id}")
+    @PutMapping("updateUser/{id}")
     String updateUserByAdmin(@RequestBody SignupRequest user,
                              @PathVariable Long id) {
         return userRepository.findById(id)
