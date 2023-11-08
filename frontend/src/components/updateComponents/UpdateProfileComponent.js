@@ -43,7 +43,7 @@ const UpdateProfileComponent = () => {
     setTimeout(() => {
       UserService.updateCurrentUser(updatedUser)
         .then(() => {
-          setMessage("User updated successfully");
+          setMessage("Profile updated successfully.");
         })
         .catch((err) => {
           setError(err.message);
@@ -89,7 +89,7 @@ const UpdateProfileComponent = () => {
                 variant={`outline-${reversedTheme}`}
                 type="submit"
                 className="w-100 mt-2"
-                href="/profile"
+                href="/settings"
               >
                 Cancel
               </Button>
@@ -103,7 +103,7 @@ const UpdateProfileComponent = () => {
               {message}
             </div>
             <div className="mt-5 text-center">
-              <Link to={"/profile"} className={`link-${reversedTheme} `}>
+              <Link to={"/settings"} className={`link-${reversedTheme} `}>
                 Back
               </Link>
             </div>

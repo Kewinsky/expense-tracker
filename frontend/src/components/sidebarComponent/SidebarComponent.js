@@ -135,16 +135,14 @@ const SidebarComponent = () => {
             aria-expanded="false"
           >
             <BsPersonCircle />
-            <span className="ms-2 d-none d-sm-inline">
-              {currentUser.username}
-            </span>
+            <span className="ms-2 d-none d-sm-inline">Profile</span>
           </a>
           <ul className="dropdown-menu dropdown-menu-dark text-small shadow">
-            <li>
+            {/* <li>
               <a className="dropdown-item" href="/profile">
                 Profile
               </a>
-            </li>
+            </li> */}
             <li>
               <a className="dropdown-item" href="/settings">
                 Settings
