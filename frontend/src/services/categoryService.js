@@ -69,7 +69,7 @@ const deleteCategory = async (id) => {
       headers: authHeader(),
     })
     .then((res) => {
-      return res.data.message;
+      return res.data;
     })
     .catch((err) => {
       if (err) {

@@ -126,7 +126,7 @@ const AnalyzerPage = () => {
     }
   };
 
-  const mountLineChartData = (data, label) => {
+  const mountLineChartData = (data) => {
     if (data.length) {
       setLineChartData({
         labels: data.map((item) => item.label),

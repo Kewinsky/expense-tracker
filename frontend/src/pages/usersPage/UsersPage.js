@@ -56,7 +56,7 @@ const UserManagementPage = () => {
     } else {
       getUsers();
     }
-  }, []);
+  }, [users]);
 
   return (
     <>
