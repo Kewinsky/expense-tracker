@@ -3,7 +3,7 @@ import { BsArrowLeft, BsArrowRight } from "react-icons/bs";
 import { sumAllByMonth } from "../../helpers/summingMethods";
 import { useContext } from "react";
 import { ThemeContext } from "../../App";
-import { getYearArray } from "../../helpers/yearData";
+import { getYearArray } from "../../utils/yearData";
 import { Button } from "react-bootstrap";
 
 const SwitchMonthComponent = ({

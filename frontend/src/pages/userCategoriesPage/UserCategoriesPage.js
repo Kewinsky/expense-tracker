@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import SeparatorComponent from "../../components/separatorComponent/SeparatorComponent";
 import TableComponent from "../../components/tableComponent/TableComponent";
-import { updateCategoryURL } from "../../helpers/updateURL";
+import { updateCategoryURL } from "../../utils/updateURL";
 import CategoryService from "../../services/categoryService";
 import { useDeleteItem } from "../../hooks/useDeleteItem";
-import { categoriesTableHeaders } from "../../helpers/tableHeaders";
+import { categoriesTableHeaders } from "../../utils/tableHeaders";
 import AddCategoryComponent from "../../components/addComponent/AddCategoryComponent";
 import HeaderComponent from "../../components/headerComponent/HeaderComponent";
 

@@ -4,9 +4,9 @@ import SeparatorComponent from "../../components/separatorComponent/SeparatorCom
 import TableComponent from "../../components/tableComponent/TableComponent";
 import IncomeService from "../../services/incomeService";
 import { useDeleteItem } from "../../hooks/useDeleteItem";
-import { incomesTableHeaders } from "../../helpers/tableHeaders";
-import { updateIncomeURL } from "../../helpers/updateURL";
-import { months } from "../../helpers/monthsData";
+import { incomesTableHeaders } from "../../utils/tableHeaders";
+import { updateIncomeURL } from "../../utils/updateURL";
+import { months } from "../../utils/monthsData";
 import FilteringIncomesComponent from "../../components/filteringComponent/FilteringIncomesComponent";
 import { filterByYearAndMonth } from "../../helpers/filteringMethods";
 import HeaderComponent from "../../components/headerComponent/HeaderComponent";

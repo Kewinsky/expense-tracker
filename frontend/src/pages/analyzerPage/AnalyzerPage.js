@@ -20,7 +20,7 @@ import {
   filterByYearAndMonth,
 } from "../../helpers/filteringMethods";
 import NoteService from "../../services/noteService";
-import { months } from "../../helpers/monthsData";
+import { months } from "../../utils/monthsData";
 import { ThemeContext } from "../../App";
 import IncomeService from "../../services/incomeService";
 import TotalOutcomeComponent from "../../components/totalOutcomeComponent/TotalOutcomeComponent";
@@ -77,7 +77,7 @@ const AnalyzerPage = () => {
     labels: totalOutcomesByMonth.map((item) => item.label),
     datasets: [
       {
-        label: "Total Year",
+        label: "Total Outcome",
         data: totalOutcomesByMonth.map((data) => data.total),
       },
     ],
@@ -132,7 +132,7 @@ const AnalyzerPage = () => {
         labels: data.map((item) => item.label),
         datasets: [
           {
-            label: label,
+            label: "Total Outcome",
             data: data.map((data) => data.total),
           },
         ],
@@ -164,9 +164,9 @@ const AnalyzerPage = () => {
 
   const mountSummaryData = () => {
     if (isYear) {
-      mountLineChartData(totalOutcomesByMonth, "Total Outcome by Year");
+      mountLineChartData(totalOutcomesByMonth);
     } else {
-      mountLineChartData(totalOutcomesByRange, "Total Outcome by Month");
+      mountLineChartData(totalOutcomesByRange);
     }
   };
 

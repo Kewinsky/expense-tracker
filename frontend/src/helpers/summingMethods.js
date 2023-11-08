@@ -1,4 +1,4 @@
-import { months } from "./monthsData";
+import { months } from "../utils/monthsData";
 
 // Purpose: sum up values of items by month and
 // return array with month name and total value

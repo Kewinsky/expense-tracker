@@ -4,7 +4,7 @@ import { useEffect, useContext } from "react";
 import { dropdownData } from "../../helpers/dropdownData";
 import SelectComponent from "../selectComponent/SelectComponent";
 import { ThemeContext } from "../../App";
-import { getYearArray } from "../../helpers/yearData";
+import { getYearArray } from "../../utils/yearData";
 
 const FilteringIncomesComponent = ({
   month,

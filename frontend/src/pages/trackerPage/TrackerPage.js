@@ -4,9 +4,9 @@ import SeparatorComponent from "../../components/separatorComponent/SeparatorCom
 import TableComponent from "../../components/tableComponent/TableComponent";
 import ExpenseService from "../../services/expenseService";
 import { expenseFilter } from "../../helpers/filteringMethods";
-import { months } from "../../helpers/monthsData";
-import { trackerTableHeaders } from "../../helpers/tableHeaders";
-import { updateExpenseURL } from "../../helpers/updateURL";
+import { months } from "../../utils/monthsData";
+import { trackerTableHeaders } from "../../utils/tableHeaders";
+import { updateExpenseURL } from "../../utils/updateURL";
 import { useDeleteItem } from "../../hooks/useDeleteItem";
 import { ThemeContext } from "../../App";
 import CategoryService from "../../services/categoryService";
