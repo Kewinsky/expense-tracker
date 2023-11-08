@@ -8,7 +8,7 @@ import { categoriesTableHeaders } from "../../utils/tableHeaders";
 import AddCategoryComponent from "../../components/addComponent/AddCategoryComponent";
 import HeaderComponent from "../../components/headerComponent/HeaderComponent";
 
-const UserCategoriesPage = () => {
+const CategoriesPage = () => {
   const [categories, setCategories] = useState([]);
 
   const [isPending, setIsPending] = useState(true);
@@ -57,4 +57,4 @@ const UserCategoriesPage = () => {
   );
 };
 
-export default UserCategoriesPage;
+export default CategoriesPage;

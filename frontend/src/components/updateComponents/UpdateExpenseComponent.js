@@ -174,7 +174,7 @@ const UpdateExpenseComponent = () => {
                 variant={`outline-${reversedTheme}`}
                 type="submit"
                 className="w-100 mt-2"
-                href="/tracker"
+                href="/expenses"
               >
                 Cancel
               </Button>
@@ -187,7 +187,7 @@ const UpdateExpenseComponent = () => {
               {message}
             </div>
             <div className="mt-5 text-center">
-              <Link to={"/tracker"} className={`link-${reversedTheme} `}>
+              <Link to={"/expenses"} className={`link-${reversedTheme} `}>
                 Back
               </Link>
             </div>

@@ -61,7 +61,7 @@ const RegisterComponent = () => {
     e.preventDefault();
 
     AuthService.login(username, password).then(() => {
-      navigate("/tracker");
+      navigate("/expenses");
       window.location.reload();
     });
   };

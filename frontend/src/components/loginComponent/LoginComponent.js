@@ -86,7 +86,7 @@ const LoginComponent = () => {
             </Link>
           </div>
           <div className="mb-5 col-12 col-md-6 text-md-end">
-            <Link to={"/forgotPassword"} className={`link-${reversedTheme} `}>
+            <Link to={"/resetPassword"} className={`link-${reversedTheme} `}>
               Forgot password
             </Link>
           </div>

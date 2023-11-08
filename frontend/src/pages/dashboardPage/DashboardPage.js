@@ -7,7 +7,7 @@ import CategoriesSummaryComponent from "../../components/categoriesSummaryCompon
 import { Chart as ChartJS } from "chart.js/auto";
 import UtilitiesComponent from "../../components/utilitiesComponent/UtilitiesComponent";
 import { Col, Container, Row } from "react-bootstrap";
-import "./analyzerPage.scss";
+import "./dashboardPage.scss";
 import {
   sumAllMonths,
   sumAllCategories,
@@ -24,9 +24,9 @@ import { months } from "../../utils/monthsData";
 import { ThemeContext } from "../../App";
 import IncomeService from "../../services/incomeService";
 import TotalOutcomeComponent from "../../components/totalOutcomeComponent/TotalOutcomeComponent";
-import "./analyzerPage.scss";
+import "./dashboardPage.scss";
 
-const AnalyzerPage = () => {
+const DashboardPage = () => {
   const currentDate = new Date();
   const { expenses } = useContext(ThemeContext);
 
@@ -291,4 +291,4 @@ const AnalyzerPage = () => {
   );
 };
 
-export default AnalyzerPage;
+export default DashboardPage;

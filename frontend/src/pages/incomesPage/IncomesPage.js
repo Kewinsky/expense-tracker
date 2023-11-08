@@ -11,7 +11,7 @@ import FilteringIncomesComponent from "../../components/filteringComponent/Filte
 import { filterByYearAndMonth } from "../../helpers/filteringMethods";
 import HeaderComponent from "../../components/headerComponent/HeaderComponent";
 
-const IncomePage = () => {
+const IncomesPage = () => {
   const currentDate = new Date();
 
   const [incomes, setIncomes] = useState([]);
@@ -84,4 +84,4 @@ const IncomePage = () => {
   );
 };
 
-export default IncomePage;
+export default IncomesPage;

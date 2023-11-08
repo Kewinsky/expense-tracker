@@ -13,7 +13,7 @@ import CategoryService from "../../services/categoryService";
 import AddExpenseComponent from "../../components/addComponent/AddExpenseComponent";
 import HeaderComponent from "../../components/headerComponent/HeaderComponent";
 
-const TrackerPage = () => {
+const ExpensesPage = () => {
   const { expenses, setExpenses } = useContext(ThemeContext);
   const currentDate = new Date();
 
@@ -100,4 +100,4 @@ const TrackerPage = () => {
   );
 };
 
-export default TrackerPage;
+export default ExpensesPage;

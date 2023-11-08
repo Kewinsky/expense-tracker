@@ -9,7 +9,7 @@ import SeparatorComponent from "../../components/separatorComponent/SeparatorCom
 import AuthService from "../../services/authService";
 import HeaderComponent from "../../components/headerComponent/HeaderComponent";
 
-const UserManagementPage = () => {
+const UsersPage = () => {
   const roleMapping = {
     ROLE_USER: "User",
     ROLE_ADMIN: "Admin",
@@ -75,4 +75,4 @@ const UserManagementPage = () => {
   );
 };
 
-export default UserManagementPage;
+export default UsersPage;

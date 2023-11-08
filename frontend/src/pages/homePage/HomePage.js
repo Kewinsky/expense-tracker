@@ -7,7 +7,7 @@ const HomePage = () => {
       <h1>Welcome to Spendee</h1>
       <h4>
         don't hesitate to add new expense{" "}
-        <Link to={"/tracker"} className="link-success">
+        <Link to={"/expenses"} className="link-success">
           <BsArrowRightCircleFill />
         </Link>
       </h4>

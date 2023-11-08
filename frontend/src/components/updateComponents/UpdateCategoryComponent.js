@@ -87,7 +87,7 @@ const UpdateCategoryComponent = ({ categories }) => {
                 variant={`outline-${reversedTheme}`}
                 type="submit"
                 className="w-100 mt-2"
-                href="/userCategories"
+                href="/categories"
               >
                 Cancel
               </Button>
@@ -101,7 +101,7 @@ const UpdateCategoryComponent = ({ categories }) => {
               {message}
             </div>
             <div className="mt-5 text-center">
-              <Link to={"/userCategories"} className={`link-${reversedTheme} `}>
+              <Link to={"/categories"} className={`link-${reversedTheme} `}>
                 Back
               </Link>
             </div>
