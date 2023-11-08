@@ -14,6 +14,12 @@ import {
   BsFillPieChartFill,
 } from "react-icons/bs";
 import PieChartComponent from "../pieChartComponent/PieChartComponent";
+import TooltipComponent from "../tooltipComponent/TooltipComponent";
+import {
+  categoriesAverageMessage,
+  categoriesPercentageMessage,
+  categoriesValueMessage,
+} from "../../utils/toolipMassages";
 
 const CategoriesSummaryComponent = ({
   barChartData,
@@ -89,9 +95,30 @@ const CategoriesSummaryComponent = ({
             <thead>
               <tr className={`${borderColor}-row-color`}>
                 <th>Title</th>
-                <th>Value</th>
-                <th>Average</th>
-                <th>[%]</th>
+                <th>
+                  <TooltipComponent
+                    placement={"top"}
+                    message={categoriesValueMessage}
+                  >
+                    Value
+                  </TooltipComponent>
+                </th>
+                <th>
+                  <TooltipComponent
+                    placement={"top"}
+                    message={categoriesAverageMessage}
+                  >
+                    Average
+                  </TooltipComponent>
+                </th>
+                <th>
+                  <TooltipComponent
+                    placement={"top"}
+                    message={categoriesPercentageMessage}
+                  >
+                    [%]
+                  </TooltipComponent>
+                </th>
               </tr>
             </thead>
             <tbody>

@@ -6,6 +6,12 @@ import { useContext, useState } from "react";
 import { Button, Card } from "react-bootstrap";
 import LineChartComponent from "../lineChartComponent/LineChartComponent";
 import { BsTable, BsFillBarChartFill } from "react-icons/bs";
+import TooltipComponent from "../tooltipComponent/TooltipComponent";
+import {
+  utilitiesCurrMessage,
+  utilitiesPercentageMessage,
+  utilitiesPrevMessage,
+} from "../../utils/toolipMassages";
 
 const UtilitiesComponent = ({ lineChartData, expenses, month }) => {
   const { theme } = useContext(ThemeContext);
@@ -48,9 +54,30 @@ const UtilitiesComponent = ({ lineChartData, expenses, month }) => {
             <thead>
               <tr className={`${borderColor}-row-color`}>
                 <th></th>
-                <th>Curr</th>
-                <th>Prev</th>
-                <th>[%]</th>
+                <th>
+                  <TooltipComponent
+                    placement={"top"}
+                    message={utilitiesCurrMessage}
+                  >
+                    Curr
+                  </TooltipComponent>
+                </th>
+                <th>
+                  <TooltipComponent
+                    placement={"top"}
+                    message={utilitiesPrevMessage}
+                  >
+                    Prev
+                  </TooltipComponent>
+                </th>
+                <th>
+                  <TooltipComponent
+                    placement={"top"}
+                    message={utilitiesPercentageMessage}
+                  >
+                    [%]
+                  </TooltipComponent>
+                </th>
               </tr>
             </thead>
             <tbody>
