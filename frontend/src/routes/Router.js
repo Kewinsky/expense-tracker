@@ -15,10 +15,10 @@ import UpdateProfilePage from "../pages/updatePages/UpdateProfilePage";
 import UpdateUserPage from "../pages/updatePages/UpdateUserPage";
 import ForgotPasswordPage from "../pages/forgotPasswordPage/ForgotPasswordPage";
 import UpdateCategoryPage from "../pages/updatePages/UpdateCategoryPage";
-import CategoriesPage from "../pages/categoriesPage/CategoriesPage";
 import IncomesPage from "../pages/incomesPage/IncomesPage";
 import SettingsPage from "../pages/settingsPage/SettingsPage";
 import UpdateIncomePage from "../pages/updatePages/UpdateIncomePage";
+import CategoriesPage from "../pages/categoriesPage/CategoriesPage";
 
 export const Router = () => {
   const appName = "Spendee";
