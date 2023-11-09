@@ -1,4 +1,4 @@
-// Purpose: prepare data for SelectComponent
+// Purpose: prepare data for SelectComponent from any 1D array
 export const dropdownData = (items) => {
   return items.map((item) => ({
     value: item,

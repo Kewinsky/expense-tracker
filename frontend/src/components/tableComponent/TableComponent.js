@@ -2,12 +2,12 @@ import { useMemo, useState, useContext } from "react";
 import Table from "react-bootstrap/Table";
 import ActionButtonsComponents from "./ActionButtonsComponent";
 import SpinnerComponent from "../spinnerComponent/SpinnerComponent";
-import "./sortableTableComponent.scss";
+import "./tableComponent.scss";
 import { Button, Form } from "react-bootstrap";
 import { ThemeContext } from "../../App";
 import SelectComponent from "../selectComponent/SelectComponent";
 import { dropdownData } from "../../helpers/dropdownData";
-import PaginationComponent from "../paginationComponent/PaginationComponent";
+import PaginationComponent from "./PaginationComponent";
 
 const useSortableData = (recordsList, config = null) => {
   const [sortConfig, setSortConfig] = useState(config);

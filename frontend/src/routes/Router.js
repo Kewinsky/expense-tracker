@@ -13,7 +13,7 @@ import ProtectedRoute from "./ProtectedRoute";
 import UpdateExpensePage from "../pages/updatePages/UpdateExpensePage";
 import UpdateProfilePage from "../pages/updatePages/UpdateProfilePage";
 import UpdateUserPage from "../pages/updatePages/UpdateUserPage";
-import ForgotPasswordPage from "../pages/forgotPasswordPage/ForgotPasswordPage";
+import ResetPasswordPage from "../pages/resetPasswordPage/ResetPasswordPage";
 import UpdateCategoryPage from "../pages/updatePages/UpdateCategoryPage";
 import IncomesPage from "../pages/incomesPage/IncomesPage";
 import SettingsPage from "../pages/settingsPage/SettingsPage";
@@ -53,7 +53,7 @@ export const Router = () => {
         path="/resetPassword"
         element={
           <MainLayout pageTitle={`${appName} | Reset Password`}>
-            <ForgotPasswordPage />
+            <ResetPasswordPage />
           </MainLayout>
         }
       />

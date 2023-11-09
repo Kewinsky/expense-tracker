@@ -1,31 +1,24 @@
 import SimplePage from "../simplePage/SimplePage";
+import { useRef, useContext, useState } from "react";
 import Button from "react-bootstrap/Button";
-import { useState, useRef, useContext } from "react";
-import AuthService from "../../services/authService";
-import { Form, Card } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import Form from "react-bootstrap/Form";
+import { Card } from "react-bootstrap";
 import { ThemeContext } from "../../App";
+import AuthService from "../../services/authService";
 import SpinnerComponent from "../../components/spinnerComponent/SpinnerComponent";
+import { Link } from "react-router-dom";
 
-const RegisterPage = () => {
+const ResetPasswordPage = () => {
   const { theme } = useContext(ThemeContext);
   const reversedTheme = theme === "dark" ? "light" : "dark";
 
   const form = useRef();
 
-  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const [isPending, setIsPending] = useState(false);
-
-  const navigate = useNavigate();
-
-  const onChangeUsername = (e) => {
-    const username = e.target.value;
-    setUsername(username);
-  };
 
   const onChangeEmail = (e) => {
     const email = e.target.value;
@@ -37,7 +30,12 @@ const RegisterPage = () => {
     setPassword(password);
   };
 
-  const handleRegister = (e) => {
+  const newPassword = {
+    email,
+    password,
+  };
+
+  const handleUpdatePassword = async (e) => {
     e.preventDefault();
 
     setMessage("");
@@ -45,9 +43,9 @@ const RegisterPage = () => {
     setIsPending(true);
 
     setTimeout(() => {
-      AuthService.register(username, email, password)
+      AuthService.forgotPassword(newPassword)
         .then(() => {
-          setMessage("New user registered successfully");
+          setMessage("Password updated successfully");
         })
         .catch((err) => {
           setError(err.message);
@@ -58,34 +56,13 @@ const RegisterPage = () => {
     }, 1000);
   };
 
-  const handleLogin = (e) => {
-    e.preventDefault();
-
-    AuthService.login(username, password).then(() => {
-      navigate("/expenses");
-      window.location.reload();
-    });
-  };
-
   return (
     <SimplePage>
       <Card className={`bg-${theme}`}>
-        <Card.Header>Register new account</Card.Header>
-        <Form onSubmit={handleRegister} ref={form} className="m-5">
+        <Card.Header>Login</Card.Header>
+        <Form onSubmit={handleUpdatePassword} ref={form} className="m-5">
           <Form.Group className="mb-3">
-            <Form.Label>Username</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Enter username"
-              required
-              value={username}
-              onChange={onChangeUsername}
-              className={`${theme}Theme`}
-              disabled={message}
-            />
-          </Form.Group>
-          <Form.Group className="mb-3">
-            <Form.Label>Email address</Form.Label>
+            <Form.Label>Email</Form.Label>
             <Form.Control
               type="email"
               placeholder="Enter email"
@@ -96,8 +73,9 @@ const RegisterPage = () => {
               disabled={message}
             />
           </Form.Group>
+
           <Form.Group className="mb-5">
-            <Form.Label>Password</Form.Label>
+            <Form.Label>New password</Form.Label>
             <Form.Control
               type="password"
               placeholder="Enter password"
@@ -112,7 +90,7 @@ const RegisterPage = () => {
             {isPending && <SpinnerComponent />}
             {!isPending && !message && (
               <Button variant={`outline-${reversedTheme}`} type="submit">
-                Sign Up
+                Reset password
               </Button>
             )}
           </Form.Group>
@@ -122,21 +100,16 @@ const RegisterPage = () => {
                 {message}
               </div>
               <div className="mt-5 text-center">
-                <Button
-                  variant={`outline-${reversedTheme}`}
-                  onClick={handleLogin}
-                >
-                  Start tracking!
-                </Button>
+                <Link to={"/login"} className={`link-${reversedTheme} `}>
+                  Back
+                </Link>
               </div>
             </Form.Group>
           )}
           {error && (
             <Form.Group className="mt-5">
-              <div className="form-group">
-                <div className="alert alert-danger m-0" role="alert">
-                  {error}
-                </div>
+              <div className="alert alert-danger m-0" role="alert">
+                {error}
               </div>
             </Form.Group>
           )}
@@ -146,4 +119,4 @@ const RegisterPage = () => {
   );
 };
 
-export default RegisterPage;
+export default ResetPasswordPage;
