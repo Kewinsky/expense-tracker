@@ -10,6 +10,7 @@ import HeaderComponent from "../../components/headerComponent/HeaderComponent";
 
 const CategoriesPage = () => {
   const [categories, setCategories] = useState([]);
+  console.log("dupa");
 
   const [isPending, setIsPending] = useState(true);
   const [error, setError] = useState(null);
