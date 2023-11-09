@@ -56,7 +56,7 @@ const UsersPage = () => {
     } else {
       getUsers();
     }
-  }, [users]);
+  }, []);
 
   return (
     <>
