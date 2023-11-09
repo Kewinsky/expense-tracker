@@ -54,7 +54,7 @@ const SidebarComponent = () => {
             <>
               <li className="nav-item">
                 <a
-                  href="/analyzer"
+                  href="/dashboard"
                   className="nav-link text-white px-sm-2 pt-sm-2 p-2 mt-sm-0 mt-4"
                 >
                   <div className="d-flex align-items-center flex-nowrap">
@@ -65,7 +65,7 @@ const SidebarComponent = () => {
               </li>
               <li className="nav-item">
                 <a
-                  href="/tracker"
+                  href="/expenses"
                   className="nav-link text-white px-sm-2 p-2 mt-sm-0 mt-2"
                 >
                   <div className="d-flex align-items-center flex-nowrap">
@@ -76,7 +76,7 @@ const SidebarComponent = () => {
               </li>
               <li className="nav-item">
                 <a
-                  href="/userIncomes"
+                  href="/incomes"
                   className="nav-link text-white px-sm-2 p-2 mt-sm-0 mt-2"
                 >
                   <div className="d-flex align-items-center flex-nowrap">
@@ -87,7 +87,7 @@ const SidebarComponent = () => {
               </li>
               <li className="nav-item">
                 <a
-                  href="/userCategories"
+                  href="/categories"
                   className="nav-link text-white px-sm-2 p-2 mt-sm-0 mt-2"
                 >
                   <div className="d-flex align-items-center flex-nowrap">
@@ -113,7 +113,7 @@ const SidebarComponent = () => {
           {isAdmin && (
             <li className="nav-item">
               <a
-                href="/userManagement"
+                href="/users"
                 className="nav-link text-white px-sm-2 p-2 mt-sm-0 mt-2"
               >
                 <div className="d-flex align-items-center flex-nowrap">
@@ -135,16 +135,14 @@ const SidebarComponent = () => {
             aria-expanded="false"
           >
             <BsPersonCircle />
-            <span className="ms-2 d-none d-sm-inline">
-              {currentUser.username}
-            </span>
+            <span className="ms-2 d-none d-sm-inline">Profile</span>
           </a>
           <ul className="dropdown-menu dropdown-menu-dark text-small shadow">
-            <li>
+            {/* <li>
               <a className="dropdown-item" href="/profile">
                 Profile
               </a>
-            </li>
+            </li> */}
             <li>
               <a className="dropdown-item" href="/settings">
                 Settings

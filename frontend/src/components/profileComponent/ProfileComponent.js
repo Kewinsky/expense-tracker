@@ -26,7 +26,7 @@ const ProfileComponent = () => {
             </div>
           </Col>
           <Col className="d-flex justify-content-end">
-            <Link to={`/update/user/${currentUser.id}`}>
+            <Link to={`/update/profile/${currentUser.id}`}>
               <Button variant={`outline-${reversedTheme}`}>Edit</Button>
             </Link>
           </Col>

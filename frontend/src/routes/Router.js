@@ -1,22 +1,22 @@
 import { Routes, Route } from "react-router-dom";
 import MainLayout from "../layouts/MainLayout";
-import AnalyzerPage from "../pages/analyzerPage/AnalyzerPage";
-import ErrorPage from "../pages/errorPage/ErrorPage";
+import DashboardPage from "../pages/dashboardPage/DashboardPage";
+import NotFoundPage from "../pages/notFoundPage/NotFoundPage";
 import HomePage from "../pages/homePage/HomePage";
 import LoginPage from "../pages/loginPage/LoginPage";
 import ProfilePage from "../pages/profilePage/ProfilePage";
 import RegisterPage from "../pages/registerPage/RegisterPage";
-import TrackerPage from "../pages/trackerPage/TrackerPage";
+import ExpensesPage from "../pages/expensesPage/ExpensesPage";
 import UnauthorizedPage from "../pages/unauthorizedPage/UnauthorizedPage";
-import UserManagementPage from "../pages/userManagementPage/UserManagementPage";
+import UsersPage from "../pages/usersPage/UsersPage";
 import ProtectedRoute from "./ProtectedRoute";
 import UpdateExpensePage from "../pages/updatePages/UpdateExpensePage";
+import UpdateProfilePage from "../pages/updatePages/UpdateProfilePage";
 import UpdateUserPage from "../pages/updatePages/UpdateUserPage";
-import UpdateAdminPage from "../pages/updatePages/UpdateAdminPage";
 import ForgotPasswordPage from "../pages/forgotPasswordPage/ForgotPasswordPage";
 import UpdateCategoryPage from "../pages/updatePages/UpdateCategoryPage";
-import UserCategoriesPage from "../pages/userCategoriesPage/UserCategoriesPage";
-import IncomePage from "../pages/incomePage/IncomePage";
+import CategoriesPage from "../pages/categoriesPage/CategoriesPage";
+import IncomesPage from "../pages/incomesPage/IncomesPage";
 import SettingsPage from "../pages/settingsPage/SettingsPage";
 import UpdateIncomePage from "../pages/updatePages/UpdateIncomePage";
 
@@ -50,7 +50,7 @@ export const Router = () => {
         }
       />
       <Route
-        path="/forgotPassword"
+        path="/resetPassword"
         element={
           <MainLayout pageTitle={`${appName} | Reset Password`}>
             <ForgotPasswordPage />
@@ -58,25 +58,46 @@ export const Router = () => {
         }
       />
       <Route
-        path="/tracker"
+        path="/dashboard"
         element={
-          <MainLayout pageTitle={`${appName} | Tracker`}>
+          <MainLayout pageTitle={`${appName} | Dashboard`}>
             <ProtectedRoute>
-              <TrackerPage />
+              <DashboardPage />
             </ProtectedRoute>
           </MainLayout>
         }
       />
       <Route
-        path="/analyzer"
+        path="/expenses"
         element={
-          <MainLayout pageTitle={`${appName} | Analyzer`}>
+          <MainLayout pageTitle={`${appName} | Expenses`}>
             <ProtectedRoute>
-              <AnalyzerPage />
+              <ExpensesPage />
             </ProtectedRoute>
           </MainLayout>
         }
       />
+      <Route
+        path="/incomes"
+        element={
+          <MainLayout pageTitle={`${appName} | Incomes`}>
+            <ProtectedRoute>
+              <IncomesPage />
+            </ProtectedRoute>
+          </MainLayout>
+        }
+      />
+      <Route
+        path="/categories"
+        element={
+          <MainLayout pageTitle={`${appName} | Categories`}>
+            <ProtectedRoute>
+              <CategoriesPage />
+            </ProtectedRoute>
+          </MainLayout>
+        }
+      />
+
       <Route
         path="/update/expense/:id"
         element={
@@ -88,21 +109,11 @@ export const Router = () => {
         }
       />
       <Route
-        path="/update/user/:id"
+        path="/update/income/:id"
         element={
-          <MainLayout pageTitle={`${appName} | Update User`}>
+          <MainLayout pageTitle={`${appName} | Update Income`}>
             <ProtectedRoute>
-              <UpdateUserPage />
-            </ProtectedRoute>
-          </MainLayout>
-        }
-      />
-      <Route
-        path="/update/userByAdmin/:id"
-        element={
-          <MainLayout pageTitle={`${appName} | Update User`}>
-            <ProtectedRoute>
-              <UpdateAdminPage />
+              <UpdateIncomePage />
             </ProtectedRoute>
           </MainLayout>
         }
@@ -118,26 +129,6 @@ export const Router = () => {
         }
       />
       <Route
-        path="/update/income/:id"
-        element={
-          <MainLayout pageTitle={`${appName} | Update Category`}>
-            <ProtectedRoute>
-              <UpdateIncomePage />
-            </ProtectedRoute>
-          </MainLayout>
-        }
-      />
-      <Route
-        path="/userManagement"
-        element={
-          <MainLayout pageTitle={`${appName} | User Management`}>
-            <ProtectedRoute>
-              <UserManagementPage />
-            </ProtectedRoute>
-          </MainLayout>
-        }
-      />
-      <Route
         path="/profile"
         element={
           <MainLayout pageTitle={`${appName} | Profile`}>
@@ -148,21 +139,31 @@ export const Router = () => {
         }
       />
       <Route
-        path="/userCategories"
+        path="/update/profile/:id"
         element={
-          <MainLayout pageTitle={`${appName} | User Categories`}>
+          <MainLayout pageTitle={`${appName} | Update Profile`}>
             <ProtectedRoute>
-              <UserCategoriesPage />
+              <UpdateProfilePage />
             </ProtectedRoute>
           </MainLayout>
         }
       />
       <Route
-        path="/userIncomes"
+        path="/users"
         element={
-          <MainLayout pageTitle={`${appName} | User Incomes`}>
+          <MainLayout pageTitle={`${appName} | Users`}>
             <ProtectedRoute>
-              <IncomePage />
+              <UsersPage />
+            </ProtectedRoute>
+          </MainLayout>
+        }
+      />
+      <Route
+        path="/update/user/:id"
+        element={
+          <MainLayout pageTitle={`${appName} | Update User`}>
+            <ProtectedRoute>
+              <UpdateUserPage />
             </ProtectedRoute>
           </MainLayout>
         }
@@ -190,8 +191,8 @@ export const Router = () => {
       <Route
         path="*"
         element={
-          <MainLayout pageTitle={"Error"}>
-            <ErrorPage />
+          <MainLayout pageTitle={"Not Found"}>
+            <NotFoundPage />
           </MainLayout>
         }
       />

@@ -114,7 +114,7 @@ const UpdateIncomeComponent = ({ incomes }) => {
                 variant={`outline-${reversedTheme}`}
                 type="submit"
                 className="w-100 mt-2"
-                href="/userIncomes"
+                href="/incomes"
               >
                 Cancel
               </Button>
@@ -127,7 +127,7 @@ const UpdateIncomeComponent = ({ incomes }) => {
               {message}
             </div>
             <div className="mt-5 text-center">
-              <Link to={"/userIncomes"} className={`link-${reversedTheme} `}>
+              <Link to={"/incomes"} className={`link-${reversedTheme} `}>
                 Back
               </Link>
             </div>

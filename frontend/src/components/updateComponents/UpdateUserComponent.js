@@ -1,21 +1,28 @@
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import { useContext, useState } from "react";
+import { Link, useParams } from "react-router-dom";
+import { useState, useEffect, useContext } from "react";
 import UserService from "../../services/userService";
 import { ThemeContext } from "../../App";
 import { Card } from "react-bootstrap";
 import SpinnerComponent from "../spinnerComponent/SpinnerComponent";
-import AuthService from "../../services/authService";
-import { Link } from "react-router-dom";
 
-const UpdateUserComponent = () => {
+const UpdateUserComponent = ({ users }) => {
+  const { id: userId } = useParams();
+
   const { theme } = useContext(ThemeContext);
   const reversedTheme = theme === "dark" ? "light" : "dark";
-  const currentUser = AuthService.getCurrentUser();
 
-  const [username, setUsername] = useState(currentUser.username);
-  const [email, setEmail] = useState(currentUser.email);
+  const selectedUser = users.find((item) => {
+    return item.id === parseInt(userId);
+  });
 
+  const [username, setUsername] = useState(selectedUser.username);
+  const [email, setEmail] = useState(selectedUser.email);
+  const [isModerator, setIsModerator] = useState(false);
+  const [roles, setRoles] = useState(
+    selectedUser.roles.map((role) => role.name)
+  );
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const [isPending, setIsPending] = useState(false);
@@ -28,9 +35,20 @@ const UpdateUserComponent = () => {
     setEmail(e.target.value);
   };
 
+  const handleToggleSwitch = (e) => {
+    setIsModerator(e.target.checked);
+    if (roles.includes("ROLE_MODERATOR")) {
+      roles.splice(roles.indexOf("ROLE_MODERATOR"), 1);
+    } else {
+      roles.push("ROLE_MODERATOR");
+    }
+    setRoles(roles);
+  };
+
   const updatedUser = {
     username,
     email,
+    role: roles,
   };
 
   const handleUpdateUser = async (e) => {
@@ -41,7 +59,7 @@ const UpdateUserComponent = () => {
     setIsPending(true);
 
     setTimeout(() => {
-      UserService.updateCurrentUser(updatedUser)
+      UserService.updateUserByAdmin(userId, updatedUser)
         .then(() => {
           setMessage("User updated successfully");
         })
@@ -54,9 +72,16 @@ const UpdateUserComponent = () => {
     }, 1000);
   };
 
+  useEffect(() => {
+    const roles = selectedUser.roles.map((role) => role.name);
+    if (roles.includes("ROLE_MODERATOR")) {
+      setIsModerator(true);
+    }
+  }, [selectedUser.roles]);
+
   return (
     <Card className={`bg-${theme}`}>
-      <Card.Header>Update Profile</Card.Header>
+      <Card.Header>Update User</Card.Header>
       <Form onSubmit={handleUpdateUser} className="m-5">
         <Form.Group className="mt-3">
           <Form.Label>Username</Form.Label>
@@ -68,16 +93,29 @@ const UpdateUserComponent = () => {
             className={`${theme}Theme`}
           />
         </Form.Group>
+
         <Form.Group className="mt-3">
           <Form.Label>Email</Form.Label>
           <Form.Control
             required
             onChange={handleInputEmail}
             value={email}
-            type="email"
+            type="text"
+            placeholder="Sushi"
             className={`${theme}Theme`}
           />
         </Form.Group>
+
+        <Form.Group className="mt-3">
+          <Form.Check
+            type="switch"
+            id="custom-switch"
+            label="Moderator"
+            onChange={handleToggleSwitch}
+            checked={isModerator}
+          />
+        </Form.Group>
+
         <Form.Group className="mt-5">
           {isPending && <SpinnerComponent />}
           {!isPending && !message && (
@@ -89,27 +127,25 @@ const UpdateUserComponent = () => {
                 variant={`outline-${reversedTheme}`}
                 type="submit"
                 className="w-100 mt-2"
-                href="/profile"
+                href="/users"
               >
                 Cancel
               </Button>
             </>
           )}
         </Form.Group>
-
         {message && (
           <Form.Group className="mt-5">
             <div className="alert alert-success m-0" role="alert">
               {message}
             </div>
             <div className="mt-5 text-center">
-              <Link to={"/profile"} className={`link-${reversedTheme} `}>
+              <Link to={"/users"} className={`link-${reversedTheme} `}>
                 Back
               </Link>
             </div>
           </Form.Group>
         )}
-
         {error && (
           <Form.Group className="mt-5">
             <div className="alert alert-danger m-0" role="alert">

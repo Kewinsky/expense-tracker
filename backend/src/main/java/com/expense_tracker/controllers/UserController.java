@@ -39,9 +39,9 @@ public class UserController {
     }
 
     @PreAuthorize("hasRole('USER')")
-    @PutMapping("updateUser/{id}")
-    String updateUser(@RequestBody User user,
-                      @PathVariable Long id) {
+    @PutMapping("updateProfile/{id}")
+    String updateProfile(@RequestBody User user,
+                         @PathVariable Long id) {
 
         return userRepository.findById(id)
                 .map(user1 -> {
@@ -53,9 +53,9 @@ public class UserController {
                 .orElseThrow(() -> new UserNotFoundException(id));
     }
 
-    @PutMapping("updateUserByAdmin/{id}")
-    String updateUserByAdmin(@RequestBody SignupRequest user,
-                             @PathVariable Long id) {
+    @PutMapping("updateUser/{id}")
+    String updateUser(@RequestBody SignupRequest user,
+                      @PathVariable Long id) {
         return userRepository.findById(id)
                 .map(user1 -> {
                     user1.setUsername(user.getUsername());

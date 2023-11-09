@@ -16,7 +16,7 @@ const ModalComponent = ({ handleDelete, record, show, setShow, theme }) => {
           Close
         </Button>
         <Button variant="danger" onClick={() => handleDelete(record.id)}>
-          Yes
+          Delete
         </Button>
       </Modal.Footer>
     </Modal>
