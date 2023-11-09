@@ -66,12 +66,25 @@ const getCurrentUser = () => {
   return JSON.parse(localStorage.getItem("user")) ?? undefined;
 };
 
+const isAdmin = () => {
+  const user = AuthService.getCurrentUser();
+
+  if (user) {
+    const roles = user.roles;
+
+    if (roles.includes("ROLE_ADMIN")) {
+      return true;
+    }
+  }
+};
+
 const AuthService = {
   register,
   login,
   forgotPassword,
   logout,
   getCurrentUser,
+  isAdmin,
 };
 
 export default AuthService;

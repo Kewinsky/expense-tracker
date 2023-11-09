@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import AuthService from "../../services/authService";
 import "./sidebarComponent.scss";
 import logo from "../../assets/icons/logo.png";
@@ -13,26 +13,13 @@ import {
 } from "react-icons/bs";
 
 const SidebarComponent = () => {
-  const [currentUser, setCurrentUser] = useState(undefined);
-  const [isAdmin, setIsAdmin] = useState(false);
+  const [currentUser, setCurrentUser] = useState(AuthService.getCurrentUser());
+  const isAdmin = AuthService.isAdmin();
 
   const handleLogout = () => {
     AuthService.logout();
     setCurrentUser(undefined);
   };
-
-  useEffect(() => {
-    const user = AuthService.getCurrentUser();
-
-    if (user) {
-      setCurrentUser(user);
-      const roles = user.roles;
-
-      if (roles.includes("ROLE_ADMIN")) {
-        setIsAdmin(true);
-      }
-    }
-  }, []);
 
   return (
     <nav className="sidebar d-flex flex-column justify-content-between align-items-center align-items-sm-stretch text-white min-vh-100">
