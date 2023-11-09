@@ -40,8 +40,8 @@ public class UserController {
 
     @PreAuthorize("hasRole('USER')")
     @PutMapping("updateProfile/{id}")
-    String updateUser(@RequestBody User user,
-                      @PathVariable Long id) {
+    String updateProfile(@RequestBody User user,
+                         @PathVariable Long id) {
 
         return userRepository.findById(id)
                 .map(user1 -> {
@@ -54,8 +54,8 @@ public class UserController {
     }
 
     @PutMapping("updateUser/{id}")
-    String updateUserByAdmin(@RequestBody SignupRequest user,
-                             @PathVariable Long id) {
+    String updateUser(@RequestBody SignupRequest user,
+                      @PathVariable Long id) {
         return userRepository.findById(id)
                 .map(user1 -> {
                     user1.setUsername(user.getUsername());
