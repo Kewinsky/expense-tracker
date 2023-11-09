@@ -13,7 +13,12 @@ export const expenseFilter = (items, year, month, category, title) => {
 
 const isYearMonthMatch = (item, year, month) => {
   const itemDate = new Date(item.date);
-  return itemDate.getFullYear() === year && itemDate.getMonth() === month;
+  console.log(month);
+  if (month === -1) {
+    return itemDate.getFullYear() === year;
+  } else {
+    return itemDate.getFullYear() === year && itemDate.getMonth() === month;
+  }
 };
 
 const isCategoryMatch = (item, category) => {

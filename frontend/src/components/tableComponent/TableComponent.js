@@ -89,6 +89,14 @@ const TableComponent = ({
     setCurrentPage(1);
   };
 
+  const handleFirstPage = () => {
+    setCurrentPage(1);
+  };
+
+  const handleLastPage = () => {
+    setCurrentPage(totalPages);
+  };
+
   const handlePreviousPage = () => {
     if (currentPage > 1) {
       setCurrentPage(currentPage - 1);
@@ -156,6 +164,8 @@ const TableComponent = ({
         currentPage={currentPage}
         totalPages={totalPages}
         onPageChange={handlePageChange}
+        handleFirstPage={handleFirstPage}
+        handleLastPage={handleLastPage}
         handlePreviousPage={handlePreviousPage}
         handleNextPage={handleNextPage}
       />
