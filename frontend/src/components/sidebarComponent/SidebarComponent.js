@@ -87,7 +87,7 @@ const SidebarComponent = () => {
           ) : (
             <li className="nav-item">
               <a
-                href="userCategories"
+                href="/login"
                 className="nav-link text-white px-sm-2 p-2 mt-sm-0 mt-2"
               >
                 <div className="d-flex align-items-center flex-nowrap">
