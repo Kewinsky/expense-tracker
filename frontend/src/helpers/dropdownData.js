@@ -6,6 +6,14 @@ export const dropdownData = (items) => {
   }));
 };
 
+// Purpose: prepare data for SelectComponent for periods
+export const dropdownPeriod = (items) => {
+  return items.map((item) => ({
+    value: item,
+    label: item + "D",
+  }));
+};
+
 // Purpose: prepare data for SelectComponent for categories
 export const dropdownCategory = (items) => {
   return items.map((item) => ({

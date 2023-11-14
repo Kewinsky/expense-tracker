@@ -3,7 +3,7 @@ import { useContext } from "react";
 import { ThemeContext } from "../../App";
 import { Button, Card } from "react-bootstrap";
 import SelectComponent from "../selectComponent/SelectComponent";
-import { dropdownData } from "../../helpers/dropdownData";
+import { dropdownPeriod } from "../../helpers/dropdownData";
 
 const TotalOutcomeComponent = ({
   chartData,
@@ -38,8 +38,8 @@ const TotalOutcomeComponent = ({
               {!isYear && (
                 <div className="mx-2">
                   <SelectComponent
-                    options={dropdownData(availableRanges)}
-                    value={{ value: range, label: range }}
+                    options={dropdownPeriod(availableRanges)}
+                    value={{ value: range, label: range + "D" }}
                     handleSelect={handleSelectRange}
                     placeholder={"Select"}
                     theme={`${theme}Theme`}
