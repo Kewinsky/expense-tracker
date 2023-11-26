@@ -9,6 +9,8 @@ import com.expense_tracker.payloads.responses.JwtResponse;
 import com.expense_tracker.payloads.responses.MessageResponse;
 import com.expense_tracker.repositories.UserRepository;
 import com.expense_tracker.security.jwt.JwtUtils;
+import com.expense_tracker.security.passwordValidator.PasswordValidator;
+import com.expense_tracker.security.passwordValidator.ValidationResult;
 import com.expense_tracker.security.services.UserDetailsImpl;
 import com.expense_tracker.utils.CategoryProvider;
 import com.expense_tracker.utils.RoleConverter;
@@ -90,6 +92,16 @@ public class AuthController {
             return ResponseEntity
                     .badRequest()
                     .body(new MessageResponse("Email is already in use!"));
+        }
+
+        // Validate password complexity
+        PasswordValidator passwordValidator = new PasswordValidator(encoder);
+        ValidationResult validationResult = passwordValidator.validate(signUpRequest.getPassword());
+
+        if (!validationResult.isValid()) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(new MessageResponse(validationResult.getMessage()));
         }
 
         User user = new User(

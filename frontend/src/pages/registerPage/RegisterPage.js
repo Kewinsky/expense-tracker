@@ -6,6 +6,7 @@ import { Form, Card } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { ThemeContext } from "../../App";
 import SpinnerComponent from "../../components/spinnerComponent/SpinnerComponent";
+import { formatPasswordMessage } from "../../helpers/formatPasswordMessage";
 
 const RegisterPage = () => {
   const { theme } = useContext(ThemeContext);
@@ -78,6 +79,7 @@ const RegisterPage = () => {
               type="text"
               placeholder="Enter username"
               required
+              minLength={6}
               value={username}
               onChange={onChangeUsername}
               className={`${theme}Theme`}
@@ -135,7 +137,7 @@ const RegisterPage = () => {
             <Form.Group className="mt-5">
               <div className="form-group">
                 <div className="alert alert-danger m-0" role="alert">
-                  {error}
+                  {formatPasswordMessage(error)}
                 </div>
               </div>
             </Form.Group>
