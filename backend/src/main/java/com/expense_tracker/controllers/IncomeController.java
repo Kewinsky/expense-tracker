@@ -31,7 +31,7 @@ public class IncomeController {
 
     @PostMapping("/addIncome")
     String addIncome(@RequestBody Income income) {
-        userController.getUserById(income.getUserId());
+        userController.getUserById(income.getUser().getId());
         incomeRepository.save(income);
 
         return "Income added successfully";

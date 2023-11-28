@@ -63,7 +63,9 @@ const UpdateExpenseComponent = () => {
     date,
     title,
     value,
-    categoryId: category ? category.id : 0,
+    category: {
+      id: category ? category.id : 0,
+    },
   };
 
   const handleUpdateExpense = async (e) => {

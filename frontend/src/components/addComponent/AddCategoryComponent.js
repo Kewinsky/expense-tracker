@@ -23,7 +23,9 @@ const AddCategoryComponent = ({ setCategories }) => {
 
   const newCategory = {
     title,
-    userId: currentUser.id,
+    user: {
+      id: currentUser.id,
+    },
   };
 
   const handleAddCategory = async (e) => {

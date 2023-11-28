@@ -26,16 +26,12 @@ public class ExpenseService {
         for (Expense expense : expenses) {
             ExpenseResponse response = new ExpenseResponse();
 
-            var category = categoryRepository.findById(expense.getCategoryId()).orElse(null);
-
             response.setId(expense.getId());
             response.setTitle(expense.getTitle());
             response.setValue(expense.getValue());
-            if (category != null) {
-                response.setCategory(category.getTitle());
-            }
+            response.setCategory(expense.getCategory().getTitle());
             response.setDate(expense.getDate());
-            response.setUserId(expense.getUserId());
+            response.setUserId(expense.getUser().getId());
 
             expensesWithCategory.add(response);
         }

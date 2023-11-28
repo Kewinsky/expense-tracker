@@ -1,7 +1,6 @@
 package com.expense_tracker.models;
 
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -11,7 +10,6 @@ import java.util.Set;
 
 @Data
 @Entity
-@NoArgsConstructor
 @Table(name = "users",
         uniqueConstraints = {
                 @UniqueConstraint(columnNames = "username"),

@@ -42,8 +42,12 @@ const AddExpenseComponent = ({ setExpenses, categories }) => {
     date,
     title,
     value,
-    categoryId: category ? category.id : 0,
-    userId: currentUser.id,
+    category: {
+      id: category ? category.id : 0,
+    },
+    user: {
+      id: currentUser.id,
+    },
   };
 
   const handleAddExpense = async (e) => {
