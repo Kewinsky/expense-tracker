@@ -1,16 +1,12 @@
 package com.expense_tracker.models;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 
 @Data
 @Entity
-@NoArgsConstructor
-@AllArgsConstructor
 @Table(name = "incomes")
 public class Income {
     @Id
@@ -21,5 +17,7 @@ public class Income {
 
     private int value;
 
-    private Long userId;
+    @ManyToOne
+    @JoinColumn(name = "userId")
+    private User user;
 }

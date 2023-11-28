@@ -1,16 +1,12 @@
 package com.expense_tracker.models;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 
 @Data
 @Entity
-@NoArgsConstructor
-@AllArgsConstructor
 @Table(name = "expenses")
 public class Expense {
     @Id
@@ -21,9 +17,13 @@ public class Expense {
 
     private float value;
 
-    private Long categoryId;
+    @ManyToOne
+    @JoinColumn(name = "categoryId")
+    private Category category;
 
     private LocalDate date;
 
-    private Long userId;
+    @ManyToOne
+    @JoinColumn(name = "userId")
+    private User user;
 }

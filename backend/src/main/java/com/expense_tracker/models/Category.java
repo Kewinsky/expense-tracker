@@ -1,13 +1,11 @@
 package com.expense_tracker.models;
 
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Data
 @Entity
-@NoArgsConstructor
 @Table(name = "categories")
 public class Category {
     @Id
@@ -16,5 +14,7 @@ public class Category {
 
     private String title;
 
-    private Long userId;
+    @ManyToOne
+    @JoinColumn(name = "userId")
+    private User user;
 }
