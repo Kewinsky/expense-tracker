@@ -3,13 +3,11 @@ package com.expense_tracker.models;
 
 import com.expense_tracker.models.enums.ERole;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Data
 @Entity
-@NoArgsConstructor
 @Table(name = "roles")
 public class Role {
     @Id
