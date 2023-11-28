@@ -34,7 +34,7 @@ public class CategoryController {
 
     @PostMapping("/addCategory")
     String addCategory(@RequestBody Category category) {
-        userController.getUserById(category.getUserId());
+        userController.getUserById(category.getUser().getId());
         categoryRepository.save(category);
 
         return "Category added successfully";

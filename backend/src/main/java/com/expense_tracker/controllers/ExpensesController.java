@@ -33,7 +33,8 @@ public class ExpensesController {
 
     @PostMapping("/addExpense")
     String addExpense(@RequestBody Expense expense) {
-        userController.getUserById(expense.getUserId());
+        userController.getUserById(expense.getUser().getId());
+
         expensesRepository.save(expense);
 
         return "Expense added successfully";
@@ -46,7 +47,7 @@ public class ExpensesController {
                 .map(exp -> {
                     exp.setTitle(expense.getTitle());
                     exp.setValue(expense.getValue());
-                    exp.setCategoryId(expense.getCategoryId());
+                    exp.setCategory(expense.getCategory());
                     exp.setDate(expense.getDate());
                     expensesRepository.save(exp);
                     return "Expense updated successfully";

@@ -30,7 +30,7 @@ public class CategoryProvider {
             Category category = new Category();
 
             category.setTitle(categoryTitle);
-            category.setUserId(user.getId());
+            category.setUser(user);
 
             categoryRepository.save(category);
         }

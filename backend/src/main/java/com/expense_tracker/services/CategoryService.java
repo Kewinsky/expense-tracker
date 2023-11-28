@@ -22,7 +22,7 @@ public class CategoryService {
         var expenses = expenseRepository.findByCategoryId(category.getId());
         expenseRepository.deleteAll(expenses);
 
-        var userCategories = categoryRepository.findByUserId(category.getUserId());
+        var userCategories = categoryRepository.findByUserId(category.getUser().getId());
 
         if (userCategories.size() > 1) {
             categoryRepository.deleteById(category.getId());
