@@ -29,7 +29,9 @@ const AddIncomeComponent = ({ setIncomes }) => {
   const newIncome = {
     date,
     value,
-    userId: currentUser.id,
+    user: {
+      id: currentUser.id,
+    },
   };
 
   const handleAddIncome = async (e) => {
