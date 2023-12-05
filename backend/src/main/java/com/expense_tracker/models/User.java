@@ -1,15 +1,15 @@
 package com.expense_tracker.models;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
 import java.util.HashSet;
 import java.util.Set;
 
 @Data
 @Entity
+@NoArgsConstructor
 @Table(name = "users",
         uniqueConstraints = {
                 @UniqueConstraint(columnNames = "username"),
@@ -20,14 +20,10 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank
     private String username;
 
-    @NotBlank
-    @Email
     private String email;
 
-    @NotBlank
     private String password;
 
     @ManyToMany(fetch = FetchType.LAZY)
