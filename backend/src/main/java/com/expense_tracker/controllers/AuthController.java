@@ -94,7 +94,7 @@ public class AuthController {
                     .body(new MessageResponse("Email is already in use!"));
         }
 
-        // Validate password complexity
+        // Validate password
         PasswordValidator passwordValidator = new PasswordValidator(encoder);
         ValidationResult validationResult = passwordValidator.validate(signUpRequest.getPassword());
 
@@ -128,6 +128,16 @@ public class AuthController {
             return ResponseEntity
                     .badRequest()
                     .body(new MessageResponse("Email not found!"));
+        }
+
+        // Validate password
+        PasswordValidator passwordValidator = new PasswordValidator(encoder);
+        ValidationResult validationResult = passwordValidator.validate(forgotPasswordRequest.getPassword());
+
+        if (!validationResult.isValid()) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(new MessageResponse(validationResult.getMessage()));
         }
 
         return userRepository.findByEmail(forgotPasswordRequest.getEmail())

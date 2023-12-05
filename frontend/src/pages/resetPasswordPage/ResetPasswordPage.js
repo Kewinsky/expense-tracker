@@ -7,6 +7,7 @@ import { ThemeContext } from "../../App";
 import AuthService from "../../services/authService";
 import SpinnerComponent from "../../components/spinnerComponent/SpinnerComponent";
 import { Link } from "react-router-dom";
+import { formatPasswordMessage } from "../../helpers/formatPasswordMessage";
 
 const ResetPasswordPage = () => {
   const { theme } = useContext(ThemeContext);
@@ -109,7 +110,7 @@ const ResetPasswordPage = () => {
           {error && (
             <Form.Group className="mt-5">
               <div className="alert alert-danger m-0" role="alert">
-                {error}
+                {formatPasswordMessage(error)}
               </div>
             </Form.Group>
           )}
