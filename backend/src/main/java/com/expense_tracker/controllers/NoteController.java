@@ -27,7 +27,7 @@ public class NoteController {
 
     @PutMapping("updateNote/{id}")
     ResponseEntity<String> updateNote(@RequestBody Note note,
-                                      @PathVariable Long id) {
+                                      @PathVariable String id) {
         var result = noteService.updateNote(id, note);
 
         return ResponseEntity.ok(result);

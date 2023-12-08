@@ -27,15 +27,15 @@ public class NoteService {
         return noteRepository.findByUserId(userId);
     }
 
-    public String updateNote(Long noteId, Note updateNote) {
+    public String updateNote(String noteId, Note updateNote) {
         if (!Objects.equals(noteId, "undefined")) {
-            return noteRepository.findById(noteId)
+            return noteRepository.findById(Long.parseLong(noteId))
                     .map(nt -> {
                         nt.setNote(updateNote.getNote());
                         noteRepository.save(nt);
                         return "Note updated successfully";
                     })
-                    .orElseThrow(() -> new NoteNotFoundException(noteId));
+                    .orElseThrow(() -> new NoteNotFoundException(Long.parseLong(noteId)));
         }
 
         noteRepository.save(updateNote);
