@@ -23,11 +23,11 @@ public class CategoryService {
     @Autowired
     private ExpenseRepository expenseRepository;
 
-    public List<Category> getCategories(Long id) {
-        userRepository.findById(id)
-                .orElseThrow(() -> new UserNotFoundException(id));
+    public List<Category> getCategories(Long userId) {
+        userRepository.findById(userId)
+                .orElseThrow(() -> new UserNotFoundException(userId));
 
-        return categoryRepository.findByUserId(id);
+        return categoryRepository.findByUserId(userId);
     }
 
     public void addCategory(Category category) {
@@ -39,14 +39,14 @@ public class CategoryService {
         categoryRepository.save(category);
     }
 
-    public String updateCategory(Long id, Category updatedCategory) {
-        return categoryRepository.findById(id)
+    public String updateCategory(Long categoryId, Category updatedCategory) {
+        return categoryRepository.findById(categoryId)
                 .map(existingCategory -> {
                     existingCategory.setTitle(updatedCategory.getTitle());
                     categoryRepository.save(existingCategory);
                     return "Category updated successfully";
                 })
-                .orElseThrow(() -> new CategoryNotFoundException(id));
+                .orElseThrow(() -> new CategoryNotFoundException(categoryId));
     }
 
     public void deleteCategory(Long categoryId) {

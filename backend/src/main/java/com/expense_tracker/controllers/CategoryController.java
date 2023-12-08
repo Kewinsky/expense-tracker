@@ -26,8 +26,10 @@ public class CategoryController {
 
     @GetMapping("/getCategoriesByUser/{id}")
     @ResponseBody
-    List<Category> getCategoriesByUser(@PathVariable Long id) {
-        return categoryService.getCategories(id);
+    ResponseEntity<List<Category>> getCategoriesByUser(@PathVariable Long id) {
+        var result = categoryService.getCategories(id);
+
+        return ResponseEntity.ok(result);
     }
 
 
