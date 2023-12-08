@@ -1,9 +1,9 @@
 package com.expense_tracker.controllers;
 
-import com.expense_tracker.exceptions.incomes.IncomeNotFoundException;
 import com.expense_tracker.models.Income;
-import com.expense_tracker.repositories.IncomeRepository;
+import com.expense_tracker.services.IncomeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,47 +16,35 @@ import java.util.List;
 public class IncomeController {
 
     @Autowired
-    IncomeRepository incomeRepository;
-
-    @Autowired
-    UserController userController;
+    IncomeService incomeService;
 
     @GetMapping("/getIncomesByUser/{id}")
     @ResponseBody
-    List<Income> getIncomesByUser(@PathVariable Long id) {
-        userController.getUserById(id);
+    ResponseEntity<List<Income>> getIncomesByUser(@PathVariable Long id) {
+        var result = incomeService.getIncomes(id);
 
-        return incomeRepository.findByUserIdOrderByDate(id);
+        return ResponseEntity.ok(result);
     }
 
     @PostMapping("/addIncome")
-    String addIncome(@RequestBody Income income) {
-        userController.getUserById(income.getUser().getId());
-        incomeRepository.save(income);
+    ResponseEntity<String> addIncome(@RequestBody Income income) {
+        incomeService.addIncomes(income);
 
-        return "Income added successfully";
+        return ResponseEntity.ok("Income added successfully");
     }
 
     @PutMapping("updateIncome/{id}")
-    String updateIncome(@RequestBody Income income,
-                        @PathVariable Long id) {
-        return incomeRepository.findById(id)
-                .map(inc -> {
-                    inc.setDate(income.getDate());
-                    inc.setValue(income.getValue());
-                    incomeRepository.save(inc);
-                    return "Income updated successfully";
-                })
-                .orElseThrow(() -> new IncomeNotFoundException(id));
+    ResponseEntity<String> updateIncome(@RequestBody Income income,
+                                        @PathVariable Long id) {
+        var result = incomeService.updateIncome(id, income);
+
+        return ResponseEntity.ok(result);
     }
 
     @DeleteMapping("/deleteIncome/{id}")
-    String deleteIncome(@PathVariable Long id) {
-        if (!incomeRepository.existsById(id)) {
-            throw new IncomeNotFoundException(id);
-        }
-        incomeRepository.deleteById(id);
+    ResponseEntity<String> deleteIncome(@PathVariable Long id) {
+        incomeService.deleteIncome(id);
 
-        return "Income deleted successfully";
+        return ResponseEntity.ok("Income deleted successfully");
     }
 }
