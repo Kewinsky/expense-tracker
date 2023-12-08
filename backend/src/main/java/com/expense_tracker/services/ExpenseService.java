@@ -4,7 +4,6 @@ import com.expense_tracker.exceptions.expenses.ExpenseNotFoundException;
 import com.expense_tracker.exceptions.users.UserNotFoundException;
 import com.expense_tracker.models.Expense;
 import com.expense_tracker.payloads.responses.ExpenseResponse;
-import com.expense_tracker.repositories.CategoryRepository;
 import com.expense_tracker.repositories.ExpenseRepository;
 import com.expense_tracker.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,9 +14,6 @@ import java.util.List;
 
 @Service
 public class ExpenseService {
-    @Autowired
-    CategoryRepository categoryRepository;
-
     @Autowired
     private UserRepository userRepository;
 

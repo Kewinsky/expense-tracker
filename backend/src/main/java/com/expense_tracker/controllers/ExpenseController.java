@@ -15,7 +15,6 @@ import java.util.List;
 @RequestMapping("/api/expenses")
 @PreAuthorize("hasRole('USER')")
 public class ExpenseController {
-
     @Autowired
     ExpenseService expenseService;
 

@@ -1,7 +1,6 @@
 package com.expense_tracker.controllers;
 
 import com.expense_tracker.models.Category;
-import com.expense_tracker.repositories.CategoryRepository;
 import com.expense_tracker.services.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,12 +14,6 @@ import java.util.List;
 @RequestMapping("/api/categories")
 @PreAuthorize("hasRole('USER')")
 public class CategoryController {
-    @Autowired
-    UserController userController;
-
-    @Autowired
-    CategoryRepository categoryRepository;
-
     @Autowired
     CategoryService categoryService;
 

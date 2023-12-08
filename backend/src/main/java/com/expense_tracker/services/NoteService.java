@@ -19,7 +19,6 @@ public class NoteService {
     @Autowired
     private UserRepository userRepository;
 
-
     public List<Note> getNotes(Long userId) {
         userRepository.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException(userId));

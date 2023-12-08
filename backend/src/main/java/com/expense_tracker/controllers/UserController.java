@@ -2,9 +2,7 @@ package com.expense_tracker.controllers;
 
 import com.expense_tracker.models.User;
 import com.expense_tracker.payloads.requests.SignupRequest;
-import com.expense_tracker.repositories.UserRepository;
 import com.expense_tracker.services.UserService;
-import com.expense_tracker.utils.RoleConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -19,12 +17,6 @@ import java.util.List;
 public class UserController {
     @Autowired
     UserService userService;
-
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private RoleConverter converter;
 
     @GetMapping("/getUsers")
     public ResponseEntity<List<User>> getUsers() {

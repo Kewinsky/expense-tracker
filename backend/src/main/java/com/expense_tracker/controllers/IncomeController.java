@@ -14,7 +14,6 @@ import java.util.List;
 @RequestMapping("/api/incomes")
 @PreAuthorize("hasRole('USER')")
 public class IncomeController {
-
     @Autowired
     IncomeService incomeService;
 
