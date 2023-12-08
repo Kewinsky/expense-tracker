@@ -21,18 +21,24 @@ const NoteComponent = ({ note, getNotes, month, year }) => {
     setUpdatedNote(e.target.value);
   };
 
+  const noteRequestBody = {
+    note: updatedNote,
+    month: month,
+    year: year,
+    user: {
+      id: currentUser.id,
+    },
+  };
+
   const handleSaveNote = async (e) => {
     e.preventDefault();
 
     try {
-      const response = await NoteService.updateNote(note?.id, {
-        userId: currentUser.id,
-        note: updatedNote,
-        month: month,
-        year: year,
-      });
+      const response = await NoteService.updateNote(note?.id, noteRequestBody);
+      console.log();
       successNotification(response);
     } catch (err) {
+      console.log(err);
       errorNotification(err.message);
     }
     getNotes();
