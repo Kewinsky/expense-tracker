@@ -75,7 +75,7 @@ const UpdateIncomeComponent = ({ incomes }) => {
 
   return (
     <Card className={`bg-${theme}`}>
-      <Card.Header>Update Expense</Card.Header>
+      <Card.Header>Update Income</Card.Header>
       <Form onSubmit={handleUpdateIncome} className="m-5">
         <Form.Group className="mt-3">
           <Form.Label>Date</Form.Label>

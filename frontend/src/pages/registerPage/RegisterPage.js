@@ -71,7 +71,7 @@ const RegisterPage = () => {
   return (
     <SimplePage>
       <Card className={`bg-${theme}`}>
-        <Card.Header>Register new account</Card.Header>
+        <Card.Header>Register</Card.Header>
         <Form onSubmit={handleRegister} ref={form} className="m-5">
           <Form.Group className="mb-3">
             <Form.Label>Username</Form.Label>

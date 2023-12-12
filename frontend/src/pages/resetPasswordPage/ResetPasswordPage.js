@@ -60,7 +60,7 @@ const ResetPasswordPage = () => {
   return (
     <SimplePage>
       <Card className={`bg-${theme}`}>
-        <Card.Header>Login</Card.Header>
+        <Card.Header>Reset password</Card.Header>
         <Form onSubmit={handleUpdatePassword} ref={form} className="m-5">
           <Form.Group className="mb-3">
             <Form.Label>Email</Form.Label>

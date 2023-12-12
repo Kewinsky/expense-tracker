@@ -16,7 +16,7 @@ const ProfilePage = () => {
   return (
     <SimplePage>
       <Card className={`bg-${theme}`}>
-        <Card.Header>Your Profile</Card.Header>
+        <Card.Header>{currentUser}'s Profile</Card.Header>
         <Card.Body className="m-4">
           <div className="mb-5 text-center">
             <BsPersonCircle size={80} />

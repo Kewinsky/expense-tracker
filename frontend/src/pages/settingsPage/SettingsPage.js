@@ -16,7 +16,7 @@ const SettingsPage = () => {
   return (
     <SimplePage>
       <Card className={`bg-${theme} card-width`}>
-        <Card.Header>Settings</Card.Header>
+        <Card.Header>{`${currentUser.username}'s Profile`}</Card.Header>
         <Card.Body className="m-4">
           <div className="mb-5 text-center">
             <BsPersonCircle size={80} />
