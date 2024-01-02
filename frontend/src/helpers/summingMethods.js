@@ -12,7 +12,9 @@ export const sumAllMonths = (items) => {
 
   items.forEach((item) => {
     const date = new Date(item.date);
-    const monthName = date.toLocaleString("default", { month: "long" });
+    const monthName = new Intl.DateTimeFormat("en-US", {
+      month: "long",
+    }).format(date);
 
     const index = result.findIndex((obj) => obj.label === monthName);
     if (index !== -1) {
