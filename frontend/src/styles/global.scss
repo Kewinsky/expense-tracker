@@ -1,4 +1,13 @@
-@import url("https://fonts.googleapis.com/css2?family=Montserrat&family=Nunito&display=swap");
+@font-face {
+  font-family: "Montserrat";
+  src: url("../../public/Montserrat-VariableFont_wght.ttf");
+}
+
+@font-face {
+  font-family: "Nunito";
+  src: url("../../public/Nunito-VariableFont_wght.ttf");
+}
+
 @import "../styles/theme.scss";
 html,
 body,
