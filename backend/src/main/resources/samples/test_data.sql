@@ -22,20 +22,20 @@ INSERT INTO categories (title, user_id) VALUES ("Entertainment", 1);
 INSERT INTO categories (title, user_id) VALUES ("Gifts", 1);
 
 #provide income examples for admin
-INSERT INTO incomes(date, user_id, value)
+INSERT INTO incomes(date, title, user_id, value)
 VALUES
-    ("2024-01-01", 1, 3000),
-    ("2024-02-01", 1, 3000),
-    ("2024-03-01", 1, 3000),
-    ("2024-04-01", 1, 3000),
-    ("2024-05-01", 1, 3000),
-    ("2024-06-01", 1, 3000),
-    ("2024-07-01", 1, 3000),
-    ("2024-08-01", 1, 3000),
-    ("2024-09-01", 1, 3000),
-    ("2024-10-01", 1, 3000),
-    ("2024-11-01", 1, 3000),
-    ("2024-12-01", 1, 3000);
+    ("2024-01-01", "Salary", 1, 3000),
+    ("2024-02-01", "Salary", 1, 3000),
+    ("2024-03-01", "Salary", 1, 3000),
+    ("2024-04-01", "Salary", 1, 3000),
+    ("2024-05-01", "Salary", 1, 3000),
+    ("2024-06-01", "Salary", 1, 3000),
+    ("2024-07-01", "Salary", 1, 3000),
+    ("2024-08-01", "Salary", 1, 3000),
+    ("2024-09-01", "Salary", 1, 3000),
+    ("2024-10-01", "Salary", 1, 3000),
+    ("2024-11-01", "Salary", 1, 3000),
+    ("2024-12-01", "Salary", 1, 3000);
 
 #provide expense examples for admin
 INSERT INTO expenses(category_id, date, title, user_id, value)
