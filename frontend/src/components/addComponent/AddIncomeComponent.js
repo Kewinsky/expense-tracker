@@ -94,8 +94,8 @@ const AddIncomeComponent = ({ setIncomes }) => {
               <Form.Control
                 required
                 type="number"
-                step={1}
-                min="1"
+                step={0.5}
+                min="0,5"
                 placeholder="3000"
                 value={value}
                 onChange={handleInputValue}

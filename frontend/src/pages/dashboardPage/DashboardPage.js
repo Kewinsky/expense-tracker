@@ -18,6 +18,7 @@ import {
 import {
   noteFilterByYear,
   filterByYearAndMonth,
+  filterByYear,
 } from "../../helpers/filteringMethods";
 import NoteService from "../../services/noteService";
 import { months } from "../../utils/monthsData";
@@ -46,8 +47,8 @@ const DashboardPage = () => {
   const [notes, setNotes] = useState([]);
 
   // filtered expenses(outcome)/incomes
-  const incomesOfYear = filterByYearAndMonth(incomes, year, null);
-  const expensesOfYear = filterByYearAndMonth(expenses, year, null);
+  const incomesOfYear = filterByYear(incomes, year);
+  const expensesOfYear = filterByYear(expenses, year);
   const expensesOfMonth = filterByYearAndMonth(expenses, year, month);
 
   // data for summary line chart

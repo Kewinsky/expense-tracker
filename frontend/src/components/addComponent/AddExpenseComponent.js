@@ -106,7 +106,7 @@ const AddExpenseComponent = ({ setExpenses, categories }) => {
                 required
                 type="number"
                 step={0.5}
-                min="1"
+                min="0,5"
                 placeholder="100"
                 value={value}
                 onChange={handleInputValue}

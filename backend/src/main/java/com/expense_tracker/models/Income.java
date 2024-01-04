@@ -17,7 +17,7 @@ public class Income {
 
     private String title;
 
-    private int value;
+    private float value;
 
     @ManyToOne
     @JoinColumn(name = "userId")
