@@ -1,6 +1,6 @@
-// Purpose: filter expenses by year, month, category and title
-// return array with filtered expenses
-// used for filtering expenses in TrackerPage
+// Purpose: filter items by year, month, category and title
+// return array with filtered items
+// used for filtering incomes/expenses in IncomesPage/ExpensesPage
 export const expenseFilter = (items, year, month, category, title) => {
   return items.filter((item) => {
     return (
@@ -13,11 +13,10 @@ export const expenseFilter = (items, year, month, category, title) => {
 
 const isYearMonthMatch = (item, year, month) => {
   const itemDate = new Date(item.date);
-  if (month === -1) {
-    return itemDate.getFullYear() === year;
-  } else {
-    return itemDate.getFullYear() === year && itemDate.getMonth() === month;
-  }
+  return (
+    itemDate.getFullYear() === year &&
+    (month === -1 || itemDate.getMonth() === month)
+  );
 };
 
 const isCategoryMatch = (item, category) => {
@@ -45,10 +44,6 @@ export const filterByYearAndMonth = (items, year, month) => {
     return yearMatches && monthMatches;
   });
 };
-
-// Purpose: this method provides filtered notes for specific year
-// Parameters: array (all notes), integer
-// Returns: array of notes
 
 // Purpose: filter notes by year
 // return array with filtered notes

@@ -8,7 +8,7 @@ import { incomesTableHeaders } from "../../utils/tableHeaders";
 import { updateIncomeURL } from "../../utils/updateURL";
 import { months } from "../../utils/monthsData";
 import FilteringIncomesComponent from "../../components/filteringComponent/FilteringIncomesComponent";
-import { filterByYearAndMonth } from "../../helpers/filteringMethods";
+import { expenseFilter } from "../../helpers/filteringMethods";
 import HeaderComponent from "../../components/headerComponent/HeaderComponent";
 
 const IncomesPage = () => {
@@ -16,6 +16,7 @@ const IncomesPage = () => {
 
   const [incomes, setIncomes] = useState([]);
   const [filteredIncomes, setFilteredIncomes] = useState([]);
+  const [filterTitle, setFilterTitle] = useState("");
   const [year, setYear] = useState(currentDate.getFullYear());
   const [month, setMonth] = useState(months[currentDate.getMonth()]);
 
@@ -35,7 +36,13 @@ const IncomesPage = () => {
   );
 
   const filterIncomes = () => {
-    const response = filterByYearAndMonth(incomes, year, months.indexOf(month));
+    const response = expenseFilter(
+      incomes,
+      year,
+      months.indexOf(month),
+      null,
+      filterTitle
+    );
 
     setError(null);
     setFilteredIncomes(response);
@@ -55,7 +62,7 @@ const IncomesPage = () => {
 
   useEffect(() => {
     filterIncomes();
-  }, [incomes]);
+  }, [filterTitle, incomes]);
 
   return (
     <>
@@ -63,6 +70,8 @@ const IncomesPage = () => {
       <SeparatorComponent />
       <AddIncomeComponent setIncomes={setIncomes} />
       <FilteringIncomesComponent
+        title={filterTitle}
+        setTitle={setFilterTitle}
         month={month}
         setMonth={setMonth}
         year={year}

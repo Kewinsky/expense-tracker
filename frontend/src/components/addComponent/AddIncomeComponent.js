@@ -16,10 +16,15 @@ const AddIncomeComponent = ({ setIncomes }) => {
   const currentUser = AuthService.getCurrentUser();
 
   const [date, setDate] = useState("");
+  const [title, setTitle] = useState("");
   const [value, setValue] = useState("");
 
   const handleInputDate = (e) => {
     setDate(e.target.value);
+  };
+
+  const handleInputTitle = (e) => {
+    setTitle(e.target.value);
   };
 
   const handleInputValue = (e) => {
@@ -28,6 +33,7 @@ const AddIncomeComponent = ({ setIncomes }) => {
 
   const newIncome = {
     date,
+    title,
     value,
     user: {
       id: currentUser.id,
@@ -38,6 +44,7 @@ const AddIncomeComponent = ({ setIncomes }) => {
     e.preventDefault();
 
     setDate("");
+    setTitle("");
     setValue("");
 
     IncomeService.addIncome(newIncome)
@@ -64,6 +71,19 @@ const AddIncomeComponent = ({ setIncomes }) => {
                 type="date"
                 value={date}
                 onChange={handleInputDate}
+                className={`${theme}Theme`}
+              />
+            </Form.Group>
+          </Col>
+          <Col className="mt-3">
+            <Form.Group>
+              <Form.Label>Title</Form.Label>
+              <Form.Control
+                required
+                type="text"
+                placeholder="Salary"
+                value={title}
+                onChange={handleInputTitle}
                 className={`${theme}Theme`}
               />
             </Form.Group>
