@@ -6,7 +6,7 @@ import SelectComponent from "../selectComponent/SelectComponent";
 import { ThemeContext } from "../../App";
 import { getYearArray } from "../../utils/yearData";
 
-const FilteringComponent = ({
+const FilteringExpensesComponent = ({
   categories,
   title,
   setTitle,
@@ -60,7 +60,6 @@ const FilteringComponent = ({
             <Form.Group>
               <Form.Label>Filter by Title</Form.Label>
               <Form.Control
-                required
                 type="text"
                 value={title}
                 placeholder="Petrol"
@@ -112,4 +111,4 @@ const FilteringComponent = ({
   );
 };
 
-export default FilteringComponent;
+export default FilteringExpensesComponent;
