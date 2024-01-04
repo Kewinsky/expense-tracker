@@ -7,6 +7,8 @@ import { ThemeContext } from "../../App";
 import { getYearArray } from "../../utils/yearData";
 
 const FilteringIncomesComponent = ({
+  title,
+  setTitle,
   month,
   setMonth,
   year,
@@ -15,6 +17,7 @@ const FilteringIncomesComponent = ({
   filterIncomes,
 }) => {
   const years = getYearArray();
+  const monthFilters = ["All", ...months];
 
   const { theme } = useContext(ThemeContext);
 
@@ -34,6 +37,10 @@ const FilteringIncomesComponent = ({
     setYear(e.value);
   };
 
+  const handleInputTitle = (e) => {
+    setTitle(e.target.value);
+  };
+
   useEffect(() => {
     filterIncomes();
   }, [year, month]);
@@ -42,6 +49,18 @@ const FilteringIncomesComponent = ({
     <Container className="my-3">
       <Form>
         <Row className="align-items-end" xs={1} md={2} lg={4}>
+          <Col className="mt-3">
+            <Form.Group>
+              <Form.Label>Filter by Title</Form.Label>
+              <Form.Control
+                type="text"
+                value={title}
+                placeholder="Scholarship"
+                onChange={handleInputTitle}
+                className={`${theme}Theme`}
+              />
+            </Form.Group>
+          </Col>
           <Col className="mt-3">
             <Form.Group>
               <Form.Label>Filter by Year</Form.Label>
@@ -58,7 +77,7 @@ const FilteringIncomesComponent = ({
             <Form.Group>
               <Form.Label>Filter by Month</Form.Label>
               <SelectComponent
-                options={dropdownData(months)}
+                options={dropdownData(monthFilters)}
                 handleSelect={handleSelectMonth}
                 theme={`${theme}Theme`}
                 value={getDefaultMonth()}

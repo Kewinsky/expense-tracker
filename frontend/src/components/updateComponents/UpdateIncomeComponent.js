@@ -18,6 +18,7 @@ const UpdateIncomeComponent = ({ incomes }) => {
   const selectedIncome = selectItemToUpdate(incomes, incomeId);
 
   const [date, setDate] = useState("");
+  const [title, setTitle] = useState("");
   const [value, setValue] = useState("");
 
   const [message, setMessage] = useState("");
@@ -26,11 +27,16 @@ const UpdateIncomeComponent = ({ incomes }) => {
 
   const handleSetDefaults = () => {
     setDate(selectedIncome.date);
+    setTitle(selectedIncome.title);
     setValue(selectedIncome.value);
   };
 
   const handleInputDate = (e) => {
     setDate(e.target.value);
+  };
+
+  const handleInputTitle = (e) => {
+    setTitle(e.target.value);
   };
 
   const handleInputValue = (e) => {
@@ -39,6 +45,7 @@ const UpdateIncomeComponent = ({ incomes }) => {
 
   const updatedIncome = {
     date,
+    title,
     value,
   };
 
@@ -84,6 +91,19 @@ const UpdateIncomeComponent = ({ incomes }) => {
             onChange={handleInputDate}
             value={date}
             type="date"
+            className={`${theme}Theme`}
+            disabled={message}
+          />
+        </Form.Group>
+
+        <Form.Group className="mt-3">
+          <Form.Label>Title</Form.Label>
+          <Form.Control
+            required
+            onChange={handleInputTitle}
+            value={title}
+            type="text"
+            placeholder="Sushi"
             className={`${theme}Theme`}
             disabled={message}
           />

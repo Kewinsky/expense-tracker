@@ -15,6 +15,8 @@ public class Income {
 
     private LocalDate date;
 
+    private String title;
+
     private int value;
 
     @ManyToOne

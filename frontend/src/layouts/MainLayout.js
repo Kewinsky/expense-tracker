@@ -13,9 +13,11 @@ const MainLayout = ({ children, pageTitle }) => {
   return (
     <>
       <SidebarComponent />
-      <div className={`px-3 layout ${theme}-theme min-vh-100`}>
-        <main>{children}</main>
-      </div>
+      <main
+        className={`d-flex flex-column px-3 layout ${theme}-theme min-vh-100`}
+      >
+        {children}
+      </main>
     </>
   );
 };

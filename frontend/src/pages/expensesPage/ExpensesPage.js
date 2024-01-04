@@ -1,9 +1,9 @@
 import { useEffect, useState, useContext } from "react";
-import FilteringComponent from "../../components/filteringComponent/FilteringExpensesComponent";
+import FilteringExpensesComponent from "../../components/filteringComponent/FilteringExpensesComponent";
 import SeparatorComponent from "../../components/separatorComponent/SeparatorComponent";
 import TableComponent from "../../components/tableComponent/TableComponent";
 import ExpenseService from "../../services/expenseService";
-import { expenseFilter } from "../../helpers/filteringMethods";
+import { transactionsFilter } from "../../helpers/filteringMethods";
 import { months } from "../../utils/monthsData";
 import { trackerTableHeaders } from "../../utils/tableHeaders";
 import { updateExpenseURL } from "../../utils/updateURL";
@@ -33,7 +33,7 @@ const ExpensesPage = () => {
   );
 
   const filterExpenses = () => {
-    const response = expenseFilter(
+    const response = transactionsFilter(
       expenses,
       year,
       months.indexOf(month),
@@ -73,7 +73,7 @@ const ExpensesPage = () => {
       <HeaderComponent header={"Manage Expenses"} />
       <SeparatorComponent />
       <AddExpenseComponent setExpenses={setExpenses} categories={categories} />
-      <FilteringComponent
+      <FilteringExpensesComponent
         categories={categories}
         title={filterTitle}
         setTitle={setFilterTitle}

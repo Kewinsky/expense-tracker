@@ -1,4 +1,4 @@
-import { useMemo, useState, useContext } from "react";
+import { useMemo, useState, useContext, useEffect } from "react";
 import Table from "react-bootstrap/Table";
 import ActionButtonsComponents from "./ActionButtonsComponent";
 import SpinnerComponent from "../spinnerComponent/SpinnerComponent";
@@ -74,6 +74,10 @@ const TableComponent = ({
     return sortConfig.key === name ? sortConfig.direction : undefined;
   };
 
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [records]);
+
   if (isPending) {
     return <SpinnerComponent />;
   } else if (error) {
@@ -110,56 +114,58 @@ const TableComponent = ({
   };
 
   return (
-    <>
-      <Form.Group className="d-flex justify-content-end align-items-end m-3">
-        <Form.Label className="m-0 mx-3 align-self-center">
-          Items per page:
-        </Form.Label>
-        <SelectComponent
-          options={dropdownData(availableLimits)}
-          value={{
-            value: itemsPerPage,
-            label: itemsPerPage,
-          }}
-          handleSelect={handleSelectLimit}
-          placeholder={"Select"}
-          theme={`${theme}Theme`}
-        />
-      </Form.Group>
-      <Table responsive striped bordered hover size="md" variant={theme}>
-        <thead>
-          <tr>
-            {configLabels.map((label) => (
-              <th key={label}>
-                <Button
-                  type="button"
-                  onClick={() => requestSort(label)}
-                  className={getClassNamesFor(label)}
-                  variant={`outline-${reversedTheme}`}
-                >
-                  {label.charAt(0).toUpperCase() + label.slice(1)}
-                </Button>
-              </th>
-            ))}
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {sortedRecords.map((record) => (
-            <tr key={record.id}>
+    <div className="d-flex flex-column justify-content-between flex-grow-1">
+      <div>
+        <Form.Group className="d-flex justify-content-end align-items-end mb-3">
+          <Form.Label className="m-0 mx-3 align-self-center">
+            Items per page:
+          </Form.Label>
+          <SelectComponent
+            options={dropdownData(availableLimits)}
+            value={{
+              value: itemsPerPage,
+              label: itemsPerPage,
+            }}
+            handleSelect={handleSelectLimit}
+            placeholder={"Select"}
+            theme={`${theme}Theme`}
+          />
+        </Form.Group>
+        <Table responsive striped bordered hover size="md" variant={theme}>
+          <thead>
+            <tr>
               {configLabels.map((label) => (
-                <td key={configLabels.indexOf(label)}>{record[label]}</td>
+                <th key={label}>
+                  <Button
+                    type="button"
+                    onClick={() => requestSort(label)}
+                    className={getClassNamesFor(label)}
+                    variant={`outline-${reversedTheme}`}
+                  >
+                    {label.charAt(0).toUpperCase() + label.slice(1)}
+                  </Button>
+                </th>
               ))}
-              <ActionButtonsComponents
-                handleUpdate={handleUpdate}
-                handleDelete={handleDelete}
-                record={record}
-                theme={reversedTheme}
-              />
+              <th>Action</th>
             </tr>
-          ))}
-        </tbody>
-      </Table>
+          </thead>
+          <tbody>
+            {sortedRecords.map((record) => (
+              <tr key={record.id}>
+                {configLabels.map((label) => (
+                  <td key={configLabels.indexOf(label)}>{record[label]}</td>
+                ))}
+                <ActionButtonsComponents
+                  handleUpdate={handleUpdate}
+                  handleDelete={handleDelete}
+                  record={record}
+                  theme={reversedTheme}
+                />
+              </tr>
+            ))}
+          </tbody>
+        </Table>
+      </div>
       <PaginationComponent
         currentPage={currentPage}
         totalPages={totalPages}
@@ -169,7 +175,7 @@ const TableComponent = ({
         handlePreviousPage={handlePreviousPage}
         handleNextPage={handleNextPage}
       />
-    </>
+    </div>
   );
 };
 
