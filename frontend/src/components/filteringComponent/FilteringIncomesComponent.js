@@ -17,6 +17,7 @@ const FilteringIncomesComponent = ({
   filterIncomes,
 }) => {
   const years = getYearArray();
+  const monthFilters = ["All", ...months];
 
   const { theme } = useContext(ThemeContext);
 
@@ -76,7 +77,7 @@ const FilteringIncomesComponent = ({
             <Form.Group>
               <Form.Label>Filter by Month</Form.Label>
               <SelectComponent
-                options={dropdownData(months)}
+                options={dropdownData(monthFilters)}
                 handleSelect={handleSelectMonth}
                 theme={`${theme}Theme`}
                 value={getDefaultMonth()}
