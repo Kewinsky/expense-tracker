@@ -19,7 +19,7 @@ import {
   categoriesAverageMessage,
   categoriesPercentageMessage,
   categoriesValueMessage,
-} from "../../utils/toolipMassages";
+} from "../../utils/tooltipMassages";
 
 const CategoriesSummaryComponent = ({
   barChartData,

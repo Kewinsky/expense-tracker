@@ -2,7 +2,7 @@ import { BsFillBarChartFill } from "react-icons/bs";
 import { Card, Col, Container, Row } from "react-bootstrap";
 import { useContext } from "react";
 import { ThemeContext } from "../../App";
-import { filterByYearAndMonth } from "../../helpers/filteringMethods";
+import { filterByYear } from "../../helpers/filteringMethods";
 import { sumAll } from "../../helpers/summingMethods";
 import "./summaryComponent.scss";
 import TooltipComponent from "../tooltipComponent/TooltipComponent";
@@ -16,7 +16,7 @@ import {
   savedCurrValueMessage,
   savedMessage,
   savedPrevValueMessage,
-} from "../../utils/toolipMassages";
+} from "../../utils/tooltipMassages";
 
 const SummaryComponent = ({
   year,
@@ -28,18 +28,22 @@ const SummaryComponent = ({
 }) => {
   const { expenses, theme } = useContext(ThemeContext);
 
-  const expensesOfCurrentYear = filterByYearAndMonth(expenses, year, null);
-  const expensesOfPreviousYear = filterByYearAndMonth(expenses, year - 1, null);
+  // Expenses
+  const expensesOfCurrentYear = filterByYear(expenses, year);
+  const expensesOfPreviousYear = filterByYear(expenses, year - 1);
 
-  const incomesOfCurrentYear = filterByYearAndMonth(incomes, year, null);
-  const incomesOfPreviousYear = filterByYearAndMonth(incomes, year - 1, null);
-
-  // Current Year
+  // Sum of all expenses from current/previous year
   const totalOutcomeCurrentYear = sumAll(expensesOfCurrentYear);
-  const totalIncomeCurrentYear = sumAll(incomesOfCurrentYear);
-
-  // Previous Year
   const totalOutcomePreviousYear = sumAll(expensesOfPreviousYear);
+
+  // ---
+
+  // Incomes
+  const incomesOfCurrentYear = filterByYear(incomes, year);
+  const incomesOfPreviousYear = filterByYear(incomes, year - 1);
+
+  // Sum of all incomes from current/previous year
+  const totalIncomeCurrentYear = sumAll(incomesOfCurrentYear);
   const totalIncomePreviousYear = sumAll(incomesOfPreviousYear);
 
   const outcomeStatus = (current, previous) => {
@@ -50,6 +54,7 @@ const SummaryComponent = ({
     return current < 0 || current < previous ? "text-danger" : "text-success";
   };
 
+  // Balance of current/previous month
   const balance = income - outcome;
   const previousBalance = previousIncome - previousOutcome;
 

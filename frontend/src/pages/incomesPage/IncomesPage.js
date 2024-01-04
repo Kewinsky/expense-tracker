@@ -8,7 +8,7 @@ import { incomesTableHeaders } from "../../utils/tableHeaders";
 import { updateIncomeURL } from "../../utils/updateURL";
 import { months } from "../../utils/monthsData";
 import FilteringIncomesComponent from "../../components/filteringComponent/FilteringIncomesComponent";
-import { expenseFilter } from "../../helpers/filteringMethods";
+import { transactionsFilter } from "../../helpers/filteringMethods";
 import HeaderComponent from "../../components/headerComponent/HeaderComponent";
 
 const IncomesPage = () => {
@@ -36,7 +36,7 @@ const IncomesPage = () => {
   );
 
   const filterIncomes = () => {
-    const response = expenseFilter(
+    const response = transactionsFilter(
       incomes,
       year,
       months.indexOf(month),

@@ -11,7 +11,7 @@ import {
   utilitiesCurrMessage,
   utilitiesPercentageMessage,
   utilitiesPrevMessage,
-} from "../../utils/toolipMassages";
+} from "../../utils/tooltipMassages";
 
 const UtilitiesComponent = ({ lineChartData, expenses, month }) => {
   const { theme } = useContext(ThemeContext);

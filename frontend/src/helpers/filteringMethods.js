@@ -1,47 +1,27 @@
-// Purpose: filter items by year, month, category and title
-// return array with filtered items
+// Purpose: filter transactions by year, month, category and title
+// return array with filtered transactions
 // used for filtering incomes/expenses in IncomesPage/ExpensesPage
-export const expenseFilter = (items, year, month, category, title) => {
+export const transactionsFilter = (items, year, month, category, title) => {
   return items.filter((item) => {
     return (
-      isYearMonthMatch(item, year, month) &&
+      isYearMatch(item, year) &&
+      isMonthMatch(item, month) &&
       isCategoryMatch(item, category) &&
       isTitleMatch(item, title)
     );
   });
 };
 
-const isYearMonthMatch = (item, year, month) => {
-  const itemDate = new Date(item.date);
-  return (
-    itemDate.getFullYear() === year &&
-    (month === -1 || itemDate.getMonth() === month)
-  );
-};
-
-const isCategoryMatch = (item, category) => {
-  return (
-    category === null || !category.length || category.includes(item.category)
-  );
-};
-
-const isTitleMatch = (item, title) => {
-  return (
-    !title ||
-    title.trim() === "" ||
-    item.title.toLowerCase().includes(title.toLowerCase())
-  );
-};
-
 // Purpose: filter items by year and month
 // return array with filtered items
 // used for filtering expenses/incomes
+export const filterByYear = (items, year) => {
+  return items.filter((item) => isYearMatch(item, year));
+};
+
 export const filterByYearAndMonth = (items, year, month) => {
   return items.filter((item) => {
-    const itemDate = new Date(item.date);
-    const yearMatches = itemDate.getFullYear() === year;
-    const monthMatches = month === null || itemDate.getMonth() === month;
-    return yearMatches && monthMatches;
+    return isYearMatch(item, year) && isMonthMatch(item, month);
   });
 };
 
@@ -56,4 +36,28 @@ export const noteFilterByYear = (items, year) => {
   return items.filter((item) => {
     return item.year === year;
   });
+};
+
+const isYearMatch = (item, year) => {
+  const itemDate = new Date(item.date);
+  return itemDate.getFullYear() === year;
+};
+
+const isMonthMatch = (item, month) => {
+  const itemDate = new Date(item.date);
+  return month === -1 || month === null || itemDate.getMonth() === month;
+};
+
+const isCategoryMatch = (item, category) => {
+  return (
+    category === null || !category.length || category.includes(item.category)
+  );
+};
+
+const isTitleMatch = (item, title) => {
+  return (
+    !title ||
+    title.trim() === "" ||
+    item.title.toLowerCase().includes(title.toLowerCase())
+  );
 };
