@@ -38,6 +38,7 @@ public class IncomeService {
         return incomeRepository.findById(incomeId)
                 .map(inc -> {
                     inc.setDate(updateIncome.getDate());
+                    inc.setTitle(updateIncome.getTitle());
                     inc.setValue(updateIncome.getValue());
                     incomeRepository.save(inc);
                     return "Income updated successfully";
