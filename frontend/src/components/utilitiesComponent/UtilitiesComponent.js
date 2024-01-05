@@ -46,7 +46,7 @@ const UtilitiesComponent = ({ lineChartData, expenses, month }) => {
           </div>
         </div>
       </Card.Header>
-      <Card.Body className="vertical-center">
+      <Card.Body className="vertical-center custom-chart-height">
         {isChart ? (
           <LineChartComponent chartData={lineChartData} />
         ) : (

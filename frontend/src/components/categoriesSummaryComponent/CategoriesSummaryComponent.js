@@ -54,7 +54,7 @@ const CategoriesSummaryComponent = ({
   };
 
   return (
-    <Card className={`bg-${theme} dashboard-card`}>
+    <Card className={`bg-${theme} category-summary-dashboard`}>
       <Card.Header>
         <div className="d-flex justify-content-between">
           <h4 className="align-self-center m-0">Top 5 Categories</h4>
