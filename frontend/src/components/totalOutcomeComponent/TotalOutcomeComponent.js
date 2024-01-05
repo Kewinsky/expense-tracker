@@ -57,7 +57,7 @@ const TotalOutcomeComponent = ({
           )}
         </div>
       </Card.Header>
-      <Card.Body className="vertical-center">
+      <Card.Body className="vertical-center line-chart-height">
         <Line data={chartData} />
       </Card.Body>
     </Card>
