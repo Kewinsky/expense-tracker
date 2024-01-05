@@ -173,33 +173,53 @@ export const sumAllUtilitiesForTable = (items, month) => {
 // return array with category name and average value
 // used for Category Table
 export const getRoundedCategoryAverages = (items, year) => {
-  let sumByCategoryAndYear = {};
+  const categoryData = {};
 
-  for (let i = 0; i < items.length; i++) {
-    const category = items[i].category;
-    const value = items[i].value;
-    const date = new Date(items[i].date);
-    const dataYear = date.getFullYear();
+  items.forEach((item) => {
+    const itemYear = new Date(item.date).getFullYear();
+    const itemMonth = new Date(item.date).getMonth() + 1;
 
-    if (year === null || dataYear === year) {
-      if (sumByCategoryAndYear[category]) {
-        sumByCategoryAndYear[category].sum += value;
-        sumByCategoryAndYear[category].count += 1;
-      } else {
-        sumByCategoryAndYear[category] = { sum: value, count: 1 };
+    if (itemYear === year) {
+      const key = `${itemMonth}-${item.category}`;
+
+      if (!categoryData[key]) {
+        categoryData[key] = { sum: 0 };
       }
+
+      categoryData[key].sum += item.value;
     }
+  });
+  console.log(categoryData);
+
+  const result = [];
+
+  for (const key in categoryData) {
+    const [month, category] = key.split("-");
+    const sum = categoryData[key].sum;
+
+    const existingCategory = result.find((item) => item.category === category);
+
+    if (!existingCategory) {
+      result.push({ category, totalSum: 0, numberOfMonths: 0 });
+    }
+
+    const categoryIndex = result.findIndex(
+      (item) => item.category === category
+    );
+    result[categoryIndex].totalSum += sum;
+    result[categoryIndex].numberOfMonths += 1;
   }
+  console.log(result);
 
-  const categoryAverages = Object.keys(sumByCategoryAndYear).map(
-    (category) => ({
-      category,
-      average: Math.round(
-        sumByCategoryAndYear[category].sum /
-          Math.max(sumByCategoryAndYear[category].count, 1)
-      ),
-    })
-  );
+  const finalResult = result.map((item) => {
+    const totalSum = item.totalSum;
+    const numberOfMonths = item.numberOfMonths;
+    const average = numberOfMonths > 0 ? totalSum / numberOfMonths : 0;
+    const roundedAverage = Math.round(average * 2) / 2;
 
-  return categoryAverages;
+    return { category: item.category, average: roundedAverage };
+  });
+  console.log(finalResult);
+
+  return finalResult;
 };
