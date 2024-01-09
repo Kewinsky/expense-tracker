@@ -1,0 +1,26 @@
+version: "3"
+
+services:
+  mysql:
+    image: spendee-database
+    environment:
+      MYSQL_ROOT_PASSWORD: admin
+      MYSQL_DATABASE: expense_tracker
+    ports:
+      - "3306:3306"
+
+  spendee-backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mysql
+
+  spendee-frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
