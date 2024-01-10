@@ -8,6 +8,8 @@ services:
       MYSQL_DATABASE: expense_tracker
     ports:
       - "3306:3306"
+    networks:
+      - springapimysql-net
 
   spendee-backend:
     build:
@@ -15,6 +17,10 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8080:8080"
+    networks:
+      - springapimysql-net
+    environment:
+      - spring.datasource.url=jdbc:mysql://mysql:3306/expense_tracker
     depends_on:
       - mysql
 
@@ -24,3 +30,5 @@ services:
       dockerfile: Dockerfile
     ports:
       - "3000:3000"
+networks:
+  springapimysql-net:
