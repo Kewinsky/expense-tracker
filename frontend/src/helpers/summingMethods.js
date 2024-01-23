@@ -189,7 +189,6 @@ export const getRoundedCategoryAverages = (items, year) => {
       categoryData[key].sum += item.value;
     }
   });
-  console.log(categoryData);
 
   const result = [];
 
@@ -209,7 +208,6 @@ export const getRoundedCategoryAverages = (items, year) => {
     result[categoryIndex].totalSum += sum;
     result[categoryIndex].numberOfMonths += 1;
   }
-  console.log(result);
 
   const finalResult = result.map((item) => {
     const totalSum = item.totalSum;
@@ -219,7 +217,6 @@ export const getRoundedCategoryAverages = (items, year) => {
 
     return { category: item.category, average: roundedAverage };
   });
-  console.log(finalResult);
 
   return finalResult;
 };

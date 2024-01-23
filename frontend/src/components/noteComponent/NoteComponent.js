@@ -35,10 +35,8 @@ const NoteComponent = ({ note, getNotes, month, year }) => {
 
     try {
       const response = await NoteService.updateNote(note?.id, noteRequestBody);
-      console.log();
       successNotification(response);
     } catch (err) {
-      console.log(err);
       errorNotification(err.message);
     }
     getNotes();
